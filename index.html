@@ -812,6 +812,7 @@ input.answer,.wta,textarea{background:var(--card);color:var(--ink);border-color:
 .wtile.sb{display:inline-flex;flex-direction:column;align-items:center}
 .onb-langs{grid-template-columns:repeat(3,minmax(0,1fr))}.onb-lang{min-width:0;padding:16px 4px;font-size:14px}.onb-lang b{overflow:hidden;text-overflow:ellipsis;max-width:100%}@media (max-width:340px){.onb-langs{grid-template-columns:1fr}.onb-lang{flex-direction:row;justify-content:center;gap:12px;padding:12px}.onb-lang .flag{font-size:30px}}
 .onb-langs{grid-template-columns:repeat(2,minmax(0,1fr))}
+.k-voice{display:flex;gap:8px;width:100%;align-items:center}.k-voice select{flex:1;min-width:0;min-height:44px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;font-size:14px;padding:0 10px}
 </style>
 </head>
 <body>
@@ -2851,379 +2852,379 @@ const RAW = `#greet|Привітання|👋|A1
 почуватися як удома|to feel at home|at føle sig hjemme|sentirsi a casa|🏠||czuć się jak w domu
 шкода|that's a shame|det er en skam|è un peccato|😔||szkoda
 #b2_society|Суспільство|🏛️|B2
-суспільство|society|et samfund|la società|🏛️
-уряд|government|en regering|il governo|🏢|Houses_of_Parliament|
-громадянин|citizen|en borger|il cittadino|🪪
-закон|law|en lov|la legge|📜
-нерівність|inequality|en ulighed|la disuguaglianza|⚖️
-бідність|poverty|en fattigdom|la povertà|🪙
-добробут|welfare|en velfærd|il benessere|🏡
-злочин|crime|en forbrydelse|il crimine|🚨|handcuffs|
-біженець|refugee|en flygtning|il rifugiato|🧳
-голосувати|to vote|at stemme|votare|🗳️|vote_,_to|
-впливати|to influence|at påvirke|influenzare|🎯
+суспільство|society|et samfund|la società|🏛️||społeczeństwo
+уряд|government|en regering|il governo|🏢|Houses_of_Parliament|rząd
+громадянин|citizen|en borger|il cittadino|🪪||obywatel
+закон|law|en lov|la legge|📜||prawo
+нерівність|inequality|en ulighed|la disuguaglianza|⚖️||nierówność
+бідність|poverty|en fattigdom|la povertà|🪙||ubóstwo
+добробут|welfare|en velfærd|il benessere|🏡||dobrobyt
+злочин|crime|en forbrydelse|il crimine|🚨|handcuffs|przestępstwo
+біженець|refugee|en flygtning|il rifugiato|🧳||uchodźca
+голосувати|to vote|at stemme|votare|🗳️|vote_,_to|głosować
+впливати|to influence|at påvirke|influenzare|🎯||wpływać
 #b2_environment|Довкілля|🌍|B2
-відходи|waste|et affald|i rifiuti|🗑️|wheelie_bin|
-ресурс|resource|en ressource|la risorsa|⛏️
-сталий (розвиток)|sustainable|bæredygtig|sostenibile|🌱|recycle_logo|
-шкідливий|harmful|skadelig|dannoso|☠️
-запобігати|to prevent|at forhindre|prevenire|🛑
-зберігати (природу)|to preserve|at bevare|preservare|🌳
+відходи|waste|et affald|i rifiuti|🗑️|wheelie_bin|odpady
+ресурс|resource|en ressource|la risorsa|⛏️||zasób
+сталий (розвиток)|sustainable|bæredygtig|sostenibile|🌱|recycle_logo|zrównoważony
+шкідливий|harmful|skadelig|dannoso|☠️||szkodliwy
+запобігати|to prevent|at forhindre|prevenire|🛑||zapobiegać
+зберігати (природу)|to preserve|at bevare|preservare|🌳||chronić
 #b2_work|Робота й економіка|💼|B2
-податок|tax|en skat|la tassa|🧾
-безробіття|unemployment|en arbejdsløshed|la disoccupazione|📉
-прибуток|profit|en fortjeneste|il profitto|📈
-борг|debt|en gæld|il debito|💳
-конкуренція|competition|en konkurrence|la concorrenza|🥊|race_athletics|
-підвищення (на посаді)|promotion|en forfremmelse|la promozione|🪜
-інвестувати|to invest|at investere|investire|💹
-звільняти (з роботи)|to fire|at fyre|licenziare|🚪
-вести переговори|to negotiate|at forhandle|negoziare|🤝|shake_hands_,_to|
-досвідчений|experienced|erfaren|esperto|🎓
+податок|tax|en skat|la tassa|🧾||podatek
+безробіття|unemployment|en arbejdsløshed|la disoccupazione|📉||bezrobocie
+прибуток|profit|en fortjeneste|il profitto|📈||zysk
+борг|debt|en gæld|il debito|💳||dług
+конкуренція|competition|en konkurrence|la concorrenza|🥊|race_athletics|konkurencja
+підвищення (на посаді)|promotion|en forfremmelse|la promozione|🪜||awans
+інвестувати|to invest|at investere|investire|💹||inwestować
+звільняти (з роботи)|to fire|at fyre|licenziare|🚪||zwalniać
+вести переговори|to negotiate|at forhandle|negoziare|🤝|shake_hands_,_to|negocjować
+досвідчений|experienced|erfaren|esperto|🎓||doświadczony
 #b2_character|Емоції й характер|🎭|B2
-впевнений у собі|self-confident|selvsikker|sicuro di sé|😎
-вдячний|grateful|taknemmelig|grato|🙏
-щедрий|generous|gavmild|generoso|🎁|give_,_to|
-надійний (про людину)|reliable|pålidelig|affidabile|🛡️
-чесність|honesty|en ærlighed|l'onestà|😇
-терпіння|patience|en tålmodighed|la pazienza|⏳|wait_,_to|
-тривога (почуття)|anxiety|en angst|l'ansia|😰|worried_lady|
-ображатися|to take offence|at blive fornærmet|offendersi|😤|angry_man|
+впевнений у собі|self-confident|selvsikker|sicuro di sé|😎||pewny siebie
+вдячний|grateful|taknemmelig|grato|🙏||wdzięczny
+щедрий|generous|gavmild|generoso|🎁|give_,_to|hojny
+надійний (про людину)|reliable|pålidelig|affidabile|🛡️||niezawodny
+чесність|honesty|en ærlighed|l'onestà|😇||uczciwość
+терпіння|patience|en tålmodighed|la pazienza|⏳|wait_,_to|cierpliwość
+тривога (почуття)|anxiety|en angst|l'ansia|😰|worried_lady|niepokój
+ображатися|to take offence|at blive fornærmet|offendersi|😤|angry_man|obrażać się
 #b2_connectors|Сполучники й прислівники|🔗|B2
-натомість|instead|i stedet|invece|🔀
-зрештою|eventually|til sidst|alla fine|🏁
-тим часом|meanwhile|i mellemtiden|nel frattempo|⏱️
-насправді|actually|faktisk|in realtà|💡
-очевидно|evidently|tydeligvis|evidentemente|👀
+натомість|instead|i stedet|invece|🔀||zamiast tego
+зрештою|eventually|til sidst|alla fine|🏁||w końcu
+тим часом|meanwhile|i mellemtiden|nel frattempo|⏱️||w międzyczasie
+насправді|actually|faktisk|in realtà|💡||tak naprawdę
+очевидно|evidently|tydeligvis|evidentemente|👀||najwyraźniej
 #b2_phrases|Вирази й ідіоми B2|💬|B2
-Я не маю гадки.|I have no idea.|Jeg aner det ikke.|Non ne ho idea.|🤷|confused_man|
-сушити голову|to rack one's brains|at bryde sit hoved|scervellarsi|🤯|brain|
-убити двох зайців|to kill two birds with one stone|at slå to fluer med ét smæk|prendere due piccioni con una fava|🐦🐦|bird|
-коли рак на горі свисне|when pigs fly|når der er to torsdage i en uge|quando gli asini voleranno|🐷✈️
-ллє як з відра|it's raining cats and dogs|det regner skomagerdrenge|piove a catinelle|🌧️🌧️|thunder_storm|
-тримати кулаки|to keep one's fingers crossed|at krydse fingre|incrociare le dita|🤞|cross_fingers_,_to|
-коштувати цілий статок|to cost an arm and a leg|at koste det hvide ud af øjnene|costare un occhio della testa|💰💰
-легше сказати, ніж зробити|easier said than done|lettere sagt end gjort|più facile a dirsi che a farsi|😅
-схожі як дві краплі води|like two peas in a pod|som to dråber vand|come due gocce d'acqua|👯
-бути на сьомому небі|to be on cloud nine|at være i den syvende himmel|essere al settimo cielo|☁️|happy_man|
-розтопити кригу|to break the ice|at bryde isen|rompere il ghiaccio|🧊
-краще пізно, ніж ніколи|better late than never|bedre sent end aldrig|meglio tardi che mai|⏰
-почуватися як риба без води|to feel like a fish out of water|at føle sig som en fisk på landjorden|sentirsi un pesce fuor d'acqua|🐟
-це справа смаку|it's a matter of taste|det er en smagssag|è questione di gusti|👅|taste_,_to|
-час — гроші|time is money|tid er penge|il tempo è denaro|⏳💰
-сидіти склавши руки|to twiddle one's thumbs|at sidde med hænderne i skødet|stare con le mani in mano|🙌
-бути в курсі справ|to be in the loop|at være orienteret|essere al corrente|📢
-яблуко від яблуні недалеко падає|the apple doesn't fall far from the tree|æblet falder ikke langt fra stammen|la mela non cade lontano dall'albero|🍎
-нічого не вдієш|it can't be helped|det kan ikke hjælpes|non c'è niente da fare|🤷‍♂️
-хто рано встає, тому Бог дає|the early bird catches the worm|morgenstund har guld i mund|il mattino ha l'oro in bocca|🌅
+Я не маю гадки.|I have no idea.|Jeg aner det ikke.|Non ne ho idea.|🤷|confused_man|Nie mam pojęcia.
+сушити голову|to rack one's brains|at bryde sit hoved|scervellarsi|🤯|brain|łamać sobie głowę
+убити двох зайців|to kill two birds with one stone|at slå to fluer med ét smæk|prendere due piccioni con una fava|🐦🐦|bird|upiec dwie pieczenie na jednym ogniu
+коли рак на горі свисне|when pigs fly|når der er to torsdage i en uge|quando gli asini voleranno|🐷✈️||na świętego Nigdy
+ллє як з відра|it's raining cats and dogs|det regner skomagerdrenge|piove a catinelle|🌧️🌧️|thunder_storm|leje jak z cebra
+тримати кулаки|to keep one's fingers crossed|at krydse fingre|incrociare le dita|🤞|cross_fingers_,_to|trzymać kciuki
+коштувати цілий статок|to cost an arm and a leg|at koste det hvide ud af øjnene|costare un occhio della testa|💰💰||kosztować majątek
+легше сказати, ніж зробити|easier said than done|lettere sagt end gjort|più facile a dirsi che a farsi|😅||łatwiej powiedzieć, niż zrobić
+схожі як дві краплі води|like two peas in a pod|som to dråber vand|come due gocce d'acqua|👯||jak dwie krople wody
+бути на сьомому небі|to be on cloud nine|at være i den syvende himmel|essere al settimo cielo|☁️|happy_man|być w siódmym niebie
+розтопити кригу|to break the ice|at bryde isen|rompere il ghiaccio|🧊||przełamać lody
+краще пізно, ніж ніколи|better late than never|bedre sent end aldrig|meglio tardi che mai|⏰||lepiej późno niż wcale
+почуватися як риба без води|to feel like a fish out of water|at føle sig som en fisk på landjorden|sentirsi un pesce fuor d'acqua|🐟||czuć się jak ryba wyjęta z wody
+це справа смаку|it's a matter of taste|det er en smagssag|è questione di gusti|👅|taste_,_to|to kwestia gustu
+час — гроші|time is money|tid er penge|il tempo è denaro|⏳💰||czas to pieniądz
+сидіти склавши руки|to twiddle one's thumbs|at sidde med hænderne i skødet|stare con le mani in mano|🙌||siedzieć z założonymi rękami
+бути в курсі справ|to be in the loop|at være orienteret|essere al corrente|📢||być na bieżąco
+яблуко від яблуні недалеко падає|the apple doesn't fall far from the tree|æblet falder ikke langt fra stammen|la mela non cade lontano dall'albero|🍎||niedaleko pada jabłko od jabłoni
+нічого не вдієш|it can't be helped|det kan ikke hjælpes|non c'è niente da fare|🤷‍♂️||nic nie poradzisz
+хто рано встає, тому Бог дає|the early bird catches the worm|morgenstund har guld i mund|il mattino ha l'oro in bocca|🌅||kto rano wstaje, temu Pan Bóg daje
 #b2m_gadgets|Гаджети й інтернет|📱|B2
-коментар|comment|en kommentar|il commento|💬
-реклама|advertisement|en reklame|la pubblicità|📺
-пристрій|device|en enhed|il dispositivo|📱
-застосунок|app|en app|l'app|📲
-пароль|password|en adgangskode|la password|🔑
-екран|screen|en skærm|lo schermo|🖥️|touch_screen|
-публікувати|to publish|at udgive|pubblicare|📤
-завантажувати (з інтернету)|to download|at downloade|scaricare|⬇️|download_,_to|
-оновлювати|to update|at opdatere|aggiornare|🔄
-ділитися (у мережі)|to share|at dele|condividere|🔗|share_,_to|
-гортати (стрічку)|to scroll|at scrolle|scorrere|📜
-бездротовий|wireless|trådløs|senza fili|📶
-акумулятор|battery|et batteri|la batteria|🔋|battery_1|
+коментар|comment|en kommentar|il commento|💬||komentarz
+реклама|advertisement|en reklame|la pubblicità|📺||reklama
+пристрій|device|en enhed|il dispositivo|📱||urządzenie
+застосунок|app|en app|l'app|📲||aplikacja
+пароль|password|en adgangskode|la password|🔑||hasło
+екран|screen|en skærm|lo schermo|🖥️|touch_screen|ekran
+публікувати|to publish|at udgive|pubblicare|📤||publikować
+завантажувати (з інтернету)|to download|at downloade|scaricare|⬇️|download_,_to|pobierać
+оновлювати|to update|at opdatere|aggiornare|🔄||aktualizować
+ділитися (у мережі)|to share|at dele|condividere|🔗|share_,_to|dzielić się
+гортати (стрічку)|to scroll|at scrolle|scorrere|📜||przewijać
+бездротовий|wireless|trådløs|senza fili|📶||bezprzewodowy
+акумулятор|battery|et batteri|la batteria|🔋|battery_1|bateria
 #b2m_education|Освіта й навчання|🎓|B2
-стипендія|scholarship|et stipendium|la borsa di studio|💰
-лекція|lecture|en forelæsning|la lezione|🧑‍🏫
-завдання (письмове)|assignment|en opgave|il compito|📝
-оцінка (бал)|grade|en karakter|il voto|💯
-випускник (університету)|graduate|en dimittend|il laureato|🎓
-навчальна програма|curriculum|en læseplan|il programma scolastico|📋
-подавати заявку|to apply|at søge|candidarsi|📨
-зосереджуватися|to concentrate|at koncentrere sig|concentrarsi|🎯|concentrating_man|
-вивчати напам'ять|to memorize|at lære udenad|memorizzare|🧠
-обов'язковий|compulsory|obligatorisk|obbligatorio|✅
-навичка|skill|en færdighed|l'abilità|🛠️
-повторювати (матеріал)|to revise|at repetere|ripassare|🔁|study_,_to|
-плагіат|plagiarism|et plagiat|il plagio|📄
+стипендія|scholarship|et stipendium|la borsa di studio|💰||stypendium
+лекція|lecture|en forelæsning|la lezione|🧑‍🏫||wykład
+завдання (письмове)|assignment|en opgave|il compito|📝||zadanie
+оцінка (бал)|grade|en karakter|il voto|💯||ocena
+випускник (університету)|graduate|en dimittend|il laureato|🎓||absolwent
+навчальна програма|curriculum|en læseplan|il programma scolastico|📋||program nauczania
+подавати заявку|to apply|at søge|candidarsi|📨||składać podanie
+зосереджуватися|to concentrate|at koncentrere sig|concentrarsi|🎯|concentrating_man|skupiać się
+вивчати напам'ять|to memorize|at lære udenad|memorizzare|🧠||uczyć się na pamięć
+обов'язковий|compulsory|obligatorisk|obbligatorio|✅||obowiązkowy
+навичка|skill|en færdighed|l'abilità|🛠️||umiejętność
+повторювати (матеріал)|to revise|at repetere|ripassare|🔁|study_,_to|powtarzać materiał
+плагіат|plagiarism|et plagiat|il plagio|📄||plagiat
 #b2m_medicine|Медицина й лікування|🏥|B2
-бинт|bandage|en forbinding|la benda|🩹|plaster|
-операція (хірургічна)|surgery|en operation|l'operazione|🏥|operation|
-чхати|to sneeze|at nyse|starnutire|🤧|sneeze_cold|
-оглядати (пацієнта)|to examine|at undersøge|visitare|🩺
-інфекція|infection|en infektion|l'infezione|🦠
-алергія|allergy|en allergi|l'allergia|🌼
-хірург|surgeon|en kirurg|il chirurgo|👨‍⚕️
-щеплення|vaccination|en vaccination|la vaccinazione|💉|syringe|
-непритомніти|to faint|at besvime|svenire|😵
-страждати|to suffer|at lide|soffrire|😣
-травма (ушкодження)|injury|en skade|la lesione|🤕
-виснажений|exhausted|udmattet|esausto|😩
-кров'яний тиск|blood pressure|et blodtryk|la pressione sanguigna|🩸|blood_pressure|
-загоюватися (про рану)|to heal|at hele|guarire|❤️‍🩹
+бинт|bandage|en forbinding|la benda|🩹|plaster|bandaż
+операція (хірургічна)|surgery|en operation|l'operazione|🏥|operation|operacja
+чхати|to sneeze|at nyse|starnutire|🤧|sneeze_cold|kichać
+оглядати (пацієнта)|to examine|at undersøge|visitare|🩺||badać
+інфекція|infection|en infektion|l'infezione|🦠||infekcja
+алергія|allergy|en allergi|l'allergia|🌼||alergia
+хірург|surgeon|en kirurg|il chirurgo|👨‍⚕️||chirurg
+щеплення|vaccination|en vaccination|la vaccinazione|💉|syringe|szczepienie
+непритомніти|to faint|at besvime|svenire|😵||mdleć
+страждати|to suffer|at lide|soffrire|😣||cierpieć
+травма (ушкодження)|injury|en skade|la lesione|🤕||uraz
+виснажений|exhausted|udmattet|esausto|😩||wyczerpany
+кров'яний тиск|blood pressure|et blodtryk|la pressione sanguigna|🩸|blood_pressure|ciśnienie krwi
+загоюватися (про рану)|to heal|at hele|guarire|❤️‍🩹||goić się
 #b2m_housing|Житло й місто|🏘️|B2
-орендна плата|rent|en husleje|l'affitto|🏠
-орендар|tenant|en lejer|l'inquilino|🔑
-орендодавець|landlord|en udlejer|il padrone di casa|🧑‍💼
-район (міста)|neighbourhood|et kvarter|il quartiere|🏘️
-передмістя|suburb|en forstad|il sobborgo|🏡
-застава (за оренду)|deposit|et depositum|la caparra|💶
-ремонтувати (житло)|to renovate|at renovere|ristrutturare|🔨
-переїжджати (в інше житло)|to move house|at flytte|traslocare|📦
-затишний|cosy|hyggelig|accogliente|🛋️
-переповнений|crowded|overfyldt|affollato|👥
-житло|accommodation|en bolig|l'alloggio|🏢
-затор|traffic jam|en trafikprop|l'ingorgo|🚗🚗
-хмарочос|skyscraper|en skyskraber|il grattacielo|🏙️
-тротуар|pavement|et fortov|il marciapiede|🚶
+орендна плата|rent|en husleje|l'affitto|🏠||czynsz
+орендар|tenant|en lejer|l'inquilino|🔑||najemca
+орендодавець|landlord|en udlejer|il padrone di casa|🧑‍💼||właściciel mieszkania
+район (міста)|neighbourhood|et kvarter|il quartiere|🏘️||dzielnica
+передмістя|suburb|en forstad|il sobborgo|🏡||przedmieście
+застава (за оренду)|deposit|et depositum|la caparra|💶||kaucja
+ремонтувати (житло)|to renovate|at renovere|ristrutturare|🔨||remontować
+переїжджати (в інше житло)|to move house|at flytte|traslocare|📦||przeprowadzać się
+затишний|cosy|hyggelig|accogliente|🛋️||przytulny
+переповнений|crowded|overfyldt|affollato|👥||zatłoczony
+житло|accommodation|en bolig|l'alloggio|🏢||zakwaterowanie
+затор|traffic jam|en trafikprop|l'ingorgo|🚗🚗||korek
+хмарочос|skyscraper|en skyskraber|il grattacielo|🏙️||wieżowiec
+тротуар|pavement|et fortov|il marciapiede|🚶||chodnik
 #b2m_relationships|Стосунки|💞|B2
-стосунки|relationship|et forhold|la relazione|💑
-довіряти|to trust|at stole på|fidarsi|🤝
-сваритися|to quarrel|at skændes|litigare|😠
-миритися|to reconcile|at forsone sig|riconciliarsi|🕊️
-розлучення|divorce|en skilsmisse|il divorzio|💔
-заручини|engagement|en forlovelse|il fidanzamento|💍
-підтримувати (емоційно)|to support|at støtte|sostenere|🫂
-ревнивий|jealous|jaloux|geloso|😤|jealous_man|
-вірний (партнерові)|faithful|trofast|fedele|💞
-зраджувати|to betray|at forråde|tradire|🗡️
-знайомий (людина)|acquaintance|en bekendt|il conoscente|🙋
-непорозуміння|misunderstanding|en misforståelse|il malinteso|🤔
-взаємний|mutual|gensidig|reciproco|🔁
-прощати|to forgive|at tilgive|perdonare|🙏
+стосунки|relationship|et forhold|la relazione|💑||związek
+довіряти|to trust|at stole på|fidarsi|🤝||ufać
+сваритися|to quarrel|at skændes|litigare|😠||kłócić się
+миритися|to reconcile|at forsone sig|riconciliarsi|🕊️||godzić się
+розлучення|divorce|en skilsmisse|il divorzio|💔||rozwód
+заручини|engagement|en forlovelse|il fidanzamento|💍||zaręczyny
+підтримувати (емоційно)|to support|at støtte|sostenere|🫂||wspierać
+ревнивий|jealous|jaloux|geloso|😤|jealous_man|zazdrosny
+вірний (партнерові)|faithful|trofast|fedele|💞||wierny
+зраджувати|to betray|at forråde|tradire|🗡️||zdradzać
+знайомий (людина)|acquaintance|en bekendt|il conoscente|🙋||znajomy
+непорозуміння|misunderstanding|en misforståelse|il malinteso|🤔||nieporozumienie
+взаємний|mutual|gensidig|reciproco|🔁||wzajemny
+прощати|to forgive|at tilgive|perdonare|🙏||wybaczać
 #b2m_idioms|Ще ідіоми й прислів'я B2|💬|B2
-повторення — мати навчання|practice makes perfect|øvelse gør mester|la pratica rende perfetti|🏋️
-не слова, а діла|actions speak louder than words|handling siger mere end ord|i fatti contano più delle parole|💪
-з очей геть — із серця вон|out of sight, out of mind|ude af øje, ude af sind|lontano dagli occhi, lontano dal cuore|🙈
-взяти на себе забагато|to bite off more than one can chew|at tage munden for fuld|fare il passo più lungo della gamba|🍔
-метелики в животі|butterflies in one's stomach|sommerfugle i maven|le farfalle nello stomaco|🦋
-спати як убитий|to sleep like a log|at sove som en sten|dormire come un ghiro|😴|sleep_male_,_to|
-перетворитися на слух|to be all ears|at være lutter øre|essere tutt'orecchi|👂
-немає лиха без добра|every cloud has a silver lining|intet er så skidt, at det ikke er godt for noget|non tutto il male vien per nuocere|🌥️
-що з воза впало, те пропало|no use crying over spilt milk|det nytter ikke at græde over spildt mælk|è inutile piangere sul latte versato|🥛
-у семи няньок дитя без ока|too many cooks spoil the broth|jo flere kokke, jo mere skidt|troppi cuochi guastano la cucina|👩‍🍳
-бути ласуном|to have a sweet tooth|at være en slikmund|essere goloso|🍬|sweet|
-злякатися в останню мить|to get cold feet|at få kolde fødder|tirarsi indietro|🥶
-де хотіння, там і вміння|where there's a will, there's a way|hvor der er vilje, er der vej|volere è potere|🛤️
-бути в халепі|to be in hot water|at være på den|essere nei guai|🔥
-курчат восени рахують|don't count your chickens before they hatch|man skal ikke sælge skindet, før bjørnen er skudt|non dire gatto se non ce l'hai nel sacco|🐣
+повторення — мати навчання|practice makes perfect|øvelse gør mester|la pratica rende perfetti|🏋️||praktyka czyni mistrza
+не слова, а діла|actions speak louder than words|handling siger mere end ord|i fatti contano più delle parole|💪||nie słowa, lecz czyny
+з очей геть — із серця вон|out of sight, out of mind|ude af øje, ude af sind|lontano dagli occhi, lontano dal cuore|🙈||co z oczu, to z serca
+взяти на себе забагато|to bite off more than one can chew|at tage munden for fuld|fare il passo più lungo della gamba|🍔||wziąć na siebie za dużo
+метелики в животі|butterflies in one's stomach|sommerfugle i maven|le farfalle nello stomaco|🦋||motyle w brzuchu
+спати як убитий|to sleep like a log|at sove som en sten|dormire come un ghiro|😴|sleep_male_,_to|spać jak zabity
+перетворитися на слух|to be all ears|at være lutter øre|essere tutt'orecchi|👂||zamieniać się w słuch
+немає лиха без добра|every cloud has a silver lining|intet er så skidt, at det ikke er godt for noget|non tutto il male vien per nuocere|🌥️||nie ma tego złego, co by na dobre nie wyszło
+що з воза впало, те пропало|no use crying over spilt milk|det nytter ikke at græde over spildt mælk|è inutile piangere sul latte versato|🥛||co się stało, to się nie odstanie
+у семи няньок дитя без ока|too many cooks spoil the broth|jo flere kokke, jo mere skidt|troppi cuochi guastano la cucina|👩‍🍳||gdzie kucharek sześć, tam nie ma co jeść
+бути ласуном|to have a sweet tooth|at være en slikmund|essere goloso|🍬|sweet|być łasuchem
+злякатися в останню мить|to get cold feet|at få kolde fødder|tirarsi indietro|🥶||stchórzyć
+де хотіння, там і вміння|where there's a will, there's a way|hvor der er vilje, er der vej|volere è potere|🛤️||dla chcącego nic trudnego
+бути в халепі|to be in hot water|at være på den|essere nei guai|🔥||być w tarapatach
+курчат восени рахують|don't count your chickens before they hatch|man skal ikke sælge skindet, før bjørnen er skudt|non dire gatto se non ce l'hai nel sacco|🐣||nie mów hop, póki nie przeskoczysz
 #b2x01_labour|Ринок праці в Данії|👷|B2
-колективний договір|collective agreement|en overenskomst|il contratto collettivo|📑
-допомога по безробіттю|unemployment benefit|dagpenge|il sussidio di disoccupazione|💶
-робота на пільгових умовах (флексджоб)|flex job|et fleksjob|il lavoro agevolato|♿
-роботодавець|employer|en arbejdsgiver|il datore di lavoro|🏢
-працівник|employee|en medarbejder|il dipendente|🧑‍💼
-звільнення (з роботи)|dismissal|en afskedigelse|il licenziamento|📉
-працювати неповний робочий день|to work part-time|at arbejde på deltid|lavorare part-time|🕒
-лікарняний|sick leave|en sygemelding|il congedo per malattia|🤒
-баланс між роботою та особистим життям|work-life balance|en balance mellem arbejde og fritid|l'equilibrio tra lavoro e vita privata|⚖️
-гнучкий графік|flexitime|flekstid|l'orario flessibile|🕘
-страйкувати|to go on strike|at gå i strejke|scioperare|🪧
+колективний договір|collective agreement|en overenskomst|il contratto collettivo|📑||układ zbiorowy pracy
+допомога по безробіттю|unemployment benefit|dagpenge|il sussidio di disoccupazione|💶||zasiłek dla bezrobotnych
+робота на пільгових умовах (флексджоб)|flex job|et fleksjob|il lavoro agevolato|♿||praca na preferencyjnych warunkach
+роботодавець|employer|en arbejdsgiver|il datore di lavoro|🏢||pracodawca
+працівник|employee|en medarbejder|il dipendente|🧑‍💼||pracownik
+звільнення (з роботи)|dismissal|en afskedigelse|il licenziamento|📉||zwolnienie
+працювати неповний робочий день|to work part-time|at arbejde på deltid|lavorare part-time|🕒||pracować w niepełnym wymiarze godzin
+лікарняний|sick leave|en sygemelding|il congedo per malattia|🤒||zwolnienie lekarskie
+баланс між роботою та особистим життям|work-life balance|en balance mellem arbejde og fritid|l'equilibrio tra lavoro e vita privata|⚖️||równowaga między pracą a życiem prywatnym
+гнучкий графік|flexitime|flekstid|l'orario flessibile|🕘||elastyczny czas pracy
+страйкувати|to go on strike|at gå i strejke|scioperare|🪧||strajkować
 #b2x01_workplace|Робоче місце й кар'єра|🧑‍💼|B2
-заява на роботу|job application|en jobansøgning|la candidatura|📨
-мінімальна зарплата|minimum wage|en mindsteløn|il salario minimo|💷
-нарада персоналу|staff meeting|et personalemøde|la riunione del personale|👥
-підвищення зарплати|pay rise|en lønforhøjelse|l'aumento di stipendio|⬆️
-переговори про зарплату|salary negotiation|en lønforhandling|la trattativa salariale|💬
-відділ кадрів|HR department|en personaleafdeling|l'ufficio del personale|🗂️
-підвищення кваліфікації|further training|efteruddannelse|l'aggiornamento professionale|📚
-їздити на роботу (з іншого міста)|to commute|at pendle|fare il pendolare|🚆
-задоволення від роботи|job satisfaction|arbejdsglæde|la soddisfazione lavorativa|😊
-пласка ієрархія|flat hierarchy|et fladt hierarki|la gerarchia piatta|📏
-посадова інструкція|job description|en stillingsbeskrivelse|il mansionario|📄
-змінна робота|shift work|skifteholdsarbejde|il lavoro a turni|🌙
+заява на роботу|job application|en jobansøgning|la candidatura|📨||podanie o pracę
+мінімальна зарплата|minimum wage|en mindsteløn|il salario minimo|💷||płaca minimalna
+нарада персоналу|staff meeting|et personalemøde|la riunione del personale|👥||zebranie pracowników
+підвищення зарплати|pay rise|en lønforhøjelse|l'aumento di stipendio|⬆️||podwyżka
+переговори про зарплату|salary negotiation|en lønforhandling|la trattativa salariale|💬||negocjacje płacowe
+відділ кадрів|HR department|en personaleafdeling|l'ufficio del personale|🗂️||dział kadr
+підвищення кваліфікації|further training|efteruddannelse|l'aggiornamento professionale|📚||podnoszenie kwalifikacji
+їздити на роботу (з іншого міста)|to commute|at pendle|fare il pendolare|🚆||dojeżdżać do pracy
+задоволення від роботи|job satisfaction|arbejdsglæde|la soddisfazione lavorativa|😊||satysfakcja z pracy
+пласка ієрархія|flat hierarchy|et fladt hierarki|la gerarchia piatta|📏||płaska hierarchia
+посадова інструкція|job description|en stillingsbeskrivelse|il mansionario|📄||zakres obowiązków
+змінна робота|shift work|skifteholdsarbejde|il lavoro a turni|🌙||praca zmianowa
 #b2x01_tax|Податки й соціальна система|🧾|B2
-попередній податковий розрахунок|preliminary income assessment|en forskudsopgørelse|la stima preventiva dei redditi|📋
-річний податковий звіт|annual tax statement|en årsopgørelse|il conguaglio fiscale|📬
-неоподатковуваний мінімум|personal allowance|et personfradrag|la detrazione personale|🛡️
-податкове відрахування|tax deduction|et fradrag|la detrazione fiscale|➖
-прибутковий податок|income tax|en indkomstskat|l'imposta sul reddito|💰
-ПДВ|VAT|moms|l'IVA|🧾
-отримати повернення податку|to get a tax refund|at få penge tilbage i skat|ottenere un rimborso fiscale|💸
-податкова недоплата|outstanding tax|en restskat|il saldo d'imposta|📬
-державна пенсія|state pension|en folkepension|la pensione statale|👴
-держава загального добробуту|welfare state|en velfærdsstat|lo stato sociale|🏥
-платник податків|taxpayer|en skatteyder|il contribuente|🧑‍💼
-ставка податку|tax rate|en skatteprocent|l'aliquota fiscale|📊
-зарплата до вирахування податків|gross salary|en bruttoløn|lo stipendio lordo|💵
-зарплата на руки|take-home pay|en nettoløn|lo stipendio netto|💶
-пенсійний вік|retirement age|en pensionsalder|l'età pensionabile|🧓
+попередній податковий розрахунок|preliminary income assessment|en forskudsopgørelse|la stima preventiva dei redditi|📋||wstępne rozliczenie podatkowe
+річний податковий звіт|annual tax statement|en årsopgørelse|il conguaglio fiscale|📬||roczne rozliczenie podatkowe
+неоподатковуваний мінімум|personal allowance|et personfradrag|la detrazione personale|🛡️||kwota wolna od podatku
+податкове відрахування|tax deduction|et fradrag|la detrazione fiscale|➖||ulga podatkowa
+прибутковий податок|income tax|en indkomstskat|l'imposta sul reddito|💰||podatek dochodowy
+ПДВ|VAT|moms|l'IVA|🧾||VAT
+отримати повернення податку|to get a tax refund|at få penge tilbage i skat|ottenere un rimborso fiscale|💸||otrzymać zwrot podatku
+податкова недоплата|outstanding tax|en restskat|il saldo d'imposta|📬||niedopłata podatku
+державна пенсія|state pension|en folkepension|la pensione statale|👴||emerytura państwowa
+держава загального добробуту|welfare state|en velfærdsstat|lo stato sociale|🏥||państwo opiekuńcze
+платник податків|taxpayer|en skatteyder|il contribuente|🧑‍💼||podatnik
+ставка податку|tax rate|en skatteprocent|l'aliquota fiscale|📊||stawka podatku
+зарплата до вирахування податків|gross salary|en bruttoløn|lo stipendio lordo|💵||wynagrodzenie brutto
+зарплата на руки|take-home pay|en nettoløn|lo stipendio netto|💶||pensja na rękę
+пенсійний вік|retirement age|en pensionsalder|l'età pensionabile|🧓||wiek emerytalny
 #b2x01_politics|Політика й вибори|🗳️|B2
-парламент|parliament|et parlament|il parlamento|🏛️
-депутат парламенту|member of parliament|et folketingsmedlem|il deputato|🧑‍💼
-місцеві вибори|local elections|et kommunalvalg|le elezioni amministrative|🗳️
-парламентські вибори|general election|et folketingsvalg|le elezioni politiche|🗳️
-коаліція|coalition|en koalition|la coalizione|🤝
-прем'єр-міністр|prime minister|en statsminister|il primo ministro|👔
-опозиція|opposition|en opposition|l'opposizione|🙅
-політична партія|political party|et politisk parti|il partito politico|🎗️
-виборець|voter|en vælger|l'elettore|🧑
-виборча кампанія|election campaign|en valgkamp|la campagna elettorale|📢
-законопроєкт|parliamentary bill|et lovforslag|il disegno di legge|📜
-ухвалювати закон|to pass a law|at vedtage en lov|approvare una legge|✅
-референдум|referendum|en folkeafstemning|il referendum|🗳️
-мер|mayor|en borgmester|il sindaco|🎖️
-демократія|democracy|et demokrati|la democrazia|🗽
-виборче право|right to vote|stemmeret|il diritto di voto|✋
-лівий (у політиці)|left-wing|venstreorienteret|di sinistra|⬅️
-правий (у політиці)|right-wing|højreorienteret|di destra|➡️
-конституція|constitution|en grundlov|la costituzione|📘
-балотуватися|to stand for election|at stille op til valg|candidarsi|🙋
+парламент|parliament|et parlament|il parlamento|🏛️||parlament
+депутат парламенту|member of parliament|et folketingsmedlem|il deputato|🧑‍💼||poseł
+місцеві вибори|local elections|et kommunalvalg|le elezioni amministrative|🗳️||wybory samorządowe
+парламентські вибори|general election|et folketingsvalg|le elezioni politiche|🗳️||wybory parlamentarne
+коаліція|coalition|en koalition|la coalizione|🤝||koalicja
+прем'єр-міністр|prime minister|en statsminister|il primo ministro|👔||premier
+опозиція|opposition|en opposition|l'opposizione|🙅||opozycja
+політична партія|political party|et politisk parti|il partito politico|🎗️||partia polityczna
+виборець|voter|en vælger|l'elettore|🧑||wyborca
+виборча кампанія|election campaign|en valgkamp|la campagna elettorale|📢||kampania wyborcza
+законопроєкт|parliamentary bill|et lovforslag|il disegno di legge|📜||projekt ustawy
+ухвалювати закон|to pass a law|at vedtage en lov|approvare una legge|✅||uchwalać ustawę
+референдум|referendum|en folkeafstemning|il referendum|🗳️||referendum
+мер|mayor|en borgmester|il sindaco|🎖️||burmistrz
+демократія|democracy|et demokrati|la democrazia|🗽||demokracja
+виборче право|right to vote|stemmeret|il diritto di voto|✋||prawo wyborcze
+лівий (у політиці)|left-wing|venstreorienteret|di sinistra|⬅️||lewicowy
+правий (у політиці)|right-wing|højreorienteret|di destra|➡️||prawicowy
+конституція|constitution|en grundlov|la costituzione|📘||konstytucja
+балотуватися|to stand for election|at stille op til valg|candidarsi|🙋||kandydować
 #b2x01_civic|Громадянське суспільство|🤲|B2
-демонстрація (протест)|demonstration|en demonstration|la manifestazione|🪧
-петиція|petition|en underskriftindsamling|la petizione|✍️
-громадянський обов'язок|civic duty|en borgerpligt|il dovere civico|🫡
-волонтер|volunteer|en frivillig|il volontario|🙌
-громадське об'єднання|association|en forening|l'associazione|👥
-членський внесок|membership fee|et kontingent|la quota associativa|💳
-місцева громада|local community|et lokalsamfund|la comunità locale|🏘️
-корупція|corruption|korruption|la corruzione|💰
-прозорість|transparency|gennemsigtighed|la trasparenza|🔍
-свобода зібрань|freedom of assembly|forsamlingsfrihed|la libertà di riunione|👫
-меншина|minority|et mindretal|la minoranza|🧩
-більшість|majority|et flertal|la maggioranza|📊
-конституційна монархія|constitutional monarchy|et konstitutionelt monarki|la monarchia costituzionale|👑
-державний службовець|civil servant|en embedsmand|il funzionario pubblico|🧑‍💼
-голосувати проти|to vote against|at stemme imod|votare contro|👎
-явка виборців|voter turnout|valgdeltagelse|l'affluenza alle urne|📈
-кандидат|candidate|en kandidat|il candidato|🙋‍♂️
-омбудсмен|ombudsman|en ombudsmand|il difensore civico|🛡️
-протестувати|to protest|at protestere|protestare|📣
+демонстрація (протест)|demonstration|en demonstration|la manifestazione|🪧||demonstracja
+петиція|petition|en underskriftindsamling|la petizione|✍️||petycja
+громадянський обов'язок|civic duty|en borgerpligt|il dovere civico|🫡||obowiązek obywatelski
+волонтер|volunteer|en frivillig|il volontario|🙌||wolontariusz
+громадське об'єднання|association|en forening|l'associazione|👥||stowarzyszenie
+членський внесок|membership fee|et kontingent|la quota associativa|💳||składka członkowska
+місцева громада|local community|et lokalsamfund|la comunità locale|🏘️||lokalna społeczność
+корупція|corruption|korruption|la corruzione|💰||korupcja
+прозорість|transparency|gennemsigtighed|la trasparenza|🔍||przejrzystość
+свобода зібрань|freedom of assembly|forsamlingsfrihed|la libertà di riunione|👫||wolność zgromadzeń
+меншина|minority|et mindretal|la minoranza|🧩||mniejszość
+більшість|majority|et flertal|la maggioranza|📊||większość
+конституційна монархія|constitutional monarchy|et konstitutionelt monarki|la monarchia costituzionale|👑||monarchia konstytucyjna
+державний службовець|civil servant|en embedsmand|il funzionario pubblico|🧑‍💼||urzędnik państwowy
+голосувати проти|to vote against|at stemme imod|votare contro|👎||głosować przeciw
+явка виборців|voter turnout|valgdeltagelse|l'affluenza alle urne|📈||frekwencja wyborcza
+кандидат|candidate|en kandidat|il candidato|🙋‍♂️||kandydat
+омбудсмен|ombudsman|en ombudsmand|il difensore civico|🛡️||rzecznik praw obywatelskich
+протестувати|to protest|at protestere|protestare|📣||protestować
 #b2x01_law|Право й права людини|⚖️|B2
-права людини|human rights|menneskerettigheder|i diritti umani|🕊️
-свобода слова|freedom of speech|ytringsfrihed|la libertà di parola|🗣️
-рівність|equality|lighed|l'uguaglianza|⚖️
-дискримінація|discrimination|diskrimination|la discriminazione|🚫
-суд (установа)|court|en domstol|il tribunale|🏛️
-суддя|judge|en dommer|il giudice|👨‍⚖️
-адвокат|lawyer|en advokat|l'avvocato|💼
-законний|legal|lovlig|legale|✅
-незаконний|illegal|ulovlig|illegale|❌
-мати право на|to be entitled to|at have ret til|avere diritto a|📜
-подати скаргу|to file a complaint|at indgive en klage|presentare un reclamo|📝
-порушувати закон|to break the law|at bryde loven|violare la legge|🚷
-захист даних|data protection|databeskyttelse|la protezione dei dati|🔐
-обов'язок|obligation|en forpligtelse|l'obbligo|📌
-опіка над дитиною|custody|forældremyndighed|l'affidamento|👨‍👧
-безоплатна правова допомога|legal aid|retshjælp|il gratuito patrocinio|🤝
-подавати до суду|to sue|at sagsøge|fare causa|⚖️
-згода (дозвіл)|consent|et samtykke|il consenso|✍️
+права людини|human rights|menneskerettigheder|i diritti umani|🕊️||prawa człowieka
+свобода слова|freedom of speech|ytringsfrihed|la libertà di parola|🗣️||wolność słowa
+рівність|equality|lighed|l'uguaglianza|⚖️||równość
+дискримінація|discrimination|diskrimination|la discriminazione|🚫||dyskryminacja
+суд (установа)|court|en domstol|il tribunale|🏛️||sąd
+суддя|judge|en dommer|il giudice|👨‍⚖️||sędzia
+адвокат|lawyer|en advokat|l'avvocato|💼||adwokat
+законний|legal|lovlig|legale|✅||legalny
+незаконний|illegal|ulovlig|illegale|❌||nielegalny
+мати право на|to be entitled to|at have ret til|avere diritto a|📜||mieć prawo do
+подати скаргу|to file a complaint|at indgive en klage|presentare un reclamo|📝||złożyć skargę
+порушувати закон|to break the law|at bryde loven|violare la legge|🚷||łamać prawo
+захист даних|data protection|databeskyttelse|la protezione dei dati|🔐||ochrona danych
+обов'язок|obligation|en forpligtelse|l'obbligo|📌||obowiązek
+опіка над дитиною|custody|forældremyndighed|l'affidamento|👨‍👧||opieka nad dzieckiem
+безоплатна правова допомога|legal aid|retshjælp|il gratuito patrocinio|🤝||bezpłatna pomoc prawna
+подавати до суду|to sue|at sagsøge|fare causa|⚖️||pozywać
+згода (дозвіл)|consent|et samtykke|il consenso|✍️||zgoda
 #b2x01_education|Система освіти|🎓|B2
-державна школа|state school|en folkeskole|la scuola pubblica|🏫
-гімназія (старша школа)|upper secondary school|et gymnasium|il liceo|🎓
-професійна освіта|vocational education|en erhvervsuddannelse|la formazione professionale|🛠️
-вища освіта|higher education|en videregående uddannelse|l'istruzione universitaria|🎓
-ступінь бакалавра|bachelor's degree|en bachelorgrad|la laurea triennale|📜
-ступінь магістра|master's degree|en kandidatgrad|la laurea magistrale|📜
-записуватися (на курс)|to enrol|at tilmelde sig|iscriversi|📝
-дистанційне навчання|distance learning|fjernundervisning|la didattica a distanza|💻
-навчання протягом життя|lifelong learning|livslang læring|la formazione continua|📚
-середній бал|grade point average|et karaktergennemsnit|la media dei voti|📊
-вступні вимоги|admission requirements|adgangskrav|i requisiti di ammissione|📋
-навчальний рік|academic year|et studieår|l'anno accademico|📅
-магістерська робота|master's thesis|et speciale|la tesi di laurea|📘
-викладач університету|lecturer|en lektor|il docente universitario|👩‍🏫
-факультет|faculty|et fakultet|la facoltà|🏛️
-усний іспит|oral exam|en mundtlig eksamen|l'esame orale|🗣️
-виключати (з навчального закладу)|to expel|at bortvise|espellere|🚪
-освіта для дорослих|adult education|voksenuddannelse|l'educazione degli adulti|🧓
-народна вища школа|folk high school|en højskole|la scuola popolare superiore|🏡
+державна школа|state school|en folkeskole|la scuola pubblica|🏫||szkoła publiczna
+гімназія (старша школа)|upper secondary school|et gymnasium|il liceo|🎓||liceum
+професійна освіта|vocational education|en erhvervsuddannelse|la formazione professionale|🛠️||kształcenie zawodowe
+вища освіта|higher education|en videregående uddannelse|l'istruzione universitaria|🎓||szkolnictwo wyższe
+ступінь бакалавра|bachelor's degree|en bachelorgrad|la laurea triennale|📜||licencjat
+ступінь магістра|master's degree|en kandidatgrad|la laurea magistrale|📜||tytuł magistra
+записуватися (на курс)|to enrol|at tilmelde sig|iscriversi|📝||zapisywać się
+дистанційне навчання|distance learning|fjernundervisning|la didattica a distanza|💻||nauczanie zdalne
+навчання протягом життя|lifelong learning|livslang læring|la formazione continua|📚||uczenie się przez całe życie
+середній бал|grade point average|et karaktergennemsnit|la media dei voti|📊||średnia ocen
+вступні вимоги|admission requirements|adgangskrav|i requisiti di ammissione|📋||wymagania rekrutacyjne
+навчальний рік|academic year|et studieår|l'anno accademico|📅||rok akademicki
+магістерська робота|master's thesis|et speciale|la tesi di laurea|📘||praca magisterska
+викладач університету|lecturer|en lektor|il docente universitario|👩‍🏫||wykładowca
+факультет|faculty|et fakultet|la facoltà|🏛️||wydział
+усний іспит|oral exam|en mundtlig eksamen|l'esame orale|🗣️||egzamin ustny
+виключати (з навчального закладу)|to expel|at bortvise|espellere|🚪||wyrzucać ze szkoły
+освіта для дорослих|adult education|voksenuddannelse|l'educazione degli adulti|🧓||kształcenie dorosłych
+народна вища школа|folk high school|en højskole|la scuola popolare superiore|🏡||uniwersytet ludowy
 #b2x01_economy|Економіка|📈|B2
-економічне зростання|economic growth|økonomisk vækst|la crescita economica|📈
-ВВП|GDP|BNP|il PIL|📊
-ринок праці|labour market|et arbejdsmarked|il mercato del lavoro|👷
-попит|demand|en efterspørgsel|la domanda|🛍️
-пропозиція (на ринку)|supply|et udbud|l'offerta|📦
-державний бюджет|national budget|en finanslov|il bilancio dello Stato|🏦
-дефіцит (бюджету)|deficit|et underskud|il deficit|➖
-профіцит (бюджету)|surplus|et overskud|l'avanzo|➕
-споживач|consumer|en forbruger|il consumatore|🛒
-вартість життя|cost of living|leveomkostninger|il costo della vita|🧺
-зайнятість|employment|beskæftigelse|l'occupazione|👷
-рівень безробіття|unemployment rate|en arbejdsløshedsprocent|il tasso di disoccupazione|📉
-економічна криза|economic crisis|en økonomisk krise|la crisi economica|🌪️
-експорт|export|eksport|l'esportazione|🚢
-імпорт|import|import|l'importazione|📥
-фондова біржа|stock exchange|en børs|la borsa|💹
-купівельна спроможність|purchasing power|købekraft|il potere d'acquisto|💳
-державні витрати|public spending|offentlige udgifter|la spesa pubblica|🏛️
-скорочувати витрати|to cut costs|at skære ned på udgifterne|tagliare i costi|✂️
-підвищувати податки|to raise taxes|at hæve skatten|aumentare le tasse|⬆️
+економічне зростання|economic growth|økonomisk vækst|la crescita economica|📈||wzrost gospodarczy
+ВВП|GDP|BNP|il PIL|📊||PKB
+ринок праці|labour market|et arbejdsmarked|il mercato del lavoro|👷||rynek pracy
+попит|demand|en efterspørgsel|la domanda|🛍️||popyt
+пропозиція (на ринку)|supply|et udbud|l'offerta|📦||podaż
+державний бюджет|national budget|en finanslov|il bilancio dello Stato|🏦||budżet państwa
+дефіцит (бюджету)|deficit|et underskud|il deficit|➖||deficyt
+профіцит (бюджету)|surplus|et overskud|l'avanzo|➕||nadwyżka
+споживач|consumer|en forbruger|il consumatore|🛒||konsument
+вартість життя|cost of living|leveomkostninger|il costo della vita|🧺||koszty utrzymania
+зайнятість|employment|beskæftigelse|l'occupazione|👷||zatrudnienie
+рівень безробіття|unemployment rate|en arbejdsløshedsprocent|il tasso di disoccupazione|📉||stopa bezrobocia
+економічна криза|economic crisis|en økonomisk krise|la crisi economica|🌪️||kryzys gospodarczy
+експорт|export|eksport|l'esportazione|🚢||eksport
+імпорт|import|import|l'importazione|📥||import
+фондова біржа|stock exchange|en børs|la borsa|💹||giełda
+купівельна спроможність|purchasing power|købekraft|il potere d'acquisto|💳||siła nabywcza
+державні витрати|public spending|offentlige udgifter|la spesa pubblica|🏛️||wydatki publiczne
+скорочувати витрати|to cut costs|at skære ned på udgifterne|tagliare i costi|✂️||ciąć koszty
+підвищувати податки|to raise taxes|at hæve skatten|aumentare le tasse|⬆️||podnosić podatki
 #b2x01_business|Бізнес і підприємництво|🏢|B2
-підприємець|entrepreneur|en iværksætter|l'imprenditore|🚀
-відкрити власну справу|to start a business|at starte en virksomhed|avviare un'attività|🏁
-акціонерне товариство|public limited company|et aktieselskab|la società per azioni|🏢
-оборот (виручка)|turnover|en omsætning|il fatturato|💹
-постачальник|supplier|en leverandør|il fornitore|🚚
-конкурент|competitor|en konkurrent|il concorrente|🥊
-частка ринку|market share|en markedsandel|la quota di mercato|🥧
-бізнес-план|business plan|en forretningsplan|il piano aziendale|🗂️
-маркетинг|marketing|markedsføring|il marketing|📣
-рада директорів|board of directors|en bestyrelse|il consiglio di amministrazione|👔
-генеральний директор|managing director|en administrerende direktør|l'amministratore delegato|🧑‍💼
-торгова марка|trademark|et varemærke|il marchio|™️
-стартап|start-up|en startup|la startup|🌱
-укласти угоду|to close a deal|at lukke en aftale|concludere un affare|🤝
-продуктивність|productivity|produktivitet|la produttività|⚙️
-фрилансер|freelancer|en freelancer|il libero professionista|💻
-бухгалтер|accountant|en revisor|il commercialista|🧮
-річний звіт|annual report|en årsrapport|la relazione annuale|📘
-головний офіс|headquarters|et hovedkontor|la sede centrale|🏙️
+підприємець|entrepreneur|en iværksætter|l'imprenditore|🚀||przedsiębiorca
+відкрити власну справу|to start a business|at starte en virksomhed|avviare un'attività|🏁||otworzyć własną firmę
+акціонерне товариство|public limited company|et aktieselskab|la società per azioni|🏢||spółka akcyjna
+оборот (виручка)|turnover|en omsætning|il fatturato|💹||obrót
+постачальник|supplier|en leverandør|il fornitore|🚚||dostawca
+конкурент|competitor|en konkurrent|il concorrente|🥊||konkurent
+частка ринку|market share|en markedsandel|la quota di mercato|🥧||udział w rynku
+бізнес-план|business plan|en forretningsplan|il piano aziendale|🗂️||biznesplan
+маркетинг|marketing|markedsføring|il marketing|📣||marketing
+рада директорів|board of directors|en bestyrelse|il consiglio di amministrazione|👔||zarząd
+генеральний директор|managing director|en administrerende direktør|l'amministratore delegato|🧑‍💼||dyrektor generalny
+торгова марка|trademark|et varemærke|il marchio|™️||marka
+стартап|start-up|en startup|la startup|🌱||startup
+укласти угоду|to close a deal|at lukke en aftale|concludere un affare|🤝||zawrzeć umowę
+продуктивність|productivity|produktivitet|la produttività|⚙️||wydajność
+фрилансер|freelancer|en freelancer|il libero professionista|💻||freelancer
+бухгалтер|accountant|en revisor|il commercialista|🧮||księgowy
+річний звіт|annual report|en årsrapport|la relazione annuale|📘||raport roczny
+головний офіс|headquarters|et hovedkontor|la sede centrale|🏙️||siedziba główna
 #b2x01_collocations|Колокації з make, take, do, have|🧩|B2
-отримувати прибуток|to make a profit|at give overskud|realizzare un profitto|💰
-зазнавати збитків|to make a loss|at give underskud|chiudere in perdita|📉
-мати вагоме значення|to make a difference|at gøre en forskel|fare la differenza|🌟
-брати участь у|to take part in|at deltage i|partecipare a|🙋‍♀️
-вживати заходів|to take action|at skride til handling|prendere provvedimenti|⚡
-відбуватися|to take place|at finde sted|avere luogo|📍
-вести бізнес|to do business|at gøre forretninger|fare affari|🤝
-робити все можливе|to do one's best|at gøre sit bedste|fare del proprio meglio|🏅
-завдавати шкоди|to do harm|at gøre skade|fare danni|⚠️
-зробити комусь послугу|to do someone a favour|at gøre nogen en tjeneste|fare un favore a qualcuno|🙏
-мати вплив на|to have an impact on|at have indflydelse på|avere un impatto su|💥
-мати право голосу|to have a say|at have medbestemmelse|avere voce in capitolo|🗣️
-мати щось спільне|to have something in common|at have noget til fælles|avere qualcosa in comune|🔗
+отримувати прибуток|to make a profit|at give overskud|realizzare un profitto|💰||osiągać zysk
+зазнавати збитків|to make a loss|at give underskud|chiudere in perdita|📉||ponosić straty
+мати вагоме значення|to make a difference|at gøre en forskel|fare la differenza|🌟||mieć duże znaczenie
+брати участь у|to take part in|at deltage i|partecipare a|🙋‍♀️||brać udział w
+вживати заходів|to take action|at skride til handling|prendere provvedimenti|⚡||podejmować działania
+відбуватися|to take place|at finde sted|avere luogo|📍||odbywać się
+вести бізнес|to do business|at gøre forretninger|fare affari|🤝||prowadzić interesy
+робити все можливе|to do one's best|at gøre sit bedste|fare del proprio meglio|🏅||robić wszystko, co w swojej mocy
+завдавати шкоди|to do harm|at gøre skade|fare danni|⚠️||szkodzić
+зробити комусь послугу|to do someone a favour|at gøre nogen en tjeneste|fare un favore a qualcuno|🙏||wyświadczyć komuś przysługę
+мати вплив на|to have an impact on|at have indflydelse på|avere un impatto su|💥||mieć wpływ na
+мати право голосу|to have a say|at have medbestemmelse|avere voce in capitolo|🗣️||mieć prawo głosu
+мати щось спільне|to have something in common|at have noget til fælles|avere qualcosa in comune|🔗||mieć coś wspólnego
 #b2x02_science|Наукові дослідження|🔬|B2
-експеримент|experiment|et eksperiment|l'esperimento|🧪
-дослідник|researcher|en forsker|il ricercatore|👩‍🔬
-відкриття (наукове)|discovery|en opdagelse|la scoperta|💡
-винахід|invention|en opfindelse|l'invenzione|⚙️
-лабораторія|laboratory|et laboratorium|il laboratorio|🥼
-теорія|theory|en teori|la teoria|📐
-доведення (математичне)|proof|et bevis|la dimostrazione|✅
-висновок|conclusion|en konklusion|la conclusione|📝
-дані|data|data|i dati|📊
-вимірювати|to measure|at måle|misurare|📏
-винаходити|to invent|at opfinde|inventare|🛠️
-відкривати (науково)|to discover|at opdage|scoprire|🔭
-прорив (у науці)|breakthrough|et gennembrud|la svolta|🚀
-науковий|scientific|videnskabelig|scientifico|🔬
-мікроскоп|microscope|et mikroskop|il microscopio|🔬|microscope|
-телескоп|telescope|et teleskop|il telescopio|🔭
-результати (дослідження)|findings|resultater|i risultati|📈
-проводити дослідження|to carry out research|at udføre forskning|condurre una ricerca|🧑‍🔬
+експеримент|experiment|et eksperiment|l'esperimento|🧪||eksperyment
+дослідник|researcher|en forsker|il ricercatore|👩‍🔬||badacz
+відкриття (наукове)|discovery|en opdagelse|la scoperta|💡||odkrycie
+винахід|invention|en opfindelse|l'invenzione|⚙️||wynalazek
+лабораторія|laboratory|et laboratorium|il laboratorio|🥼||laboratorium
+теорія|theory|en teori|la teoria|📐||teoria
+доведення (математичне)|proof|et bevis|la dimostrazione|✅||dowód
+висновок|conclusion|en konklusion|la conclusione|📝||wniosek
+дані|data|data|i dati|📊||dane
+вимірювати|to measure|at måle|misurare|📏||mierzyć
+винаходити|to invent|at opfinde|inventare|🛠️||wynaleźć
+відкривати (науково)|to discover|at opdage|scoprire|🔭||odkrywać
+прорив (у науці)|breakthrough|et gennembrud|la svolta|🚀||przełom
+науковий|scientific|videnskabelig|scientifico|🔬||naukowy
+мікроскоп|microscope|et mikroskop|il microscopio|🔬|microscope|mikroskop
+телескоп|telescope|et teleskop|il telescopio|🔭||teleskop
+результати (дослідження)|findings|resultater|i risultati|📈||wyniki
+проводити дослідження|to carry out research|at udføre forskning|condurre una ricerca|🧑‍🔬||prowadzić badania
 #b2x02_tech|Цифрові технології|💻|B2
-інновація|innovation|en innovation|l'innovazione|💡
-база даних|database|en database|il database|🗄️
-робот|robot|en robot|il robot|🤖
-дрон|drone|en drone|il drone|🛸
-комп'ютерний вірус|computer virus|en computervirus|il virus informatico|🦠
-встановлювати (програму)|to install|at installere|installare|💿
-перезавантажувати|to restart|at genstarte|riavviare|🔄
-налаштування|settings|indstillinger|le impostazioni|⚙️
-користувач|user|en bruger|l'utente|👤
-сенсорний екран|touchscreen|en touchskærm|il touchscreen|👆
-винахідник|inventor|en opfinder|l'inventore|🧑‍🔧
-цифровий|digital|digital|digitale|💾
-найсучасніший|state-of-the-art|topmoderne|all'avanguardia|✨
-помилка (у програмі)|bug|en programfejl|il bug|🐞
-автоматизувати|to automate|at automatisere|automatizzare|🏭
-відеодзвінок|video call|et videoopkald|la videochiamata|📹
+інновація|innovation|en innovation|l'innovazione|💡||innowacja
+база даних|database|en database|il database|🗄️||baza danych
+робот|robot|en robot|il robot|🤖||robot
+дрон|drone|en drone|il drone|🛸||dron
+комп'ютерний вірус|computer virus|en computervirus|il virus informatico|🦠||wirus komputerowy
+встановлювати (програму)|to install|at installere|installare|💿||instalować
+перезавантажувати|to restart|at genstarte|riavviare|🔄||restartować
+налаштування|settings|indstillinger|le impostazioni|⚙️||ustawienia
+користувач|user|en bruger|l'utente|👤||użytkownik
+сенсорний екран|touchscreen|en touchskærm|il touchscreen|👆||ekran dotykowy
+винахідник|inventor|en opfinder|l'inventore|🧑‍🔧||wynalazca
+цифровий|digital|digital|digitale|💾||cyfrowy
+найсучасніший|state-of-the-art|topmoderne|all'avanguardia|✨||najnowocześniejszy
+помилка (у програмі)|bug|en programfejl|il bug|🐞||błąd
+автоматизувати|to automate|at automatisere|automatizzare|🏭||automatyzować
+відеодзвінок|video call|et videoopkald|la videochiamata|📹||rozmowa wideo
 #b2x02_health|Здоров'я і медицина|🩺|B2
-імунна система|immune system|et immunforsvar|il sistema immunitario|🛡️
-запалення|inflammation|en betændelse|l'infiammazione|🔥
-антибіотик|antibiotic|et antibiotikum|l'antibiotico|💊
-ускладнення (після хвороби)|complication|en komplikation|la complicazione|⚠️
-доза|dose|en dosis|la dose|💉
-серцевий напад|heart attack|et hjerteanfald|l'infarto|💔
+імунна система|immune system|et immunforsvar|il sistema immunitario|🛡️||układ odpornościowy
+запалення|inflammation|en betændelse|l'infiammazione|🔥||stan zapalny
+антибіотик|antibiotic|et antibiotikum|l'antibiotico|💊||antybiotyk
+ускладнення (після хвороби)|complication|en komplikation|la complicazione|⚠️||powikłanie
+доза|dose|en dosis|la dose|💉||dawka
+серцевий напад|heart attack|et hjerteanfald|l'infarto|💔||zawał serca
 інсульт|stroke|et slagtilfælde|l'ictus|🧠||udar
 діагностувати|to diagnose|at diagnosticere|diagnosticare|🩺||diagnozować
 призначати (ліки)|to prescribe|at ordinere|prescrivere|📝||przepisywać
@@ -4874,17 +4875,24 @@ function applyTheme(){const r=document.documentElement;if(L().accent){r.style.se
 function dirToUk(){return S.dir==='toUk'?true:S.dir==='fromUk'?false:Math.random()<.5}
 
 /* озвучення */
-function speak(text){
-  try{
-    if(!('speechSynthesis' in window))return;
-    speechSynthesis.cancel();
-    const u=new SpeechSynthesisUtterance(String(text).replace(/[?…]$/,''));u.lang=L().tts;u.rate=.9;
-    const v=speechSynthesis.getVoices().find(v=>v.lang&&v.lang.toLowerCase().startsWith(S.lang));
-    if(v)u.voice=v;
-    speechSynthesis.speak(u);
-  }catch(e){}
-}
-try{speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>{}}catch(e){}
+/* Вибір голосу: найякісніший голос пристрою для точної локалі (en-GB/en-US, da-DK, it-IT, pl-PL, uk-UA).
+   Перевага: Premium/Enhanced/Natural/Neural/Siri/Google/Microsoft Online; «іграшкові» голоси macOS — ніколи.
+   Користувач може вибрати голос сам (S.voice[lang] = voiceURI) і швидкість (S.rate: 0.75 / 0.9 / 1.05). */
+const VOICE_BAD=/compact|eloquence|espeak|bad news|bells|boing|bubbles|cellos|jester|organ|superstar|trinoids|whisper|wobble|zarvox|albert|fred|junior|ralph|kathy|bahh|deranged|hysterical|good news|grandma|grandpa|rocko|shelley|flo|eddy|reed|sandy/i;
+function voiceScore(v,loc){
+  const l=(v.lang||'').toLowerCase().replace('_','-'),n=(v.name||'').toLowerCase(),L2=loc.toLowerCase();
+  let s=l===L2?50:l.startsWith(L2.slice(0,2))?20:-1;if(s<0)return -1;
+  if(/premium/.test(n))s+=40;else if(/enhanced|natural|neural|wavenet|online/.test(n))s+=30;
+  if(/siri/.test(n))s+=25;if(/google/.test(n))s+=15;if(/microsoft/.test(n))s+=10;
+  if(VOICE_BAD.test(n))s-=60;if(v.default)s+=2;return s}
+let VOICES=[];function loadVoices(){try{VOICES=speechSynthesis.getVoices()||[]}catch(e){VOICES=[]}return VOICES}
+function voicesFor(lang){const loc=lang==='uk'?'uk-UA':(LANGS[lang]||L()).tts;return loadVoices().map(v=>({v,s:voiceScore(v,loc)})).filter(x=>x.s>=0).sort((a,b)=>b.s-a.s).map(x=>x.v)}
+function pickVoice(lang){lang=lang||S.lang;const list=voicesFor(lang);const own=(S.voice||{})[lang];return (own&&list.find(v=>v.voiceURI===own))||list[0]||null}
+function voiceRate(){return S.rate||.9}
+function mkUtter(text,rate,lang){lang=lang||S.lang;const u=new SpeechSynthesisUtterance(String(text).replace(/[?…]$/,''));
+  u.lang=lang==='uk'?'uk-UA':(LANGS[lang]||L()).tts;u.rate=rate||voiceRate();const v=pickVoice(lang);if(v)u.voice=v;return u}
+function speak(text){try{if(!('speechSynthesis' in window))return;speechSynthesis.cancel();speechSynthesis.speak(mkUtter(text))}catch(e){}}
+try{loadVoices();speechSynthesis.onvoiceschanged=loadVoices}catch(e){}
 
 /* вибір слів */
 function activeTopics(){
@@ -5347,7 +5355,11 @@ function renderListen(it){
     <div id="fb"></div></div>`;
   setTimeout(()=>speak(w[S.lang]),300);
 }
-function slowSpeak(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang=L().tts;u.rate=.55;speechSynthesis.speak(u)}catch(e){}}
+function slowSpeak(t){try{speechSynthesis.cancel();speechSynthesis.speak(mkUtter(t,Math.max(.5,voiceRate()-.3)))}catch(e){}}
+// диктант частинами: по 2–4 слова з паузами між ними
+function speakChunks(t){try{speechSynthesis.cancel();const words=String(t).split(/\s+/),parts=[];let cur=[];
+  words.forEach((w,i)=>{cur.push(w);if(/[,;:]$/.test(w)||cur.length>=(words.length>8?4:3)||i===words.length-1){parts.push(cur.join(' '));cur=[]}});
+  parts.forEach(p=>{speechSynthesis.speak(mkUtter(p,Math.max(.55,voiceRate()-.2)));const gap=mkUtter(' ',1);gap.volume=0;speechSynthesis.speak(gap)})}catch(e){}}
 function listenA(i){
   const it=SS.items[SS.i],{w,opts}=it,btns=[...document.querySelectorAll('.opt')];
   btns.forEach(b=>b.disabled=true);
@@ -5435,8 +5447,8 @@ function showPop(el,pin){
   p.style.left=left+'px';p.style.top=top+'px';
 }
 function hidePop(){const p=$('#pop');if(p)p.style.display='none';document.querySelectorAll('.gl.on').forEach(x=>x.classList.remove('on'))}
-function voiceFor(lang){try{return speechSynthesis.getVoices().find(v=>v.lang&&v.lang.toLowerCase().startsWith(lang))}catch(e){return null}}
-function utter(text,lang,onstart){const u=new SpeechSynthesisUtterance(text);u.lang=lang==='uk'?'uk-UA':L().tts;u.rate=lang==='uk'?.95:.88;const v=voiceFor(lang==='uk'?'uk':S.lang);if(v)u.voice=v;if(onstart)u.onstart=onstart;return u}
+function voiceFor(lang){return pickVoice(lang)}
+function utter(text,lang,onstart){const u=new SpeechSynthesisUtterance(text);u.lang=lang==='uk'?'uk-UA':L().tts;u.rate=lang==='uk'?.95:Math.min(1.1,voiceRate()-.02);const v=voiceFor(lang==='uk'?'uk':S.lang);if(v)u.voice=v;if(onstart)u.onstart=onstart;return u}
 function sentsPlain(){return splitSents(RT.t.text.replace(/\n+/g,' ')).map(x=>plainText(x).trim()).filter(Boolean)}
 function sentsUk(){const t=RT.t.uk.replace(/\n+/g,' ');return (t.match(/[^.!?]+[.!?]*["»”]?/g)||[t]).map(x=>x.trim()).filter(Boolean)}
 function hl(i){document.querySelectorAll('.sent.playing').forEach(x=>x.classList.remove('playing'));if(i!=null){const e=document.querySelector(`.sent[data-s="${i}"]`);if(e){e.classList.add('playing');try{e.scrollIntoView({block:'nearest',behavior:'smooth'})}catch(x){}}}}
@@ -5729,7 +5741,7 @@ function renderDict(it){
   app.innerHTML=topRow()+`<div class="card">
     <div class="q-label">✍️ Диктант: послухайте й запишіть речення</div>
     <div style="text-align:center;margin:14px 0 4px"><button class="listen-btn" onclick="speak(${js(g.full)})">🔊</button>
-    <div><button class="mini" style="margin-top:10px" onclick="slowSpeak(${js(g.full)})">🐢 повільно</button> <button class="mini" onclick="dictHint()">💡 переклад</button></div></div>
+    <div><button class="mini" style="margin-top:10px" onclick="slowSpeak(${js(g.full)})">🐢 повільно</button> <button class="mini" onclick="speakChunks(${js(g.full)})">🧩 частинами</button> <button class="mini" onclick="dictHint()">💡 переклад</button></div></div>
     <div id="dhint"></div>
     <form onsubmit="event.preventDefault();dictA()"><input class="answer" id="ans" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Запишіть почуте…"></form>
     ${L().chars.length?`<div class="chars">${L().chars.map(c=>`<button type="button" onclick="insChar('${c}')">${c}</button>`).join('')}</div>`:''}
@@ -6005,7 +6017,7 @@ function exampleFor(letter){
   cand.sort((a,b)=>(b.img?1:0)-(a.img?1:0)||LEVELS.indexOf(a.lv)-LEVELS.indexOf(b.lv));
   return cand[0]||null;
 }
-function speakLetter(l){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(l.toUpperCase());u.lang=L().tts;u.rate=.75;speechSynthesis.speak(u)}catch(e){}}
+function speakLetter(l){try{speechSynthesis.cancel();speechSynthesis.speak(mkUtter(l.toUpperCase(),.75))}catch(e){}}
 function alphabetScreen(){
   applyTheme();const A=ALPHA[S.lang];
   app.innerHTML=header()+`<div class="top-row"><button class="back" onclick="home()">← Назад</button><b style="font-size:18px">🔤 Алфавіт і вимова: ${L().name} ${L().flag}</b></div>
@@ -6048,7 +6060,7 @@ function renderSpell(it){
    <div class="row"><button class="btn" onclick="spellA()">Перевірити</button></div><div id="fb"></div></div>`;
   setTimeout(spellOut,300);
 }
-function spellOut(){const it=SS.items[SS.i];try{speechSynthesis.cancel();[...it.word].forEach(ch=>{const u=new SpeechSynthesisUtterance(ch.toUpperCase());u.lang=L().tts;u.rate=.7;speechSynthesis.speak(u)})}catch(e){}}
+function spellOut(){const it=SS.items[SS.i];try{speechSynthesis.cancel();[...it.word].forEach(ch=>{const u=mkUtter(ch.toUpperCase(),.7);speechSynthesis.speak(u)})}catch(e){}}
 function spellA(){
   const it=SS.items[SS.i];if(it.answered)return nextItem();const v=$('#ans').value;if(!v.trim())return;it.answered=true;
   const ok=norm(v,S.lang)===norm(it.word,S.lang);SS.graded++;if(ok){SS.right++;SS.xp+=8}
@@ -7788,8 +7800,11 @@ function settingsScreen(){
     <div class="k-srow"><span>Тема</span>${seg([['auto','Авто'],['light','Світла'],['dark','Темна']],th,'setTheme')}</div>
     <div class="k-srow"><span>Звуки</span>${tog(S.sound!==false,'toggleSound()','Звуки')}</div>
     <div class="k-srow"><span>Озвучення слів</span>${tog(S.tts!==false,'S.tts=S.tts===false;save();settingsScreen()','Озвучення')}</div>
+    <div class="k-srow"><span>Швидкість мовлення</span>${seg([[.75,'Повільно'],[.9,'Звичайно'],[1.05,'Швидко']],S.rate||.9,'setRate')}</div>
+    <div class="k-srow col"><span>Голос (${L().name.split(' ')[0].toLowerCase()})</span>${voiceSelectHTML()}</div>
     ${S.lang!=='en'?`<div class="k-srow"><span>Кольори роду (${S.lang==='da'?'en / et':'il / la'})</span>${tog(S.genderColors!==false,'S.genderColors=S.genderColors===false;save();settingsScreen()','Кольори роду')}</div>`:''}
   </div>
+  <p class="k-hint">💡 Голос звучить природніше, якщо на телефоні є якісний голос. На iPhone: Параметри → Універсальний доступ → Начитаний вміст → Голоси → ${L().name.split(' ')[0]} → завантажте голос із позначкою «Покращений» або «Преміум». Потім виберіть його тут.</p>
   <div class="k-sec">Дані</div>
   <div class="k-set">
     <div class="k-srow"><span>Синхронізація</span><span class="k-val">${sync?'увімкнено':'лише цей браузер'}</span></div>
@@ -7809,6 +7824,19 @@ function setMinutesS(m){S.minutes=m;save();settingsScreen()}
 /* ---------- нижнє меню ---------- */
 (function(){const tb=document.getElementById('tabbar');if(!tb)return;const lbl={home:'Сьогодні',train:'Вправи',read:'Тексти',dict:'Словник',stats:'Прогрес'};
   tb.querySelectorAll('button').forEach(b=>{const s=b.querySelector('small');if(s&&lbl[b.dataset.tab])s.textContent=lbl[b.dataset.tab]})})();
+
+/* ---------- голос і швидкість ---------- */
+function voiceSelectHTML(){
+  const list=voicesFor(S.lang),cur=pickVoice(S.lang);
+  if(!list.length)return '<span class="k-val">на цьому пристрої немає голосу для цієї мови</span>';
+  const tag=v=>/premium/i.test(v.name)?' · преміум':/enhanced|natural|neural|online/i.test(v.name)?' · покращений':'';
+  return `<div class="k-voice"><select onchange="setVoice(this.value)" aria-label="Голос">${list.slice(0,12).map(v=>`<option value="${esc(v.voiceURI)}" ${cur&&cur.voiceURI===v.voiceURI?'selected':''}>${esc(v.name)} (${esc(v.lang)})${tag(v)}</option>`).join('')}</select>
+    <button class="mini" onclick="testVoice()">▶ Перевірити</button></div>`}
+function setVoice(uri){S.voice=S.voice||{};S.voice[S.lang]=uri;save();testVoice()}
+function setRate(r){S.rate=+r;save();settingsScreen();testVoice()}
+function testVoice(){const w=WORDS.find(x=>x[S.lang]&&x.sent&&x.sent[S.lang]);speak(w?w.sent[S.lang].replace(/\[([^;\]]+)[^\]]*\]/,'$1'):(S.lang==='en'?'Hello! How are you?':'Hej!'))}
+// голоси на iOS/Chrome підвантажуються із затримкою — оновити налаштування, коли з'являться
+try{speechSynthesis.addEventListener('voiceschanged',()=>{loadVoices();if(REDRAW===settingsScreen&&document.querySelector('.k-voice,.k-set'))settingsScreen()})}catch(e){}
 
 /* ====================== KLAR: КАРТИНКА — ЧАСТИНА ЗАВДАННЯ ======================
    K03 «Оберіть картинку» (слово → 4 картинки, підписи відкриваються після відповіді),
