@@ -8043,7 +8043,7 @@ const LANG_NAT={en:'English',da:'Dansk',it:'Italiano',pl:'Polski'};
 function blockSub(b){const due=dueWords().length;
   return {review:due?`${Math.min(due,60)} слів до повторення`:'усе повторено',new:`${typeof newQuotaToday==='function'?newQuotaToday():10} нових слів`,
     grammar:(()=>{const g=GRAMMAR[S.lang][nextGrammar()];return g?g.t:''})(),read:(()=>{const T=S.todayText&&S.todayText[S.lang];const t=T&&T.d===today()&&textsFor()[T.idx];return t?t.title:'справжні факти з перекладом'})(),
-    fill:'слова в реченнях',dict:'почуйте й запишіть',events:'події до тексту дня',struct:'порядок слів',speak:'скажіть уголос',transl:'речення з новими словами'}[b.id]||b.d}
+    fill:'слова в реченнях',dict:'почуйте й запишіть',events:'події до тексту дня',struct:'порядок слів',speak:'скажіть уголос',transl:'речення з новими словами',practice:'слова дня в реченнях і на слух'}[b.id]||b.d}
 const LOCK_SVG='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
 
 /* ---------- верхній рядок вправи: ✕ · сегментований прогрес · лічильник · ⋯ ---------- */
@@ -8512,7 +8512,7 @@ function lvOpenHTML(){const mx=maxLv(),mi=LEVELS.indexOf(mx),open=LEVELS.slice(0
 const PHASES=[
   {k:'warm',n:'Розминка',d:'пам\'ять прокидається',ic:'🔥',si:'flame',ids:['review']},
   {k:'new',n:'Нове',d:'правило й нові слова',ic:'🌱',si:'sparkle',ids:['grammar','struct','new']},
-  {k:'prac',n:'Практика',d:'слова в реченнях, текст і слух',ic:'🎯',si:'target',ids:['fill','read','events','focus','listen','dict']},
+  {k:'prac',n:'Практика',d:'слова в реченнях, текст і слух',ic:'🎯',si:'target',ids:['practice','fill','read','events','focus','listen','dict']},
   {k:'talk',n:'Мовлення й письмо',d:'діалог, свій текст, вимова',ic:'💬',si:'chat',ids:['dialog','transl','write','speak','extra']}];
 function phaseOf(id){const i=PHASES.findIndex(p=>p.ids.includes(id));return i<0?2:i}
 // фази йдуть суцільно: диктант закриває практику, далі — власне мовлення
@@ -8576,8 +8576,8 @@ function homeView(){
   // 2. головна дія: продовжити навчання
   let hero;
   if(next){const ph=PHASES[phaseOf(next.id)],left=B.slice(ni).reduce((a,b)=>a+(b.min||5),0),lockRev=next.id==='review'&&dueWords().length>0;
-    hero=`<div class="jr-hero"><div class="jr-hero-top">${ringSVG(doneN,B.length,`${doneN}<small>/${B.length}</small>`)}<div class="jr-hero-t"><small>${doneN?'Продовжити навчання':'Почати навчання'} · ${ph.n}</small><h2>${esc(stepName(next))}</h2><p>${esc(blockSub(next))}${lockRev?' · обов\'язково перед новим':''}</p></div></div>
-      <button class="jr-cta" onclick="startBlock('${next.id}')">${icn('play')}<span>${doneN?'Продовжити':'Почати'}</span><small>≈ ${next.min||5} хв</small></button>
+    hero=`<div class="jr-hero"><div class="jr-hero-top">${ringSVG(doneN,B.length,`${doneN}<small>/${B.length}</small>`)}<div class="jr-hero-t"><small>${sec>30?'Продовжити навчання':'Почати навчання'} · ${ph.n}</small><h2>${esc(stepName(next))}</h2><p>${esc(blockSub(next))}${lockRev?' · обов\'язково перед новим':''}</p></div></div>
+      <button class="jr-cta" onclick="startBlock('${next.id}')">${icn('play')}<span>${sec>30?'Продовжити':'Почати'}</span><small>≈ ${next.min||5} хв</small></button>
       <div class="jr-hero-meta">крок ${ni+1} з ${B.length} · до кінця плану ≈ ${left} хв</div></div>`}
   else if(bnext){const rem=Math.max(0,m-spentMin);
     hero=`<div class="jr-hero ph-bonus"><div class="jr-hero-top">${ringSVG(1,1,icn('check'))}<div class="jr-hero-t"><small>План дня виконано · бонус-раунд</small><h2>${esc(bnext.t)}</h2><p>${rem>=3?`До вашої норми ще ${rem} хв — бонус займе ≈ ${bmin} хв.`:`Норму виконано. Бонус ≈ ${bmin} хв — за бажанням.`}</p></div></div>
@@ -8594,10 +8594,10 @@ function homeView(){
     <button onclick="statsScreen()"><span class="pm-st-ic fl">${icn('flame')}</span><b>${S.streak}</b><small>${S.streak===1?'день':'днів'} поспіль</small></button>
     <button onclick="settingsScreen()"><span class="pm-st-ring">${mini(gp)}</span><b>${spentMin}<i>/${m}</i></b><small>хв · ціль дня</small></button>
     <button onclick="settingsScreen()"><span class="pm-st-ring">${mini(lp)}</span><b>${Math.round(lp*100)}%</b><small>${nx?'до '+nx:'рівень пройдено'}</small></button></div>`;
-  const test=!(S.placement&&S.placement[S.lang])&&!((S.ptLater||{})[S.lang]===today())?`<div class="k-test">${icn('target','pm-tic')}<div class="k-t"><b>Визначте свій рівень</b><small>Тест 10–15 хв: вправи й тексти будуть саме вашого рівня</small>
+  const test=!(S.placement&&S.placement[S.lang])&&!((S.beginner||{})[S.lang])&&!((S.ptLater||{})[S.lang]===today())?`<div class="k-test">${icn('target','pm-tic')}<div class="k-t"><b>Визначте свій рівень</b><small>Тест 10–15 хв: вправи й тексти будуть саме вашого рівня</small>
       <div class="k-hbtns"><button class="btn" onclick="placementIntro()">Пройти тест</button><button class="btn ghost" onclick="S.ptLater=S.ptLater||{};S.ptLater[S.lang]=today();save();home()">Пізніше</button></div></div></div>`:'';
   // 4. виклик дня
-  const qs=typeof questsToday==='function'?questsToday():[],qx=qs.find(q=>!qClaimed(q.id))||null,qdone=qs.filter(q=>qClaimed(q.id)).length;
+  const qs=typeof questsToday==='function'?questsToday():[],qx=(next&&qs.find(q=>!qClaimed(q.id)&&!q.go))||qs.find(q=>!qClaimed(q.id))||null,qdone=qs.filter(q=>qClaimed(q.id)).length;
   const chal=qs.length?`<div class="pm-card pm-chal"><div class="pm-ch-h">${icn('target','pm-tic')}<div><small>Виклик дня · ${qdone}/${qs.length}</small><b>${qx?esc(qx.t):'Усі виклики виконано'}</b></div>
       ${qx&&qx.get()>=qx.n?`<button class="btn sm" onclick="qClaim('${qx.id}')">+${qx.xp} XP</button>`:`<span class="pm-ch-v">${qx?Math.min(qx.n,qx.get())+'/'+qx.n:icn('check')}</span>`}</div>
       <div class="pm-bar"><i style="width:${qx?Math.min(100,qx.get()/qx.n*100):100}%"></i></div></div>`:'';
@@ -8932,7 +8932,7 @@ const IC={
   play:'<path d="M8 5.5v13l10.5-6.5z" fill="currentColor" stroke="none"/>',
   globe:'<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.5 3.5 5.5 3.5 8.5s-1 6-3.5 8.5c-2.5-2.5-3.5-5.5-3.5-8.5s1-6 3.5-8.5z"/>'};
 function icn(n,cls){return `<svg class="ic ${cls||''}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]||IC.sparkle}</svg>`}
-const BLOCK_IC={review:'refresh',grammar:'book',struct:'blocks',new:'sparkle',fill:'type',read:'bookopen',events:'list',focus:'target',listen:'headphones',dict:'headphones',
+const BLOCK_IC={practice:'target',review:'refresh',grammar:'book',struct:'blocks',new:'sparkle',fill:'type',read:'bookopen',events:'list',focus:'target',listen:'headphones',dict:'headphones',
   dialog:'chat',transl:'lang',write:'pen',speak:'mic',extra:'flag',mist:'xcircle',today:'refresh',blitz:'bolt',text:'bookopen',build:'blocks',bed:'moon'};
 
 /* тема одним дотиком: світла ↔ темна */
@@ -8944,6 +8944,37 @@ function greetText(){const h=new Date().getHours();return h<5?'Доброї но
 function avatarHTML(){const n=(S.name||'').trim();return `<button class="pm-ava" onclick="settingsScreen()" aria-label="Профіль">${n?esc(n[0].toUpperCase()):icn('user')}</button>`}
 // останні досягнення поточної мови
 function recentAch(n){const A=S.ach||{},pre=S.lang+':';return ACH.map(a=>({a,d:A[pre+a[0]]})).filter(x=>x.d).sort((x,y)=>x.d<y.d?1:-1).slice(0,n||3)}
+
+/* ====================== ЯДРО ДНЯ: ДІЄВИЙ ПЛАН БЕЗ ЗАЙВОГО ======================
+   Погляд учня, який хоче вивчити мову: план має вкладатися в обраний час, іти від легкого до складного
+   і щодня проходити повне коло пам'яті: пригадати старе → нове правило → нові слова → ужити їх у реченнях
+   і на слух → побачити в живому тексті → сказати / написати самому.
+   30 хв (≈30): Повторення 6 · Граматика 5 · Нові слова 7 · Закріплення 4 · Текст дня 5 · Діалог 3 · Переклад або Короткий текст 4 (чергуються щодня)
+   60 хв (≈60): + Будова речення, Вимова (якщо є мікрофон), і Переклад, і Короткий текст, Фокус на слабку навичку (після тесту)
+   Прибрано з плану (лишилися у «Вправах» і бонус-раунді): «Події до тексту», окремі «Вставте слово» й «Аудіодиктант» —
+   тепер це один крок «Закріплення». Крок без вмісту (нема що повторювати) зараховується сам і не заважає. */
+const CORE30=[['review',6],['grammar',5],['new',7],['practice',4],['read',5],['dialog',3],['OUT',4]];
+const CORE60=[['review',9],['grammar',6],['struct',5],['new',9],['practice',6],['read',8],['dialog',4],['speak',4],['transl',4],['write',6],['focus',4]];
+function outOfDay(){return dayIndex()%2?'write':'transl'}
+on('planBlocks',B=>{const long=(S.minutes||30)>=60,by=Object.fromEntries(B.map(b=>[b.id,b]));
+  by.practice={id:'practice',s:'Закріплення',t:'🎯 Закріплення',d:'слова дня в реченнях і на слух'};
+  if(by.write)by.write=Object.assign({},by.write,{d:long?by.write.d:'короткий текст на тему дня · чергується з перекладом'});
+  if(by.transl&&!long)by.transl=Object.assign({},by.transl,{d:'речення з новими словами · чергується з коротким текстом'});
+  const out=[];for(const [id0,min] of long?CORE60:CORE30){const id=id0==='OUT'?outOfDay():id0,b=by[id];if(b)out.push(Object.assign({},b,{min}))}
+  return out});
+// «Закріплення»: слова дня в реченнях (вибір у пропуск) + почуйте й запишіть
+on('block:practice',b=>{const long=(S.minutes||30)>=60;
+  const td=withSent(shuffle(touchedToday()));let ws=td.concat(withSent(shuffle(studied())).filter(w=>!td.includes(w)));
+  if(ws.length<6)ws=ws.concat(withSent(shuffle(pool())).filter(w=>!ws.includes(w)));
+  const nF=long?6:4,nD=canSpeak?(long?3:2):0;
+  const items=ws.slice(0,nF).map(w=>({kind:'fill',w,phase:'🧩 Слово в реченні'})).concat(ws.slice(nF,nF+nD).map(w=>({kind:'dict',w,phase:'🎧 Почуйте й запишіть'})));
+  if(!items.length){markBlock('practice');return planNext()}
+  runSession(items,{title:'Слова закріплено!',requeue:true,...finB('practice')})});
+// порожній крок «Повторення» зараховується сам (новачок у перший день не бачить зайвого)
+function autoSkipEmpty(){if(!S.onb||(typeof SYNC!=='undefined'&&SYNC.busy))return;const B=planBlocks(),r=B.find(b=>b.id==='review');if(!r||r.done)return;
+  if(dueWords().length||errorFocusItems().length||oldMaterialItems().length)return;
+  S.dayDone=S.dayDone||{};S.dayDone[S.lang]=S.dayDone[S.lang]||{};(S.dayDone[S.lang][today()]=S.dayDone[S.lang][today()]||{}).review=true}
+on('home:before',()=>{try{autoSkipEmpty()}catch(e){}});
 
 bootApp();
 </script>
