@@ -955,6 +955,12 @@ input.answer,.wta,textarea{background:var(--card);color:var(--ink);border-color:
 .lv-open-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
 .lv-open-g div{background:var(--card);border-radius:12px;padding:8px 10px}.lv-open-g b{display:block;font-size:16px}.lv-open-g small{color:var(--muted);font-size:12px}
 .lv-open-c{margin-top:10px;font-size:13px;color:var(--muted)}
+/* англійська: один блок із перемикачем UK / US */
+.onb-lang,.lp-card{cursor:pointer}
+.onb-lt{display:flex;flex-direction:column;flex:1;min-width:0}
+.var-seg{flex:none;margin-left:auto}.var-seg button{padding:7px 10px;font-size:13px;white-space:nowrap}
+.onb-langs.three .onb-lang{align-items:center}
+@media (max-width:360px){.var-seg button{padding:6px 7px;font-size:12px}}
 </style>
 </head>
 <body>
@@ -7198,7 +7204,7 @@ function onboarding(step=0){
   const dots=`<div class="onb-dots">${[0,1,2,3].map(i=>`<i class="${i<=step?'on':''}"></i>`).join('')}</div>`;
   if(step===0){app.innerHTML=`<div class="onb">${dots}<div class="onb-hero">👋</div><h1>Привіт! Яку мову вивчаємо?</h1>
     <p class="muted">Потім можна перемикатися між мовами в будь-який момент.</p>
-    <div class="onb-langs three">${startOptions().map(o=>`<button class="onb-lang" onclick="setStartLang('${o.k}','${o.v||''}');onboarding(1)"><span class="flag">${o.flag}</span><b>${o.name}</b><small>${o.sub}</small></button>`).join('')}</div>
+    <div class="onb-langs three">${startOptions().map(o=>`<div class="onb-lang" role="button" tabindex="0" onclick="setStartLang('${o.k}',${o.var?"S.engVar||'gb'":"''"});onboarding(1)"><span class="flag">${o.flag}</span><span class="onb-lt"><b>${o.name}</b><small>${o.sub}</small></span>${o.var?varSeg('onboarding(0)'):''}</div>`).join('')}</div>
     <button class="link" onclick="onbDone()">Пропустити</button></div>`;return}
   if(step===1){app.innerHTML=`<div class="onb">${dots}<div class="onb-hero">⏱</div><h1>Скільки часу на день?</h1>
     <p class="muted">Гра складе збалансований план: повторення, нові слова, речення, читання й аудіювання.</p>
@@ -7253,10 +7259,10 @@ function langPicker(){
   applyTheme();document.body.classList.add('in-session');
   const h=new Date().getHours(),greet=h<5?'Доброї ночі':h<12?'Доброго ранку':h<18?'Доброго дня':'Доброго вечора';
   app.innerHTML=`<div class="onb lp"><div class="onb-hero">🌍</div><h1>${greet}!</h1><p class="muted">Яку мову сьогодні повторюємо або вивчаємо?</p>
-   <div class="lp-list">${startOptions().map(o=>{const k=o.k,st_=langStats(k),cur=k===S.lang&&(!o.v||o.v===(S.engVar||'gb'));
-     return `<button class="lp-card ${cur?'last':''}" onclick="setStartLang('${k}','${o.v||''}');chooseLang('${k}')"><span class="flag">${o.flag}</span>
-      <div class="lp-t"><b>${o.name}${o.sub?` <span class="lp-sub">${o.sub}</span>`:''}</b><small>${st_.started?`${st_.due?'🔁 '+st_.due+' до повторення':'✅ повторено'} · 📚 ${st_.learnedN} вивчено`:'🌱 ще не починали'}</small>
-      ${st_.started?`<div class="bar"><i style="width:${Math.min(100,st_.done/st_.B*100)}%"></i></div><small>План дня: ${Math.min(st_.done,st_.B)}/${st_.B}</small>`:''}</div><span class="lp-go">›</span></button>`}).join('')}</div>
+   <div class="lp-list">${startOptions().map(o=>{const k=o.k,st_=langStats(k),cur=k===S.lang;
+     return `<div class="lp-card ${cur?'last':''}" role="button" tabindex="0" onclick="setStartLang('${k}',${o.var?"S.engVar||'gb'":"''"});chooseLang('${k}')"><span class="flag">${o.flag}</span>
+      <div class="lp-t"><b>${o.name}</b><small>${st_.started?`${st_.due?'🔁 '+st_.due+' до повторення':'✅ повторено'} · 📚 ${st_.learnedN} вивчено`:'🌱 ще не починали'}</small>
+      ${st_.started?`<div class="bar"><i style="width:${Math.min(100,st_.done/st_.B*100)}%"></i></div><small>План дня: ${Math.min(st_.done,st_.B)}/${st_.B}</small>`:''}</div>${o.var?varSeg('langPicker()'):'<span class="lp-go">›</span>'}</div>`}).join('')}</div>
    <div class="lp-streak">🔥 Серія: <b>${S.streak}</b> дн. · ⭐ рівень ${level()}</div></div>`;
 }
 /* рівні — окремо для кожної мови (S.lvBy); перемикання мови зберігає рівні попередньої */
@@ -7297,8 +7303,11 @@ function importProgress(file){
 
 /* на старті: англійська британська / англійська американська / данська (прогрес англійської спільний для обох варіантів) */
 function startOptions(){const o=[];
-  if(ACTIVE_LANGS.includes('en'))o.push({k:'en',v:'gb',flag:'🇬🇧',name:'Англійська',sub:'британська'},{k:'en',v:'us',flag:'🇺🇸',name:'Англійська',sub:'американська'});
+  const us=S.engVar==='us';if(ACTIVE_LANGS.includes('en'))o.push({k:'en',var:true,flag:us?'🇺🇸':'🇬🇧',name:'Англійська',sub:us?'американська':'британська'});
   activeLangEntries().filter(([k])=>k!=='en').forEach(([k,v])=>o.push({k,v:null,flag:v.flag,name:v.name.split(' ')[0],sub:''}));return o}
+// перемикач UK / US усередині картки англійської (не відкриває мову, лише змінює варіант)
+function varSeg(redraw){const v=S.engVar==='us'?'us':'gb';return `<div class="k-seg var-seg" onclick="event.stopPropagation()">${[['gb','🇬🇧 UK'],['us','🇺🇸 US']].map(([x,t])=>`<button type="button" class="${v===x?'on':''}" onclick="event.stopPropagation();pickEngVar('${x}');${redraw}">${t}</button>`).join('')}</div>`}
+function pickEngVar(v){S.engVar=v;if(typeof applyEngVar==='function')applyEngVar();save()}
 function setStartLang(k,v){if(k==='en'&&v){S.engVar=v;if(typeof applyEngVar==='function')applyEngVar()}if(k!==S.lang&&typeof switchLang==='function')switchLang(k);else S.lang=k;save()}
 
 /* ====================== МОЇ ПОМИЛКИ ======================
