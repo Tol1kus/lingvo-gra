@@ -858,8 +858,6 @@ input.answer,.wta,textarea{background:var(--card);color:var(--ink);border-color:
 .ph-talk{--ph:#7C3AED;--ph2:#5B21B6;--ph-soft:#F1EAFE;--ph-ink:#5B21B6}
 .ph-bonus{--ph:#D97706;--ph2:#B45309;--ph-soft:#FEF5DC;--ph-ink:#92400E}
 .ph-free{--ph:#DB2777;--ph2:#9D174D;--ph-soft:#FDE8F1;--ph-ink:#9D174D}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) :is(.ph-warm,.ph-new,.ph-prac,.ph-talk,.ph-bonus,.ph-free){--ph-soft:color-mix(in srgb,var(--ph) 18%,#131B2C);--ph-ink:color-mix(in srgb,var(--ph) 55%,#fff)}}
-:root[data-theme="dark"] :is(.ph-warm,.ph-new,.ph-prac,.ph-talk,.ph-bonus,.ph-free){--ph-soft:color-mix(in srgb,var(--ph) 18%,#131B2C);--ph-ink:color-mix(in srgb,var(--ph) 55%,#fff)}
 
 /* картка «зараз» */
 .jr-hero{position:relative;overflow:hidden;border-radius:24px;padding:18px 18px 14px;margin:6px 0 12px;color:#fff;
@@ -1016,6 +1014,130 @@ header .pill{background:var(--surf);border-color:transparent;padding:6px 10px;fo
 #ukTipBox::after{content:"";position:absolute;top:100%;left:var(--ax,50%);transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--pop)}
 .tr-tiphelp{font-size:12px;margin:-4px 0 10px}
 .tr-uk{padding-top:14px}
+
+/* =====================================================================
+   PREMIUM MINIMALISM — палітра й типографіка з ТЗ (світла / темна)
+   ===================================================================== */
+:root{
+  --bg:#F7F7FA; --card:#FFFFFF; --surf:#EFEFF4; --pic:#F2F1F6; --ink:#17171C; --muted:#777985; --line:#E7E7ED;
+  --accent:#7958D8; --accent2:#3B82F6; --accent-soft:#EFEAFB; --on-accent:#FFFFFF; --pop:#17171C;
+  --ok:#1F9D6B; --ok-soft:#E8F6EF; --ok-ink:#167A53; --bad:#D9483B; --bad-soft:#FBEDEB; --bad-ink:#B23A2F; --warn:#B7791F; --warn-soft:#FBF3E4; --warn-ink:#8F5F17;
+  --note-bg:#FBF8F1; --note-bg2:#FBF8F1; --note-line:#EEE6D3; --bar-bg:rgba(247,247,250,.86); --shadow:rgba(23,23,28,.05); --radius:18px;
+  --hero1:#1B1A22; --hero2:#2A2440; --hero-ink:#FFFFFF; --hero-mut:#B9B6C8; --hero-acc:#A78BFA;
+  --sh-card:0 1px 2px rgba(23,23,28,.04),0 8px 24px -16px rgba(23,23,28,.18);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#101114; --surf:#191B20; --card:#22242A; --pic:#E9E7F2; --ink:#FFFFFF; --muted:#A0A3AB; --line:#2E3038;
+  --accent:#A78BFA; --accent2:#60A5FA; --accent-soft:#2A2440; --on-accent:#101114; --pop:#2E3038;
+  --ok:#4ADE9B; --ok-soft:#15302A; --ok-ink:#6EE7B7; --bad:#F98B80; --bad-soft:#3A2120; --bad-ink:#FCA5A5; --warn:#F2C46B; --warn-soft:#342A16; --warn-ink:#F6D58E;
+  --note-bg:#262219; --note-bg2:#262219; --note-line:#3D3626; --bar-bg:rgba(16,17,20,.86); --shadow:rgba(0,0,0,.4);
+  --hero1:#22242A; --hero2:#2B2640; --hero-mut:#A0A3AB;
+  --sh-card:0 1px 0 rgba(255,255,255,.03) inset,0 10px 30px -18px rgba(0,0,0,.7)}}
+:root[data-theme="dark"]{
+  --bg:#101114; --surf:#191B20; --card:#22242A; --pic:#E9E7F2; --ink:#FFFFFF; --muted:#A0A3AB; --line:#2E3038;
+  --accent:#A78BFA; --accent2:#60A5FA; --accent-soft:#2A2440; --on-accent:#101114; --pop:#2E3038;
+  --ok:#4ADE9B; --ok-soft:#15302A; --ok-ink:#6EE7B7; --bad:#F98B80; --bad-soft:#3A2120; --bad-ink:#FCA5A5; --warn:#F2C46B; --warn-soft:#342A16; --warn-ink:#F6D58E;
+  --note-bg:#262219; --note-bg2:#262219; --note-line:#3D3626; --bar-bg:rgba(16,17,20,.86); --shadow:rgba(0,0,0,.4);
+  --hero1:#22242A; --hero2:#2B2640; --hero-mut:#A0A3AB;
+  --sh-card:0 1px 0 rgba(255,255,255,.03) inset,0 10px 30px -18px rgba(0,0,0,.7)}
+body{font-family:-apple-system,"SF Pro Display","SF Pro Text",Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+h1{font-size:30px;font-weight:800;letter-spacing:-.03em}h2{font-size:19px;font-weight:700;letter-spacing:-.02em}
+.card,.k-row,.jr-ph,.lp-card,.onb-lang,.onb-opt,.tr-it{box-shadow:var(--sh-card)}
+.btn{border-radius:14px;font-weight:700;letter-spacing:-.01em}
+.btn:not(.ghost){background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.ic{width:20px;height:20px;flex:none;vertical-align:middle}
+#tabbar{backdrop-filter:saturate(1.6) blur(18px);-webkit-backdrop-filter:saturate(1.6) blur(18px);border-top:1px solid var(--line)}
+#tabbar button.on{color:var(--accent)}
+
+/* фази — стримані відтінки, не «дитячі» */
+.ph-warm{--ph:#C9864E}.ph-new{--ph:var(--accent)}.ph-prac{--ph:#3E9B85}.ph-talk{--ph:#5B8DEF}.ph-bonus{--ph:#C49A2C}.ph-free{--ph:var(--accent)}
+:is(.ph-warm,.ph-new,.ph-prac,.ph-talk,.ph-bonus,.ph-free){--ph2:var(--ph);--ph-soft:color-mix(in srgb,var(--ph) 11%,var(--card));--ph-ink:color-mix(in srgb,var(--ph) 78%,var(--ink))}
+
+/* ---------- верх: аватар, привітання, тема ---------- */
+.pm-top{display:flex;align-items:center;gap:12px;margin:4px 0 14px}
+.pm-ava{width:44px;height:44px;flex:none;border-radius:50%;border:0;display:grid;place-items:center;color:#fff;font:700 18px/1 inherit;cursor:pointer;
+  background:linear-gradient(135deg,#A78BFA,#7958D8 55%,#60A5FA);box-shadow:0 6px 16px -8px #7958D8}
+.pm-ava .ic{width:22px;height:22px}
+.pm-hi{flex:1;min-width:0}.pm-hi small{display:block;color:var(--muted);font-size:13px;font-weight:500}.pm-hi b{display:block;font-size:20px;font-weight:700;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pm-top .k-icon{width:40px;height:40px;border-radius:12px;background:var(--card);border:1px solid var(--line);color:var(--ink);display:grid;place-items:center}
+.pm-top .k-icon svg{width:20px;height:20px}
+.pm-lang{display:flex;align-items:center;gap:12px;width:100%;padding:10px 14px;margin:0 0 14px;border:1px solid var(--line);border-radius:16px;background:var(--card);font:inherit;color:var(--ink);text-align:left;cursor:pointer}
+.pm-flag{font-size:24px}.pm-lang>span:nth-child(2){flex:1}.pm-lang b{display:block;font-size:15px}.pm-lang small{color:var(--muted);font-size:13px}.pm-chev{color:var(--muted);width:18px;height:18px}
+
+/* ---------- головна дія ---------- */
+.jr-hero{color:var(--hero-ink);border-radius:24px;padding:20px 18px 16px;margin:0 0 12px;border:1px solid rgba(255,255,255,.06);
+  background:radial-gradient(120% 120% at 100% 0%,rgba(167,139,250,.28) 0,rgba(167,139,250,0) 55%),linear-gradient(150deg,var(--hero1),var(--hero2));
+  box-shadow:0 24px 48px -28px rgba(42,36,64,.75)}
+.jr-hero::after{display:none}
+.jr-hero.ph-bonus,.jr-hero.ph-free{background:radial-gradient(120% 120% at 100% 0%,rgba(96,165,250,.22) 0,rgba(96,165,250,0) 55%),linear-gradient(150deg,var(--hero1),var(--hero2))}
+.jr-hero-t small{color:var(--hero-mut);opacity:1;font-size:13px;font-weight:600}
+.jr-hero-t h2{font-size:26px;font-weight:700;letter-spacing:-.03em}.jr-hero-t p{color:var(--hero-mut);opacity:1}
+.jr-ring .rb{stroke:rgba(255,255,255,.12)}.jr-ring .rf{stroke:var(--hero-acc)}
+.jr-ring b{font-size:17px;color:#fff}.jr-ring b small{font-size:12px;color:var(--hero-mut);font-weight:600}.jr-ring .ic{width:24px;height:24px;color:var(--hero-acc)}
+.jr-cta{background:var(--hero-acc);color:#16131F;border-radius:16px;box-shadow:0 10px 24px -12px rgba(167,139,250,.9);font-size:17px;gap:10px;padding:15px 16px}
+.jr-cta .ic{width:18px;height:18px}.jr-cta small{color:#16131F;opacity:.6}
+:root[data-theme="dark"] .jr-cta{background:var(--hero-acc)}
+.jr-hero-meta{color:var(--hero-mut);opacity:1}
+
+/* ---------- серія · ціль · прогрес ---------- */
+.pm-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 12px}
+.pm-stats button{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:12px;border:1px solid var(--line);border-radius:18px;background:var(--card);font:inherit;color:var(--ink);text-align:left;cursor:pointer;box-shadow:var(--sh-card)}
+.pm-stats b{font-size:22px;font-weight:700;letter-spacing:-.02em;line-height:1.1;margin-top:6px}.pm-stats b i{font-style:normal;font-size:14px;color:var(--muted);font-weight:600}
+.pm-stats small{color:var(--muted);font-size:12px}
+.pm-st-ic{width:30px;height:30px;border-radius:10px;display:grid;place-items:center}.pm-st-ic.fl{background:color-mix(in srgb,#F59E0B 14%,var(--card));color:#E08A1E}
+.pm-mini{width:30px;height:30px;transform:rotate(-90deg)}.pm-mini circle{fill:none;stroke-width:4}.pm-mini .rb{stroke:var(--surf)}.pm-mini .rf{stroke:var(--accent);stroke-linecap:round}
+
+/* ---------- картки ---------- */
+.pm-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin:0 0 12px;box-shadow:var(--sh-card)}
+.pm-tic{width:22px;height:22px;color:var(--accent);flex:none}
+.pm-ch-h{display:flex;align-items:center;gap:12px}.pm-ch-h>div{flex:1;min-width:0}.pm-ch-h small{display:block;color:var(--muted);font-size:12px;font-weight:600}.pm-ch-h b{display:block;font-size:15px;font-weight:600}
+.pm-ch-v{font-weight:700;color:var(--accent);font-size:14px;font-variant-numeric:tabular-nums}.pm-ch-v .ic{color:var(--ok)}
+.pm-bar{height:6px;border-radius:99px;background:var(--surf);margin-top:12px;overflow:hidden}.pm-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.btn.sm{padding:7px 12px;font-size:13px}
+.k-test{background:var(--card);border:1px solid var(--line);box-shadow:var(--sh-card)}
+.k-test .pm-tic{margin-top:2px}
+
+/* ---------- шлях дня ---------- */
+.jr-head h2,.pm-sec-h h2{font-size:19px}
+.jr-ph{border-radius:18px;background:var(--card);border:1px solid var(--line)}
+.jr-ph.cur{border-color:color-mix(in srgb,var(--accent) 35%,var(--line));box-shadow:0 12px 28px -20px var(--accent)}
+.jr-ph.cur .jr-ph-h{background:none}
+.jr-ph-ic{background:var(--ph-soft);color:var(--ph);border-radius:12px}.jr-ph-ic .ic{width:19px;height:19px}
+.jr-ph.done .jr-ph-ic{background:var(--ph-soft);color:var(--ph)}
+.jr-ph-h em{color:var(--muted);font-weight:600}
+.jr-ph.lock{background:transparent;border:1px dashed var(--line);box-shadow:none}
+.jr-steps::before{background:var(--line);left:30px;width:2px}
+.jr-node{background:var(--card);border:2px solid var(--line);color:var(--muted);font-size:13px}.jr-node .ic{width:16px;height:16px}
+.jr-step.done .jr-node{background:var(--ph);border-color:var(--ph);color:#fff}
+.jr-step.next{background:color-mix(in srgb,var(--accent) 7%,var(--card))}
+.jr-step.next .jr-node{background:var(--accent);border-color:var(--accent);color:var(--on-accent);box-shadow:0 0 0 5px color-mix(in srgb,var(--accent) 16%,transparent)}
+.jr-step.next .jr-min{color:var(--accent)}
+
+/* ---------- досягнення ---------- */
+.pm-sec-h{display:flex;align-items:center;justify-content:space-between;margin:20px 0 8px}.pm-sec-h h2{margin:0}
+.pm-sec-h .link{display:flex;align-items:center;gap:4px;color:var(--accent);font-weight:600;text-decoration:none}.pm-sec-h .link .ic{width:16px;height:16px}
+.pm-ach{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pm-badge{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 8px;border:1px solid var(--line);border-radius:18px;background:var(--card);font:inherit;color:var(--ink);cursor:pointer;box-shadow:var(--sh-card)}
+.pm-badge span{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:22px;background:radial-gradient(circle at 30% 25%,color-mix(in srgb,var(--accent) 22%,var(--card)),var(--accent-soft))}
+.pm-badge b{font-size:12px;font-weight:600;text-align:center;line-height:1.25}
+.pm-empty{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:14px}
+
+/* ---------- «Вправи» ---------- */
+.tr-rec{background:radial-gradient(120% 140% at 100% 0%,rgba(167,139,250,.3),rgba(167,139,250,0) 60%),linear-gradient(150deg,var(--hero1),var(--hero2));box-shadow:0 18px 36px -24px rgba(42,36,64,.8)}
+.tr-rec-ic{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:rgba(255,255,255,.08);color:var(--hero-acc)}.tr-rec-ic .ic{width:22px;height:22px}
+.tr-g{background:transparent;padding:0;margin-bottom:18px}
+.tr-gh{padding:0 2px 10px}.tr-gh span{display:grid;place-items:center;color:var(--ph)}.tr-gh span .ic{width:18px;height:18px}.tr-gh b{color:var(--ink);font-size:16px}
+.tr-it{border:1px solid var(--line);background:var(--card);border-radius:18px;padding:14px 6px 12px}
+.tr-ic{width:44px;height:44px;border-radius:14px;background:var(--ph-soft);color:var(--ph)}.tr-ic .ic{width:22px;height:22px}
+.tr-it b{font-weight:600}
+.tr-it .k-badge{background:var(--accent);color:var(--on-accent)}
+
+/* ---------- налаштування: ім'я ---------- */
+.k-name{width:150px;max-width:50%;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surf);color:var(--ink);font:inherit;text-align:right}
+.jr-ring b{display:flex;align-items:baseline;justify-content:center;gap:1px}
+.pm-ava{font-family:inherit;font-weight:700;font-size:18px;line-height:1}
+.pm-hi b{white-space:normal;font-size:19px;line-height:1.2}
+.k-say .ic{width:26px;height:26px}.k-say.sm .ic{width:18px;height:18px}
 </style>
 </head>
 <body>
@@ -6856,15 +6978,15 @@ new MutationObserver(muts=>{
     if(nd.nodeType!==1)continue;
     const fb=nd.classList&&nd.classList.contains('feedback')?nd:nd.querySelector&&nd.querySelector('.feedback');
     if(fb&&!fb.dataset.snd){fb.dataset.snd=1;snd(fb.classList.contains('bad')?'bad':'ok')}
-    if(nd.querySelector&&nd.querySelector('.result .score')){snd('win');confetti()}
+    if(nd.querySelector&&nd.querySelector('.result .score')){snd('win')}
   }
 }).observe(app,{childList:true,subtree:true});
 
 /* конфеті */
 function confetti(){
   const c=document.createElement('div');c.className='confetti';
-  const cols=['#2f5bd3','#c8102e','#00875a','#f5b301','#e08a1e','#8b5cf6'];
-  c.innerHTML=[...Array(40)].map(()=>`<i style="left:${Math.random()*100}%;background:${cols[Math.floor(Math.random()*cols.length)]};animation-delay:${Math.random()*.4}s;animation-duration:${1.4+Math.random()*1.2}s;transform:rotate(${Math.random()*360}deg)"></i>`).join('');
+  const cols=['#A78BFA','#7958D8','#60A5FA','#C4B5FD','#E9D5FF'];
+  c.innerHTML=[...Array(22)].map(()=>`<i style="left:${Math.random()*100}%;background:${cols[Math.floor(Math.random()*cols.length)]};animation-delay:${Math.random()*.4}s;animation-duration:${1.4+Math.random()*1.2}s;transform:rotate(${Math.random()*360}deg)"></i>`).join('');
   document.body.appendChild(c);setTimeout(()=>c.remove(),3000);
 }
 
@@ -7052,7 +7174,7 @@ const ACH=[
 ];
 function checkAch(){S.ach=S.ach||{};let n=0;for(const [id,ic,t,,f] of ACH){const k=S.lang+':'+id;if(S.ach[k])continue;let ok=false;try{ok=f()}catch(e){}
   if(ok){S.ach[k]=today();n++;setTimeout(()=>toast(ic+' Нове досягнення: '+t),400+n*2200)}}
-  if(n){save();setTimeout(confetti,400)}}
+  if(n){save()}}
 function achScreen(){applyTheme();S.ach=S.ach||{};const got=ACH.filter(a=>S.ach[S.lang+':'+a[0]]).length;
   app.innerHTML=header()+backBar(`🏅 Досягнення ${L().flag} · ${got}/${ACH.length}`)+`<div class="ach-grid">${ACH.map(([id,ic,t,d])=>{const g=S.ach[S.lang+':'+id];
     return `<div class="ach ${g?'got':''}"><div class="a-ic">${g?ic:'🔒'}</div><b>${esc(t)}</b><small>${esc(d)}</small>${g?`<small class="muted">${g}</small>`:''}</div>`}).join('')}</div>`;emit('screen','stats')}
@@ -7958,7 +8080,7 @@ RENDER_X.card=function(it){
   const top=reveal?`<div class="k-word">${artHTML(t)}</div><div class="k-tr">${esc(w.uk)}</div>`:`<div class="k-word uk">${esc(w.uk)}</div><div class="k-tr">Згадайте слово мовою: ${L().name.split(' ')[0].toLowerCase()}</div>`;
   app.innerHTML=topRow()+`<div class="flip k-card">
     <div class="k-pic ${g?'gt-'+g.slice(2):''}">${g?`<span class="gchip ${g}">${t.split(' ')[0]}</span>`:''}${picHTML(w)}</div>
-    <div class="k-wrow"><div>${top}</div>${reveal?`<button class="k-say" onclick="speak(${js(t)})" aria-label="Прослухати">🔊</button>`:''}</div>
+    <div class="k-wrow"><div>${top}</div>${reveal?`<button class="k-say" onclick="speak(${js(t)})" aria-label="Прослухати">${icn('speaker')}</button>`:''}</div>
     ${reveal?exampleHTML(w)+(w.gb&&S.lang==='en'?`<div class="k-note">🇬🇧 ${esc(w.gb)} · 🇺🇸 ${esc(w.us)}</div>`:'')+mnemBox(w):''}
   </div>
   ${reveal?`<div class="k-rate">${[['again','Ще вчу','r0'],['hard','Важко','r1'],['good','Знаю','r2'],['easy','Легко','r3']].map(([q,l,c])=>`<button class="btn rate ${c}" onclick="cardAnswer('${q}')"><b>${l}</b><small>${ivLabel(previewIv(w,q,it.intro))}</small></button>`).join('')}</div>`
@@ -7986,6 +8108,7 @@ function settingsScreen(){
   app.innerHTML=`<div class="k-head"><div><small>${L().flag} ${L().name}</small><h1>Налаштування</h1></div><div class="k-head-r"><button class="k-icon" onclick="home()" aria-label="Закрити">✕</button></div></div>
   <div class="k-sec">Навчання</div>
   <div class="k-set">
+    <div class="k-srow"><span>Ваше ім'я<small class="k-sub2">для привітання на головній</small></span><input class="k-name" value="${esc(S.name||'')}" maxlength="30" placeholder="Ім'я" onchange="S.name=this.value.trim().slice(0,30);save()"></div>
     <button class="k-srow" onclick="langPicker()"><span>Мова</span><span class="k-val">${L().flag} ${L().name.split(' ')[0]} ›</span></button>
     ${S.lang==='en'?`<div class="k-srow"><span>Англійська</span>${seg([['gb','🇬🇧 UK'],['us','🇺🇸 US']],S.engVar==='us'?'us':'gb','setEngVar')}</div>`:''}
     <div class="k-srow"><span>Час на день</span>${seg([[30,'30 хв'],[60,'60 хв']],S.minutes||30,'setMinutesS')}</div>
@@ -8058,7 +8181,7 @@ RENDER_X.picchoice=function(it){
   const w=it.w;if(!hasPic(w)){it.kind='choice';return renderItem()}
   if(!it.opts){const d=picPool(w);if(d.length<3){it.kind='choice';return renderItem()}it.opts=shuffle([w,...d])}
   const t=w[S.lang];
-  app.innerHTML=topRow()+`<div class="k-qline"><div class="k-word">${artHTML(t)}</div><button class="k-say sm" onclick="speak(${js(t)})" aria-label="Прослухати">🔊</button></div>
+  app.innerHTML=topRow()+`<div class="k-qline"><div class="k-word">${artHTML(t)}</div><button class="k-say sm" onclick="speak(${js(t)})" aria-label="Прослухати">${icn('speaker')}</button></div>
    <div class="k-sub">Оберіть картинку</div>${picGrid(it,false)}<div id="fb"></div>`;
   if(S.tts)setTimeout(()=>speak(t),250);
 };
@@ -8387,10 +8510,10 @@ function lvOpenHTML(){const mx=maxLv(),mi=LEVELS.indexOf(mx),open=LEVELS.slice(0
       теж по черзі, з переходом «Далі»;
    4) лише після всього — вільна практика (вкладки «Вправи» й «Тексти»). */
 const PHASES=[
-  {k:'warm',n:'Розминка',d:'пам\'ять прокидається',ic:'🔥',ids:['review']},
-  {k:'new',n:'Нове',d:'правило й нові слова',ic:'🌱',ids:['grammar','struct','new']},
-  {k:'prac',n:'Практика',d:'слова в реченнях, текст і слух',ic:'🎯',ids:['fill','read','events','focus','listen','dict']},
-  {k:'talk',n:'Мовлення й письмо',d:'діалог, свій текст, вимова',ic:'💬',ids:['dialog','transl','write','speak','extra']}];
+  {k:'warm',n:'Розминка',d:'пам\'ять прокидається',ic:'🔥',si:'flame',ids:['review']},
+  {k:'new',n:'Нове',d:'правило й нові слова',ic:'🌱',si:'sparkle',ids:['grammar','struct','new']},
+  {k:'prac',n:'Практика',d:'слова в реченнях, текст і слух',ic:'🎯',si:'target',ids:['fill','read','events','focus','listen','dict']},
+  {k:'talk',n:'Мовлення й письмо',d:'діалог, свій текст, вимова',ic:'💬',si:'chat',ids:['dialog','transl','write','speak','extra']}];
 function phaseOf(id){const i=PHASES.findIndex(p=>p.ids.includes(id));return i<0?2:i}
 // фази йдуть суцільно: диктант закриває практику, далі — власне мовлення
 on('planBlocks',B=>B.map((b,i)=>({b,i})).sort((x,y)=>phaseOf(x.b.id)-phaseOf(y.b.id)||x.i-y.i).map(x=>x.b));
@@ -8438,49 +8561,68 @@ function bonusOpenText(){const t=bonusTextPick();if(!t){bonusMark('text');return
 function ringSVG(k,n,inner){const r=26,c=2*Math.PI*r,p=n?k/n:0;
   return `<div class="jr-ring"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="${r}" class="rb"/><circle cx="32" cy="32" r="${r}" class="rf" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-p)}"/></svg><b>${inner}</b></div>`}
 
-/* ---------- головна ---------- */
+/* ---------- головна (Premium Minimalism) ----------
+   Привітання з аватаром · поточна мова · «Продовжити навчання» (головна дія) · серія · ціль дня · прогрес рівня ·
+   виклик дня · шлях дня (фази) · останні досягнення. */
 function homeView(){
-  const B=planBlocks(),m=S.minutes||30,spent=minutesToday(),next=B.find(b=>!b.done),ni=next?B.indexOf(next):B.length,d=new Date(),doneN=B.filter(b=>b.done).length;
-  const learnedN=WORDS.filter(w=>w[S.lang]&&learned(w)).length,pl=S.plan&&S.plan[S.lang];
+  const B=planBlocks(),m=S.minutes||30,next=B.find(b=>!b.done),ni=next?B.indexOf(next):B.length,doneN=B.filter(b=>b.done).length;
+  const pl=S.plan&&S.plan[S.lang],sec=((S.act||{})[today()]||{}).sec||0,spentMin=Math.floor(sec/60);
   const bon=next?null:bonusSteps(),bnext=bon&&bon.find(x=>!x.done),bmin=bon?bon.filter(x=>!x.done).reduce((a,x)=>a+x.min,0):0;
-  const top=`<div class="k-top2"><small>${DAYS[d.getDay()]}, ${d.getDate()} ${MONTHS[d.getMonth()]}</small>
-    <span><button class="k-icon" onclick="langPicker()" aria-label="Змінити мову">${L().flag}</button><button class="k-icon" onclick="settingsScreen()" aria-label="Налаштування">${ICON.gear}</button></span></div>`;
-  // 1. картка «зараз»
+  const d=new Date();
+  // 1. привітання
+  const top=`<div class="pm-top">${avatarHTML()}<div class="pm-hi"><small>${DAYS[d.getDay()]}, ${d.getDate()} ${MONTHS[d.getMonth()]}</small><b>${greetText()}${S.name?', '+esc(S.name):''}</b></div>
+    <button class="k-icon" onclick="toggleTheme()" aria-label="Світла чи темна тема">${icn(isDark()?'sun':'moon')}</button><button class="k-icon" onclick="settingsScreen()" aria-label="Налаштування">${ICON.gear}</button></div>
+   <button class="pm-lang" onclick="langPicker()"><span class="pm-flag">${L().flag}</span><span><b>${LANG_NAT[S.lang]}${S.lang==='en'?(S.engVar==='us'?' · US':' · UK'):''}</b><small>рівень ${typeof maxLv==='function'?maxLv():curLevel()} · ${LEVEL_NAMES[typeof maxLv==='function'?maxLv():curLevel()]||''}</small></span>${icn('arrow','pm-chev')}</button>`;
+  // 2. головна дія: продовжити навчання
   let hero;
   if(next){const ph=PHASES[phaseOf(next.id)],left=B.slice(ni).reduce((a,b)=>a+(b.min||5),0),lockRev=next.id==='review'&&dueWords().length>0;
-    hero=`<div class="jr-hero ph-${ph.k}"><div class="jr-hero-top">${ringSVG(doneN,B.length,`${doneN}/${B.length}`)}<div class="jr-hero-t"><small>Крок ${ni+1} з ${B.length} · ${ph.n}</small><h2>${esc(stepName(next))}</h2><p>${esc(blockSub(next))}${lockRev?' · обов\'язково перед новим':''}</p></div><span class="jr-hero-ic">${stepIc(next)}</span></div>
-      <button class="jr-cta" onclick="startBlock('${next.id}')">▶ ${doneN?'Продовжити':'Почати день'} <small>≈ ${next.min||5} хв</small></button>
-      <div class="jr-hero-meta">до кінця плану ≈ ${left} хв · <span class="k-daytimer">⏱ сьогодні ${fmtSec(((S.act||{})[today()]||{}).sec||0)} / ${m} хв</span></div></div>`}
-  else if(bnext){const rem=Math.max(0,m-spent),mascot=(typeof MASCOT!=='undefined'&&MASCOT[S.lang])||'🦉';
-    hero=`<div class="jr-hero ph-bonus"><div class="jr-hero-top">${ringSVG(1,1,'✓')}<div class="jr-hero-t"><small>План дня виконано 🏅</small><h2>Бонус-раунд</h2><p>${mascot} ${rem>=3?`До вашої норми ще ${rem} хв — бонус займе ≈ ${bmin} хв.`:`Норму виконано! Бонус ≈ ${bmin} хв — за бажанням.`}</p></div><span class="jr-hero-ic">⭐</span></div>
-      <button class="jr-cta" onclick="bonusGo()">▶ ${bon.some(x=>x.done)?'Продовжити':'Почати'}: ${bnext.ic} ${esc(bnext.t)}</button>
-      <div class="jr-hero-meta">необов'язково · ${bon.filter(x=>x.done).length} з ${bon.length} кроків</div></div>`}
+    hero=`<div class="jr-hero"><div class="jr-hero-top">${ringSVG(doneN,B.length,`${doneN}<small>/${B.length}</small>`)}<div class="jr-hero-t"><small>${doneN?'Продовжити навчання':'Почати навчання'} · ${ph.n}</small><h2>${esc(stepName(next))}</h2><p>${esc(blockSub(next))}${lockRev?' · обов\'язково перед новим':''}</p></div></div>
+      <button class="jr-cta" onclick="startBlock('${next.id}')">${icn('play')}<span>${doneN?'Продовжити':'Почати'}</span><small>≈ ${next.min||5} хв</small></button>
+      <div class="jr-hero-meta">крок ${ni+1} з ${B.length} · до кінця плану ≈ ${left} хв</div></div>`}
+  else if(bnext){const rem=Math.max(0,m-spentMin);
+    hero=`<div class="jr-hero ph-bonus"><div class="jr-hero-top">${ringSVG(1,1,icn('check'))}<div class="jr-hero-t"><small>План дня виконано · бонус-раунд</small><h2>${esc(bnext.t)}</h2><p>${rem>=3?`До вашої норми ще ${rem} хв — бонус займе ≈ ${bmin} хв.`:`Норму виконано. Бонус ≈ ${bmin} хв — за бажанням.`}</p></div></div>
+      <button class="jr-cta" onclick="bonusGo()">${icn('play')}<span>${bon.some(x=>x.done)?'Продовжити бонус':'Почати бонус'}</span><small>необов'язково</small></button>
+      <div class="jr-hero-meta">${bon.filter(x=>x.done).length} з ${bon.length} кроків бонусу</div></div>`}
   else{const t=tomorrowPreview();
-    hero=`<div class="jr-hero ph-free"><div class="jr-hero-top">${ringSVG(1,1,'🏆')}<div class="jr-hero-t"><small>Усе на сьогодні виконано</small><h2>Чудовий день!</h2><p>Завтра: 🔁 ${t.due} на повторення · 🆕 ${t.newW} нових</p></div><span class="jr-hero-ic">🎉</span></div>
-      <button class="jr-cta" onclick="trainScreen()">🎮 Вільна практика</button>
+    hero=`<div class="jr-hero ph-free"><div class="jr-hero-top">${ringSVG(1,1,icn('trophy'))}<div class="jr-hero-t"><small>Усе на сьогодні виконано</small><h2>Чудовий день</h2><p>Завтра: ${t.due} на повторення · ${t.newW} нових слів</p></div></div>
+      <button class="jr-cta" onclick="trainScreen()">${icn('grid')}<span>Вільна практика</span></button>
       <div class="jr-hero-meta">новий план через <b id="midnight">${untilMidnight()}</b></div></div>`}
-  // 2. коротка статистика
-  const nx=typeof nextLv==='function'?nextLv():null,lp=typeof lvProgress==='function'?lvProgress():0;
-  const stats=`<div class="k-stats jr-chips"><button onclick="statsScreen()"><b>🔥 ${S.streak}</b><small>днів поспіль</small></button><button onclick="myDict()"><b>🧠 ${learnedN.toLocaleString('uk')}</b><small>слів у пам'яті</small></button>
-    <button onclick="settingsScreen()"><b>🎯 ${typeof maxLv==='function'?maxLv():curLevel()}</b><small>${nx?`до ${nx}: ${Math.round(Math.min(1,lp/(typeof LV_UNLOCK!=='undefined'?LV_UNLOCK:.6))*100)}%`:'рівень'}</small></button></div>`;
-  const test=!(S.placement&&S.placement[S.lang])&&!((S.ptLater||{})[S.lang]===today())?`<div class="k-test"><span>🎯</span><div class="k-t"><b>Визначте свій рівень з ${LANGS[S.lang].name.split(' ')[0].toLowerCase().replace(/а$/,'ої')}</b><small>Тест 10–15 хв: вправи й тексти будуть саме вашого рівня</small>
+  // 3. серія · ціль дня · прогрес
+  const nx=typeof nextLv==='function'?nextLv():null,lp=typeof lvProgress==='function'?Math.min(1,lvProgress()/(typeof LV_UNLOCK!=='undefined'?LV_UNLOCK:.6)):0,gp=Math.min(1,sec/60/m);
+  const mini=(p)=>{const r=15,c=2*Math.PI*r;return `<svg class="pm-mini" viewBox="0 0 36 36"><circle cx="18" cy="18" r="${r}" class="rb"/><circle cx="18" cy="18" r="${r}" class="rf" stroke-dasharray="${c}" stroke-dashoffset="${c*(1-p)}"/></svg>`};
+  const stats=`<div class="k-stats pm-stats">
+    <button onclick="statsScreen()"><span class="pm-st-ic fl">${icn('flame')}</span><b>${S.streak}</b><small>${S.streak===1?'день':'днів'} поспіль</small></button>
+    <button onclick="settingsScreen()"><span class="pm-st-ring">${mini(gp)}</span><b>${spentMin}<i>/${m}</i></b><small>хв · ціль дня</small></button>
+    <button onclick="settingsScreen()"><span class="pm-st-ring">${mini(lp)}</span><b>${Math.round(lp*100)}%</b><small>${nx?'до '+nx:'рівень пройдено'}</small></button></div>`;
+  const test=!(S.placement&&S.placement[S.lang])&&!((S.ptLater||{})[S.lang]===today())?`<div class="k-test">${icn('target','pm-tic')}<div class="k-t"><b>Визначте свій рівень</b><small>Тест 10–15 хв: вправи й тексти будуть саме вашого рівня</small>
       <div class="k-hbtns"><button class="btn" onclick="placementIntro()">Пройти тест</button><button class="btn ghost" onclick="S.ptLater=S.ptLater||{};S.ptLater[S.lang]=today();save();home()">Пізніше</button></div></div></div>`:'';
-  // 3. шлях: фази плану + бонус
+  // 4. виклик дня
+  const qs=typeof questsToday==='function'?questsToday():[],qx=qs.find(q=>!qClaimed(q.id))||null,qdone=qs.filter(q=>qClaimed(q.id)).length;
+  const chal=qs.length?`<div class="pm-card pm-chal"><div class="pm-ch-h">${icn('target','pm-tic')}<div><small>Виклик дня · ${qdone}/${qs.length}</small><b>${qx?esc(qx.t):'Усі виклики виконано'}</b></div>
+      ${qx&&qx.get()>=qx.n?`<button class="btn sm" onclick="qClaim('${qx.id}')">+${qx.xp} XP</button>`:`<span class="pm-ch-v">${qx?Math.min(qx.n,qx.get())+'/'+qx.n:icn('check')}</span>`}</div>
+      <div class="pm-bar"><i style="width:${qx?Math.min(100,qx.get()/qx.n*100):100}%"></i></div></div>`:'';
+  // 5. шлях дня
   const row=(b)=>{const st_=b.done?'done':next&&b.id===next.id?'next':'locked',num=B.indexOf(b)+1;
-    return `<button class="k-step jr-step ${st_}" onclick="startBlock('${b.id}')"><span class="jr-node">${b.done?'✓':st_==='next'?stepIc(b):num}</span>
-      <span class="k-t"><b>${esc(stepName(b))}</b><small>${esc(blockSub(b))}</small></span><span class="jr-min">${st_==='done'?'↻':(b.min||5)+' хв'}</span></button>`};
+    return `<button class="k-step jr-step ${st_}" onclick="startBlock('${b.id}')"><span class="jr-node">${b.done?icn('check'):st_==='next'?icn(BLOCK_IC[b.id]):num}</span>
+      <span class="k-t"><b>${esc(stepName(b))}</b><small>${esc(blockSub(b))}</small></span><span class="jr-min">${st_==='done'?'':(b.min||5)+' хв'}</span></button>`};
   const phases=PHASES.map((p,pi)=>{const S_=B.filter(b=>phaseOf(b.id)===pi);if(!S_.length)return '';
     const dn=S_.filter(b=>b.done).length,state=dn===S_.length?'done':S_.includes(next)?'cur':'lock';
-    return `<section class="jr-ph ph-${p.k} ${state}"><button class="jr-ph-h" onclick="this.parentNode.classList.toggle('open')"><span class="jr-ph-ic">${state==='done'?'✓':p.ic}</span><span class="jr-ph-t"><b>${p.n}</b><small>${state==='done'?S_.map(stepName).join(' · '):p.d}</small></span><em>${dn}/${S_.length}</em></button>
+    return `<section class="jr-ph ph-${p.k} ${state}"><button class="jr-ph-h" onclick="this.parentNode.classList.toggle('open')"><span class="jr-ph-ic">${state==='done'?icn('check'):icn(p.si)}</span><span class="jr-ph-t"><b>${p.n}</b><small>${state==='done'?S_.map(stepName).join(' · '):p.d}</small></span><em>${dn}/${S_.length}</em></button>
       <div class="jr-steps">${S_.map(row).join('')}</div></section>`}).join('');
-  const bonusSec=next?`<section class="jr-ph ph-bonus lock jr-bonus"><div class="jr-ph-h"><span class="jr-ph-ic">⭐</span><span class="jr-ph-t"><b>Бонус-раунд</b><small>відкриється після плану: помилки, гра, ще текст</small></span><em>${typeof LOCK_SVG!=='undefined'?LOCK_SVG:'🔒'}</em></div></section>`
-    :`<section class="jr-ph ph-bonus ${bnext?'cur':'done'} jr-bonus"><button class="jr-ph-h" onclick="this.parentNode.classList.toggle('open')"><span class="jr-ph-ic">${bnext?'⭐':'✓'}</span><span class="jr-ph-t"><b>Бонус-раунд</b><small>розширений план · необов'язково</small></span><em>${bon.filter(x=>x.done).length}/${bon.length}</em></button>
-      <div class="jr-steps">${bon.map((x,i)=>{const st_=x.done?'done':x===bnext?'next':'locked';return `<button class="k-step jr-step ${st_}" onclick="bonusGo('${x.id}')"><span class="jr-node">${x.done?'✓':st_==='next'?x.ic:i+1}</span><span class="k-t"><b>${esc(x.t)}</b><small>${esc(x.d)}</small></span><span class="jr-min">${x.done?'↻':x.min+' хв'}</span></button>`}).join('')}</div></section>`;
-  const freeSec=`<section class="jr-ph ph-free ${!next&&!bnext?'cur':'lock'}"><${!next&&!bnext?'button onclick="trainScreen()"':'div'} class="jr-ph-h"><span class="jr-ph-ic">🎮</span><span class="jr-ph-t"><b>Вільна практика</b><small>ігри, мапа, діалоги, іспити — відкриється в кінці</small></span><em>${!next&&!bnext?'›':(typeof LOCK_SVG!=='undefined'?LOCK_SVG:'🔒')}</em></${!next&&!bnext?'button':'div'}></section>`;
-  const after=next&&!S.freeAccess?'':`${!next&&typeof daySummaryHTML==='function'?daySummaryHTML():''}${pl?`<button class="k-row" onclick="settingsScreen()"><span>🎯</span><span class="k-t"><b>Ціль: ${pl.lvl} до ${fmtDate(pl.eta)}</b><small>фокус: ${(FOCUS[pl.focus]||FOCUS.prod).t.toLowerCase()}</small></span><span class="k-chev">›</span></button>`:''}${questsHTML()}`;
-  return `${top}${hero}${stats}${test}
-   <div class="jr-head"><h2>Шлях дня</h2><div class="k-seg sm">${[30,60].map(x=>`<button class="${m===x?'on':''}" onclick="setMinutes(${x})">${x} хв</button>`).join('')}</div></div>
-   <div class="k-list jr">${phases}${bonusSec}${freeSec}</div>${after}`;
+  const lockI=typeof LOCK_SVG!=='undefined'?LOCK_SVG:'';
+  const bonusSec=next?`<section class="jr-ph ph-bonus lock jr-bonus"><div class="jr-ph-h"><span class="jr-ph-ic">${icn('star')}</span><span class="jr-ph-t"><b>Бонус-раунд</b><small>після плану: помилки, гра, ще текст</small></span><em>${lockI}</em></div></section>`
+    :`<section class="jr-ph ph-bonus ${bnext?'cur':'done'} jr-bonus"><button class="jr-ph-h" onclick="this.parentNode.classList.toggle('open')"><span class="jr-ph-ic">${bnext?icn('star'):icn('check')}</span><span class="jr-ph-t"><b>Бонус-раунд</b><small>розширений план · необов'язково</small></span><em>${bon.filter(x=>x.done).length}/${bon.length}</em></button>
+      <div class="jr-steps">${bon.map((x,i)=>{const st_=x.done?'done':x===bnext?'next':'locked';return `<button class="k-step jr-step ${st_}" onclick="bonusGo('${x.id}')"><span class="jr-node">${x.done?icn('check'):st_==='next'?icn(BLOCK_IC[x.id]):i+1}</span><span class="k-t"><b>${esc(x.t)}</b><small>${esc(x.d)}</small></span><span class="jr-min">${x.done?'':x.min+' хв'}</span></button>`}).join('')}</div></section>`;
+  const free=!next&&!bnext;
+  const freeSec=`<section class="jr-ph ph-free ${free?'cur':'lock'}"><${free?'button onclick="trainScreen()"':'div'} class="jr-ph-h"><span class="jr-ph-ic">${icn('grid')}</span><span class="jr-ph-t"><b>Вільна практика</b><small>ігри, мапа, діалоги, іспити — відкриється в кінці</small></span><em>${free?icn('arrow'):lockI}</em></${free?'button':'div'}></section>`;
+  // 6. останні досягнення
+  const ra=typeof recentAch==='function'?recentAch(3):[];
+  const ach=`<div class="pm-sec-h"><h2>Досягнення</h2><button class="link" onclick="achScreen()">Усі ${icn('arrow')}</button></div>
+    ${ra.length?`<div class="pm-ach">${ra.map(({a})=>`<button class="pm-badge" onclick="achScreen()"><span>${a[1]}</span><b>${esc(a[2])}</b></button>`).join('')}</div>`:`<div class="pm-card pm-empty">${icn('medal','pm-tic')}<span>Перше досягнення — після першого вивченого слова</span></div>`}`;
+  const after=!next?`${typeof daySummaryHTML==='function'?daySummaryHTML():''}${pl?`<button class="k-row" onclick="settingsScreen()">${icn('target','pm-tic')}<span class="k-t"><b>Ціль: ${pl.lvl} до ${fmtDate(pl.eta)}</b><small>${pl.focus&&FOCUS[pl.focus]?'фокус: '+FOCUS[pl.focus].t.toLowerCase():'щоденний план'}</small></span><span class="k-chev">›</span></button>`:''}`:'';
+  return `${top}${hero}${stats}${test}${chal}
+   <div class="jr-head"><h2>План дня</h2><div class="k-seg sm">${[30,60].map(x=>`<button class="${m===x?'on':''}" onclick="setMinutes(${x})">${x} хв</button>`).join('')}</div></div>
+   <div class="k-list jr">${phases}${bonusSec}${freeSec}</div>${after}${ach}`;
 }
 
 /* ---------- екран «План виконано» ---------- */
@@ -8510,13 +8652,13 @@ function trainScreen(){
   const mist=typeof mistList==='function'?mistList().filter(x=>!x.m.fixed).length:0,hard=hardOfDay().length,best=S.best||{};
   const t=(ic,n,f,badge)=>`<button class="tr-it" onclick="${f}"><span class="tr-ic">${ic}</span><b>${n}</b>${badge?`<i class="k-badge">${badge}</i>`:''}</button>`;
   const G=[
-   ['warm','🔁','Закріпити слова','щоб не забути',[t('🃏','Картки','startLearn()'),t('✅','Тест','startQuiz()'),t('🔗','Пари','startMatch()'),t('❌','Мої помилки','myDict()',mist||''),hard>=3?t('🔥','Важкі слова','startHardDay()',hard):'']],
-   ['new','🧩','Слова в реченнях','щоб уміти вжити',[t('🧩','Вставте слово','startFill()'),t('🧱','Складіть речення','startBuild()'),SD()?t('📐','Будова речення','structList()'):'',t('📘','Граматика','grammarList()')]],
-   ['prac','🎧','Слухати й писати','на слух і з голови',[t('🎧','Аудіювання','startListen()'),t('✍️','Диктант','startDict()'),typeof canTalk!=='undefined'&&canTalk?t('🗣','Вимова','startSpeak()'):'',t('🇺🇦','Переклад речень','translateStart()'),t('⌨️','Написання','startType()'),t('📝','Вільне письмо','freeWrite()')]],
-   ['talk','🎮','Ігри та історії','легше, але з користю',[t('🗺️','Мапа й боси','mapScreen()'),t('💬','Діалоги','dialogList()'),t('🌧️','Дощ слів','rainStart()',best['rain_'+S.lang]?'🏆'+best['rain_'+S.lang]:''),t('⚡','Блискавка','blitzStart()',best['blitz_'+S.lang]?'🏆'+best['blitz_'+S.lang]:'')]],
-   ['bonus','🧭','Основи й іспити','алфавіт, числа, PD',[t('🔤','Алфавіт','alphabetScreen()'),t('🔢','Числа','numbersScreen()'),S.lang==='da'?t('🇩🇰','Іспити PD','examHome()'):'',t('🏅','Досягнення','achScreen()'),t('📅','Тиждень','weekReport()')]]];
+   ['warm',icn('refresh'),'Закріпити слова','щоб не забути',[t(icn('cards'),'Картки','startLearn()'),t(icn('quiz'),'Тест','startQuiz()'),t(icn('link'),'Пари','startMatch()'),t(icn('xcircle'),'Мої помилки','myDict()',mist||''),hard>=3?t(icn('bolt'),'Важкі слова','startHardDay()',hard):'']],
+   ['new',icn('type'),'Слова в реченнях','щоб уміти вжити',[t(icn('type'),'Вставте слово','startFill()'),t(icn('blocks'),'Складіть речення','startBuild()'),SD()?t(icn('list'),'Будова речення','structList()'):'',t(icn('book'),'Граматика','grammarList()')]],
+   ['prac',icn('headphones'),'Слухати й писати','на слух і з голови',[t(icn('headphones'),'Аудіювання','startListen()'),t(icn('pen'),'Диктант','startDict()'),typeof canTalk!=='undefined'&&canTalk?t(icn('mic'),'Вимова','startSpeak()'):'',t(icn('lang'),'Переклад речень','translateStart()'),t(icn('type'),'Написання','startType()'),t(icn('pen'),'Вільне письмо','freeWrite()')]],
+   ['talk',icn('grid'),'Ігри та історії','легше, але з користю',[t(icn('map'),'Мапа й боси','mapScreen()'),t(icn('chat'),'Діалоги','dialogList()'),t(icn('rain'),'Дощ слів','rainStart()',best['rain_'+S.lang]?best['rain_'+S.lang]:''),t(icn('bolt'),'Блискавка','blitzStart()',best['blitz_'+S.lang]?best['blitz_'+S.lang]:'')]],
+   ['bonus',icn('globe'),'Основи й іспити','алфавіт, числа, PD',[t(icn('abc'),'Алфавіт','alphabetScreen()'),t(icn('hash'),'Числа','numbersScreen()'),S.lang==='da'?t(icn('flag'),'Іспити PD','examHome()'):'',t(icn('medal'),'Досягнення','achScreen()'),t(icn('calendar'),'Тиждень','weekReport()')]]];
   const rec=nextOptions()[0];
-  app.innerHTML=tabHead('Вправи')+(rec?`<button class="tr-rec" onclick="${rec[3]}"><span>${rec[0]}</span><span class="k-t"><small>Радимо зараз</small><b>${esc(rec[1])}</b><em>${esc(rec[2])}</em></span><span class="k-chev">›</span></button>`:'')+
+  app.innerHTML=tabHead('Вправи')+(rec?`<button class="tr-rec" onclick="${rec[3]}"><span class="tr-rec-ic">${icn('sparkle')}</span><span class="k-t"><small>Радимо зараз</small><b>${esc(rec[1])}</b><em>${esc(rec[2])}</em></span><span class="k-chev">›</span></button>`:'')+
     G.map(([k,ic,n,d,items])=>{const h=items.filter(Boolean).join('');return h?`<section class="tr-g ph-${k}"><div class="tr-gh"><span>${ic}</span><b>${n}</b><small>${d}</small></div><div class="modes tr-grid">${h}</div></section>`:''}).join('');
   emit('screen','train');
 }
@@ -8744,6 +8886,64 @@ on('feedback',(html,ctx)=>{if(!ctx||ctx.ok||!/k-mistake/.test(html))return html;
   return html.replace(/<div class="hl-line">[^<]*Ви обрали[\s\S]*?<\/div>/,'').replace('<details class="rulebox" open>','<details class="rulebox">')});
 // пауза (повернення на головну чи у «Вправи») — таймер кроку починається заново, коли ви продовжите
 on('home:before',()=>{STEP_T=null});
+
+/* ====================== PREMIUM MINIMALISM: іконки, тема, ім'я ======================
+   Тонкі лінійні іконки (24×24, штрих 1.8) замість емодзі в інтерфейсі: план дня, головна, «Вправи».
+   Емодзі лишаються лише в навчальному вмісті (картинки слів, діалоги). */
+const IC={
+  refresh:'<path d="M20 11a8 8 0 0 0-14.3-4.9L4 8M4 4v4h4M4 13a8 8 0 0 0 14.3 4.9L20 16M20 20v-4h-4"/>',
+  book:'<path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5zM5 19.5A1.5 1.5 0 0 0 6.5 21H19v-3"/>',
+  sparkle:'<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM18.5 15.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/>',
+  type:'<path d="M4 7V5h16v2M12 5v14M9 19h6"/>',
+  bookopen:'<path d="M12 6.5C10 5 7 4.5 3 5v14c4-.5 7 0 9 1.5 2-1.5 5-2 9-1.5V5c-4-.5-7 0-9 1.5zM12 6.5v14"/>',
+  list:'<path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/>',
+  headphones:'<path d="M4 15v-3a8 8 0 0 1 16 0v3M4 15a2 2 0 0 1 2-2h1v7H6a2 2 0 0 1-2-2zM20 15a2 2 0 0 0-2-2h-1v7h1a2 2 0 0 0 2-2z"/>',
+  chat:'<path d="M20.5 12a8.5 8.5 0 0 1-12.3 7.6L3.5 20.5l1-4.4A8.5 8.5 0 1 1 20.5 12z"/>',
+  lang:'<path d="M4 5h8M8 3v2M6 5c0 4 2.5 7 5 8M10 5c-.5 3-2.5 6-6 8M13 21l4-10 4 10M14.5 17.5h5"/>',
+  pen:'<path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16zM13.5 6.5l4 4"/>',
+  blocks:'<path d="M4 14h7v6H4zM13 14h7v6h-7zM8.5 7h7v7h-7z"/>',
+  mic:'<path d="M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3zM5 11a7 7 0 0 0 14 0M12 18v3"/>',
+  target:'<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/>',
+  flag:'<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>',
+  star:'<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8L3.5 9.7l5.9-.9z"/>',
+  grid:'<path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z"/>',
+  flame:'<path d="M12 21a7 7 0 0 0 7-7c0-4-3-6.5-4-10-2 2-3 3.5-3 6-1-1-1.5-2-1.7-3.3C7.5 8.6 5 11 5 14a7 7 0 0 0 7 7z"/>',
+  clock:'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+  trophy:'<path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M9 20h6M10 17h4v3h-4z"/>',
+  cards:'<path d="M7 4h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zM9 9h6M9 13h4"/>',
+  quiz:'<path d="M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zM8 12l3 3 5-6"/>',
+  link:'<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
+  xcircle:'<circle cx="12" cy="12" r="8.5"/><path d="M9 9l6 6M15 9l-6 6"/>',
+  bolt:'<path d="M13 3L5 13h6l-1 8 8-10h-6z"/>',
+  map:'<path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2zM9 4v14M15 6v14"/>',
+  rain:'<path d="M7 15a4 4 0 0 1-.6-8A6 6 0 0 1 18 8a3.5 3.5 0 0 1 0 7zM8 18l-1 2.5M12 18l-1 2.5M16 18l-1 2.5"/>',
+  abc:'<path d="M3 17l3.5-10L10 17M4.3 13.5h4.4M13 7v10h3.5a2.5 2.5 0 0 0 0-5H13h3a2.5 2.5 0 0 0 0-5z"/>',
+  hash:'<path d="M9 4L7 20M17 4l-2 16M4 9h16M3 15h16"/>',
+  calendar:'<path d="M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM4 10h16M8 3v4M16 3v4"/>',
+  medal:'<circle cx="12" cy="15" r="5"/><path d="M8.5 3h7L13.8 10.3M8.5 3l1.7 7.3"/>',
+  sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/>',
+  moon:'<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>',
+  user:'<circle cx="12" cy="8.5" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/>',
+  arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+  layers:'<path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5"/>',
+  check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+  speaker:'<path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4zM16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"/>',
+  play:'<path d="M8 5.5v13l10.5-6.5z" fill="currentColor" stroke="none"/>',
+  globe:'<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.5 3.5 5.5 3.5 8.5s-1 6-3.5 8.5c-2.5-2.5-3.5-5.5-3.5-8.5s1-6 3.5-8.5z"/>'};
+function icn(n,cls){return `<svg class="ic ${cls||''}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]||IC.sparkle}</svg>`}
+const BLOCK_IC={review:'refresh',grammar:'book',struct:'blocks',new:'sparkle',fill:'type',read:'bookopen',events:'list',focus:'target',listen:'headphones',dict:'headphones',
+  dialog:'chat',transl:'lang',write:'pen',speak:'mic',extra:'flag',mist:'xcircle',today:'refresh',blitz:'bolt',text:'bookopen',build:'blocks',bed:'moon'};
+
+/* тема одним дотиком: світла ↔ темна */
+function isDark(){const t=document.documentElement.dataset.theme;return t?t==='dark':!!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)}
+function toggleTheme(){S.theme=isDark()?'light':'dark';save();applyTheme();(REDRAW||home)()}
+
+/* привітання */
+function greetText(){const h=new Date().getHours();return h<5?'Доброї ночі':h<12?'Доброго ранку':h<18?'Доброго дня':'Доброго вечора'}
+function avatarHTML(){const n=(S.name||'').trim();return `<button class="pm-ava" onclick="settingsScreen()" aria-label="Профіль">${n?esc(n[0].toUpperCase()):icn('user')}</button>`}
+// останні досягнення поточної мови
+function recentAch(n){const A=S.ach||{},pre=S.lang+':';return ACH.map(a=>({a,d:A[pre+a[0]]})).filter(x=>x.d).sort((x,y)=>x.d<y.d?1:-1).slice(0,n||3)}
 
 bootApp();
 </script>
