@@ -950,6 +950,11 @@ input.answer,.wta,textarea{background:var(--card);color:var(--ink);border-color:
 .jr-hero-t small{text-transform:none;letter-spacing:0}
 .tr-rec small{color:#fff;opacity:.85}
 .ph-bonus.jr-hero{--ph:#F59E0B;--ph2:#B45309}
+.lv-open{text-align:left;margin:14px 0 6px;padding:14px;border-radius:16px;background:var(--ok-soft)}
+.lv-open-h{font-weight:700;margin-bottom:10px}.lv-open-h b{color:var(--ok-ink)}
+.lv-open-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
+.lv-open-g div{background:var(--card);border-radius:12px;padding:8px 10px}.lv-open-g b{display:block;font-size:16px}.lv-open-g small{color:var(--muted);font-size:12px}
+.lv-open-c{margin-top:10px;font-size:13px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -5991,10 +5996,11 @@ function placementResult(){
   const tot={rec:[0,0],ctx:[0,0],prod:[0,0],syn:[0,0]};PT.res.forEach(r=>{for(const k in tot){tot[k][0]+=r.sk[k][0];tot[k][1]+=r.sk[k][1]}});
   const SK={rec:'🔎 Розуміння',ctx:'🧩 Контекст',prod:'✍️ Написання',syn:'🧱 Будова речення'};
   const weak=Object.entries(tot).filter(([k,v])=>v[1]).sort((a,b)=>a[1][0]/a[1][1]-b[1][0]/b[1][1])[0];
-  S.placement=S.placement||{};S.placement[S.lang]={lvl,date:today(),res:PT.res.map(r=>({lv:r.lv,right:r.right,n:r.n}))};save();addXP(30);
+  S.placement=S.placement||{};S.placement[S.lang]={lvl,date:today(),res:PT.res.map(r=>({lv:r.lv,right:r.right,n:r.n}))};if(typeof clampLevels==='function'){if(!S.levels.includes(maxLv()))S.levels=[maxLv()];clampLevels()}save();addXP(30);
   app.innerHTML=header()+`<div class="card result"><div class="emoji">🏅</div><h2 style="margin:6px 0">Ваш рівень: ${lvl}</h2>
     <div class="muted">${LEVEL_NAMES[lvl]}${passed.length?' · упевнено пройдено: '+passed.map(r=>r.lv).join(', '):''}</div>
     <div class="pt-res">${PT.res.map(r=>`<div class="${r.pass?'ok':'no'}"><b>${r.lv}</b><span>${r.right}/${r.n}</span></div>`).join('')}</div>
+    ${typeof lvOpenHTML==='function'?lvOpenHTML():''}
     <div class="pt-sk">${Object.entries(tot).filter(([k,v])=>v[1]).map(([k,v])=>`<div class="srow"><span>${SK[k]}</span><div class="bar"><i style="width:${v[0]/v[1]*100}%"></i></div><b>${v[0]}/${v[1]}</b></div>`).join('')}</div>
     ${weak&&weak[1][0]/weak[1][1]<.7?`<p class="muted" style="line-height:1.5">Найслабше місце: <b>${SK[weak[0]]}</b>. ${weak[0]==='prod'?'Частіше обирайте режим «Написання» і диктант.':weak[0]==='syn'?'Пройдіть уроки «Будова речення».':weak[0]==='ctx'?'Тренуйте «Вставте слово» й читання.':'Більше карток і «Тест».'}</p>`:''}
     ${planProposalHTML(lvl,weak?weak[0]:null,lower,n)}</div>`;
@@ -8277,6 +8283,17 @@ function lvPathHTML(){const n=nextLv(),p=lvProgress();
   return `<div class="lv-path"><div class="lv-path-h"><b>Ваш рівень: ${maxLv()}</b><span>${n?`до ${n}: ${Math.round(p*100)}% / ${Math.round(LV_UNLOCK*100)}%`:'найвищий рівень'}</span></div>
    <div class="bar"><i style="width:${Math.min(100,p/LV_UNLOCK*100)}%"></i></div>
    ${n?`<small class="muted">Вивчіть ${Math.round(LV_UNLOCK*100)}% слів рівня ${maxLv()} — і рівень ${n} відкриється автоматично.</small>`:''}</div>`}
+
+// після тесту: що саме відкрилося на вашому рівні, а що ще закрито
+function lvOpenHTML(){const mx=maxLv(),mi=LEVELS.indexOf(mx),open=LEVELS.slice(0,mi+1),closed=LEVELS.slice(mi+1);
+  const words=WORDS.filter(w=>w[S.lang]&&open.includes(w.lv)&&(w.topic!=='ukus'||S.lang==='en')).length;
+  const texts=textsFor().filter(t=>open.includes(t.lv)).length,gram=(GRAMMAR[S.lang]||[]).filter(g=>open.includes(g.lv||'A1')).length;
+  const dlg=typeof dialogsFor==='function'?dialogsFor().filter(s=>open.includes(s.lv||'A1')).length:0;
+  const wr=((typeof EXAMDATA!=='undefined'&&EXAMDATA.write)||[]).filter(t=>(t.lang||'da')===S.lang&&open.includes(t.lv||'B1')).length;
+  const cell=(ic,n,t)=>`<div><b>${ic} ${n.toLocaleString('uk')}</b><small>${t}</small></div>`;
+  return `<div class="lv-open"><div class="lv-open-h">🔓 Відкрито для вас: <b>${open.length>1?open[0]+'–'+mx:mx}</b></div>
+    <div class="lv-open-g">${cell('🔤',words,'слів і фраз')}${cell('📖',texts,'текстів')}${cell('📘',gram,'уроків граматики')}${cell('💬',dlg,'діалогів')}${wr?cell('✍️',wr,'завдань на письмо'):''}</div>
+    ${closed.length?`<div class="lv-open-c">🔒 ${closed.join(', ')} — закрито. ${closed[0]} відкриється, коли вивчите ${Math.round(LV_UNLOCK*100)}% слів ${mx} або пройдете тест ще раз.</div>`:''}</div>`}
 
 /* ====================== ШЛЯХ ДНЯ ======================
    Головна — один маршрут без хаосу:
