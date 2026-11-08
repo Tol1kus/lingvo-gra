@@ -813,6 +813,22 @@ input.answer,.wta,textarea{background:var(--card);color:var(--ink);border-color:
 .onb-langs{grid-template-columns:repeat(3,minmax(0,1fr))}.onb-lang{min-width:0;padding:16px 4px;font-size:14px}.onb-lang b{overflow:hidden;text-overflow:ellipsis;max-width:100%}@media (max-width:340px){.onb-langs{grid-template-columns:1fr}.onb-lang{flex-direction:row;justify-content:center;gap:12px;padding:12px}.onb-lang .flag{font-size:30px}}
 .onb-langs{grid-template-columns:repeat(2,minmax(0,1fr))}
 .k-voice{display:flex;gap:8px;width:100%;align-items:center}.k-voice select{flex:1;min-width:0;min-height:44px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;font-size:14px;padding:0 10px}
+
+/* ===== фінал дня ===== */
+.k-daydone{text-align:center;padding:18px 4px 4px}.k-dd-hero{font-size:64px}.k-daydone h1{margin:4px 0;font-size:28px}
+.k-sum{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:12px 0 8px}.k-sum div{background:var(--surf);border-radius:14px;padding:10px 6px;text-align:center}
+.k-sum b{display:block;font-size:17px}.k-sum small{font-size:11px;color:var(--muted);font-weight:600}
+.k-tomorrow{background:var(--accent-soft);border-radius:14px;padding:12px 14px;margin-bottom:6px}.k-tomorrow b{display:block}.k-tomorrow small{display:block;color:var(--ink);opacity:.8;font-weight:600;font-size:13px;margin-top:2px}
+.k-next .k-row.rec{border-color:var(--accent);background:var(--accent-soft)}.k-rec{font-style:normal;font-size:11px;font-weight:800;color:var(--on-accent);background:var(--accent);border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:middle}
+.k-plan-done{margin-top:10px}.k-plan-done summary{cursor:pointer;color:var(--muted);font-weight:700;font-size:14px;padding:8px 2px}
+@media (max-width:360px){.k-sum{grid-template-columns:repeat(2,1fr)}}
+.k-helper{display:flex;gap:10px;align-items:flex-start;margin:10px 0 8px}
+.k-hm{font-size:40px;line-height:1;flex:0 0 auto}
+.k-hb{flex:1;min-width:0;background:var(--accent-soft);border-radius:4px 18px 18px 18px;padding:12px 14px;position:relative}
+.k-hb small{display:block;font-size:12px;font-weight:800;color:var(--accent);margin-bottom:2px}.k-hb p{margin:0 0 10px;font-size:15px;line-height:1.45}
+.k-hbtns{display:flex;flex-wrap:wrap;gap:6px}.k-hbtns .btn{min-height:42px;font-size:14px;padding:0 12px;flex:1 1 auto}
+.k-test{display:flex;gap:12px;align-items:flex-start;border:2px solid var(--accent);background:var(--accent-soft);border-radius:18px;padding:14px;margin-bottom:10px}.k-test>span{font-size:28px}.k-test .k-t small{white-space:normal;margin-bottom:8px}
+.k-gdesc{margin:-4px 2px 8px;font-size:13px;color:var(--muted);font-weight:600}.k-badge{font-style:normal;font-size:11px;font-weight:800;color:#fff;background:var(--bad);border-radius:8px;padding:1px 6px;vertical-align:middle}
 </style>
 </head>
 <body>
@@ -6738,7 +6754,7 @@ on('grade',(w,q,x)=>{
 });
 on('introduce',w=>touch(w));
 function touch(w){if(!w||w.my)return;S.touched=S.touched||{};const t=today();
-  if(!S.touched.d||S.touched.d!==t)S.touched={d:t};LANG_IDS.forEach(l=>S.touched[l]=[]);
+  if(!S.touched.d||S.touched.d!==t){S.touched={d:t};LANG_IDS.forEach(l=>S.touched[l]=[])}
   const a=S.touched[S.lang]||(S.touched[S.lang]=[]);if(!a.includes(w.id))a.push(w.id)}
 function retentionHTML(){
   const R=(S.ret||{})[S.lang];const p=b=>b&&b.n?Math.round(b.c/b.n*100)+'%':'—';
@@ -7034,31 +7050,30 @@ on('home:after',checkAch);
 
 function trainScreen(){
   emit('home:before');applyTheme();REDRAW=trainScreen;
-  app.innerHTML=header()+`
-  <h2>🎮 Ігри та виклики</h2><div class="modes">${gameModes()}</div>
-  <h2>🏋️ Вправи</h2>
-  <div class="modes">
-    <button class="mode" onclick="startLearn()"><div class="ic">🃏</div><b>Вивчати</b><span>Картки з картинками</span></button>
-    <button class="mode" onclick="startQuiz()"><div class="ic">✅</div><b>Тест</b><span>Оберіть переклад</span></button>
-    <button class="mode" onclick="startType()"><div class="ic">⌨️</div><b>Написання</b><span>Напишіть самостійно</span></button>
-    <button class="mode" onclick="startMatch()"><div class="ic">🔗</div><b>Пари</b><span>На швидкість</span></button>
-    <button class="mode" onclick="startFill()"><div class="ic">🧩</div><b>Вставте слово</b><span>Речення з пропуском</span></button>
-    <button class="mode" onclick="startBuild()"><div class="ic">🧱</div><b>Складіть речення</b><span>Зі слів-плиток</span></button>
-    <button class="mode" onclick="startListen()"><div class="ic">🎧</div><b>Аудіювання</b><span>Почуйте й оберіть</span></button>
-    <button class="mode" onclick="startDict()"><div class="ic">✍️</div><b>Диктант</b><span>Почуйте й запишіть</span></button>
-    ${typeof canTalk!=='undefined'&&canTalk?`<button class="mode" onclick="startSpeak()"><div class="ic">🗣</div><b>Вимова</b><span>Скажіть слово вголос</span></button>`:''}
-  </div>
-  <h2>📘 Основи й граматика</h2>
-  <div class="modes">
-    <button class="mode" onclick="grammarList()"><div class="ic">📘</div><b>Граматика</b><span>Правила + вправи</span></button>
-    <button class="mode" onclick="structList()"><div class="ic">🧱</div><b>Будова речення</b><span>Порядок слів і «чому так»</span></button>
-    <button class="mode" onclick="alphabetScreen()"><div class="ic">🔤</div><b>Алфавіт і вимова</b><span>Літери, звуки, правила читання</span></button>
-    <button class="mode" onclick="numbersScreen()"><div class="ic">🔢</div><b>Числа</b><span>На слух, читання, написання</span></button>
-    ${S.lang==='da'?`<button class="mode" onclick="examHome()"><div class="ic">🇩🇰</div><b>Іспити PD2 / PD3</b><span>Письмо, читання, суспільство, історія</span></button>`:''}
-  </div>`;
+  const mist=typeof mistList==='function'?mistList().filter(x=>!x.m.fixed).length:0,hard=hardOfDay().length;
+  const m=(ic,t,d,f,badge)=>`<button class="mode" onclick="${f}"><div class="ic">${ic}</div><b>${t}${badge?` <i class="k-badge">${badge}</i>`:''}</b><span>${d}</span></button>`;
+  const G=[
+   ['🔁 Закріпити слова','коли хочеться повторити й не забути',[
+     m('🃏','Картки','перегляньте й оцініть, наскільки знаєте','startLearn()'),m('✅','Тест','оберіть правильний переклад','startQuiz()'),
+     m('🔗','Пари','з’єднайте слово з перекладом на швидкість','startMatch()'),m('❌','Мої помилки','слова, де ви помилялися','myDict()',mist||''),
+     hard>=3?m('🔥','Важкі слова','найважчі слова за останні дні','startHardDay()',hard):'']],
+   ['🧩 Слова в реченнях','коли знаєте слово, але не вмієте його вжити',[
+     m('🧩','Вставте слово','речення з пропуском','startFill()'),m('🧱','Складіть речення','з плиток-слів','startBuild()'),
+     SD()?m('📐','Будова речення','порядок слів і «чому так»','structList()'):'']],
+   ['🎧 Слухати й говорити','щоб розуміти на слух і не боятися говорити',[
+     m('🎧','Аудіювання','почуйте й оберіть','startListen()'),m('✍️','Диктант','почуйте й запишіть','startDict()'),
+     typeof canTalk!=='undefined'&&canTalk?m('🗣','Вимова','скажіть слово вголос','startSpeak()'):'']],
+   ['✍️ Писати','щоб слово «вийшло з голови на папір»',[
+     m('⌨️','Написання','напишіть слово самостійно','startType()'),m('📝','Вільне письмо','3–5 речень із сьогоднішніми словами','freeWrite()'),
+     S.lang==='da'?m('🇩🇰','Іспити PD2 / PD3','письмо, читання, суспільство','examHome()'):'']],
+   ['📘 Граматика й основи','правила, алфавіт, вимова, числа',[
+     m('📘','Граматика','правила з поясненням і вправи','grammarList()'),m('🔤','Алфавіт і вимова','літери й правила читання','alphabetScreen()'),
+     m('🔢','Числа','на слух, читання, написання','numbersScreen()')]],
+   ['🎮 Ігри та виклики','коли хочеться легше, але з користю',[gameModes()]]];
+  app.innerHTML=header()+`<p class="muted" style="margin:0 2px 6px">Основне навчання — у плані на вкладці «Сьогодні». Тут вправи, щоб попрацювати над чимось окремо.</p>`+
+    G.map(([t,d,items])=>{const h=items.filter(Boolean).join('');return h?`<h2>${t}</h2><p class="k-gdesc">${d}</p><div class="modes">${h}</div>`:''}).join('');
   emit('screen','train');
 }
-
 // settingsScreen — у 20_klar.js (екран за макетом K16)
 function setTheme(t){S.theme=t;save();applyTheme();settingsScreen()}
 let RESET_ARM=0;
@@ -7311,7 +7326,7 @@ on('planBlocks',B=>{
 let PLAN_JUST=null,PLAN_AUTO=null;
 function planNextBlock(){return planBlocks().find(b=>!b.done)}
 function planNextLabel(){const n=planNextBlock();return n?'Далі: '+n.t:'✅ План виконано'}
-function planNext(){clearInterval(PLAN_AUTO);const n=planNextBlock();if(n)startBlock(n.id);else{home();snd('win');confetti();toast('🏅 План на сьогодні виконано! Новий — після 00:00')}}
+function planNext(){clearInterval(PLAN_AUTO);const n=planNextBlock();if(n)return startBlock(n.id);if(typeof dayDoneScreen==='function')return dayDoneScreen();home()}
 on('result',o=>{
   if(!PLAN_JUST)return;PLAN_JUST=null;const n=planNextBlock(),row=document.querySelector('.result .row');if(!row)return;
   const B=planBlocks(),k=B.filter(b=>b.done).length;
@@ -7708,14 +7723,16 @@ function homeView(){
   const row=(b,i)=>{const st_=b.done?'done':next&&b.id===next.id?'next':'locked';
     return `<button class="k-step ${st_}" onclick="startBlock('${b.id}')"><span class="k-ic">${b.done?'✓':b.t.split(' ')[0]}</span>
       <span class="k-t"><b>${esc(b.t.split(' ').slice(1).join(' '))}</b><small>${esc(blockSub(b))}</small></span>
-      ${st_==='next'?`<span class="btn k-go">${B.some(x=>x.done)?'Продовжити':'Почати'}</span>`:st_==='done'?'<span class="k-ok">✓</span>':`<span class="k-lock" aria-label="закрито">${LOCK_SVG}</span>`}</button>`};
+      ${st_==='next'?`<span class="btn k-go">${B.some(x=>x.done)?'Продовжити':'Почати'}</span>`:st_==='done'?(next?'<span class="k-ok">✓</span>':'<span class="k-ok" title="Повторити">↻</span>'):`<span class="k-lock" aria-label="закрито">${LOCK_SVG}</span>`}</button>`};
   return `<div class="k-top2"><small>${DAYS[d.getDay()]}, ${d.getDate()} ${MONTHS[d.getMonth()]} · ${LANG_NAT[S.lang]} ${curLevel()}</small>
     <span><button class="k-icon" onclick="langPicker()" aria-label="Змінити мову">${L().flag}</button><button class="k-icon" onclick="settingsScreen()" aria-label="Налаштування">${ICON.gear}</button></span></div>
    <div class="k-head"><h1>Сьогодні</h1><div class="k-seg">${[30,60].map(x=>`<button class="${m===x?'on':''}" onclick="setMinutes(${x})">${x} хв</button>`).join('')}</div></div>
    <div class="k-prog"><div class="bar"><i style="width:${Math.min(100,spent/m*100)}%"></i></div><b>${spent} / ${m} хв</b></div>
+   ${!(S.placement&&S.placement[S.lang])&&!((S.ptLater||{})[S.lang]===today())?`<div class="k-test"><span>🎯</span><div class="k-t"><b>Визначте свій рівень з ${LANGS[S.lang].name.split(' ')[0].toLowerCase().replace(/а$/,'ої')}</b><small>Тест 10–15 хв — після нього гра складе план саме під вас</small>
+      <div class="k-hbtns"><button class="btn" onclick="placementIntro()">Пройти тест</button><button class="btn ghost" onclick="S.ptLater=S.ptLater||{};S.ptLater[S.lang]=today();save();home()">Пізніше</button></div></div></div>`:''}
    ${lockRev?`<div class="k-warn"><span>🔁</span><div><b>Обов'язкове повторення</b><small>Ще ${Math.min(dueWords().length,60)} слів, далі відкриються нові</small></div></div>`:''}
-   ${!next?`<div class="k-done"><b>🎉 План на сьогодні виконано</b><small>Новий план відкриється о 00:00 · <b id="midnight">${untilMidnight()}</b></small></div>`:''}
-   <div class="k-list">${B.map(row).join('')}</div>
+   ${!next?(typeof helperHTML==='function'?helperHTML():`<div class="k-done"><b>🎉 План на сьогодні виконано</b></div>`)+(typeof daySummaryHTML==='function'?daySummaryHTML()+'<h2>Що далі?</h2>'+nextOptionsHTML(4)+'<details class="k-plan-done"><summary>Сьогоднішній план (повторити крок)</summary>':''):''}
+   <div class="k-list">${B.map(row).join('')}</div>${!next&&typeof daySummaryHTML==='function'?'</details>':''}
    <div class="k-stats"><div><b>🔥 ${S.streak}</b><small>днів поспіль</small></div><div><b>${learnedN.toLocaleString('uk')}</b><small>слів у пам'яті</small></div><div><b>${R&&R.n?Math.round(R.c/R.n*100)+'%':'—'}</b><small>утримання</small></div></div>
    ${pl?`<button class="k-row" onclick="settingsScreen()"><span>🎯</span><span class="k-t"><b>Ціль: ${pl.lvl} до ${fmtDate(pl.eta)}</b><small>фокус: ${(FOCUS[pl.focus]||FOCUS.prod).t.toLowerCase()}</small></span><span class="k-chev">›</span></button>`:''}
    ${questsHTML()}
@@ -7976,6 +7993,70 @@ on('check:pre',(r,input,stored,lang)=>{
   if(u===s||!/'|\bnot\b|\b(am|is|are|will|would|had|have|has|us|cannot)\b/.test(u+' '+s))return null;
   return enEq(input,stored)?{ok:true,kind:'perfect',note:'Правильно. Скорочена й повна форма рівноцінні: '+stored}:null;
 });
+
+/* ====================== ЛОГІКА ДНЯ: ЩО ДАЛІ ======================
+   Після останнього кроку плану — екран «День завершено»: підсумок дня, що чекає завтра, і зрозумілі варіанти «що далі»
+   (закріпити сьогоднішнє, помилки, ще текст, гра, перед сном, інша мова). Ті самі варіанти — на головній, поки не настане 00:00. */
+function todayStats(){
+  const a=(S.act||{})[today()]||{},n=S.newLog[S.lang][today()]||0;
+  return {min:minutesToday(),ans:a.a||0,acc:a.a?Math.round((a.c||0)/a.a*100):0,newW:n,touched:touchedToday().length,streak:S.streak};
+}
+function tomorrowPreview(){
+  const t=addDays(1),due=ALL().filter(w=>{const x=st(w);return x&&x.due<=t}).length;
+  const gi=nextGrammar(),g=GRAMMAR[S.lang][gi];
+  return {due,newW:typeof newQuotaToday==='function'?newPerDay():10,grammar:g?g.t:''};
+}
+function nextOptions(){
+  const o=[],td=touchedToday(),mist=typeof mistList==='function'?mistList().filter(x=>!x.m.fixed).length:0;
+  const unread=textsFor().filter(t=>S.read[S.lang][t.idx]==null&&Math.abs(LEVELS.indexOf(t.lv)-LEVELS.indexOf(curLevel()))<=1).length;
+  const otherLangs=LANG_IDS.filter(l=>l!==S.lang&&Object.keys(S.srs[l]||{}).length);
+  if(bedTime()&&td.length>=3&&!(S.bed||{})[today()])o.push(['🌙','Перевірка перед сном','5 хв: слова, які ви вчили сьогодні — сон допоможе їх закріпити','startBed()',1]);
+  if(td.length>=3)o.push(['🔁','Закріпити сьогоднішнє',`${Math.min(10,td.length)} слів, з якими ви працювали сьогодні`,'startToday()',td.length>=5]);
+  if(mist)o.push(['❌','Мої помилки',`${mist} слів і фраз чекають на виправлення`,'startMist()',mist>=5]);
+  if(unread)o.push(['📖','Ще один текст',`${unread} непрочитаних текстів вашого рівня`,'readingList()',0]);
+  o.push(['⚡','Гра на 1 хвилину','«Блискавка 60 с» — швидке повторення','blitzStart()',0]);
+  o.push(['🗺️','Бос розділу','перевірте себе на мапі навчання','mapScreen()',0]);
+  if(otherLangs.length)o.push([LANGS[otherLangs[0]].flag,'Інша мова',`план дня з ${LANGS[otherLangs[0]].name.toLowerCase()}`,`chooseLang('${otherLangs[0]}')`,0]);
+  o.push(['📊','Мій прогрес','утримання, тижневий звіт, досягнення','statsScreen()',0]);
+  return o.sort((a,b)=>b[4]-a[4]);
+}
+function nextOptionsHTML(limit){return `<div class="k-next">${nextOptions().slice(0,limit||6).map(([ic,t,d,f,rec],i)=>`<button class="k-row ${i===0?'rec':''}" onclick="${f}"><span>${ic}</span><span class="k-t"><b>${esc(t)}${i===0?' <i class="k-rec">радимо</i>':''}</b><small>${esc(d)}</small></span><span class="k-chev">›</span></button>`).join('')}</div>`}
+function daySummaryHTML(){const s=todayStats(),t=tomorrowPreview();
+  return `<div class="k-sum">
+    <div><b>${s.min} хв</b><small>навчання</small></div><div><b>${s.ans}</b><small>відповідей${s.ans?' · '+s.acc+'%':''}</small></div><div><b>${s.newW}</b><small>нових слів</small></div><div><b>🔥 ${s.streak}</b><small>днів поспіль</small></div></div>
+   <div class="k-tomorrow"><b>Завтра в плані</b><small>🔁 ${t.due} слів на повторення · 🆕 ${t.newW} нових${t.grammar?` · 📘 ${esc(t.grammar)}`:''}</small><small>Новий план відкриється о 00:00 · <b id="midnight">${untilMidnight()}</b></small></div>`}
+/* екран «День завершено» — одразу після останнього кроку */
+function dayDoneScreen(){
+  applyTheme();snd('win');confetti();
+  app.innerHTML=`<div class="k-daydone"><div class="k-dd-hero">🏅</div><h1>День завершено!</h1>
+    <p class="muted">Ви пройшли весь план на сьогодні. Регулярність важливіша за кількість — завтра продовжимо.</p></div>
+    ${helperHTML()}${daySummaryHTML()}<h2>Що далі? <span class="muted" style="font-size:13px;font-weight:600">необов'язково</span></h2>${nextOptionsHTML(6)}
+    <div class="row"><button class="btn ghost" onclick="home()">На головну</button></div>`;
+  emit('screen','home');
+}
+// закріпити сьогоднішнє: короткий мікс по словах, з якими працювали сьогодні
+function startToday(){const ws=shuffle(touchedToday()).slice(0,10);if(ws.length<3)return toast('Сьогодні ще замало слів для закріплення');
+  runSession(ws.map((w,i)=>({kind:i%3===0&&w.sent&&w.sent[S.lang]?'fill':i%3===1?'type':(typeof hasPic==='function'&&hasPic(w)?'picchoice':'choice'),w,toUk:false,phase:'🔁 Закріплюємо сьогоднішнє'})),
+    {title:'Сьогоднішні слова закріплено!',back:home,backLabel:'🏠 На головну'})}
+
+/* ---------- помічник: «ви закінчили день, але у вас ще є час…» ----------
+   Рахує, скільки часу лишилося до вашої норми (30/60 хв), і пропонує, чим його заповнити, з оцінкою тривалості. */
+const OPT_MIN={startBed:5,startToday:5,startMist:5,readingList:8,blitzStart:1,mapScreen:5,chooseLang:30,statsScreen:1};
+const HELPER_NAME='Лінго';
+function helperHTML(){
+  const m=S.minutes||30,spent=minutesToday(),rem=Math.max(0,m-spent),h=new Date().getHours();
+  const opts=nextOptions().map(o=>({ic:o[0],t:o[1],f:o[3],min:OPT_MIN[o[3].split('(')[0]]||5})).filter(o=>!/statsScreen|chooseLang/.test(o.f));
+  let pick=[],left=rem;for(const o of opts){if(pick.length>=2)break;if(o.min<=Math.max(left,5)){pick.push(o);left-=o.min}}
+  if(!pick.length)pick=opts.slice(0,1);
+  const list=pick.map(o=>`<b>${esc(o.t.toLowerCase())}</b> (~${o.min} хв)`).join(' і ');
+  let say;
+  if(rem>=3)say=`Ви завершили навчальний день за ${spent} хв. До вашої норми ${m} хв лишилося ще <b>${rem} хв</b> — можна встигнути ${list}.`;
+  else say=`Чудово: і план, і ${m} хвилин навчання виконано! Якщо хочеться ще — ${list}. А можна й відпочити: пам'ять закріплює слова, поки ви відпочиваєте.`;
+  if(h>=21&&!(S.bed||{})[today()]&&touchedToday().length>=3)say+=' Перед сном раджу 5-хвилинну перевірку — так слова краще запам\'ятовуються.';
+  const mascot=(typeof MASCOT!=='undefined'&&MASCOT[S.lang])||'🦉';
+  return `<div class="k-helper"><span class="k-hm">${mascot}</span><div class="k-hb"><small>${HELPER_NAME}, ваш помічник</small><p>${say}</p>
+    <div class="k-hbtns">${pick.map((o,i)=>`<button class="btn ${i?'ghost':''}" onclick="${o.f}">${o.ic} ${esc(o.t)}</button>`).join('')}</div></div></div>`;
+}
 
 bootApp();
 </script>
