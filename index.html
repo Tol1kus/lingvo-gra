@@ -4788,7 +4788,7 @@ function langSeg(fn='home'){
 function dailyPlan(){
   const due=dueWords();
   const newDone=S.newLog[S.lang][today()]||0;
-  const quota=Math.max(0,S.dailyNew-newDone);
+  const quota=typeof newQuotaToday==='function'?newQuotaToday():Math.max(0,S.dailyNew-newDone);
   const fresh=pickNew(quota);
   const gram=(Object.keys(S.grammar[S.lang]).length?3:0)+errorFocusItems().length;
   return {due,newDone,quota,fresh,gram,done:!!S.doneLog[S.lang][today()]};
@@ -6875,6 +6875,9 @@ function settingsScreen(){
   <div class="levels">${lvStats.map(x=>`<button class="lvl ${S.levels.includes(x.lv)?'on':''}" onclick="toggleLevel('${x.lv}')">
      <b>${x.lv}</b><small>${LEVEL_NAMES[x.lv]}</small><div class="bar"><i style="width:${x.total?x.learned/x.total*100:0}%"></i></div><small>${x.learned}/${x.total}</small></button>`).join('')}</div>
   <div class="row" style="margin-top:10px"><button class="btn ghost" onclick="placementIntro()">🎯 ${S.placement&&S.placement[S.lang]?'Ваш рівень: '+S.placement[S.lang].lvl+' · пройти тест ще раз':'Визначити рівень (5 хв)'}</button></div>
+  <h2>Нових слів на день</h2>
+  <div class="topics">${NEW_OPTIONS.map(n=>`<button class="chip ${newPerDay()===n?'on':''}" onclick="setNewPerDay(${n})">${n}${n===((S.minutes||30)>=60?15:10)?' · рекомендовано':''}</button>`).join('')}</div>
+  <p class="muted" style="font-size:12.5px;margin:6px 2px 0">Кожне нове слово потім ще 8–10 разів повертається на повторення, тому через місяць щоденні повторення ≈ 10 × норма. Оптимально: 10 на день при 30 хв, 15 — при 60 хв. Якщо накопичилось багато повторень, гра сама дає менше нових.</p>
   <h2>Напрям перекладу</h2>
   <div class="topics">
     <button class="chip ${S.dir==='toUk'?'on':''}" onclick="setDir('toUk')">${L().flag} → 🇺🇦 На українську</button>
@@ -7073,7 +7076,7 @@ const FOCUS={
 };
 function planNumbers(lvl,minutes){
   const ws=WORDS.filter(w=>w.lv===lvl&&w[S.lang]&&!w.my),total=ws.length,known=ws.filter(learned).length;
-  const daily=minutes>=60?24:12, remain=Math.max(0,total-known);
+  const daily=(S.newPerDay||{})[S.lang]||(minutes>=60?15:10), remain=Math.max(0,total-known);
   const days=Math.max(1,Math.ceil(remain/daily*1.15)); // +15% на дні з повтореннями
   return {total,known,daily,days,eta:addDays(days),retest:addDays(Math.min(42,Math.max(14,Math.round(days/2))))};
 }
@@ -7105,7 +7108,7 @@ function placementResultRefresh(){const box_=document.querySelector('.plan-prop'
 function acceptPlan(){
   const {lvl,focus,markLower}=PLAN_OPT,m=S.minutes||30,N=planNumbers(lvl,m);
   S.plan=S.plan||{};S.plan[S.lang]={lvl,daily:N.daily,minutes:m,focus,start:today(),eta:N.eta,retest:N.retest};
-  S.dailyNew=N.daily;
+  S.dailyNew=N.daily;S.newPerDay=S.newPerDay||{};S.newPerDay[S.lang]=N.daily;
   placementApply(lvl,markLower);
   toast('📅 План прийнято: '+N.daily+' нових слів на день');
 }
@@ -7266,7 +7269,7 @@ on('home:after',()=>{const st_=document.querySelector('.stepper'),n=st_&&st_.que
 function textWords(t){if(!t)return [];const toks=new Set();(t.text.match(/\{([^{}|]+)\|/g)||[]).forEach(m=>toks.add(norm(m.slice(1,-1),S.lang)));
   return pool().filter(w=>!st(w)&&w[S.lang]&&toks.has(stripArt(norm(w[S.lang],S.lang),S.lang)))}
 on('block:new',b=>{
-  const pl=S.plan&&S.plan[S.lang],n=Math.max(4,Math.min(Math.round(b.min*60/22),pl&&pl.daily||99));
+  const n=newQuotaToday();if(n<=0){markBlock('new');toast('✅ Норму нових слів на сьогодні вже виконано');return planNext()}
   const fromText=shuffle(textWords(pickTextOfDay())).slice(0,Math.round(n*.4));
   const fresh=fromText.concat(pickNew(n*2).filter(w=>!fromText.includes(w))).slice(0,n);
   if(!fresh.length){markBlock('new');toast('У вибраних рівнях усі слова вже в роботі. Додайте рівень');return planNext()}
@@ -7274,6 +7277,17 @@ on('block:new',b=>{
     .concat(shuffle(fresh).map(w=>({kind:'choice',w,toUk:dirToUk(),phase:'🆕 Закріплення'})));
   runSession(items,{title:'Нові слова вивчено!',requeue:true,...finB('new'),extra:fromText.length?`<p class="muted">📖 ${fromText.length} із цих слів зустрінуться вам у тексті дня.</p>`:''});
 });
+
+/* Норма нових слів на день. Рекомендовано: 10 (30 хв) або 15 (60 хв): кожне нове слово потім ще ~8–10 разів повертається
+   на повторення, тож через місяць щоденні повторення ≈ 10 × норма. Коли накопичився борг повторень — нових менше. */
+const NEW_OPTIONS=[5,10,15,20];
+function newPerDay(){const own=(S.newPerDay||{})[S.lang];return own||((S.minutes||30)>=60?15:10)}
+function newQuotaToday(){
+  let n=newPerDay();const due=dueWords().length;
+  if(due>150)n=Math.min(n,3);else if(due>80)n=Math.ceil(n/2);
+  return Math.max(0,n-(S.newLog[S.lang][today()]||0));
+}
+function setNewPerDay(n){S.newPerDay=S.newPerDay||{};S.newPerDay[S.lang]=n;S.dailyNew=n;if(S.plan&&S.plan[S.lang])S.plan[S.lang].daily=n;save();settingsScreen()}
 
 /* ====================== 🗣 ВИМОВА: скажіть уголос ======================
    Розпізнавання мовлення браузера (iPhone Safari 14.5+, Chrome). Якщо його немає або мікрофон заборонено —
