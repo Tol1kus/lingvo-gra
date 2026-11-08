@@ -637,6 +637,10 @@ header{gap:8px}.brand{font-size:19px;min-width:0}.stats{gap:6px}.stats .pill{pad
 .dx-tip{background:var(--note-bg2);border-radius:10px;padding:8px 10px;margin:8px 0;font-weight:700;font-size:13.5px}
 .ai-txt{white-space:pre-wrap;font-size:14.5px;line-height:1.5}
 .atr-note{font-size:12.5px;font-weight:700;color:var(--muted);margin-top:6px;min-height:16px}
+.back.prev{font-size:22px;font-weight:900;line-height:1;padding:6px 12px;margin-right:4px;color:var(--accent)}
+.modal-box.peek{text-align:center}.pk-pic{font-size:54px;margin:8px 0}.pk-pic .pimg{width:90px;height:90px}
+.pk-uk{font-size:18px;font-weight:800;color:var(--muted);margin:4px 0 10px}
+.pk-ex{background:var(--bg);border-radius:12px;padding:10px;margin:6px 0;font-size:15px;line-height:1.45;text-align:left}.pk-ex small{display:block;color:var(--muted);margin-top:4px}
 </style>
 </head>
 <body>
@@ -7494,6 +7498,32 @@ function bindAutoTr(){
   fg.addEventListener('keydown',()=>{ATR_AUTO.fg=false});
 }
 on('screen',tab=>{if(tab==='dict'){ATR_AUTO={uk:false,fg:false};bindAutoTr()}});
+
+/* ====================== ‹ НАЗАД ДО ПОПЕРЕДНЬОГО СЛОВА ======================
+   Під час вправ кнопка «‹» у верхньому рядку повертає до попереднього слова чи фрази:
+   — серед карток нових слів — справжній крок назад (можна перегорнути картку ще раз);
+   — після вправ з оцінкою — картка-підказка попереднього слова (переклад, приклад, 🔊) без повторної оцінки.
+   У тесті рівня й бою з босом кнопки немає. */
+on('topRow',h=>{const it=SS&&SS.items&&SS.items[SS.i];if(!SS||SS.i<1||!it||it.test||it.phase==='👹 Бос')return h;
+  return h.replace('<div class="top-row"><button class="back"','<div class="top-row"><button class="back prev" onclick="prevItem()" title="Попереднє слово" aria-label="Попереднє слово">↶</button><button class="back"')});
+function prevItem(){
+  if(!SS||SS.i<1)return;const p=SS.items[SS.i-1],cur=SS.items[SS.i];
+  if(p.kind==='card'&&cur.kind==='card'){emit('item:leave');SS.i--;return renderItem()}
+  peekItem(p);
+}
+function peekItem(p){
+  const w=p.w;let body='';
+  if(w){const t=w[S.lang]||'',ex=w.sent&&w.sent[S.lang]?w.sent[S.lang].replace(/\[([^;\]]+)[^\]]*\]/,'<b>$1</b>'):'';
+    body=`<div class="pk-pic">${picHTML(w)}</div><div class="q-word">${esc(t)} <button class="speak" onclick="speak(${js(t)})">🔊</button></div><div class="pk-uk">${esc(w.uk)}</div>
+      ${ex?`<div class="pk-ex">${ex}<small>🇺🇦 ${esc((w.sent.uk||'').replace(/[\[\]]/g,''))}</small></div>`:''}${mnem(w)?`<div class="pk-ex">🧠 ${esc(mnem(w))}</div>`:''}`;
+    speak(t)}
+  else if(p.x){const t=p.x.parts.map(a=>a[0]).join(' ').replace(/\s+([,.!?])/g,'$1');body=`<div class="q-word" style="font-size:20px">${esc(t)} <button class="speak" onclick="speak(${js(t)})">🔊</button></div><div class="pk-uk">${esc(p.x.uk)}</div>`}
+  else if(p.ex){const [q,o,a,e]=p.ex;body=`<div class="q-word" style="font-size:19px">${esc(q.includes('___')?q.replace('___',o[a]):o[a])}</div><div class="pk-ex">💡 ${esc(e||'')}</div>${TR[q]?`<div class="pk-uk">${esc(TR[q])}</div>`:''}`}
+  else return toast('Попереднє завдання не має слова для перегляду');
+  const m=document.createElement('div');m.className='modal';m.id='peek';m.onclick=e=>{if(e.target===m)m.remove()};
+  m.innerHTML=`<div class="modal-box peek"><div class="q-label">‹ Попереднє слово</div>${body}<div class="row"><button class="btn" onclick="document.getElementById('peek').remove()">Продовжити →</button></div></div>`;
+  document.body.appendChild(m);
+}
 
 bootApp();
 </script>
