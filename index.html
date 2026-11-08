@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-180.png"><meta name="apple-mobile-web-app-title" content="Лінгво-гра"><meta name="apple-mobile-web-app-status-bar-style" content="default"><script>if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))</script>
-<meta name="theme-color" content="#f6f4ef">
+<meta name="theme-color" content="#FFFFFF">
 <title>Лінгво-гра: англійська, данська, італійська</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --accent:#2f5bd3; --accent-soft:#e8eefc;
@@ -641,6 +641,151 @@ header{gap:8px}.brand{font-size:19px;min-width:0}.stats{gap:6px}.stats .pill{pad
 .modal-box.peek{text-align:center}.pk-pic{font-size:54px;margin:8px 0}.pk-pic .pimg{width:90px;height:90px}
 .pk-uk{font-size:18px;font-weight:800;color:var(--muted);margin:4px 0 10px}
 .pk-ex{background:var(--bg);border-radius:12px;padding:10px;margin:6px 0;font-size:15px;line-height:1.45;text-align:left}.pk-ex small{display:block;color:var(--muted);margin-top:4px}
+
+/* =====================================================================
+   KLAR — дизайн-система (DESIGN.md). Перекриває попередні стилі.
+   ===================================================================== */
+:root{
+  --accent:#1D4ED8; --accent-soft:#E8EEFE; --on-accent:#FFFFFF;
+  --bg:#FFFFFF; --card:#FFFFFF; --surf:#F5F7FB; --pic:#F5F7FB; --ink:#0F172A; --muted:#546072; --line:#E4E8F0;
+  --ok:#047857; --ok-soft:#E3F5EC; --bad:#B42318; --bad-soft:#FDECEA; --warn:#8A5300; --warn-soft:#FFF3DD;
+  --en:#0E6E8C; --en-soft:#E1F2F7; --et:#A34A08; --et-soft:#FCEEDF; --m:#0E6E8C; --m-soft:#E1F2F7; --f:#A3266B; --f-soft:#FBE7F1;
+  --note-bg:#FFF8EB; --note-bg2:#FFF8EB; --note-line:#F1DFB5; --bar-bg:rgba(255,255,255,.94); --shadow:rgba(15,23,42,.06); --pop:#0F172A;
+  --ok-ink:#047857; --bad-ink:#B42318; --warn-ink:#8A5300; --radius:16px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --accent:#7EA3FF; --accent-soft:#1B2A4D; --on-accent:#0B1120;
+  --bg:#0B1120; --card:#131B2C; --surf:#1A2234; --pic:#E7ECF4; --ink:#F1F5F9; --muted:#A3AEC2; --line:#253047;
+  --ok:#5ED3A4; --ok-soft:#12352A; --bad:#FF9B8F; --bad-soft:#3B1A1A; --warn:#F4C063; --warn-soft:#33270F;
+  --en:#6BD0EE; --en-soft:#163845; --et:#F2B26B; --et-soft:#3D2A14; --m:#6BD0EE; --m-soft:#163845; --f:#F59AC7; --f-soft:#3A1830;
+  --note-bg:#2A2412; --note-bg2:#2A2412; --note-line:#4A3E1E; --bar-bg:rgba(19,27,44,.94); --shadow:rgba(0,0,0,.4); --pop:#1A2234;
+  --ok-ink:#5ED3A4; --bad-ink:#FF9B8F; --warn-ink:#F4C063}}
+:root[data-theme="dark"]{
+  --accent:#7EA3FF; --accent-soft:#1B2A4D; --on-accent:#0B1120;
+  --bg:#0B1120; --card:#131B2C; --surf:#1A2234; --pic:#E7ECF4; --ink:#F1F5F9; --muted:#A3AEC2; --line:#253047;
+  --ok:#5ED3A4; --ok-soft:#12352A; --bad:#FF9B8F; --bad-soft:#3B1A1A; --warn:#F4C063; --warn-soft:#33270F;
+  --en:#6BD0EE; --en-soft:#163845; --et:#F2B26B; --et-soft:#3D2A14; --m:#6BD0EE; --m-soft:#163845; --f:#F59AC7; --f-soft:#3A1830;
+  --note-bg:#2A2412; --note-bg2:#2A2412; --note-line:#4A3E1E; --bar-bg:rgba(19,27,44,.94); --shadow:rgba(0,0,0,.4); --pop:#1A2234;
+  --ok-ink:#5ED3A4; --bad-ink:#FF9B8F; --warn-ink:#F4C063}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg)!important;background-image:none!important;color:var(--ink);letter-spacing:-.005em}
+h1,h2,.brand,.q-word,.big,.daily-title,.score{letter-spacing:-.02em}
+h2{font-weight:800;font-size:18px}
+/* менше руху: лише необхідне */
+.brand .dot,.st.next .st-ic,.quest .mini.on,.q-dots i.ready,.blk.next .bk-ic,.node.boss.ready,.mascot,.flame.lit,.bz-head .combo{animation:none!important}
+.mode,.goal,.quests,.daily,.hero,.lp-card{animation:none!important}
+/* картки, кнопки, поля */
+.card,.mode,.lesson,.lang,.lvl,.chip,.pill,.my-row,.summary div,.daily,.k-set,.quests{background:var(--card);border-color:var(--line)}
+.card{border:1px solid var(--line);box-shadow:none}
+.mode{border:1px solid var(--line);box-shadow:none}.mode:hover{transform:none;box-shadow:none;border-color:var(--accent)}
+.mode::after{display:none}.mode .ic{background:var(--surf)!important;width:44px;height:44px;border-radius:12px;font-size:22px}
+.btn{background:var(--accent);color:var(--on-accent);font-weight:700;border-radius:14px;min-height:48px}
+.btn.big{min-height:52px;font-size:17px}.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.daily .btn.big{background:var(--accent);box-shadow:none}
+.lv-tag,.listen-btn,.gap.act,.rec,.cnt-b{color:var(--on-accent)}
+.opt{border-radius:14px;border:2px solid var(--line);background:var(--card);font-weight:600;min-height:52px}
+.opt.ok{background:var(--ok-soft);border-color:var(--ok)}.opt.bad{background:var(--bad-soft);border-color:var(--bad)}
+input.answer,.wta,textarea{background:var(--card);color:var(--ink);border-color:var(--line)}
+.chars button,.mini,.sbtn,.wtile,.tile,.numgrid button,.abc-k,.emoji-pick button{background:var(--card);color:var(--ink);border-color:var(--line)}
+.speak{background:var(--accent-soft);color:var(--accent);border:none}
+.mini.on{background:var(--accent);color:var(--on-accent)}
+.hintbox{background:var(--note-bg);border-color:var(--note-line)}.hintbox.soft{background:var(--accent-soft);border-color:transparent}
+.toast{background:var(--ink);color:var(--bg)}
+#tabbar{background:var(--bar-bg);border-top:1px solid var(--line)}
+#tabbar button span{background:none!important}#tabbar button.on{color:var(--accent)}
+.bar{background:var(--surf)}.bar i{background:var(--accent)}
+.lvl.on,.chip.on{border-color:var(--accent);background:var(--accent-soft)}
+.banner{background:var(--accent);color:var(--on-accent)}
+.xpfloat{color:var(--ok)}
+/* картинки на підкладці */
+.pic .pimg,.face-pic .pimg,.pic-q .pimg{background:var(--pic);border-radius:22px;padding:14px;box-sizing:content-box}
+.pic .pimg{width:150px;height:150px}.pic-q .pimg{width:120px;height:120px}
+.tile-pic .pimg,.wr-pic .pimg,.listen-ans .pimg,.build-head .pimg,.abc-ex .pimg,.my-pic .pimg,.k-mis-pic .pimg{background:var(--pic);border-radius:10px;padding:3px}
+/* рід кольором */
+.art{font-weight:800}.art.g-en{color:var(--en)}.art.g-et{color:var(--et)}.art.g-m{color:var(--m)}.art.g-f{color:var(--f)}
+.gt-en .pimg,.gt-en.k-pic{background:var(--en-soft)!important}.gt-et .pimg,.gt-et.k-pic{background:var(--et-soft)!important}
+.gt-m .pimg,.gt-m.k-pic{background:var(--m-soft)!important}.gt-f .pimg,.gt-f.k-pic{background:var(--f-soft)!important}
+.gchip{display:inline-block;font-size:13px;font-weight:800;padding:2px 9px;border-radius:7px}
+.gchip.g-en{background:var(--card);color:var(--en)}.gchip.g-et{background:var(--card);color:var(--et)}.gchip.g-m{background:var(--card);color:var(--m)}.gchip.g-f{background:var(--card);color:var(--f)}
+/* головна «Сьогодні» (K01) */
+.k-head{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;margin:6px 0 12px}
+.k-head small{font-size:13px;color:var(--muted);font-weight:600}.k-head h1{margin:2px 0 0;font-size:30px;font-weight:800;letter-spacing:-.6px}
+.k-head-r{display:flex;align-items:center;gap:6px}
+.k-icon{width:44px;height:44px;border-radius:12px;background:var(--surf);display:grid;place-items:center;font-size:20px;color:var(--ink)}
+.k-icon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.k-seg{display:flex;padding:3px;border-radius:10px;background:var(--surf);gap:2px;flex:0 0 auto}
+.k-seg button{min-height:36px;padding:0 10px;border-radius:8px;font-size:13px;font-weight:700;color:var(--muted)}
+.k-seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 2px rgba(15,23,42,.12)}
+.k-prog{display:flex;align-items:center;gap:12px;margin-bottom:14px}.k-prog .bar{flex:1;height:8px}.k-prog b{font-size:14px;white-space:nowrap}
+.k-warn{display:flex;gap:12px;align-items:center;background:var(--warn-soft);border-radius:16px;padding:14px 16px;margin-bottom:6px}
+.k-warn span{font-size:22px}.k-warn b{display:block;font-size:15px}.k-warn small{color:var(--warn);font-weight:700;font-size:14px}
+.k-done{background:var(--ok-soft);border-radius:16px;padding:14px 16px;margin-bottom:6px}.k-done b{display:block}.k-done small{color:var(--muted);font-weight:600}
+.k-list{display:flex;flex-direction:column}
+.k-step{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--line);text-align:left;min-height:64px}
+.k-ic{width:48px;height:48px;flex:0 0 48px;border-radius:12px;background:var(--surf);display:grid;place-items:center;font-size:22px}
+.k-t{flex:1;min-width:0}.k-t b{display:block;font-size:16px;font-weight:700}.k-t small{display:block;font-size:13px;color:var(--muted);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.k-step.next .k-ic{background:var(--accent-soft);box-shadow:inset 0 0 0 2px var(--accent)}
+.k-step.done .k-ic{background:var(--ok-soft);color:var(--ok);font-weight:900}.k-step.done .k-t b{color:var(--muted)}
+.k-step.locked .k-ic{filter:grayscale(1);opacity:.55}.k-step.locked .k-t b{color:var(--muted)}
+.k-go{min-height:40px!important;padding:0 14px;font-size:14px;display:flex;align-items:center}
+.k-ok{color:var(--ok);font-weight:900;font-size:18px;padding:0 6px}.k-lock{color:var(--muted);display:flex}
+.k-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0 10px}
+.k-stats div{background:var(--surf);border-radius:14px;padding:10px 12px}.k-stats b{display:block;font-size:20px;font-weight:800}.k-stats small{font-size:12px;color:var(--muted);font-weight:600}
+.k-row{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:8px;text-align:left;min-height:56px}
+.k-row>span:first-child{font-size:20px}.k-chev{color:var(--muted);font-size:22px}
+/* верхній рядок вправи */
+.k-top{gap:10px;align-items:center}.k-top .back{width:44px;height:44px;padding:0;display:grid;place-items:center;border-radius:12px;background:var(--surf);border:none;font-size:18px}
+.k-cnt{font-size:14px;font-weight:700;white-space:nowrap}
+.bar.segs{flex:1;display:flex;gap:4px;background:none;height:6px}.bar.segs i{flex:1;height:6px;border-radius:3px;background:var(--line);width:auto!important}
+.bar.segs i.on{background:var(--accent)}.bar.segs i.cur{background:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.bar.segs.dots{gap:3px}.bar.segs.dots i{flex:1 1 4px;height:6px;border-radius:3px}
+.k-phase{font-size:12px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin:2px 0 10px}
+.phase{display:none}
+.k-menu{position:absolute;z-index:250;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 30px var(--shadow);padding:6px;display:flex;flex-direction:column;min-width:220px}
+.k-menu button{text-align:left;padding:12px 14px;border-radius:10px;font-weight:600;min-height:44px}.k-menu button:hover{background:var(--surf)}
+/* картка слова (K02) */
+.k-card{background:none;border:none;padding:0;transform:none}
+.k-pic{position:relative;background:var(--pic);border-radius:24px;min-height:220px;display:grid;place-items:center;font-size:110px;margin-bottom:16px}
+.k-pic .pimg{width:180px;height:180px;background:none!important;padding:0}
+.k-pic .gchip{position:absolute;left:14px;top:14px}
+.k-wrow{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.k-word{font-size:40px;font-weight:800;letter-spacing:-1px;line-height:1.1}.k-word.uk{font-size:32px}
+.k-tr{font-size:19px;font-weight:600;color:var(--muted);margin-top:2px}
+.k-say{width:56px;height:56px;flex:0 0 56px;border-radius:16px;background:var(--accent);color:var(--on-accent);font-size:22px}
+.k-ex{border-left:3px solid var(--accent);padding:4px 0 4px 12px;margin:16px 0 8px;font-size:16px;line-height:1.45}
+.k-ex mark{background:var(--accent-soft);color:var(--accent);border-radius:6px;padding:0 4px;font-weight:800}
+.k-ex small{display:block;color:var(--muted);font-weight:500;font-size:14px;margin-top:2px}.k-ex .speak{font-size:12px;padding:2px 6px}
+.k-note{font-size:14px;color:var(--muted);font-weight:600;margin:6px 0}
+.k-rate{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:18px}
+.k-rate .btn.rate{background:var(--card)!important;border:1px solid var(--line);min-height:58px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 4px}
+.k-rate .btn.rate b{font-size:14px}.k-rate .btn.rate small{font-size:11.5px;color:var(--muted);font-weight:600}
+.btn.rate.r0 b{color:var(--bad)}.btn.rate.r1 b{color:var(--warn)}.btn.rate.r2 b{color:var(--ok)}.btn.rate.r3 b{color:var(--accent)}
+/* розбір помилки (K06) */
+.k-mistake{margin-top:12px}.k-mistake .q-label{margin-bottom:8px}
+.k-mis{display:flex;align-items:center;gap:12px;border-radius:16px;padding:12px 14px;margin-bottom:8px}
+.k-mis.bad{background:var(--bad-soft)}.k-mis.ok{background:var(--ok-soft)}
+.k-mis-pic{width:52px;height:52px;flex:0 0 52px;border-radius:12px;background:var(--card);display:grid;place-items:center;font-size:26px}.k-mis-pic .pimg{width:46px;height:46px}
+.k-mis small{display:block;font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}.k-mis.bad small{color:var(--bad)}.k-mis.ok small{color:var(--ok)}
+.k-mis b{font-size:17px}
+.k-back-note{font-size:13px;color:var(--muted);font-weight:600;margin:10px 2px 0}
+/* налаштування (K16) */
+.k-sec{font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin:18px 2px 6px}
+.k-set{border:1px solid var(--line);border-radius:16px;padding:0 14px}
+.k-srow{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:52px;padding:8px 0;border-bottom:1px solid var(--line);font-weight:600;font-size:15.5px;text-align:left;cursor:pointer}
+.k-set>.k-srow:last-child,.k-set>:last-child>.k-srow{border-bottom:none}
+.k-srow.col{flex-direction:column;align-items:flex-start}.k-srow.col .k-seg{width:100%}.k-srow.col .k-seg button{flex:1}
+.k-val{color:var(--muted);font-weight:600;font-size:14.5px;white-space:nowrap}
+.k-hint{font-size:12.5px;color:var(--muted);margin:6px 4px 0}
+.k-topics summary{list-style:none}.k-topics summary::-webkit-details-marker{display:none}.k-topics .topics{padding:4px 0 12px}
+.k-about{font-size:13px;line-height:1.55;color:var(--muted);padding:2px 4px 20px}
+.switch.on{background:var(--accent)}
+/* цілі дотику ≥44 px */
+.speak,.mini{min-height:32px}.back{min-height:44px;min-width:44px}.chip{min-height:40px}
+.k-head-r{gap:4px}.k-head-r .k-icon{width:40px;height:40px;border-radius:11px}.k-head-r .k-seg button{padding:0 8px}.k-head>div:first-child{min-width:0}.k-head small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.k-top2{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:4px}
+.k-top2 small{font-size:13px;color:var(--muted);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.k-top2>span{display:flex;gap:6px;flex:0 0 auto}.k-top2 .k-icon{width:40px;height:40px}
+.k-head{align-items:center;margin:0 0 12px}.k-head h1{margin:0}
+.flip.k-card{height:auto!important;perspective:none;cursor:default;margin:0}.k-card .k-pic{min-height:200px}@media (max-height:700px){.k-card .k-pic{min-height:150px}.k-pic .pimg{width:130px;height:130px}}
 </style>
 </head>
 <body>
@@ -4694,7 +4839,7 @@ function addXP(n){
   if(level()>before) toast('🎉 Новий рівень: '+level()+'!');
 }
 let toastT; function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2000)}
-function applyTheme(){const r=document.documentElement;r.style.setProperty('--accent',L().accent);r.style.setProperty('--accent-l',L().soft);
+function applyTheme(){const r=document.documentElement;if(L().accent){r.style.setProperty('--accent',L().accent);r.style.setProperty('--accent-l',L().soft)}else{r.style.removeProperty('--accent');r.style.removeProperty('--accent-l')}
   const t=S.theme||'auto';if(t==='auto')delete r.dataset.theme;else r.dataset.theme=t}
 function dirToUk(){return S.dir==='toUk'?true:S.dir==='fromUk'?false:Math.random()<.5}
 
@@ -4806,6 +4951,7 @@ function home(){
   if(!S.onb){if(['en','da','it'].some(l=>Object.keys(S.srs[l]).length)){S.onb=1;save()}else if(typeof onboarding==='function')return onboarding()}
   if(!LANG_PICKED&&typeof langPicker==='function')return langPicker();
   if(typeof needsLevel==='function'&&needsLevel(S.lang))return levelGate();
+  if(typeof homeView==='function'){app.innerHTML=homeView();emit('screen','home');emit('home:after');return}
   app.innerHTML=header()+(typeof heroHTML==='function'?heroHTML():'')+(typeof shortcutsHTML==='function'?shortcutsHTML():'')+planCard()+
   `<p class="muted foot">Повторення за алгоритмом FSRS: кожне слово повертається тоді, коли ви от-от його забудете. Прогрес зберігається в цьому браузері.</p>`;
   emit('screen','home');emit('home:after');
@@ -4834,7 +4980,7 @@ function nextItem(){emit('item:leave');SS.i++;renderItem()}
 function renderItem(){
   if(SS.i>=SS.items.length)return finishSession();
   const it=SS.items[SS.i]; it.t0=Date.now();
-  (({card:renderCard,choice:renderChoice,type:renderType,gram:renderGram,fill:renderFill,build:renderBuild,listen:renderListen,dict:renderDict,letter:renderLetter,spell:renderSpell,num:renderNum,sentb:renderSentB,mcq:renderMcq})[it.kind]||RENDER_X[it.kind])(it);
+  (RENDER_X[it.kind]||({card:renderCard,choice:renderChoice,type:renderType,gram:renderGram,fill:renderFill,build:renderBuild,listen:renderListen,dict:renderDict,letter:renderLetter,spell:renderSpell,num:renderNum,sentb:renderSentB,mcq:renderMcq})[it.kind])(it);
   emit('item:render',it);
 }
 function markWrong(it){
@@ -4887,7 +5033,7 @@ function choiceA(i){
   SS.graded++;
   if(ok){SS.right++;SS.xp+=10;grade(w,true,it.retry)}else{grade(w,false);markWrong(it)}
   speak(w[S.lang]);
-  $('#fb').innerHTML=ok?`<div class="feedback ok">✓ Правильно! +10 XP</div>`:`<div class="feedback bad">✗ Правильна відповідь: ${esc(w.uk)} — <b>${esc(w[S.lang])}</b></div>${hintBox({lines:[`Ви обрали «${esc(opts[i][it.toUk?'uk':S.lang])}» — це ${it.toUk?'<b>'+esc(opts[i][S.lang]||'')+'</b>':'«'+esc(opts[i].uk)+'»'}.`,genderTip(w)],cat:'meaning',q:(it.toUk?'Перекласти українською: ':'Як сказати: ')+(it.toUk?w[S.lang]:w.uk),correct:it.toUk?w.uk:w[S.lang],given:opts[i][it.toUk?'uk':S.lang]})}<div class="row"><button class="btn" onclick="nextItem()">Далі →</button></div>`;
+  $('#fb').innerHTML=pipe('feedback',ok?`<div class="feedback ok">✓ Правильно! +10 XP</div>`:`<div class="feedback bad">✗ Правильна відповідь: ${esc(w.uk)} — <b>${esc(w[S.lang])}</b></div>${hintBox({lines:[`Ви обрали «${esc(opts[i][it.toUk?'uk':S.lang])}» — це ${it.toUk?'<b>'+esc(opts[i][S.lang]||'')+'</b>':'«'+esc(opts[i].uk)+'»'}.`,genderTip(w)],cat:'meaning',q:(it.toUk?'Перекласти українською: ':'Як сказати: ')+(it.toUk?w[S.lang]:w.uk),correct:it.toUk?w.uk:w[S.lang],given:opts[i][it.toUk?'uk':S.lang]})}<div class="row"><button class="btn" onclick="nextItem()">Далі →</button></div>`,{it,ok,given:opts[i][it.toUk?'uk':S.lang],gw:opts[i]});
   if(ok){const s0=SS,i0=SS.i;setTimeout(()=>{if(SS===s0&&SS.i===i0)nextItem()},1000)}
 }
 
@@ -5108,7 +5254,7 @@ function fillA(i){
     hb=hintBox({lines:[wm?`«${esc(it.order[i])}» — це «${esc(wm)}». Не підходить за змістом.`:`«${esc(it.order[i])}» тут не підходить за змістом.`,
       `Потрібне слово: <b>${esc(it.w[S.lang])}</b> — «${esc(it.w.uk)}».`,ef?ef.txt:'','🇺🇦 '+ukSentence(it.w.sent.uk,true)],cat:ef?ef.cat:'meaning',q:'Вставити слово: '+g.pre+'___'+g.post,correct:g.answer,given:it.order[i]})}
   else{const ef=explainForm(it.w,g.answer);if(ef)hb=`<div class="hintbox soft"><div class="hl-line">💡 ${ef.txt}</div></div>`}
-  $('#fb').innerHTML=`<div class="feedback ${ok?'ok':'bad'}">${ok?'✓ Правильно! +12 XP':'✗ Правильно: <b>'+esc(g.answer)+'</b>'}<br><span style="font-weight:600">${esc(g.full)}</span></div>${hb}<div class="row"><button class="btn" onclick="nextItem()">Далі →</button></div>`;
+  $('#fb').innerHTML=pipe('feedback',`<div class="feedback ${ok?'ok':'bad'}">${ok?'✓ Правильно! +12 XP':'✗ Правильно: <b>'+esc(g.answer)+'</b>'}<br><span style="font-weight:600">${esc(g.full)}</span></div>${hb}<div class="row"><button class="btn" onclick="nextItem()">Далі →</button></div>`,{it,ok,given:it.order[i],gw:null});
 }
 
 /* складіть речення (плитки) */
@@ -6869,52 +7015,7 @@ function trainScreen(){
   emit('screen','train');
 }
 
-function settingsScreen(){
-  applyTheme();REDRAW=settingsScreen;
-  const lvStats=LEVELS.map(lv=>{const ws=WORDS.filter(w=>w.lv===lv&&w[S.lang]);return{lv,total:ws.length,learned:ws.filter(learned).length}}).filter(x=>x.total);
-  const tps=TOPICS.filter(t=>S.levels.includes(t.lv)&&(t.id!=='ukus'||S.lang==='en'));
-  const th=S.theme||'auto',sync=typeof SYNC!=='undefined'&&SYNC.ok;
-  app.innerHTML=header()+backBar('⚙️ Налаштування')+langSeg('settingsScreen')+`
-  <h2>Рівні</h2>
-  <div class="levels">${lvStats.map(x=>`<button class="lvl ${S.levels.includes(x.lv)?'on':''}" onclick="toggleLevel('${x.lv}')">
-     <b>${x.lv}</b><small>${LEVEL_NAMES[x.lv]}</small><div class="bar"><i style="width:${x.total?x.learned/x.total*100:0}%"></i></div><small>${x.learned}/${x.total}</small></button>`).join('')}</div>
-  <div class="row" style="margin-top:10px"><button class="btn ghost" onclick="placementIntro()">🎯 ${S.placement&&S.placement[S.lang]?'Ваш рівень: '+S.placement[S.lang].lvl+' · пройти тест ще раз':'Визначити рівень (5 хв)'}</button></div>
-  <h2>Нових слів на день</h2>
-  <div class="topics">${NEW_OPTIONS.map(n=>`<button class="chip ${newPerDay()===n?'on':''}" onclick="setNewPerDay(${n})">${n}${n===((S.minutes||30)>=60?15:10)?' · рекомендовано':''}</button>`).join('')}</div>
-  <p class="muted" style="font-size:12.5px;margin:6px 2px 0">Кожне нове слово потім ще 8–10 разів повертається на повторення, тому через місяць щоденні повторення ≈ 10 × норма. Оптимально: 10 на день при 30 хв, 15 — при 60 хв. Якщо накопичилось багато повторень, гра сама дає менше нових.</p>
-  <h2>Напрям перекладу</h2>
-  <div class="topics">
-    <button class="chip ${S.dir==='toUk'?'on':''}" onclick="setDir('toUk')">${L().flag} → 🇺🇦 На українську</button>
-    <button class="chip ${S.dir==='fromUk'?'on':''}" onclick="setDir('fromUk')">🇺🇦 → ${L().flag} З української</button>
-    <button class="chip ${S.dir==='mix'?'on':''}" onclick="setDir('mix')">🔀 Змішано</button>
-  </div>
-  ${S.lang==='en'?`<h2>Варіант англійської</h2><div class="topics"><button class="chip ${S.engVar!=='us'?'on':''}" onclick="setEngVar('gb')">🇬🇧 Британська</button><button class="chip ${S.engVar==='us'?'on':''}" onclick="setEngVar('us')">🇺🇸 Американська</button></div>`:''}
-  <h2>Вигляд і звук</h2>
-  <div class="card set-list">
-    <div class="set-row"><span>Тема</span><div class="seg mini-seg">${[['auto','Авто'],['light','Світла'],['dark','Темна']].map(([k,t])=>`<button class="${th===k?'on':''}" onclick="setTheme('${k}')">${t}</button>`).join('')}</div></div>
-    <div class="set-row"><span>Звуки відповідей</span><button class="switch ${S.sound===false?'':'on'}" onclick="toggleSound()" aria-label="Звуки"><i></i></button></div>
-    <div class="set-row"><span>Автоматично озвучувати слова</span><button class="switch ${S.tts===false?'':'on'}" onclick="S.tts=S.tts===false;save();settingsScreen()" aria-label="Озвучення"><i></i></button></div>
-    <div class="set-row"><span>Синхронізація між пристроями</span><b class="${sync?'ok-t':'muted'}">${sync?'☁️ увімкнена':'лише цей браузер'}</b></div>
-  </div>
-  <h2>Резервна копія</h2>
-  <div class="card set-list">
-    <p class="muted" style="font-size:13px;margin:10px 0 4px">Прогрес зберігається в цьому браузері. Збережіть копію у файл, щоб не втратити його або перенести на інший пристрій.</p>
-    <div class="row" style="margin:8px 0 12px"><button class="btn ghost" onclick="exportProgress()">💾 Зберегти у файл</button>
-    <label class="btn ghost file-btn">📂 Відновити з файлу<input type="file" accept=".json,application/json" onchange="importProgress(this.files[0])" hidden></label></div>
-    ${S.backupAt?`<p class="muted" style="font-size:12px;margin:0 0 10px">Остання копія: ${S.backupAt}</p>`:''}
-  </div>
-  <h2>Теми <span class="muted" style="font-size:14px">(нічого не обрано = всі теми рівнів)</span></h2>
-  <div class="topics">${tps.map(t=>{const n=t.words.filter(learned).length;
-    return `<button class="chip ${S.topics.includes(t.id)?'on':''}" onclick="toggleTopic('${t.id}')"><span class="lv-tag">${t.lv}</span>${t.icon} ${esc(t.name)} <span class="cnt">${n}/${t.words.length}</span></button>`}).join('')}</div>
-  <h2>Про гру</h2>
-  <div class="card muted about">
-    <p>🤖 Слова, речення й переклади створила та перевірила модель ШІ, носії мови їх не вичитували. Помітили помилку — натисніть ⚑ під час вправи.</p>
-    <p>Повторення працює за алгоритмом FSRS-4.5: він планує кожне слово так, щоб ви згадували його з імовірністю ~90%.</p>
-    <p>Ілюстрації: <a href="https://mulberrysymbols.org" target="_blank" rel="noopener">Mulberry Symbols</a> © Steve Lee, ліцензія CC BY-SA 4.0.</p>
-    <button class="mini" onclick="if(confirmReset())resetAll()">🗑 Скинути весь прогрес</button>
-  </div>`;
-  emit('screen','home');
-}
+// settingsScreen — у 20_klar.js (екран за макетом K16)
 function setTheme(t){S.theme=t;save();applyTheme();settingsScreen()}
 let RESET_ARM=0;
 function confirmReset(){if(Date.now()-RESET_ARM<4000)return true;RESET_ARM=Date.now();toast('Натисніть ще раз, щоб скинути прогрес');return false}
@@ -7265,7 +7366,7 @@ function eventsCheck(){
 /* новий план — після 00:00: живий відлік і автоматичне оновлення, якщо застосунок відкритий */
 let PLAN_DAY=today();
 setInterval(()=>{const e=document.getElementById('midnight');if(e)e.textContent=untilMidnight();
-  if(today()!==PLAN_DAY){PLAN_DAY=today();if(document.querySelector('.daily')&&!document.body.classList.contains('in-session')){home();toast('🌅 Новий день — новий план!')}}},1000);
+  if(today()!==PLAN_DAY){PLAN_DAY=today();if(document.querySelector('.daily,.k-list')&&!document.body.classList.contains('in-session')){home();toast('🌅 Новий день — новий план!')}}},1000);
 // степер: поточний крок завжди видно (горизонтальна прокрутка до нього)
 on('home:after',()=>{const st_=document.querySelector('.stepper'),n=st_&&st_.querySelector('.st.next');if(n)st_.scrollLeft=Math.max(0,n.offsetLeft-st_.clientWidth/2+n.clientWidth/2)});
 
@@ -7524,6 +7625,158 @@ function peekItem(p){
   m.innerHTML=`<div class="modal-box peek"><div class="q-label">‹ Попереднє слово</div>${body}<div class="row"><button class="btn" onclick="document.getElementById('peek').remove()">Продовжити →</button></div></div>`;
   document.body.appendChild(m);
 }
+
+/* ====================== KLAR — дизайн-система (DESIGN.md) ======================
+   Білий простір, Inter, ОДИН акцент для всіх мов (мову видно з прапорця), рід слова кольором (en/et, il/la),
+   картинка на підкладці. Тут: тема, рід кольором, головна «Сьогодні» (K01), верхній рядок вправ із сегментованим
+   прогресом, картка слова (K02) з інтервалами FSRS під кнопками оцінки, розбір помилки (K06), налаштування (K16). */
+Object.values(LANGS).forEach(l=>{l.accent=null;l.soft=null});
+if(S.genderColors===undefined)S.genderColors=true;
+
+/* ---------- рід кольором ---------- */
+function genderOf(t,lang){lang=lang||S.lang;t=String(t||'').trim();
+  if(lang==='da'){const m=t.match(/^(en|et)\s/i);return m?'g-'+m[1].toLowerCase():null}
+  if(lang==='it'){const m=t.match(/^(il|lo|i|gli|la|le)\s/i);if(!m)return null;return ['la','le'].includes(m[1].toLowerCase())?'g-f':'g-m'}
+  return null}
+function artHTML(t,lang){const g=S.genderColors!==false&&genderOf(t,lang);if(!g)return esc(t);const m=String(t).match(/^(\S+)(\s+)(.*)$/);
+  return `<span class="art ${g}">${esc(m[1])}</span> ${esc(m[3])}`}
+const GNAME={'g-en':'en-ord','g-et':'et-ord','g-m':'чоловічий рід','g-f':'жіночий рід'};
+// фарбування артиклів у старих екранах (картки, словник, результати)
+new MutationObserver(()=>{if(S.lang==='en'||S.genderColors===false)return;
+  app.querySelectorAll('.card > .q-word:not([data-art]), .my-row .t > b:not([data-art]), .wrong-row > span:last-child:not([data-art])').forEach(el=>{
+    el.dataset.art=1;const tn=[...el.childNodes].find(n=>n.nodeType===3&&n.textContent.trim());if(!tn)return;
+    const g=genderOf(tn.textContent);if(!g)return;const sp=document.createElement('span');sp.innerHTML=artHTML(tn.textContent.trim())+' ';el.replaceChild(sp,tn);
+    const c=el.closest('.card');const pic=c&&c.querySelector('.pic,.pic-q');if(pic)pic.classList.add('gt-'+g.slice(2))});
+}).observe(app,{childList:true,subtree:true});
+
+/* ---------- головна «Сьогодні» (K01) ---------- */
+const DAYS=['Неділя','Понеділок','Вівторок','Середа','Четвер','Пʼятниця','Субота'],MONTHS=['січня','лютого','березня','квітня','травня','червня','липня','серпня','вересня','жовтня','листопада','грудня'];
+const LANG_NAT={en:'English',da:'Dansk',it:'Italiano'};
+function blockSub(b){const due=dueWords().length;
+  return {review:due?`${Math.min(due,60)} слів до повторення`:'усе повторено',new:`${typeof newQuotaToday==='function'?newQuotaToday():10} нових слів`,
+    grammar:(()=>{const g=GRAMMAR[S.lang][nextGrammar()];return g?g.t:''})(),read:(()=>{const T=S.todayText&&S.todayText[S.lang];const t=T&&T.d===today()&&textsFor()[T.idx];return t?t.title:'справжні факти з перекладом'})(),
+    fill:'слова в реченнях',dict:'почуйте й запишіть',events:'події до тексту дня',struct:'порядок слів',speak:'скажіть уголос'}[b.id]||b.d}
+function homeView(){
+  const B=planBlocks(),m=S.minutes||30,spent=minutesToday(),next=B.find(b=>!b.done),ni=next?B.indexOf(next):B.length,d=new Date();
+  const lockRev=next&&next.id==='review'&&dueWords().length>0;
+  const learnedN=WORDS.filter(w=>w[S.lang]&&learned(w)).length,R=((S.ret||{})[S.lang]||{}).d7;
+  const pl=S.plan&&S.plan[S.lang];
+  const row=(b,i)=>{const st_=b.done?'done':next&&b.id===next.id?'next':'locked';
+    return `<button class="k-step ${st_}" onclick="startBlock('${b.id}')"><span class="k-ic">${b.done?'✓':b.t.split(' ')[0]}</span>
+      <span class="k-t"><b>${esc(b.t.split(' ').slice(1).join(' '))}</b><small>${esc(blockSub(b))}</small></span>
+      ${st_==='next'?`<span class="btn k-go">${B.some(x=>x.done)?'Продовжити':'Почати'}</span>`:st_==='done'?'<span class="k-ok">✓</span>':`<span class="k-lock" aria-label="закрито">${LOCK_SVG}</span>`}</button>`};
+  return `<div class="k-top2"><small>${DAYS[d.getDay()]}, ${d.getDate()} ${MONTHS[d.getMonth()]} · ${LANG_NAT[S.lang]} ${curLevel()}</small>
+    <span><button class="k-icon" onclick="langPicker()" aria-label="Змінити мову">${L().flag}</button><button class="k-icon" onclick="settingsScreen()" aria-label="Налаштування">${ICON.gear}</button></span></div>
+   <div class="k-head"><h1>Сьогодні</h1><div class="k-seg">${[30,60].map(x=>`<button class="${m===x?'on':''}" onclick="setMinutes(${x})">${x} хв</button>`).join('')}</div></div>
+   <div class="k-prog"><div class="bar"><i style="width:${Math.min(100,spent/m*100)}%"></i></div><b>${spent} / ${m} хв</b></div>
+   ${lockRev?`<div class="k-warn"><span>🔁</span><div><b>Обов'язкове повторення</b><small>Ще ${Math.min(dueWords().length,60)} слів, далі відкриються нові</small></div></div>`:''}
+   ${!next?`<div class="k-done"><b>🎉 План на сьогодні виконано</b><small>Новий план відкриється о 00:00 · <b id="midnight">${untilMidnight()}</b></small></div>`:''}
+   <div class="k-list">${B.map(row).join('')}</div>
+   <div class="k-stats"><div><b>🔥 ${S.streak}</b><small>днів поспіль</small></div><div><b>${learnedN.toLocaleString('uk')}</b><small>слів у пам'яті</small></div><div><b>${R&&R.n?Math.round(R.c/R.n*100)+'%':'—'}</b><small>утримання</small></div></div>
+   ${pl?`<button class="k-row" onclick="settingsScreen()"><span>🎯</span><span class="k-t"><b>Ціль: ${pl.lvl} до ${fmtDate(pl.eta)}</b><small>фокус: ${(FOCUS[pl.focus]||FOCUS.prod).t.toLowerCase()}</small></span><span class="k-chev">›</span></button>`:''}
+   ${questsHTML()}
+   <button class="k-row" onclick="trainScreen()"><span>🎮</span><span class="k-t"><b>Тренування та ігри</b><small>мапа, діалоги, «Дощ слів», «Блискавка», помилки</small></span><span class="k-chev">›</span></button>`;
+}
+const LOCK_SVG='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+
+/* ---------- верхній рядок вправи: ✕ · сегментований прогрес · лічильник · ⋯ ---------- */
+on('topRow',h=>{
+  if(!SS||!SS.items)return h;const n=SS.items.length,i=SS.i,it=SS.items[i]||{};
+  const hp=(h.match(/<div class="boss-hp">[\s\S]*?<\/div>/)||[''])[0];
+  const ph=it.phase?`<div class="k-phase">${esc(String(it.phase).replace(/^[^\wА-яІіЇїЄєҐґ]+/u,''))}</div>`:'';
+  const segs=n<=12?`<div class="bar segs">${[...Array(n)].map((_,k)=>`<i class="${k<i?'on':k===i?'cur':''}"></i>`).join('')}</div>`
+    :n<=40?`<div class="bar segs dots">${[...Array(n)].map((_,k)=>`<i class="${k<i?'on':k===i?'cur':''}"></i>`).join('')}</div>`
+    :`<div class="bar"><i style="width:${i/n*100}%"></i></div>`;
+  const menu=!it.test;
+  return `<div class="top-row k-top"><button class="back" onclick="${SS.backFn||'home()'}" aria-label="Закрити">✕</button>${segs}<span class="muted k-cnt">${Math.min(i+1,n)}/${n}</span>${menu?`<button class="back k-more" onclick="sessMenu(this)" aria-label="Ще">⋯</button>`:''}</div>${hp}${ph}`;
+});
+function sessMenu(btn){
+  const old=document.getElementById('kMenu');if(old)return old.remove();
+  const can=SS&&SS.i>0&&!(SS.items[SS.i]||{}).test;
+  const m=document.createElement('div');m.id='kMenu';m.className='k-menu';
+  m.innerHTML=`${can?`<button onclick="document.getElementById('kMenu').remove();prevItem()">↶ Попереднє слово</button>`:''}<button onclick="document.getElementById('kMenu').remove();reportForm()">⚑ Повідомити про помилку</button>`;
+  const r=btn.getBoundingClientRect();m.style.top=(r.bottom+window.scrollY+6)+'px';m.style.right='16px';document.body.appendChild(m);
+  setTimeout(()=>document.addEventListener('click',function c(e){if(!m.contains(e.target)){m.remove();document.removeEventListener('click',c)}}),0);
+}
+
+/* ---------- картка слова (K02) ---------- */
+function previewIv(w,q,intro){const x0=st(w);
+  if(!x0||intro)return {again:0,hard:1,good:1,easy:3}[q];
+  const x=JSON.parse(JSON.stringify(x0));if(x.iv==null){x.iv=INT[x.b]||0;x.ef=2.5;x.l=0;x.r=x.b}fsrsInit(x);
+  const g=G_OF[q];if(q==='again')x.r=0;else x.r=(x.r||0)+1;let iv=fsrsNext(x,g);if(g>1&&x.r<=1)iv=Math.min(iv,g===4?5:3);return Math.min(365,iv)}
+function ivLabel(d){return d<1?'сьогодні':d===1?'завтра':d<14?d+' дн.':d<60?Math.round(d/7)+' тиж.':Math.round(d/30)+' міс.'}
+function exampleHTML(w){if(!w.sent||!w.sent[S.lang])return '';
+  const ex=esc(w.sent[S.lang]).replace(/\[([^;\]]+)[^\]]*\]/,'<mark>$1</mark>'),uk=esc((w.sent.uk||'').replace(/[\[\]]/g,''));
+  return `<div class="k-ex"><b>${ex}</b> <button class="speak" onclick="speak(${js(w.sent[S.lang].replace(/\[([^;\]]+)[^\]]*\]/,'$1'))})" aria-label="Прослухати речення">🔊</button><small>${uk}</small></div>`}
+RENDER_X.card=function(it){
+  const w=it.w,t=w[S.lang]||'',g=S.genderColors!==false&&genderOf(t),reveal=it.intro||it.toUk||it.revealed;
+  const top=reveal?`<div class="k-word">${artHTML(t)}</div><div class="k-tr">${esc(w.uk)}</div>`:`<div class="k-word uk">${esc(w.uk)}</div><div class="k-tr">Згадайте слово мовою: ${L().name.split(' ')[0].toLowerCase()}</div>`;
+  app.innerHTML=topRow()+`<div class="flip k-card">
+    <div class="k-pic ${g?'gt-'+g.slice(2):''}">${g?`<span class="gchip ${g}">${t.split(' ')[0]}</span>`:''}${picHTML(w)}</div>
+    <div class="k-wrow"><div>${top}</div>${reveal?`<button class="k-say" onclick="speak(${js(t)})" aria-label="Прослухати">🔊</button>`:''}</div>
+    ${reveal?exampleHTML(w)+(w.gb&&S.lang==='en'?`<div class="k-note">🇬🇧 ${esc(w.gb)} · 🇺🇸 ${esc(w.us)}</div>`:'')+mnemBox(w):''}
+  </div>
+  ${reveal?`<div class="k-rate">${[['again','Ще вчу','r0'],['hard','Важко','r1'],['good','Знаю','r2'],['easy','Легко','r3']].map(([q,l,c])=>`<button class="btn rate ${c}" onclick="cardAnswer('${q}')"><b>${l}</b><small>${ivLabel(previewIv(w,q,it.intro))}</small></button>`).join('')}</div>`
+   :`<div class="row"><button class="btn big" onclick="SS.items[SS.i].revealed=true;renderItem()">Показати відповідь</button></div>`}`;
+  if(S.tts&&reveal&&it.toUk!==false)setTimeout(()=>speak(t),250);
+};
+
+/* ---------- розбір помилки (K06): «ви обрали» / «правильно» ---------- */
+on('feedback',(html,ctx)=>{
+  if(!ctx||ctx.ok||!ctx.it||!ctx.it.w)return html;const w=ctx.it.w,gw=ctx.gw;
+  const card=(cls,label,pic,main)=>`<div class="k-mis ${cls}"><span class="k-mis-pic">${pic||'❔'}</span><div><small>${label}</small><b>${main}</b></div></div>`;
+  const given=gw?card('bad','Ви обрали',picHTML(gw),artHTML(gw[S.lang]||'')+' — '+esc(gw.uk)):card('bad','Ви обрали','✗',esc(ctx.given||''));
+  const right=card('ok','Правильно',picHTML(w),artHTML(w[S.lang]||'')+' — '+esc(w.uk));
+  return html.replace(/<div class="feedback bad">[\s\S]*?<\/div>(?=<div class="hintbox">|<div class="row">)/,`<div class="k-mistake"><div class="q-label">Розбір помилки</div>${given}${right}</div>`)
+    .replace('<div class="row"><button class="btn" onclick="nextItem()">Далі →</button></div>','<div class="k-back-note">🔁 Слово повернеться на повторення завтра.</div><div class="row"><button class="btn big" onclick="nextItem()">Зрозуміло, далі</button></div>');
+});
+
+/* ---------- налаштування (K16) ---------- */
+function settingsScreen(){
+  applyTheme();REDRAW=settingsScreen;
+  const th=S.theme||'auto',sync=typeof SYNC!=='undefined'&&SYNC.ok,lvStats=LEVELS.map(lv=>{const ws=WORDS.filter(w=>w.lv===lv&&w[S.lang]);return{lv,total:ws.length,learned:ws.filter(learned).length}}).filter(x=>x.total);
+  const seg=(opts,cur,fn)=>`<div class="k-seg">${opts.map(([v,t])=>`<button class="${cur===v?'on':''}" onclick="${fn}(${js(v)})">${t}</button>`).join('')}</div>`;
+  const tog=(on_,fn,lbl)=>`<button class="switch ${on_?'on':''}" onclick="${fn}" aria-label="${lbl}"><i></i></button>`;
+  const tps=TOPICS.filter(t=>S.levels.includes(t.lv)&&(t.id!=='ukus'||S.lang==='en'));
+  app.innerHTML=`<div class="k-head"><div><small>${L().flag} ${L().name}</small><h1>Налаштування</h1></div><div class="k-head-r"><button class="k-icon" onclick="home()" aria-label="Закрити">✕</button></div></div>
+  <div class="k-sec">Навчання</div>
+  <div class="k-set">
+    <button class="k-srow" onclick="langPicker()"><span>Мова</span><span class="k-val">${L().flag} ${L().name.split(' ')[0]} ›</span></button>
+    ${S.lang==='en'?`<div class="k-srow"><span>Англійська</span>${seg([['gb','🇬🇧 UK'],['us','🇺🇸 US']],S.engVar==='us'?'us':'gb','setEngVar')}</div>`:''}
+    <div class="k-srow"><span>Час на день</span>${seg([[30,'30 хв'],[60,'60 хв']],S.minutes||30,'setMinutesS')}</div>
+    <div class="k-srow"><span>Нових слів на день</span>${seg(NEW_OPTIONS.map(n=>[n,String(n)]),newPerDay(),'setNewPerDay')}</div>
+    <div class="k-srow col"><span>Напрям перекладу</span>${seg([['toUk','На українську'],['fromUk','З української'],['mix','Змішано']],S.dir,'setDir')}</div>
+  </div>
+  <p class="k-hint">Оптимально ${(S.minutes||30)>=60?15:10} нових слів на день: кожне слово ще 8–10 разів повернеться на повторення.</p>
+  <div class="k-sec">Рівні</div>
+  <div class="levels">${lvStats.map(x=>`<button class="lvl ${S.levels.includes(x.lv)?'on':''}" onclick="toggleLevel('${x.lv}')"><b>${x.lv}</b><small>${LEVEL_NAMES[x.lv]}</small><div class="bar"><i style="width:${x.total?x.learned/x.total*100:0}%"></i></div><small>${x.learned}/${x.total}</small></button>`).join('')}</div>
+  <div class="k-set" style="margin-top:10px"><button class="k-srow" onclick="placementIntro()"><span>🎯 Тест рівня</span><span class="k-val">${S.placement&&S.placement[S.lang]?'ваш рівень '+S.placement[S.lang].lvl:'пройти'} ›</span></button></div>
+  <div class="k-sec">Вигляд і звук</div>
+  <div class="k-set">
+    <div class="k-srow"><span>Тема</span>${seg([['auto','Авто'],['light','Світла'],['dark','Темна']],th,'setTheme')}</div>
+    <div class="k-srow"><span>Звуки</span>${tog(S.sound!==false,'toggleSound()','Звуки')}</div>
+    <div class="k-srow"><span>Озвучення слів</span>${tog(S.tts!==false,'S.tts=S.tts===false;save();settingsScreen()','Озвучення')}</div>
+    ${S.lang!=='en'?`<div class="k-srow"><span>Кольори роду (${S.lang==='da'?'en / et':'il / la'})</span>${tog(S.genderColors!==false,'S.genderColors=S.genderColors===false;save();settingsScreen()','Кольори роду')}</div>`:''}
+  </div>
+  <div class="k-sec">Дані</div>
+  <div class="k-set">
+    <div class="k-srow"><span>Синхронізація</span><span class="k-val">${sync?'увімкнено':'лише цей браузер'}</span></div>
+    <button class="k-srow" onclick="exportProgress()"><span>💾 Зберегти прогрес у файл</span><span class="k-val">${S.backupAt||''} ›</span></button>
+    <label class="k-srow"><span>📂 Відновити з файлу</span><span class="k-val">›</span><input type="file" accept=".json,application/json" onchange="importProgress(this.files[0])" hidden></label>
+    <button class="k-srow" onclick="reportForm({kind:'settings'})"><span>⚑ Повідомити про помилку</span><span class="k-val">›</span></button>
+  </div>
+  <details class="k-set k-topics"><summary class="k-srow"><span>Теми слів</span><span class="k-val">${S.topics.length?S.topics.length+' обрано':'усі'} ›</span></summary>
+    <div class="topics">${tps.map(t=>`<button class="chip ${S.topics.includes(t.id)?'on':''}" onclick="toggleTopic('${t.id}')"><span class="lv-tag">${t.lv}</span>${t.icon} ${esc(t.name)}</button>`).join('')}</div></details>
+  <div class="k-sec">Про гру</div>
+  <div class="k-about">Слова, речення й переклади створила та перевірила модель ШІ, носії мови їх не вичитували. Повторення за FSRS-4.5.<br>Ілюстрації: <a href="https://mulberrysymbols.org" target="_blank" rel="noopener">Mulberry Symbols</a> © Steve Lee, CC BY-SA 4.0.
+   <br><button class="mini" style="margin-top:10px" onclick="if(confirmReset())resetAll()">🗑 Скинути весь прогрес</button></div>`;
+  emit('screen','home');
+}
+function setMinutesS(m){S.minutes=m;save();settingsScreen()}
+
+/* ---------- нижнє меню ---------- */
+(function(){const tb=document.getElementById('tabbar');if(!tb)return;const lbl={home:'Сьогодні',train:'Вправи',read:'Тексти',dict:'Словник',stats:'Прогрес'};
+  tb.querySelectorAll('button').forEach(b=>{const s=b.querySelector('small');if(s&&lbl[b.dataset.tab])s.textContent=lbl[b.dataset.tab]})})();
 
 bootApp();
 </script>
