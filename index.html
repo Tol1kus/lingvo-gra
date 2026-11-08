@@ -7061,7 +7061,7 @@ function onboarding(step=0){
     <button class="onb-opt" onclick="S.minutes=60;save();onboarding(2)"><b>60 хвилин</b><span>+ письмо та іспити</span></button></div></div>`;return}
   app.innerHTML=`<div class="onb">${dots}<div class="onb-hero">${L().flag}</div><h1>З чого почнемо?</h1>
     <div class="onb-opts"><button class="onb-opt" onclick="S.levels=['A1'];onbDone()"><b>🌱 З нуля</b><span>Почати з рівня A1</span></button>
-    <button class="onb-opt" onclick="onbDone(true)"><b>🎯 Я трохи знаю</b><span>Тест рівня, 5 хвилин</span></button></div></div>`;
+    <button class="onb-opt" onclick="onbDone(true)"><b>🎯 Я трохи знаю</b><span>Тест рівня, 10–15 хвилин</span></button></div></div>`;
 }
 function onbDone(test){S.onb=1;LANG_PICKED=true;if(!test){S.beginner=S.beginner||{};S.beginner[S.lang]=today()}save();document.body.classList.remove('in-session');if(test)placementIntro();else home()}
 
