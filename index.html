@@ -837,6 +837,9 @@ input.answer,.wta,textarea{background:var(--card);color:var(--ink);border-color:
 .k-lockprog{display:flex;gap:4px;margin:16px 0}.k-lockprog i{flex:1;height:6px;border-radius:3px;background:var(--line)}.k-lockprog i.on{background:var(--ok)}.k-lockprog i.cur{background:var(--accent)}
 .k-sub2{display:block;font-size:12px;color:var(--muted);font-weight:500}
 .onb-langs{grid-template-columns:repeat(2,minmax(0,1fr))}
+.onb-langs.three{grid-template-columns:1fr;gap:10px}.onb-langs.three .onb-lang{flex-direction:row;justify-content:flex-start;gap:14px;padding:14px 18px;text-align:left}.onb-langs.three .onb-lang .flag{font-size:34px}.onb-lang small{display:block;color:var(--muted);font-weight:600;font-size:13px}.onb-langs.three .onb-lang b{display:flex;flex-direction:column}
+.lp-sub{font-weight:600;color:var(--muted);font-size:15px}
+.onb-opt.onb-rec{border-color:var(--accent);background:var(--accent-soft)}
 </style>
 </head>
 <body>
@@ -7099,19 +7102,24 @@ function resetAll(){try{localStorage.removeItem(STORE_KEY)}catch(e){}location.re
 /* перший запуск: мова → час → рівень */
 function onboarding(step=0){
   applyTheme();document.body.classList.add('in-session');
-  const dots=`<div class="onb-dots">${[0,1,2].map(i=>`<i class="${i<=step?'on':''}"></i>`).join('')}</div>`;
+  const dots=`<div class="onb-dots">${[0,1,2,3].map(i=>`<i class="${i<=step?'on':''}"></i>`).join('')}</div>`;
   if(step===0){app.innerHTML=`<div class="onb">${dots}<div class="onb-hero">👋</div><h1>Привіт! Яку мову вивчаємо?</h1>
     <p class="muted">Потім можна перемикатися між мовами в будь-який момент.</p>
-    <div class="onb-langs">${activeLangEntries().map(([k,v])=>`<button class="onb-lang" onclick="S.lang='${k}';save();onboarding(1)"><span class="flag">${v.flag}</span><b>${v.name.split(' ')[0]}</b></button>`).join('')}</div>
+    <div class="onb-langs three">${startOptions().map(o=>`<button class="onb-lang" onclick="setStartLang('${o.k}','${o.v||''}');onboarding(1)"><span class="flag">${o.flag}</span><b>${o.name}</b><small>${o.sub}</small></button>`).join('')}</div>
     <button class="link" onclick="onbDone()">Пропустити</button></div>`;return}
   if(step===1){app.innerHTML=`<div class="onb">${dots}<div class="onb-hero">⏱</div><h1>Скільки часу на день?</h1>
     <p class="muted">Гра складе збалансований план: повторення, нові слова, речення, читання й аудіювання.</p>
     <div class="onb-opts"><button class="onb-opt" onclick="S.minutes=30;save();onboarding(2)"><b>30 хвилин</b><span>Стабільний темп</span></button>
     <button class="onb-opt" onclick="S.minutes=60;save();onboarding(2)"><b>60 хвилин</b><span>+ письмо та іспити</span></button></div></div>`;return}
+  if(step===2){const rec=(S.minutes||30)>=60?15:10;
+    app.innerHTML=`<div class="onb">${dots}<div class="onb-hero">🆕</div><h1>Скільки нових слів на тиждень?</h1>
+    <p class="muted">Кожне нове слово ще 8–10 разів повернеться на повторення, тому краще менше, але щодня. Змінити можна будь-коли в налаштуваннях.</p>
+    <div class="onb-opts">${[[5,'Спокійно'],[10,'Оптимально для 30 хв'],[15,'Оптимально для 60 хв'],[20,'Інтенсивно']].map(([n,t])=>`<button class="onb-opt ${n===rec?'onb-rec':''}" onclick="setNewPerDayOnb(${n})"><b>${n*7} слів на тиждень${n===rec?' · радимо':''}</b><span>${n} на день · ${t}</span></button>`).join('')}</div></div>`;return}
   app.innerHTML=`<div class="onb">${dots}<div class="onb-hero">${L().flag}</div><h1>З чого почнемо?</h1>
     <div class="onb-opts"><button class="onb-opt" onclick="S.levels=['A1'];onbDone()"><b>🌱 З нуля</b><span>Почати з рівня A1</span></button>
     <button class="onb-opt" onclick="onbDone(true)"><b>🎯 Я трохи знаю</b><span>Тест рівня, 10–15 хвилин</span></button></div></div>`;
 }
+function setNewPerDayOnb(n){S.newPerDay=S.newPerDay||{};S.newPerDay[S.lang]=n;S.dailyNew=n;save();onboarding(3)}
 function onbDone(test){S.onb=1;LANG_PICKED=true;if(!test){S.beginner=S.beginner||{};S.beginner[S.lang]=today()}save();document.body.classList.remove('in-session');if(test)placementIntro();else home()}
 
 /* ====================== ЖИВИЙ ДИЗАЙН: привітання, анімації, «+XP» ====================== */
@@ -7152,9 +7160,9 @@ function langPicker(){
   applyTheme();document.body.classList.add('in-session');
   const h=new Date().getHours(),greet=h<5?'Доброї ночі':h<12?'Доброго ранку':h<18?'Доброго дня':'Доброго вечора';
   app.innerHTML=`<div class="onb lp"><div class="onb-hero">🌍</div><h1>${greet}!</h1><p class="muted">Яку мову сьогодні повторюємо або вивчаємо?</p>
-   <div class="lp-list">${activeLangEntries().map(([k,v])=>{const st_=langStats(k);
-     return `<button class="lp-card ${k===S.lang?'last':''}" onclick="chooseLang('${k}')"><span class="flag">${v.flag}</span>
-      <div class="lp-t"><b>${v.name.split(' ')[0]}</b><small>${st_.started?`${st_.due?'🔁 '+st_.due+' до повторення':'✅ повторено'} · 📚 ${st_.learnedN} вивчено`:'🌱 ще не починали'}</small>
+   <div class="lp-list">${startOptions().map(o=>{const k=o.k,st_=langStats(k),cur=k===S.lang&&(!o.v||o.v===(S.engVar||'gb'));
+     return `<button class="lp-card ${cur?'last':''}" onclick="setStartLang('${k}','${o.v||''}');chooseLang('${k}')"><span class="flag">${o.flag}</span>
+      <div class="lp-t"><b>${o.name}${o.sub?` <span class="lp-sub">${o.sub}</span>`:''}</b><small>${st_.started?`${st_.due?'🔁 '+st_.due+' до повторення':'✅ повторено'} · 📚 ${st_.learnedN} вивчено`:'🌱 ще не починали'}</small>
       ${st_.started?`<div class="bar"><i style="width:${Math.min(100,st_.done/st_.B*100)}%"></i></div><small>План дня: ${Math.min(st_.done,st_.B)}/${st_.B}</small>`:''}</div><span class="lp-go">›</span></button>`}).join('')}</div>
    <div class="lp-streak">🔥 Серія: <b>${S.streak}</b> дн. · ⭐ рівень ${level()}</div></div>`;
 }
@@ -7193,6 +7201,12 @@ function importProgress(file){
     }catch(e){toast('Файл пошкоджено або має інший формат')}};
   r.readAsText(file);
 }
+
+/* на старті: англійська британська / англійська американська / данська (прогрес англійської спільний для обох варіантів) */
+function startOptions(){const o=[];
+  if(ACTIVE_LANGS.includes('en'))o.push({k:'en',v:'gb',flag:'🇬🇧',name:'Англійська',sub:'британська'},{k:'en',v:'us',flag:'🇺🇸',name:'Англійська',sub:'американська'});
+  activeLangEntries().filter(([k])=>k!=='en').forEach(([k,v])=>o.push({k,v:null,flag:v.flag,name:v.name.split(' ')[0],sub:''}));return o}
+function setStartLang(k,v){if(k==='en'&&v){S.engVar=v;if(typeof applyEngVar==='function')applyEngVar()}if(k!==S.lang&&typeof switchLang==='function')switchLang(k);else S.lang=k;save()}
 
 /* ====================== МОЇ ПОМИЛКИ ======================
    Кожне слово, вираз чи речення, де ви помилилися (крім тесту рівня), автоматично потрапляє в «Словник → Мої помилки».
@@ -7822,7 +7836,7 @@ function settingsScreen(){
     <button class="k-srow" onclick="langPicker()"><span>Мова</span><span class="k-val">${L().flag} ${L().name.split(' ')[0]} ›</span></button>
     ${S.lang==='en'?`<div class="k-srow"><span>Англійська</span>${seg([['gb','🇬🇧 UK'],['us','🇺🇸 US']],S.engVar==='us'?'us':'gb','setEngVar')}</div>`:''}
     <div class="k-srow"><span>Час на день</span>${seg([[30,'30 хв'],[60,'60 хв']],S.minutes||30,'setMinutesS')}</div>
-    <div class="k-srow"><span>Нових слів на день</span>${seg(NEW_OPTIONS.map(n=>[n,String(n)]),newPerDay(),'setNewPerDay')}</div>
+    <div class="k-srow"><span>Нових слів на день<small class="k-sub2">≈ ${newPerDay()*7} на тиждень</small></span>${seg(NEW_OPTIONS.map(n=>[n,String(n)]),newPerDay(),'setNewPerDay')}</div>
     <div class="k-srow col"><span>Напрям перекладу</span>${seg([['toUk','На українську'],['fromUk','З української'],['mix','Змішано']],S.dir,'setDir')}</div>
   </div>
   <p class="k-hint">Оптимально ${(S.minutes||30)>=60?15:10} нових слів на день: кожне слово ще 8–10 разів повернеться на повторення.</p>
