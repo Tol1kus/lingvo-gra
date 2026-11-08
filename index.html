@@ -556,6 +556,73 @@ body{background:radial-gradient(1200px 500px at 110% -10%,color-mix(in srgb,var(
 .mist-card .my-row{animation:rise .3s both}
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 .pill{white-space:nowrap}.stats .pill:first-child{gap:5px}
+
+/* ===== 14: компактна головна, степер плану, події до тексту ===== */
+.hero{padding:12px 14px;gap:10px;border-radius:20px;margin-bottom:10px}
+.hero::before{width:110px;height:110px;right:-30px;top:-50px}.hero::after{display:none}
+.hero .mascot{font-size:34px}
+.hero-t b{font-size:15px;margin:0 0 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hero-xp{font-size:11px}.hero-xp .bar{height:5px}
+.shortcuts{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 -16px 10px;padding:2px 16px 4px;scroll-snap-type:x proximity}
+.shortcuts::-webkit-scrollbar{display:none}
+.sc{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:3px;width:62px;scroll-snap-align:start}
+.sc-ic{position:relative;width:48px;height:48px;border-radius:16px;display:grid;place-items:center;font-size:23px;background:var(--card);border:1px solid var(--line);box-shadow:0 3px 8px var(--shadow)}
+.sc small{font-size:10.5px;font-weight:800;color:var(--muted);white-space:nowrap}
+.sc-badge{position:absolute;top:-5px;right:-6px;background:var(--bad);color:#fff;font-style:normal;font-size:10px;font-weight:900;border-radius:999px;padding:1px 5px;border:2px solid var(--bg)}
+.sc:active .sc-ic{transform:scale(.92)}
+.daily{padding:14px 14px 16px}
+.daily-head{align-items:flex-start}.daily-title{font-size:18px}
+.d-right{display:flex;align-items:center;gap:8px}.d-right .mins{margin:0}.d-right .mini{padding:4px 8px;font-size:12px}
+.ring.sm{width:48px;height:48px}.ring.sm span{width:38px;height:38px;font-size:13px}.ring.sm small{font-size:8px}
+.stepper{display:flex;gap:4px;margin:14px 0 10px;position:relative;overflow-x:auto;scrollbar-width:none;padding:2px 2px 4px}
+.stepper::-webkit-scrollbar{display:none}
+.stepper::before{content:'';position:absolute;left:24px;right:24px;top:21px;height:2px;background:var(--line);z-index:0}
+.st{flex:1 0 46px;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;z-index:1;min-width:46px}
+.st-ic{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:18px;background:var(--card);border:2px solid var(--line);transition:.2s}
+.st small{font-size:9.5px;font-weight:800;color:var(--muted);text-align:center;line-height:1.1;max-width:58px}
+.st.done .st-ic{background:var(--ok);border-color:var(--ok);color:#fff;font-weight:900}
+.st.next .st-ic{border-color:var(--accent);background:var(--accent-soft);animation:ping 1.8s infinite;transform:scale(1.08)}
+.st.next small{color:var(--accent)}
+.st.locked{opacity:.45}
+.next-info{background:var(--bg);border-radius:14px;padding:10px 12px;margin-bottom:10px}
+.next-info b{display:block;font-size:16px}.next-info span{font-size:13px;color:var(--muted);font-weight:600}
+.next-info.done{background:var(--ok-soft)}.next-info.done span b{display:inline;font-variant-numeric:tabular-nums;color:var(--ink)}
+.blocks{display:none}
+.quests{padding:0}.quests summary{list-style:none;display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;font-weight:800}
+.quests summary::-webkit-details-marker{display:none}
+.quests summary .q-dots{display:flex;gap:4px;margin-left:auto}.q-dots i{font-style:normal;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:14px;background:var(--bg);filter:grayscale(1);opacity:.6}
+.q-dots i.ready{filter:none;opacity:1;background:var(--warn-soft);animation:ping 1.6s infinite}.q-dots i.on{filter:none;opacity:1;background:var(--ok-soft)}
+.quests[open] summary{border-bottom:1px solid var(--line)}.quests .quest{padding:10px 14px}
+h2{font-size:18px;margin:16px 0 8px}
+/* граматика: нове правило */
+.gram-new .rule{font-size:16px;line-height:1.6}
+/* події до тексту */
+.evts{display:flex;flex-direction:column;gap:8px}
+.evt{display:flex;align-items:flex-start;gap:10px;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:10px 12px;font-size:15px;font-weight:600;line-height:1.4;flex-wrap:wrap}
+.evt .ev-chk{flex:0 0 22px;height:22px;border-radius:7px;border:2px solid var(--line);margin-top:1px}
+.evt .ev-s{flex:1;min-width:0}.evt .speak{font-size:13px;padding:2px 6px}
+.evt.on{border-color:var(--accent);background:var(--accent-soft)}.evt.on .ev-chk{background:var(--accent);border-color:var(--accent)}
+.evt.is-own{border-color:var(--ok)}.evt.is-own .ev-chk{border-color:var(--ok)}
+.evt.miss{background:var(--bad-soft)}.evt.good.is-own{background:var(--ok-soft)}
+.ev-src{flex-basis:100%;color:var(--muted);font-size:12px;padding-left:32px}
+
+/* ===== стартовий вибір мови ===== */
+.flag-btn{font-size:20px;padding:4px 9px}
+.lp h1{margin-bottom:2px}
+.lp-list{display:flex;flex-direction:column;gap:10px;width:100%;margin:20px 0 14px}
+.lp-card{display:flex;align-items:center;gap:14px;background:var(--card);border:2px solid var(--line);border-radius:20px;padding:14px 16px;text-align:left;animation:rise .35s both;box-shadow:0 4px 14px var(--shadow)}
+.lp-card:nth-child(2){animation-delay:.06s}.lp-card:nth-child(3){animation-delay:.12s}
+.lp-card.last{border-color:var(--accent)}
+.lp-card .flag{font-size:42px}
+.lp-t{flex:1;min-width:0}.lp-t b{display:block;font-size:19px}.lp-t small{display:block;color:var(--muted);font-weight:600;font-size:12.5px}
+.lp-t .bar{height:6px;margin:6px 0 2px}.lp-t .bar i{background:var(--ok)}
+.lp-go{font-size:26px;color:var(--muted)}
+.lp-card:active{transform:scale(.97);border-color:var(--accent)}
+.lp-streak{color:var(--muted);font-weight:700}
+
+header{gap:8px}.brand{font-size:19px;min-width:0}.stats{gap:6px}.stats .pill{padding:6px 10px}
+@media (max-width:360px){.brand{font-size:0}.brand .dot{width:14px;height:14px}}
+.hero-t b{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;font-size:14.5px}
 </style>
 </head>
 <body>
@@ -3305,7 +3372,7 @@ function pickWords(n){
   const fresh=p.filter(w=>!st(w));
   return seen.slice(0,Math.ceil(n*0.6)).concat(fresh).concat(seen.slice(Math.ceil(n*0.6))).slice(0,n);
 }
-function pickNew(n){return pool().filter(w=>!st(w)).slice(0,n)}
+function pickNew(n){return shuffle(pool().filter(w=>!st(w))).slice(0,n)} // завжди випадковий порядок
 // пріоритет повторення: що імовірніше забуто (нижча утримуваність R), те раніше; після перерви це «борг», і першими йдуть найризиковіші слова
 function recallP(w){const x=st(w);if(!x)return 1;if(x.s==null||!x.lr)return x.due<today()?.7:.9;return fsrsR(Math.max(0,dayDiff(x.lr,today())),x.s)}
 function dueWords(){const t=today();return ALL().filter(isDue).map(w=>[w,recallP(w)]).sort((a,b)=>a[1]-b[1]||box(a[0])-box(b[0])).map(x=>x[0])}
@@ -3361,7 +3428,8 @@ function header(){
   return `<header>
     <div class="brand" onclick="home()"><span class="dot"></span>Лінгво-гра</div>
     <div class="stats">
-      <span class="pill" title="Рівень гравця · досвід · днів поспіль">⭐ ${level()} <i class="sep"></i> ⚡ ${S.xp} <i class="sep"></i> 🔥 ${S.streak}</span>
+      <span class="pill" title="Досвід · днів поспіль">⚡${S.xp} <i class="sep"></i> 🔥${S.streak}</span>
+      <button class="pill icon flag-btn" onclick="langPicker()" title="Змінити мову" aria-label="Змінити мову">${L().flag}</button>
       <button class="pill icon" onclick="settingsScreen()" title="Налаштування" aria-label="Налаштування">${ICON.gear}</button>
     </div></header>`;
 }
@@ -3376,17 +3444,19 @@ function dailyPlan(){
   const gram=(Object.keys(S.grammar[S.lang]).length?3:0)+errorFocusItems().length;
   return {due,newDone,quota,fresh,gram,done:!!S.doneLog[S.lang][today()]};
 }
+let LANG_PICKED=false; // мову обирають на стартовому екрані при кожному відкритті гри
 let REDRAW=null; // екран, який перемальовують налаштування (рівні, теми, напрям…)
 function redraw(){(REDRAW||home)()}
 function home(){
   emit('home:before');
   applyTheme();REDRAW=home;
   if(!S.onb){if(['en','da','it'].some(l=>Object.keys(S.srs[l]).length)){S.onb=1;save()}else if(typeof onboarding==='function')return onboarding()}
-  app.innerHTML=header()+langSeg()+(typeof heroHTML==='function'?heroHTML():'')+planCard()+
+  if(!LANG_PICKED&&typeof langPicker==='function')return langPicker();
+  app.innerHTML=header()+(typeof heroHTML==='function'?heroHTML():'')+(typeof shortcutsHTML==='function'?shortcutsHTML():'')+planCard()+
   `<p class="muted foot">Повторення за алгоритмом FSRS: кожне слово повертається тоді, коли ви от-от його забудете. Прогрес зберігається в цьому браузері.</p>`;
   emit('screen','home');emit('home:after');
 }
-function setLang(l,fn){S.lang=l;save();(fn&&window[fn]||home)()}
+function setLang(l,fn){S.lang=l;LANG_PICKED=true;save();(fn&&window[fn]||home)()}
 function setDir(d){S.dir=d;save();redraw()}
 function setDaily(n){S.dailyNew=n;save();home()}
 function toggleTopic(id){const i=S.topics.indexOf(id);i>=0?S.topics.splice(i,1):S.topics.push(id);save();redraw()}
@@ -3464,7 +3534,7 @@ function choiceA(i){
   if(ok){SS.right++;SS.xp+=10;grade(w,true,it.retry)}else{grade(w,false);markWrong(it)}
   speak(w[S.lang]);
   $('#fb').innerHTML=ok?`<div class="feedback ok">✓ Правильно! +10 XP</div>`:`<div class="feedback bad">✗ Правильна відповідь: ${esc(w.uk)} — <b>${esc(w[S.lang])}</b></div>${hintBox({lines:[`Ви обрали «${esc(opts[i][it.toUk?'uk':S.lang])}» — це ${it.toUk?'<b>'+esc(opts[i][S.lang]||'')+'</b>':'«'+esc(opts[i].uk)+'»'}.`,genderTip(w)],cat:'meaning',q:(it.toUk?'Перекласти українською: ':'Як сказати: ')+(it.toUk?w[S.lang]:w.uk),correct:it.toUk?w.uk:w[S.lang],given:opts[i][it.toUk?'uk':S.lang]})}<div class="row"><button class="btn" onclick="nextItem()">Далі →</button></div>`;
-  if(ok)setTimeout(nextItem,1000);
+  if(ok){const s0=SS,i0=SS.i;setTimeout(()=>{if(SS===s0&&SS.i===i0)nextItem()},1000)}
 }
 
 /* написання */
@@ -3561,6 +3631,7 @@ function finishSession(){
   </div>`;
   if(o.again)$('#againBtn').onclick=o.again;
   $('#backBtn').onclick=o.back||home;
+  emit('result',o);
 }
 
 /* ====================== РЕЖИМИ ====================== */
@@ -3797,7 +3868,7 @@ function openText(i){
     <div class="reader-pic">${t.pic||'📄'}</div>
     <h2 style="margin:4px 0 2px">${esc(t.title)}</h2><div class="muted">${esc(t.title_uk)}</div>
     <div class="audio-bar"><button class="btn ghost" onclick="readAll()">▶ ${L().flag} Увесь текст</button><button class="btn ghost" onclick="readAllUk()">▶ 🇺🇦 Увесь переклад</button><button class="btn ghost" onclick="readBoth()">▶ ${L().flag}+🇺🇦 По реченнях</button><button class="btn ghost" onclick="stopRead()">⏹</button><button class="btn ghost" onclick="toggleTr()">🇺🇦 Текст перекладу</button></div>
-    <div class="muted" style="font-size:12px;margin-top:6px">▶ перед реченням — прослухати лише його. Торкніться слова, щоб побачити переклад.</div>
+    <div class="muted" style="font-size:12px;margin-top:6px">▶ перед реченням — прослухати лише його. Торкніться слова чи фрази: побачите переклад, а слово автоматично потрапить у «Словник» і повториться завтра.</div>
     ${t.topic_uk?`<span class="lv-tag" style="background:#555">${esc(t.topic_uk)}</span>`:''}
     <div class="gtext" id="gtext">${glossHTML(t.text)}</div>
     ${t.fact_uk?`<div class="fact">💡 <b>Чи знали ви?</b> ${esc(t.fact_uk)}</div>`:''}
@@ -3827,6 +3898,7 @@ function showPop(el,pin){
   p.innerHTML=`<div class="pop-w">${esc(wd)}</div><div class="pop-tr">${esc(tr)}</div>
     <div class="pop-row"><button onclick="speak(${js(wd)})">🔊</button><button id="popAdd" ${inDict?'disabled':''}>${inDict?'✓ У словнику':'➕ До словника'}</button></div>`;
   $('#popAdd').onclick=e=>{e.stopPropagation();addMy(wd,tr,'📖');$('#popAdd').textContent='✓ У словнику';$('#popAdd').disabled=true};
+  if(pin&&!inDict&&addMy(wd,tr,'📖',{quiet:true,due:addDays(1)})){$('#popAdd').textContent='✓ Додано · повтор завтра';$('#popAdd').disabled=true;RT&&(RT.added=(RT.added||0)+1)}
   const r=el.getBoundingClientRect();p.style.display='block';
   const pw=p.offsetWidth,left=Math.max(8,Math.min(window.innerWidth-pw-8,r.left+r.width/2-pw/2));
   let top=r.bottom+8+window.scrollY; if(r.bottom+p.offsetHeight+16>window.innerHeight)top=r.top+window.scrollY-p.offsetHeight-8;
@@ -3854,18 +3926,18 @@ function textQ(qi,oi,btn){
     const xp=prev==null?20+RT.right*10:RT.right*3;
     S.read[S.lang][RT.i]=Math.max(prev||0,sc);save();addXP(xp);
     const blk=READBLOCK;if(blk){READBLOCK=false;markBlock('read')}
-    $('#rres').innerHTML=`<div class="feedback ${sc===1?'ok':'warn'}">Результат: ${RT.right}/${RT.t.q.length} · +${xp} XP</div><div class="row"><button class="btn" onclick="hidePop();${blk?'home()':'readingList()'}">${blk?'✅ Далі за планом':'До текстів'}</button></div>`;
+    $('#rres').innerHTML=`<div class="feedback ${sc===1?'ok':'warn'}">Результат: ${RT.right}/${RT.t.q.length} · +${xp} XP</div><div class="row"><button class="btn" onclick="hidePop();${blk?'planNext()':'readingList()'}">${blk?'▶ '+planNextLabel():'До текстів'}</button></div>`;
   }
 }
 
 /* ====================== МІЙ СЛОВНИК ====================== */
-function addMy(fg,uk,pic){
+function addMy(fg,uk,pic,o={}){
   fg=String(fg).trim();uk=String(uk).trim();if(!fg||!uk)return false;
   const list=S.my[S.lang];
-  if(list.some(m=>norm(m.fg,S.lang)===norm(fg,S.lang))){toast('Це слово вже є у словнику');return false}
+  if(list.some(m=>norm(m.fg,S.lang)===norm(fg,S.lang))){if(!o.quiet)toast('Це слово вже є у словнику');return false}
   const id='my_'+S.lang+'_'+Date.now().toString(36)+Math.random().toString(36).slice(2,5);
   list.unshift({id,fg,uk,pic:pic||'📝',added:today()});
-  S.srs[S.lang][id]={b:0,due:today()};save();toast('➕ Додано до словника');return true;
+  S.srs[S.lang][id]={b:0,due:o.due||today()};save();if(!o.quiet)toast('➕ Додано до словника');return true;
 }
 function delMy(id){S.my[S.lang]=S.my[S.lang].filter(m=>m.id!==id);delete S.srs[S.lang][id];save();myDict()}
 function myDict(){
@@ -4712,42 +4784,46 @@ function planBlocks(){
   B.forEach(b=>b.done=!!done[b.id]);
   return B;
 }
-function markBlock(id){S.dayDone=S.dayDone||{};S.dayDone[S.lang]=S.dayDone[S.lang]||{};const d=S.dayDone[S.lang][today()]||(S.dayDone[S.lang][today()]={});d[id]=true;
+function markBlock(id){PLAN_JUST=id;S.dayDone=S.dayDone||{};S.dayDone[S.lang]=S.dayDone[S.lang]||{};const d=S.dayDone[S.lang][today()]||(S.dayDone[S.lang][today()]={});d[id]=true;
   if(planBlocks().every(b=>b.done)){S.doneLog[S.lang][today()]=true;toast('🏅 План на сьогодні виконано!')}save()}
 function minutesToday(){return Math.round(((S.act||{})[today()]||{}).sec/60||0)}
 function setMinutes(m){S.minutes=m;save();home()}
 function planCard(){
-  const B=planBlocks(),m=S.minutes||30,spent=minutesToday(),lockedNow=reviewLocked();let next=B.find(b=>!b.done);if(lockedNow)next=B[0];
-  const pct=Math.min(100,spent/m*100);
+  const B=planBlocks(),m=S.minutes||30,spent=minutesToday(),next=B.find(b=>!b.done),ni=next?B.indexOf(next):B.length;
+  const pct=Math.min(100,spent/m*100),lbl=b=>b.s||b.t.split(' ').slice(1).join(' ');
   return pipe('planCard',`<div class="daily ${!next?'is-done':''}">
-   <div class="daily-head"><div><div class="q-label">Мій план на сьогодні</div><b class="daily-title">${next?'⏱ '+m+' хвилин навчання':'✅ План виконано!'}</b></div>
-   <div class="ring" style="--p:${pct}"><span>${spent}<small>/${m} хв</small></span></div></div>
-   <div class="mins">${[30,60].map(x=>`<button class="mini ${m===x?'on':''}" onclick="setMinutes(${x})">${x} хв</button>`).join('')}<span class="muted" style="margin-left:auto;font-size:12px">рівень ${curLevel()}</span></div>
-   <div class="blocks">${B.map(b=>`<button class="blk ${b.done?'done':''} ${next&&next.id===b.id?'next':''} ${b.id!=='review'&&lockedNow?'locked':''}" onclick="startBlock('${b.id}')"><span class="bk-ic">${b.done?'✅':b.t.split(' ')[0]}</span><div class="t"><b>${b.t.split(' ').slice(1).join(' ')}</b><span>${b.d}</span></div><span class="bk-min">${b.id!=='review'&&lockedNow?'🔒':b.min+' хв'}</span></button>`).join('')}</div>
-   ${lockedNow?`<div class="lock-note">🔒 Обов'язкове повторення: ${dueWords().length} слів чекають на вас.${dueWords().length>60?' Після перерви накопичився борг: сьогодні повторимо найризиковіші слова, решту — у наступні дні.':''} Решта блоків відкриється після нього.</div>`:''}
-   ${next?`<button class="btn big" onclick="startBlock('${next.id}')">▶ ${B.some(b=>b.done)?'Продовжити':'Почати'}: ${next.t.split(' ').slice(1).join(' ')}</button>`:`<button class="btn big ghost" onclick="startDaily()">🔁 Додаткове повторення</button>`}
+   <div class="daily-head"><div><div class="q-label">Обов'язковий план на сьогодні</div><b class="daily-title">${next?`Крок ${ni+1} з ${B.length}`:'✅ План виконано!'}</b></div>
+   <div class="d-right"><div class="mins">${[30,60].map(x=>`<button class="mini ${m===x?'on':''}" onclick="setMinutes(${x})">${x}</button>`).join('')}</div>
+   <div class="ring sm" style="--p:${pct}"><span>${spent}<small>/${m}</small></span></div></div></div>
+   <div class="stepper">${B.map((b,i)=>`<button class="st ${b.done?'done':''} ${next&&next.id===b.id?'next':''} ${next&&i>ni?'locked':''}" onclick="startBlock('${b.id}')" title="${esc(lbl(b))}"><span class="st-ic">${b.done?'✓':b.t.split(' ')[0]}</span><small>${esc(lbl(b))}</small></button>`).join('')}</div>
+   ${next?`<div class="next-info"><b>${next.t}</b><span>${next.d} · ${next.min} хв</span></div>
+     ${next.id==='review'&&dueWords().length>60?`<div class="lock-note">Після перерви накопичився борг (${dueWords().length} слів): сьогодні повторимо найризиковіші, решту — у наступні дні.</div>`:''}
+     <button class="btn big" onclick="startBlock('${next.id}')">▶ ${B.some(b=>b.done)?'Продовжити':'Почати план'}</button>`
+    :`<div class="next-info done"><b>🎉 Чудова робота!</b><span>Новий план відкриється о 00:00 · <b id="midnight">${untilMidnight()}</b></span></div>
+     <button class="btn big ghost" onclick="trainScreen()">🎮 Додаткове тренування</button>`}
   </div>`);
 }
+function untilMidnight(){const n=new Date(),m=new Date(n);m.setHours(24,0,0,0);const s=Math.max(0,Math.floor((m-n)/1000));return [s/3600|0,(s%3600)/60|0,s%60].map(x=>String(x).padStart(2,'0')).join(':')}
 const SEC={card:9,choice:9,fill:15,listen:12,build:30,dict:45,type:20,gram:20,sentb:35,num:15,mcq:25};
 function fitItems(items,min){let s=0;const out=[];for(const it of items){s+=SEC[it.kind]||15;if(s>min*60&&out.length>=3)break;out.push(it)}return out}
 function startBlock(id){
-  if(id!=='review'&&reviewLocked()){toast('🔒 Спершу обов\'язкове повторення ('+dueWords().length+' слів)');id='review'}
+  {const first=planBlocks().find(b=>!b.done);if(first&&id!==first.id){toast('▶ План іде по черзі. Спершу: '+(first.s||first.t.split(' ').slice(1).join(' ')));id=first.id}}
   if(HOOKS['block:'+id]){const bb=planBlocks().find(x=>x.id===id);return emit('block:'+id,bb)}
   const b=planBlocks().find(x=>x.id===id);const fin={onFinish:o=>{markBlock(id);if(o._prev)o._prev(o)}};
   if(id==='review'){
     const due=dueWords();let items=shuffle(due.slice(0,60)).map(w=>({kind:reviewKind(w),w,toUk:dirToUk(),phase:'🔁 Повторення'}));
     items=fitItems(items,b.min-3).concat(errorFocusItems(),oldMaterialItems());
-    if(!items.length){markBlock(id);toast('Повторювати поки нічого. Блок зараховано ✅');return home()}
+    if(!items.length){markBlock(id);toast('Повторювати поки нічого. Блок зараховано ✅');return planNext()}
     return runSession(items,{title:'Повторення завершено!',requeue:true,...fin});
   }
   if(id==='new'){
     const pl=S.plan&&S.plan[S.lang];const n=Math.max(4,Math.min(Math.round(b.min*60/22),pl&&pl.daily||99));const fresh=pickNew(n);
-    if(!fresh.length){markBlock(id);toast('У вибраних рівнях усі слова вже в роботі. Додайте рівень');return home()}
+    if(!fresh.length){markBlock(id);toast('У вибраних рівнях усі слова вже в роботі. Додайте рівень');return planNext()}
     const items=fresh.map(w=>({kind:'card',w,toUk:true,intro:true,phase:'🆕 Нові слова'})).concat(shuffle(fresh).map(w=>({kind:'choice',w,toUk:dirToUk(),phase:'🆕 Закріплення'})));
     return runSession(items,{title:'Нові слова вивчено!',requeue:true,...fin});
   }
   if(id==='struct'){
-    const d=SD();if(!d){markBlock(id);return home()}
+    const d=SD();if(!d){markBlock(id);return planNext()}
     S.struct=S.struct||{};S.struct[S.lang]=S.struct[S.lang]||{};
     const ok=d.lessons.filter(l=>LEVELS.indexOf(l.lv)<=LEVELS.indexOf(curLevel()));
     const l=(ok.find(l=>(S.struct[S.lang][l.id]||0)<.99)||ok[ok.length-1]||d.lessons[0]);
@@ -4755,7 +4831,7 @@ function startBlock(id){
     return runSession(items,{title:l.title_uk,onFinish:o=>{const sc=o.graded?o.right/o.graded:0;S.struct[S.lang][l.id]=Math.max(S.struct[S.lang][l.id]||0,sc);markBlock(id)}});
   }
   if(id==='read'){
-    const ts=textsFor();if(!ts.length){markBlock(id);return home()}
+    const ts=textsFor();if(!ts.length){markBlock(id);return planNext()}
     const lv=curLevel(),order=[lv,...LEVELS.filter(x=>x!==lv).sort((a,b)=>Math.abs(LEVELS.indexOf(a)-LEVELS.indexOf(lv))-Math.abs(LEVELS.indexOf(b)-LEVELS.indexOf(lv)))];
     let t=null;for(const l of order){t=ts.find(x=>x.lv===l&&S.read[S.lang][x.idx]==null);if(t)break}
     t=t||ts.find(x=>x.lv===lv)||ts[0];READBLOCK=true;return openText(t.idx);
@@ -4763,7 +4839,7 @@ function startBlock(id){
   if(id==='listen'){
     let pool=ALL().filter(w=>st(w)&&box(w)>=1);if(pool.length<4)pool=pickWords(10);
     const items=shuffle(pool).slice(0,12).map(w=>({kind:w.sent&&w.sent[S.lang]&&box(w)>=3?'dict':'listen',w,phase:'🎧 Аудіювання'}));
-    if(!canSpeak){markBlock(id);toast('Озвучення недоступне на цьому пристрої');return home()}
+    if(!canSpeak){markBlock(id);toast('Озвучення недоступне на цьому пристрої');return planNext()}
     return runSession(fitItems(items,b.min),{title:'Аудіювання завершено!',...fin});
   }
   if(id==='write'){
@@ -4796,7 +4872,7 @@ function mcqA(j){
   const ci=it.ord.indexOf(q.answer),ok=j===ci;btns[ci].classList.add('ok');if(!ok)btns[j].classList.add('bad');
   SS.graded++;if(ok){SS.right++;SS.xp+=8;if(q.test==='værdier')SS.vals=(SS.vals||0)+1}if(q.test==='værdier')SS.valsN=(SS.valsN||0)+1;
   if(!ok)markWrong(it);
-  if(SS.sim){return setTimeout(nextItem,250)}
+  if(SS.sim){const s0=SS,i0=SS.i;return setTimeout(()=>{if(SS===s0&&SS.i===i0)nextItem()},250)}
   $('#fb').innerHTML=`<div class="feedback ${ok?'ok':'bad'}">${ok?'✓ Правильно!':'✗ Правильно: <b>'+esc(q.opts[q.answer])+'</b>'}</div>${q.why_uk?`<div class="hintbox ${ok?'soft':''}"><div class="hl-line">💡 ${esc(q.why_uk)}</div></div>`:''}<div class="row"><button class="btn" onclick="nextItem()">Далі →</button></div>`;
 }
 
@@ -4858,7 +4934,7 @@ async function checkWrite(){
       <div class="row"><button class="btn" onclick="finishWrite()">${WRITEBLOCK?'✅ Завершити блок':'✅ Готово'}</button></div></div>`;
   }catch(e){out.innerHTML=`<div class="hintbox"><div class="hl-line">${e&&e.code==='rate_limited'?'Забагато запитів, спробуйте за хвилину.':'Не вдалося перевірити. Порівняйте свій текст зі зразком.'}</div></div>`}
 }
-function finishWrite(){if(WT){clearInterval(WT.iv);addTime(Date.now()-WT.start)}if(WRITEBLOCK){WRITEBLOCK=false;markBlock('write');snd('win');confetti();return home()}examHome()}
+function finishWrite(){if(WT){clearInterval(WT.iv);addTime(Date.now()-WT.start)}if(WRITEBLOCK){WRITEBLOCK=false;markBlock('write');snd('win');confetti();return planNext()}examHome()}
 // вільне письмо для інших мов / нижчих рівнів
 function freeWrite(){
   const ws=shuffle(ALL().filter(w=>st(w)&&box(w)>=1&&!w.my)).slice(0,5);const list=ws.length>=3?ws:pickWords(5);
@@ -5001,7 +5077,7 @@ let CURTAB='home';
 function setTab(k){CURTAB=k;document.querySelectorAll('#tabbar button').forEach(b=>b.classList.toggle('on',b.dataset.tab===k))}
 // показувати меню лише на основних екранах, а не під час вправ
 new MutationObserver(()=>{
-  const inSession=!!app.querySelector('.top-row .bar, .reader, .cloze, #wtext, .tline, .onb');
+  const inSession=!!app.querySelector('.top-row .bar, .reader, .cloze, #wtext, .tline, .onb, .lp');
   document.body.classList.toggle('in-session',inSession);
 }).observe(app,{childList:true});
 on('screen',tab=>{setTab(tab);try{window.scrollTo(0,0)}catch(e){}});
@@ -5194,9 +5270,10 @@ function qClaim(id){const q=QUESTS.find(x=>x.id===id);if(!q||qClaimed(id)||q.get
   addXP(q.xp);snd('win');confetti();toast('🎁 +'+q.xp+' XP за завдання!');home()}
 function questsHTML(){
   const qs=questsToday();const done=qs.filter(q=>qClaimed(q.id)).length;
-  return `<h2>🎯 Завдання дня <span class="muted" style="font-size:14px">${done}/${qs.length}</span></h2><div class="card quests">${qs.map(q=>{const v=Math.min(q.n,q.get()),ok=v>=q.n,cl=qClaimed(q.id);
+  const ready=qs.some(q=>!qClaimed(q.id)&&q.get()>=q.n);
+  return `<details class="card quests" ${ready?'open':''}><summary><span>🎯 Завдання дня</span><span class="q-dots">${qs.map(q=>`<i class="${qClaimed(q.id)?'on':q.get()>=q.n?'ready':''}">${q.ic}</i>`).join('')}</span><b>${done}/${qs.length}</b></summary>${qs.map(q=>{const v=Math.min(q.n,q.get()),ok=v>=q.n,cl=qClaimed(q.id);
     return `<div class="quest ${cl?'claimed':''}"><span class="q-ic">${cl?'✅':q.ic}</span><div class="q-t"><b>${esc(q.t)}</b><div class="bar"><i style="width:${v/q.n*100}%"></i></div><small class="muted">${v}/${q.n} · +${q.xp} XP</small></div>
-     ${cl?'':ok?`<button class="mini on" onclick="qClaim('${q.id}')">🎁 Забрати</button>`:q.go?`<button class="mini" onclick="${q.go}">Почати</button>`:''}</div>`}).join('')}</div>`;
+     ${cl?'':ok?`<button class="mini on" onclick="qClaim('${q.id}')">🎁 Забрати</button>`:q.go?`<button class="mini" onclick="${q.go}">Почати</button>`:''}</div>`}).join('')}</details>`;
 }
 
 /* ---------- досягнення ---------- */
@@ -5411,7 +5488,7 @@ on('home:after',checkAch);
 
 function trainScreen(){
   emit('home:before');applyTheme();REDRAW=trainScreen;
-  app.innerHTML=header()+langSeg('trainScreen')+`
+  app.innerHTML=header()+`
   <h2>🎮 Ігри та виклики</h2><div class="modes">${gameModes()}</div>
   <h2>🏋️ Вправи</h2>
   <div class="modes">
@@ -5492,20 +5569,26 @@ function onboarding(step=0){
     <div class="onb-opts"><button class="onb-opt" onclick="S.levels=['A1'];onbDone()"><b>🌱 З нуля</b><span>Почати з рівня A1</span></button>
     <button class="onb-opt" onclick="onbDone(true)"><b>🎯 Я трохи знаю</b><span>Тест рівня, 5 хвилин</span></button></div></div>`;
 }
-function onbDone(test){S.onb=1;save();document.body.classList.remove('in-session');if(test)placementIntro();else home()}
+function onbDone(test){S.onb=1;LANG_PICKED=true;save();document.body.classList.remove('in-session');if(test)placementIntro();else home()}
 
 /* ====================== ЖИВИЙ ДИЗАЙН: привітання, анімації, «+XP» ====================== */
 const MASCOT={en:'💂',da:'🧜‍♀️',it:'🛵'};
 function heroHTML(){
   const h=new Date().getHours(),greet=h<5?'Доброї ночі':h<12?'Доброго ранку':h<18?'Доброго дня':'Доброго вечора';
   const due=dueWords().length,doneToday=S.lastDay===today(),xpIn=S.xp%100;
-  const msg=!doneToday&&S.streak>0?`Серія ${S.streak} ${S.streak%10===1&&S.streak%100!==11?'день':'дн.'} чекає на продовження 🔥`
-    :doneToday?'Сьогодні ви вже займалися. Так тримати!':due?`${due} слів чекають на повторення`:'Почнімо: кілька нових слів чекають на вас';
+  const msg=!doneToday&&S.streak>0?`серія ${S.streak} дн. чекає на продовження`:doneToday?'сьогодні ви вже займалися 💪':due?`${due} слів до повторення`:'почнімо!';
   return `<div class="hero">
-    <div class="hero-t"><small>${greet} 👋</small><b>${esc(msg)}</b>
-      <div class="hero-xp"><span>⭐ Рівень ${level()}</span><div class="bar"><i style="width:${xpIn}%"></i></div><span>${xpIn}/100 XP</span></div></div>
-    <div class="hero-side"><div class="mascot">${MASCOT[S.lang]||'🌍'}</div><div class="flame ${doneToday?'lit':''}">🔥<b>${S.streak}</b></div></div>
+    <div class="mascot">${MASCOT[S.lang]||'🌍'}</div>
+    <div class="hero-t"><b>${greet}, ${esc(msg)}</b><div class="hero-xp"><span>⭐${level()}</span><div class="bar"><i style="width:${xpIn}%"></i></div><span>${xpIn}/100</span></div></div>
+    <div class="flame ${doneToday?'lit':''}">🔥<b>${S.streak}</b></div>
   </div>`;
+}
+/* ярлики: усе додаткове — в одному рядку значків */
+function shortcutsHTML(){
+  const open=(typeof mistList==='function')?mistList().filter(x=>!x.m.fixed).length:0;
+  const it=[['🗺️','Мапа','mapScreen()'],['💬','Діалоги','dialogList()'],['🌧️','Дощ слів','rainStart()'],['⚡','Блискавка','blitzStart()'],
+    ['❌','Помилки','myDict()',open],['📒','Словник','myDict()'],['🏅','Нагороди','achScreen()'],['📅','Звіт','weekReport()'],['🎯','Тест рівня','placementIntro()']];
+  return `<div class="shortcuts" role="toolbar">${it.map(([ic,t,f,n])=>`<button class="sc" onclick="${f}"><span class="sc-ic">${ic}${n?`<i class="sc-badge">${n>99?'99+':n}</i>`:''}</span><small>${t}</small></button>`).join('')}</div>`;
 }
 // «+N XP», що злітає з правильної відповіді
 new MutationObserver(muts=>{for(const m of muts)for(const nd of m.addedNodes){if(nd.nodeType!==1)continue;
@@ -5514,6 +5597,21 @@ new MutationObserver(muts=>{for(const m of muts)for(const nd of m.addedNodes){if
   const r=fb.getBoundingClientRect(),f=document.createElement('div');f.className='xpfloat';f.textContent='+'+mm[1]+' XP';
   f.style.left=(r.left+r.width/2)+'px';f.style.top=(r.top+window.scrollY)+'px';document.body.appendChild(f);setTimeout(()=>f.remove(),1100)}
 }).observe(document.getElementById('app'),{childList:true,subtree:true});
+
+/* стартовий екран: яку мову сьогодні вчимо / повторюємо */
+function langStats(k){const keep=S.lang;S.lang=k;let due=0,learnedN=0,B=7;try{due=dueWords().length;learnedN=WORDS.filter(w=>w[k]&&learned(w)).length;B=planBlocks().length}finally{S.lang=keep}
+  const dd=((S.dayDone||{})[k]||{})[today()]||{};return {due,learnedN,done:Object.keys(dd).length,B,started:Object.keys(S.srs[k]).length>0}}
+function langPicker(){
+  applyTheme();document.body.classList.add('in-session');
+  const h=new Date().getHours(),greet=h<5?'Доброї ночі':h<12?'Доброго ранку':h<18?'Доброго дня':'Доброго вечора';
+  app.innerHTML=`<div class="onb lp"><div class="onb-hero">🌍</div><h1>${greet}!</h1><p class="muted">Яку мову сьогодні повторюємо або вивчаємо?</p>
+   <div class="lp-list">${Object.entries(LANGS).map(([k,v])=>{const st_=langStats(k);
+     return `<button class="lp-card ${k===S.lang?'last':''}" onclick="chooseLang('${k}')"><span class="flag">${v.flag}</span>
+      <div class="lp-t"><b>${v.name.split(' ')[0]}</b><small>${st_.started?`${st_.due?'🔁 '+st_.due+' до повторення':'✅ повторено'} · 📚 ${st_.learnedN} вивчено`:'🌱 ще не починали'}</small>
+      ${st_.started?`<div class="bar"><i style="width:${Math.min(100,st_.done/st_.B*100)}%"></i></div><small>План дня: ${Math.min(st_.done,st_.B)}/${st_.B}</small>`:''}</div><span class="lp-go">›</span></button>`}).join('')}</div>
+   <div class="lp-streak">🔥 Серія: <b>${S.streak}</b> дн. · ⭐ рівень ${level()}</div></div>`;
+}
+function chooseLang(k){S.lang=k;LANG_PICKED=true;save();document.body.classList.remove('in-session');home()}
 
 /* ====================== МОЇ ПОМИЛКИ ======================
    Кожне слово, вираз чи речення, де ви помилилися (крім тесту рівня), автоматично потрапляє в «Словник → Мої помилки».
@@ -5634,6 +5732,126 @@ on('planCard',h=>{const p=S.plan&&S.plan[S.lang];if(!p)return h;
   return `<div class="goal" onclick="${due?'placementIntro()':'settingsScreen()'}"><div class="goal-ring" style="--p:${pct}"><span>${p.lvl}</span></div>
     <div class="goal-t"><b>${due?'🎯 Час повторного тесту рівня!':'Ціль: рівень '+p.lvl+' до '+fmtDate(p.eta)}</b><small>${k}/${ws.length} слів · ${pct}% · фокус: ${(FOCUS[p.focus]||FOCUS.prod).t.toLowerCase()}</small>
     <div class="bar"><i style="width:${pct}%"></i></div></div><span class="goal-go">›</span></div>`+h});
+
+/* ====================== ОБОВ'ЯЗКОВИЙ ПЛАН ДНЯ (30 / 60 хв) ======================
+   Порядок: 1 повторення → 2 граматика (нове правило з поясненням) → 3 нові слова → 4 текст дня (слова, на які натиснули,
+   йдуть у словник із повтором завтра) → 5 вставляння слів → 6 аудіодиктант → 7 «події до тексту» (+ для 60 хв: будова речення, письмо).
+   Блоки проходяться по черзі. Після виконання всіх новий план відкривається о 00:00. Усі добірки — у випадковому порядку. */
+/* Логіка порядку: розігрів пам'яті (повтор) → нове правило → нові слова → одразу закріплюємо їх у реченнях →
+   текст дня (слова й правило в живому контексті) → події до тексту (перевірка розуміння, поки текст свіжий) →
+   аудіодиктант як підсумок (слух + письмо). Для 60 хв: будова речення одразу після граматики, письмо й суспільство — наприкінці. */
+on('planBlocks',B=>{
+  const m=S.minutes||30,long=m>=60,da=S.lang==='da',old=Object.fromEntries(B.map(b=>[b.id,b]));
+  const R=[
+    {id:'review',s:'Повтор',t:'🔁 Повторення',d:'розігрів: слова, вирази й помилки, які пора повторити',min:long?8:5},
+    {id:'grammar',s:'Граматика',t:'📘 Граматика',d:'нове правило з поясненням і вправи',min:long?7:5}];
+  if(long)R.push({id:'struct',s:'Будова',t:'🧱 Будова речення',d:'застосовуємо правила: порядок слів',min:5});
+  R.push(
+    {id:'new',s:'Нові слова',t:'🆕 Нові слова',d:'картки з картинками, потім закріплення',min:long?10:6},
+    {id:'fill',s:'Вставити',t:'🧩 Вставте слово',d:'нові й старі слова в реченнях',min:long?5:3},
+    {id:'read',s:'Текст',t:'📖 Текст дня',d:'торкніться слова — переклад і в словник',min:long?8:5},
+    {id:'events',s:'Події',t:'🧠 Події до тексту',d:'знайдіть події, що підходять до теми тексту',min:long?4:3},
+    {id:'dict',s:'Диктант',t:'🎧 Аудіодиктант',d:'підсумок дня: почуйте й запишіть',min:long?5:3});
+  if(old.focus)R.splice(R.findIndex(b=>b.id==='dict'),0,Object.assign(old.focus,{s:'Фокус'}));
+  if(long){if(old.write)R.push(Object.assign(old.write,{s:'Письмо',min:6}));
+    if(da&&lvAtLeast('B1')&&old.extra)R.push(Object.assign(old.extra,{s:'Суспільство',min:4}))}
+  return R;
+});
+/* покроковий перехід: після кожного кроку — одразу наступний */
+let PLAN_JUST=null,PLAN_AUTO=null;
+function planNextBlock(){return planBlocks().find(b=>!b.done)}
+function planNextLabel(){const n=planNextBlock();return n?'Далі: '+n.t:'✅ План виконано'}
+function planNext(){clearInterval(PLAN_AUTO);const n=planNextBlock();if(n)startBlock(n.id);else{home();snd('win');confetti();toast('🏅 План на сьогодні виконано! Новий — після 00:00')}}
+on('result',o=>{
+  if(!PLAN_JUST)return;PLAN_JUST=null;const n=planNextBlock(),row=document.querySelector('.result .row');if(!row)return;
+  const B=planBlocks(),k=B.filter(b=>b.done).length;
+  row.insertAdjacentHTML('beforebegin',`<div class="plan-flow"><div class="pf-bar"><i style="width:${k/B.length*100}%"></i></div><small>План дня: ${k} з ${B.length} кроків</small></div>`);
+  row.innerHTML=n?`<button class="btn big" id="planNextBtn" onclick="planNext()">▶ Далі: ${n.t} <span id="pfSec">(5)</span></button><button class="btn ghost" onclick="clearInterval(PLAN_AUTO);home()">Пауза</button>`
+    :`<button class="btn big" onclick="planNext()">🏅 Завершити день</button>`;
+  if(n){let sec=5;clearInterval(PLAN_AUTO);PLAN_AUTO=setInterval(()=>{const e=document.getElementById('pfSec');if(!e)return clearInterval(PLAN_AUTO);sec--;e.textContent='('+sec+')';if(sec<=0){clearInterval(PLAN_AUTO);planNext()}},1000)}
+});
+on('home:before',()=>clearInterval(PLAN_AUTO));
+on('session:start',()=>{PLAN_JUST=null});
+const finB=id=>({onFinish:()=>markBlock(id)});
+function studied(){return ALL().filter(w=>st(w)&&w[S.lang])}
+
+/* 2. Граматика: наступне правило, яке ще не засвоєно (або найслабше з пройдених) */
+function nextGrammar(){const G=GRAMMAR[S.lang]||[],sc=S.grammar[S.lang]||{};
+  let i=G.findIndex((g,k)=>!(sc[k]>=.99));if(i<0){i=0;G.forEach((g,k)=>{if((sc[k]||0)<(sc[i]||0))i=k})}return i}
+on('block:grammar',b=>{
+  const i=nextGrammar(),g=GRAMMAR[S.lang][i];if(!g){markBlock('grammar');return planNext()}
+  const isNew=S.grammar[S.lang][i]==null;
+  app.innerHTML=`<div class="top-row"><button class="back" onclick="home()">✕</button><b>📘 ${isNew?'Нове правило':'Повторюємо правило'}</b></div>
+  <div class="card gram-new"><div class="q-label">Урок ${i+1} з ${GRAMMAR[S.lang].length}</div><h2 style="margin:4px 0 10px">${g.t}</h2>
+   <div class="rule">${g.rule}</div>
+   <div class="muted" style="font-size:13px;margin-top:10px">Прочитайте пояснення, прослухайте приклади, а потім виконайте ${g.ex.length} вправ.</div>
+   <div class="row"><button class="btn big" onclick="grammarBlockGo(${i})">Зрозуміло, до вправ →</button></div></div>`;
+  document.body.classList.add('in-session');
+});
+function grammarBlockGo(i){const g=GRAMMAR[S.lang][i];
+  runSession(shuffle(g.ex).map(ex=>({kind:'gram',g,ex,phase:'📘 '+g.t})),{title:g.t,requeue:true,
+    onFinish:o=>{const sc=o.graded?Math.min(1,o.right/o.graded):0,prev=S.grammar[S.lang][i]||0;S.grammar[S.lang][i]=Math.max(prev,sc);markBlock('grammar');save()}})}
+
+/* 4. Текст дня: випадковий непрочитаний текст свого рівня (далі — сусідніх) */
+function pickTextOfDay(){
+  const ts=textsFor();if(!ts.length)return null;const T=S.todayText&&S.todayText[S.lang];
+  if(T&&T.d===today()&&ts[T.idx])return ts[T.idx];
+  const lv=curLevel(),near=[lv,...LEVELS.filter(x=>x!==lv).sort((a,b)=>Math.abs(LEVELS.indexOf(a)-LEVELS.indexOf(lv))-Math.abs(LEVELS.indexOf(b)-LEVELS.indexOf(lv)))];
+  let t=null;for(const l of near){const c=ts.filter(x=>x.lv===l&&S.read[S.lang][x.idx]==null);if(c.length){t=c[Math.floor(Math.random()*c.length)];break}}
+  t=t||shuffle(ts.filter(x=>x.lv===lv))[0]||shuffle(ts)[0];
+  S.todayText=S.todayText||{};S.todayText[S.lang]={d:today(),idx:t.idx};save();return t;
+}
+on('block:read',b=>{const t=pickTextOfDay();if(!t){markBlock('read');return planNext()}READBLOCK=true;openText(t.idx)});
+
+/* 5. Вставте слово (випадкові слова з реченнями, які вже вивчаються) */
+on('block:fill',b=>{
+  const td=withSent(shuffle(touchedToday()));let ws=td.concat(withSent(shuffle(studied())).filter(w=>!td.includes(w)));if(ws.length<6)ws=ws.concat(withSent(shuffle(pool())).filter(w=>!ws.includes(w)));
+  const items=ws.slice(0,b.min>=5?10:7).map(w=>({kind:'fill',w,phase:'🧩 Вставте слово'}));
+  if(!items.length){markBlock('fill');return planNext()}
+  runSession(items,{title:'Слова на своїх місцях!',requeue:true,...finB('fill')});
+});
+/* 6. Аудіодиктант */
+on('block:dict',b=>{
+  let ws=withSent(shuffle(studied()));if(ws.length<4)ws=ws.concat(withSent(shuffle(pool())).filter(w=>!ws.includes(w)));
+  const n=b.min>=5?6:4;
+  const items=canSpeak?ws.slice(0,n).map(w=>({kind:'dict',w,phase:'🎧 Аудіодиктант'})):shuffle(studied()).slice(0,n+2).map(w=>({kind:'type',w,toUk:false,phase:'✍️ Диктант (без звуку: пишемо самі)'}));
+  if(!items.length){markBlock('dict');return planNext()}
+  runSession(items,{title:'Диктант написано!',...finB('dict')});
+});
+
+/* 7. Події до тексту: які речення-події підходять до теми сьогоднішнього тексту */
+function textSents(t){return splitSents(plainText(t.text).replace(/\n+/g,' ')).map(x=>x.trim()).filter(x=>{const n=x.split(/\s+/).length;return n>=5&&n<=26})}
+let EVT=null;
+on('block:events',b=>{
+  const ts=textsFor();const t=pickTextOfDay();if(!t||ts.length<3){markBlock('events');return planNext()}
+  const own=shuffle(textSents(t)).slice(0,3);
+  const others=shuffle(ts.filter(x=>x.idx!==t.idx&&x.topic_uk!==t.topic_uk&&Math.abs(LEVELS.indexOf(x.lv)-LEVELS.indexOf(t.lv))<=1));
+  const foreign=[];for(const o of others){const s=shuffle(textSents(o))[0];if(s)foreign.push({s,src:o});if(foreign.length>=3)break}
+  if(own.length<2||foreign.length<2){markBlock('events');return planNext()}
+  EVT={t,items:shuffle(own.map(s=>({s,ok:true})).concat(foreign.map(f=>({s:f.s,ok:false,src:f.src})))),t0:Date.now()};
+  document.body.classList.add('in-session');
+  app.innerHTML=`<div class="top-row"><button class="back" onclick="home()">✕</button><b>🧠 Події до тексту</b></div>
+  <div class="card"><div class="q-label">Тема: ${esc(t.topic_uk||'')} · ${t.pic||''}</div><h2 style="margin:4px 0">${esc(t.title)}</h2><div class="muted">${esc(t.title_uk)}</div>
+   <p style="font-weight:700">Позначте всі події та факти, які стосуються цього тексту:</p>
+   <div class="evts">${EVT.items.map((x,i)=>`<button class="evt" data-i="${i}" onclick="this.classList.toggle('on')"><span class="ev-chk"></span><span class="ev-s">${esc(x.s)}</span><span class="speak" onclick="event.stopPropagation();speak(${js(x.s)})">🔊</span></button>`).join('')}</div>
+   <div class="row"><button class="btn ghost" onclick="openText(${t.idx})">📖 Перечитати текст</button><button class="btn" onclick="eventsCheck()">Перевірити</button></div><div id="fb"></div></div>`;
+});
+function eventsCheck(){
+  if(!EVT||EVT.done)return planNext();EVT.done=true;let right=0;
+  document.querySelectorAll('.evt').forEach(el=>{const x=EVT.items[+el.dataset.i],on_=el.classList.contains('on'),ok=on_===x.ok;if(ok)right++;
+    el.classList.add(x.ok?'is-own':'is-other',ok?'good':'miss');el.disabled=true;
+    if(!x.ok)el.insertAdjacentHTML('beforeend',`<small class="ev-src">з тексту «${esc(x.src.title_uk)}»</small>`)});
+  logAct(right===EVT.items.length,0);const xp=right*4;addXP(xp);addSec(Math.min(600,Math.round((Date.now()-EVT.t0)/1000)));markBlock('events');
+  $('#fb').innerHTML=`<div class="feedback ${right===EVT.items.length?'ok':'warn'}">${right===EVT.items.length?'✓ Усе правильно!':'Правильно '+right+' з '+EVT.items.length+'.'} +${xp} XP<br><small>🟩 події з цього тексту · ⬜ з інших текстів</small></div>
+   <div class="row"><button class="btn big" onclick="planNext()">▶ ${planNextLabel()}</button></div>`;
+}
+
+/* новий план — після 00:00: живий відлік і автоматичне оновлення, якщо застосунок відкритий */
+let PLAN_DAY=today();
+setInterval(()=>{const e=document.getElementById('midnight');if(e)e.textContent=untilMidnight();
+  if(today()!==PLAN_DAY){PLAN_DAY=today();if(document.querySelector('.daily')&&!document.body.classList.contains('in-session')){home();toast('🌅 Новий день — новий план!')}}},1000);
+// степер: поточний крок завжди видно (горизонтальна прокрутка до нього)
+on('home:after',()=>{const st_=document.querySelector('.stepper'),n=st_&&st_.querySelector('.st.next');if(n)st_.scrollLeft=Math.max(0,n.offsetLeft-st_.clientWidth/2+n.clientWidth/2)});
 
 bootApp();
 </script>
