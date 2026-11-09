@@ -1975,6 +1975,8 @@ header.ds-hd{display:block!important;flex-wrap:initial;margin:0}header.ds-top{ma
 .nf-step-eye{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:44px;margin-bottom:4px}
 .nf-step .nf-prev{position:static!important;flex:none}
 .st-card b.en{color:var(--lime);font-weight:700}
+/* таймер у вправах і текстах прибрано (кожен іде у своєму темпі; час рахується непомітно для статистики) */
+.nf-time,.k-timer{display:none!important}
 </style>
 </head>
 <body>
@@ -10402,7 +10404,7 @@ function renderFill(it){
 /* E08 · аудіювання: велика кнопка зі звуком і сітка 2×2 світлих плиток-картинок (підпис з'являється після відповіді) */
 function renderListen(it){
   const w=it.w;if(!it.opts)it.opts=shuffle([w,...distractors(w,'uk')]);
-  const pics=it.opts.length>=3&&it.opts.every(nfHasPic)&&new Set(it.opts.map(o=>o.img)).size===it.opts.length;
+  const pics=it.opts.length>=3&&it.opts.every(o=>typeof picturable==='function'?picturable(o):nfHasPic(o))&&new Set(it.opts.map(o=>o.img)).size===it.opts.length;
   app.innerHTML=topRow()+`<div class="nf-ex">
     <div class="nf-listen-hd"><button class="nf-play" onclick="speak(${js(w[S.lang])})" aria-label="Прослухати ще раз">${icn('speaker')}</button>
       <div><small class="muted">Послухай</small><b>${pics?'Що ти почув(ла)?':'Обери переклад'}</b><button class="nf-slow" onclick="slowSpeak(${js(w[S.lang])})">${icn('clock')} повільно</button></div></div>
@@ -10907,6 +10909,16 @@ if(typeof startBlock==='function'){const _sbTip=startBlock;startBlock=function(i
     if(b&&!b.done&&prev.every(x=>x.done))return stepTip(id)}   // лише для чергового кроку плану
   return _sbTip.apply(this,arguments)}}
 
+/* ---------- «Закріплення»: речення лише з новими словами дня ----------
+   Спершу слова дня, які вже бачив сьогодні, потім решта слів дня, і лише якщо їх замало — інші вивчені сьогодні. */
+HOOKS['block:practice']=[];
+on('block:practice',b=>{const long=(S.minutes||30)>=60,day=(typeof dayWordList==='function'?dayWordList():[]);
+  const day1=withSent(day.filter(w=>st(w))),day2=withSent(day.filter(w=>!st(w))),td=withSent(shuffle(touchedToday())).filter(w=>!day.includes(w));
+  const ws=shuffle(day1).concat(shuffle(day2),td);const nF=long?8:6,nD=canSpeak?(long?3:2):0;
+  const items=ws.slice(0,nF).map(w=>({kind:'fill',w,phase:'Слово дня в реченні'})).concat(shuffle(ws.slice(0,Math.max(nD,0))).slice(0,nD).map(w=>({kind:'dict',w,phase:'Почуй і запиши'})));
+  if(!items.length){markBlock('practice');return planNext()}
+  runSession(items,{title:'Слова закріплено!',requeue:true,...finB('practice')})});
+
 /* ====================== ЕКРАН «СЛОВНИК» · варіант A «Пошук і додавання в одному полі» ======================
    Макети: canvas «Лінгво-гра — варіанти дизайну», сторінка «Словник · варіанти»: DV-A-SearchAdd і DV-C-Errors.
    Одне поле «Знайти або додати слово…» фільтрує список; якщо слова ще немає — картка нового слова, заповнена
@@ -11109,6 +11121,22 @@ const _dvPicBase=dvPic;dvPic=function(o){const ov=o&&o.id&&S.picOver&&S.picOver[
   if(typeof choiceA==='function'){const _c=choiceA;choiceA=function(i){const it=cur();try{if(it&&it.opts)it._given=it.opts[i][it.toUk?'uk':S.lang]}catch(e){}return _c.apply(this,arguments)}}
   if(typeof fillA==='function'){const _f=fillA;fillA=function(i){const it=cur();try{if(it&&it.order)it._given=it.order[i]}catch(e){}return _f.apply(this,arguments)}}
   if(typeof listenA==='function'){const _l=listenA;listenA=function(i){const it=cur();try{if(it&&it.opts)it._given=it.opts[i].uk}catch(e){}return _l.apply(this,arguments)}}})();
+
+/* ---------- Картинки-варіанти лише для предметних слів ----------
+   «Оберіть картинку» й аудіювання з картинками мають сенс, коли картинку можна вгадати за 5 секунд (тест 5 секунд).
+   Привітання, ввічливі слова, фрази, прикметники, дні, місяці, час — звичайний вибір перекладу. */
+const PIC_ABSTRACT_TOPICS=/greet|phrase|polite|express|adj|feel|emot|days|months|time|question|conj|prep|opposite/i;
+const PIC_ABSTRACT_WORDS=new Set(['yes','no','please','thank you','thanks','sorry','hello','hi','bye','goodbye','good morning','good night','good evening','good afternoon','ok','okay','excuse me','welcome','you\'re welcome','maybe','of course']);
+function picturable(w){if(!(w&&w.img&&typeof PICS!=='undefined'&&PICS[w.img]))return false;const e=String(w[S.lang]||w.en||'').toLowerCase().replace(/[.!?]+$/,'').trim();
+  if(PIC_ABSTRACT_WORDS.has(e))return false;if(PIC_ABSTRACT_TOPICS.test(w.topic||''))return false;if(/[.!?]$/.test(w[S.lang]||'')||e.replace(/^(to|a|an|the) /,'').split(' ').length>2)return false;return true}
+on('reviewKind',(k,w)=>(k==='picchoice'||k==='piclisten')&&!picturable(w)?(k==='picchoice'?'choice':'listen'):k);
+if(typeof RENDER_X!=='undefined'){
+  const _pc=RENDER_X.picchoice,_pl=RENDER_X.piclisten;
+  if(_pc)RENDER_X.picchoice=function(it){if(!picturable(it.w)){it.kind='choice';delete it.opts;return renderItem()}return _pc(it)};
+  if(_pl)RENDER_X.piclisten=function(it){if(!picturable(it.w)){it.kind='listen';delete it.opts;return renderItem()}return _pl(it)};}
+if(typeof picPool==='function'){const _pp=picPool;picPool=function(w){const P=ALL().filter(x=>x!==w&&picturable(x)&&x.img!==w.img&&x[S.lang]);
+  const same=shuffle(P.filter(x=>x.topic===w.topic)),lv=shuffle(P.filter(x=>x.topic!==w.topic&&x.lv===w.lv)),rest=shuffle(P.filter(x=>x.lv!==w.lv));
+  const out=[];for(const x of same.concat(lv,rest)){if(!out.some(o=>o.img===x.img))out.push(x);if(out.length>=3)break}return out}}
 
 bootApp();
 </script>
