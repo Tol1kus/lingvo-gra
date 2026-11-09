@@ -7525,7 +7525,7 @@ function untilMidnight(){const n=new Date(),m=new Date(n);m.setHours(24,0,0,0);c
 const SEC={card:9,choice:9,picchoice:8,piclisten:9,phrase:20,fill:15,listen:12,build:30,dict:45,type:20,gram:20,sentb:35,num:15,mcq:25};
 function fitItems(items,min){let s=0;const out=[];for(const it of items){s+=SEC[it.kind]||15;if(s>min*60&&out.length>=3)break;out.push(it)}return out}
 function startBlock(id){
-  {const first=planBlocks().find(b=>!b.done);if(first&&id!==first.id){toast('▶ План іде по черзі. Спершу: '+(first.s||first.t.split(' ').slice(1).join(' ')));id=first.id}}
+  {const B_=planBlocks(),first=B_.find(b=>!b.done),me=B_.find(b=>b.id===id);if(me&&me.done&&first&&id!==first.id)toast('Повторюємо пройдений крок');else if(first&&id!==first.id){toast('▶ План іде по черзі. Спершу: '+(first.s||first.t.split(' ').slice(1).join(' ')));id=first.id}}
   if(typeof stepTimerStart==='function')stepTimerStart(id);
   if(HOOKS['block:'+id]){const bb=planBlocks().find(x=>x.id===id);return emit('block:'+id,bb)}
   const b=planBlocks().find(x=>x.id===id);const fin={onFinish:o=>{markBlock(id);if(o._prev)o._prev(o)}};
