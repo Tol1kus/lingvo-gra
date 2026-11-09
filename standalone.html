@@ -10566,7 +10566,7 @@ function nfOrbitSpin(){
 /* щодня — свій набір слів для орбіти: 14 коротких слів A1–B1 зі словника, порядок залежить від дати */
 function nfOrbitWords(){ // 6 пар «англійською — українською» на добу; порядок залежить лише від дати
   const day=Math.floor(Date.parse(today()+'T12:00')/864e5);let seed=day*2654435761%4294967296;const rnd=()=>{seed=(seed*1664525+1013904223)%4294967296;return seed/4294967296};
-  let pool=[];try{const seen=new Set();pool=WORDS.filter(w=>w.en&&w.uk&&!w.phrase&&!w.my&&['A1','A2','B1'].includes(w.lv)&&w.en.length<=10&&w.uk.length<=11&&!/[()\/;,]/.test(w.en+w.uk)&&!seen.has(w.en)&&seen.add(w.en)).map(w=>({en:w.en,uk:w.uk}))}catch(e){}
+  let pool=[];try{const seen=new Set();pool=WORDS.filter(w=>w.en&&w.uk&&!w.phrase&&!w.my&&['A1','A2','B1'].includes(w.lv)&&w.en.length<=7&&w.uk.length<=8&&!/[\s()\/;,.!?'-]/.test(w.en+w.uk)&&!seen.has(w.en)&&seen.add(w.en)).map(w=>({en:w.en,uk:w.uk}))}catch(e){}
   if(pool.length<20)pool=[['hello','привіт'],['color','колір'],['subway','метро'],['the check','рахунок'],['awesome','чудово'],['to go','з собою']].map(([en,uk])=>({en,uk}));
   for(let i=pool.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]]}
   return pool.slice(0,6)}
