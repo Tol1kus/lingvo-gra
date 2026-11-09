@@ -1833,6 +1833,12 @@ header.ds-hd{display:block!important;flex-wrap:initial;margin:0}header.ds-top{ma
 .nf-launch-in .nf-orbit-top{opacity:0;animation:nfLaunchIn .6s ease 1.6s forwards}.nf-launch-in.nf-quick .nf-orbit-top{animation-delay:0s}
 @media (max-width:360px){.nf-launch .nf-orbit-top{transform:scale(.86);transform-origin:top center;margin-bottom:-28px}}
 .ds-chipf{transition:opacity .35s ease,filter .35s ease}.ds-chipf.swap{opacity:0;filter:blur(4px)}
+/* слова на орбіті: повільний перехід англійська ↔ українська */
+.ds-flip{display:inline-grid}.ds-flip b{grid-area:1/1;font-weight:700;transition:opacity 1.1s ease,filter 1.1s ease,transform 1.1s ease;white-space:nowrap}
+.ds-flip .uk{opacity:0;filter:blur(3px);transform:translateY(4px);color:var(--lime)}
+.ds-flip.ua .en{opacity:0;filter:blur(3px);transform:translateY(-4px)}.ds-flip.ua .uk{opacity:1;filter:none;transform:none}
+.ds-flip.ua{border-color:rgba(200,245,96,.45)}
+.ds-flip{max-width:150px}.ds-flip b{overflow:hidden;text-overflow:ellipsis}
 </style>
 </head>
 <body>
@@ -10541,7 +10547,7 @@ function nfBeginner(){S.placement=S.placement||{};S.placement[S.lang]={lvl:'A1',
 
 /* орбіта «EN» зі словами навколо — верхній блок першого екрана */
 function nfOrbitHTML(){const W=nfOrbitWords();return `<div class="ds-orbit nf-orbit-top" aria-hidden="true"><svg width="390" height="250" viewBox="0 0 390 250"><circle cx="195" cy="125" r="96" fill="none" stroke="#25282D" stroke-width="1.5" stroke-dasharray="3 6"/><circle cx="195" cy="125" r="62" fill="none" stroke="#16181B" stroke-width="10"/><path d="M195.0 63.0 A62 62 0 0 1 248.7 156.0" fill="none" stroke="#C8F560" stroke-width="10" stroke-linecap="round" style="filter:drop-shadow(0 0 8px rgba(200,245,96,.6))"/></svg>
-  <span class="ds-orb-c">EN</span>${[[-120,-60,0],[95,-74,.6],[-138,30,1.2],[92,22,.3],[-40,96,.9],[120,96,1.5]].map(([x,y,d],k)=>[W[k],x,y,d]).map(([t,x,y,d])=>`<span class="ds-chipf" style="left:calc(50% + ${x}px);top:calc(50% + ${y}px);animation-delay:${d}s">${t}</span>`).join('')}</div>`}
+  <span class="ds-orb-c">EN</span>${[[-112,-62,0],[96,-74,.6],[-118,30,1.2],[96,22,.3],[-44,96,.9],[110,96,1.5]].map(([x,y,d],k)=>[W[k]||{en:'',uk:''},x,y,d]).map(([w,x,y,d])=>`<span class="ds-chipf ds-flip" style="left:calc(50% + ${x}px);top:calc(50% + ${y}px);animation-delay:${d}s"><b class="en">${esc(w.en)}</b><b class="uk">${esc(w.uk)}</b></span>`).join('')}</div>`}
 
 /* ---------- «День N» = пройдені плани + 1 (а не дати з активністю) ----------
    Тест і перші вправи — це ще день 1; «День 2» з'являється лише після всіх кроків плану дня 1. */
@@ -10552,19 +10558,18 @@ const NF_ORBIT_BASE=['hello','color','subway','the check','awesome','to go','apa
 function nfOrbitSpin(){
   const box=document.querySelector('.nf-orbit-top');if(!box||box.dataset.spin)return;box.dataset.spin='1';
   const reduce=typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches;if(reduce)return;
-  const tick=()=>{if(!box.isConnected)return;const chips=[...box.querySelectorAll('.ds-chipf')],shown=chips.map(c=>c.textContent);
-    const c=chips[Math.floor(Math.random()*chips.length)],pool=nfOrbitWords().filter(w=>!shown.includes(w)),nw=pool[Math.floor(Math.random()*pool.length)];
-    c.classList.add('swap');setTimeout(()=>{if(!c.isConnected)return;c.textContent=nw;c.classList.remove('swap')},350);setTimeout(tick,1800)};
-  setTimeout(tick,2600);
+  let k=0;const tick=()=>{if(!box.isConnected)return;const chips=[...box.querySelectorAll('.ds-flip')];if(!chips.length)return;
+    const c=chips[k%chips.length];k++;c.classList.add('ua');setTimeout(()=>{if(c.isConnected)c.classList.remove('ua')},3200);setTimeout(tick,2000)};
+  setTimeout(tick,2800);
 }
 
 /* щодня — свій набір слів для орбіти: 14 коротких слів A1–B1 зі словника, порядок залежить від дати */
-function nfOrbitWords(){
+function nfOrbitWords(){ // 6 пар «англійською — українською» на добу; порядок залежить лише від дати
   const day=Math.floor(Date.parse(today()+'T12:00')/864e5);let seed=day*2654435761%4294967296;const rnd=()=>{seed=(seed*1664525+1013904223)%4294967296;return seed/4294967296};
-  let pool=[];try{pool=WORDS.filter(w=>w.en&&!w.phrase&&!w.my&&['A1','A2','B1'].includes(w.lv)&&w.en.length<=12&&!/[()\/]/.test(w.en)).map(w=>w.en)}catch(e){}
-  pool=[...new Set(pool.length>40?pool:NF_ORBIT_BASE)];
+  let pool=[];try{const seen=new Set();pool=WORDS.filter(w=>w.en&&w.uk&&!w.phrase&&!w.my&&['A1','A2','B1'].includes(w.lv)&&w.en.length<=10&&w.uk.length<=11&&!/[()\/;,]/.test(w.en+w.uk)&&!seen.has(w.en)&&seen.add(w.en)).map(w=>({en:w.en,uk:w.uk}))}catch(e){}
+  if(pool.length<20)pool=[['hello','привіт'],['color','колір'],['subway','метро'],['the check','рахунок'],['awesome','чудово'],['to go','з собою']].map(([en,uk])=>({en,uk}));
   for(let i=pool.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]]}
-  return pool.slice(0,14)}
+  return pool.slice(0,6)}
 
 bootApp();
 </script>
