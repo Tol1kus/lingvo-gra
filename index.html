@@ -10166,9 +10166,7 @@ function launchScreen(){
   app.innerHTML=`<div class="onb nf-onb nf-full nf-launch">
     <div class="nf-brand"><span class="nf-logo">L</span><b>Лінгво</b></div>
 
-    <button class="nf-lang on" onclick="launchGo()"><span class="nf-lt lime">EN</span><span><b>Англійська · US</b>
-      <small>Рівень ${esc(lv)} · ${learned} ${plUk(learned,['слово','слова','слів'])} вивчено${S.streak?` · серія ${S.streak} дн.`:''}</small>
-      ${ep?`<small class="nf-ln-ep">Сьогодні: «${esc(ep.title)}»${B.length?` · план ${done}/${B.length}`:''}</small>`:''}</span>${icn('chev')}</button>
+    <button class="nf-lang on" onclick="launchGo()"><span class="nf-lt lime">EN</span><span><b>Англійська · US</b></span>${icn('chev')}</button>
   </div>`;
 }
 function launchGo(){LANG_PICKED=true;if(S.lang!=='en'){if(typeof switchLang==='function')switchLang('en');else S.lang='en'}save();document.body.classList.remove('in-session');home()}
@@ -10276,8 +10274,7 @@ function pickTextOfDay(){
   S.todayText=S.todayText||{};S.todayText[S.lang]={d:today(),idx:t.idx};save();return t}
 
 /* 5) перше вікно: показує тему дня замість епізоду */
-const _launchTD=launchScreen;
-launchScreen=function(){_launchTD();const ep=document.querySelector('.nf-launch .nf-lang.on span:nth-child(2)');if(ep&&!ep.querySelector('.nf-ln-ep')){const B=planBlocks(),d=B.filter(b=>b.done).length;ep.insertAdjacentHTML('beforeend',`<small class="nf-ln-ep">Тема дня: ${esc(dayTopicName())} · план ${d}/${B.length}</small>`)}};
+/* (тема дня у вікні запуску більше не показується — лише «Англійська · US») */
 /* сюжетні екрани й плитки більше не показуються (присвоєння, а не оголошення — щоб сюжетні дані встигли завантажитися) */
 storyOf=function(){return null};
 
