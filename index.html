@@ -7664,7 +7664,7 @@ function examHome(){
 function startSamfundPractice(){const qs=shuffle((EXAMDATA.samfund||{questions:[]}).questions).slice(0,10);runSession(qs.map(q=>({kind:'mcq',q})),{title:'Суспільство й історія',again:startSamfundPractice,back:examHome,backLabel:'🇩🇰 До іспитів'})}
 
 /* ====================== ОБОВ'ЯЗКОВЕ ПОВТОРЕННЯ ====================== */
-function reviewLocked(){const b=planBlocks().find(x=>x.id==='review');return !b.done&&dueWords().length>0}
+function reviewLocked(){const b=planBlocks().find(x=>x.id==='review');return !!b&&!b.done&&dueWords().length>0}
 
 // у повторення додаємо стару граматику й будову речень
 function oldMaterialItems(){
@@ -10690,6 +10690,13 @@ function routeLocked(id){const lv=maxLv(),list=routeTopics(lv),cur=routeCurrent(
     <button class="rt-close" onclick="routeSheetClose()">Закрити</button></div>`;
   d.addEventListener('click',e=>{if(e.target===d)routeSheetClose()});document.body.appendChild(d);setTimeout(()=>d.classList.add('on'),10)}
 function routeSheetClose(){document.querySelectorAll('.rt-sheet-bg').forEach(x=>x.remove())}
+
+/* ---------- День 1 без «Повторення» ----------
+   Перший день — ще нічого повторювати: план починається з нових слів, а хвилини повторення віддаємо їм.
+   Перший день = жодне слово не вивчалося раніше за сьогодні (слова, які тест лише позначив знайомими, не рахуються). */
+function isFirstStudyDay(){if(window.NF_NO_DAY1)return false;const m=(S.srs||{})[S.lang]||{},t=today();for(const k in m){const x=m[k];if(x&&x.lr&&x.lr<t)return false}return true}
+on('planBlocks',B=>{if(!isFirstStudyDay())return B;const r=B.find(b=>b.id==='review');if(!r)return B;
+  const nb=B.find(b=>b.id==='new');if(nb)nb.min=(nb.min||0)+(r.min||0);return B.filter(b=>b.id!=='review')});
 
 bootApp();
 </script>
