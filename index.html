@@ -1806,6 +1806,27 @@ header.ds-hd{display:block!important;flex-wrap:initial;margin:0}header.ds-top{ma
 .nf-launch-in.nf-quick .nf-brand{animation-delay:.05s}.nf-launch-in.nf-quick .nf-lead{animation-delay:.18s}.nf-launch-in.nf-quick .nf-lang{animation-delay:.3s}
 @keyframes nfLaunchIn{to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.nf-splash{display:none}.nf-launch-in .nf-brand,.nf-launch-in .nf-lead,.nf-launch-in .nf-lang{opacity:1;transform:none;animation:none}}
+/* ===== провідник Світлик ===== */
+.nf-guide-hero{display:flex;justify-content:center;margin:10px 0 4px}
+.nf-ff{width:150px;height:150px;overflow:visible;animation:nfFfFloat 3.2s ease-in-out infinite}
+.nf-ff-body{fill:#16181B;stroke:#3A3E45;stroke-width:2}
+.nf-ff-wing{fill:rgba(236,239,230,.14);stroke:rgba(236,239,230,.35);stroke-width:1.5;transform-box:fill-box;transform-origin:center;animation:nfFfWing .5s ease-in-out infinite alternate}
+.nf-ff-wing.r{animation-delay:.25s}
+.nf-ff-ant{fill:none;stroke:#3A3E45;stroke-width:3;stroke-linecap:round}.nf-ff-tip{fill:var(--lime)}
+.nf-ff-lamp{fill:var(--lime)}.nf-ff-glow{fill:rgba(200,245,96,.35);filter:blur(6px);transform-box:fill-box;transform-origin:center;animation:nfFfGlow 1.8s ease-in-out infinite}
+.nf-ff-eyes{transform-box:fill-box;transform-origin:center;animation:nfFfBlink 4s infinite}
+.nf-ff-smile{fill:none;stroke:#F4F5F2;stroke-width:3;stroke-linecap:round}
+@keyframes nfFfFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes nfFfWing{from{transform:scaleY(1)}to{transform:scaleY(.55)}}
+@keyframes nfFfGlow{0%,100%{transform:scale(.9);opacity:.6}50%{transform:scale(1.25);opacity:1}}
+@keyframes nfFfBlink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+.nf-say-b{position:relative;margin:14px 16px 0;padding:14px 16px;border-radius:20px;background:var(--s1);border:1px solid rgba(200,245,96,.45);box-shadow:0 0 30px rgba(200,245,96,.1);min-height:118px;cursor:pointer}
+.nf-say-b::before{content:"";position:absolute;top:-8px;left:50%;width:14px;height:14px;background:var(--s1);border-left:1px solid rgba(200,245,96,.45);border-top:1px solid rgba(200,245,96,.45);transform:translateX(-50%) rotate(45deg)}
+.nf-say-b small{font-size:12px;font-weight:800;letter-spacing:.06em;color:var(--lime)}.nf-say-b p{margin:4px 0 0;font-size:16px;line-height:1.5}
+.nf-guide-pts{list-style:none;margin:14px 16px 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.nf-guide-pts li{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--mut)}.nf-guide-pts svg{width:18px;height:18px;color:var(--lime);flex:none}
+.nf-guide .ds-foot .nf-link{margin-top:12px}
+@media (prefers-reduced-motion:reduce){.nf-ff,.nf-ff-wing,.nf-ff-glow,.nf-ff-eyes{animation:none}}
 </style>
 </head>
 <body>
@@ -10366,19 +10387,19 @@ function onboarding(step=0){
       <div class="ds-orbit" aria-hidden="true"><svg width="390" height="250" viewBox="0 0 390 250"><circle cx="195" cy="125" r="96" fill="none" stroke="#25282D" stroke-width="1.5" stroke-dasharray="3 6"/><circle cx="195" cy="125" r="62" fill="none" stroke="#16181B" stroke-width="10"/><path d="M195.0 63.0 A62 62 0 0 1 248.7 156.0" fill="none" stroke="#C8F560" stroke-width="10" stroke-linecap="round" style="filter:drop-shadow(0 0 8px rgba(200,245,96,.6))"/></svg>
         <span class="ds-orb-c">EN</span>${[['hello',-120,-60,0],['color',95,-74,.6],['subway',-138,30,1.2],['the check',92,22,.3],['awesome',-40,96,.9],['to go',120,96,1.5]].map(([t,x,y,d])=>`<span class="ds-chipf" style="left:calc(50% + ${x}px);top:calc(50% + ${y}px);animation-delay:${d}s">${t}</span>`).join('')}</div>
       <header class="ds-hd">${dsDots(0)}<h1>Яку мову вчимо?</h1><p>Переклади й підказки — українською.</p></header>
-      <ul class="ds-langs"><li class="ds-lang on solo" onclick="setStartLang('en','us');onboarding(1)"><div class="ds-lrow"><span class="ds-lt">EN</span><span class="ds-lname"><strong>Англійська</strong><span>A1 → C2 · ${nW.toLocaleString('uk')} слів і фраз з картинками</span></span>${icn('check')}</div></li></ul>
-      <div class="ds-foot"><button class="ds-cta" onclick="setStartLang('en','us');onboarding(1)">Далі ${icn('arrow')}</button></div></div>`;return}
+      <ul class="ds-langs"><li class="ds-lang on solo" onclick="setStartLang('en','us');nfGuide()"><div class="ds-lrow"><span class="ds-lt">EN</span><span class="ds-lname"><strong>Англійська</strong><span>A1 → C2 · ${nW.toLocaleString('uk')} слів і фраз з картинками</span></span>${icn('check')}</div></li></ul>
+      <div class="ds-foot"><button class="ds-cta" onclick="setStartLang('en','us');nfGuide()">Далі ${icn('arrow')}</button></div></div>`;return}
   if(step===1){const g=S.goal||'work',m=S.minutes||30;
     const G=[['work','💼','Робота','листи, зустрічі, співбесіда'],['travel','✈️','Подорожі','аеропорт, готель, місто'],['exam','🎓','Іспит','IELTS · Cambridge B2 / C1'],['self','❤️','Для себе','фільми, книжки, спілкування']];
     app.innerHTML=`<div class="ds-scr">
-      <header class="ds-hd ds-hd2">${dsDots(1)}<h1>Для чого тобі англійська?</h1><p>Від мети залежать теми слів і тексти.</p></header>
+      <header class="ds-hd ds-hd2">${dsDots(2)}<h1>Для чого тобі англійська?</h1><p>Від мети залежать теми слів і тексти.</p></header>
       <div class="ds-goals">${G.map(([k,e,t,s])=>`<button class="ds-goal ${k===g?'on':''}" onclick="S.goal='${k}';save();onboarding(1)"><span class="ds-g-pic">${e}</span><span class="ds-gtx"><strong>${t}</strong><span>${s}</span></span><span class="ds-radio"></span></button>`).join('')}</div>
       <h2 class="ds-h2">Скільки часу на день?</h2>
       <div class="ds-time">${[[30,'10–15 нових слів'],[60,'20–25 слів + вимова']].map(([x,s])=>`<button class="${m===x?'on':''}" onclick="S.minutes=${x};save();onboarding(1)"><strong>${x} хв</strong><span>${s}</span></button>`).join('')}</div>
-      <div class="ds-foot"><button class="ds-cta" onclick="ptStart()">Далі: тест рівня · 12 хв ${icn('arrow')}</button></div></div>`;return}
-  return ptStart();
+      <div class="ds-foot"><button class="ds-cta" onclick="${PLAN_OPT&&PLAN_OPT.lvl?'ptStartDay()':'nfGuide()'}">${PLAN_OPT&&PLAN_OPT.lvl?`Почати день 1 ${icn('play')}`:`Далі: тест рівня ${icn('arrow')}`}</button></div></div>`;return}
+  return nfGuide();
 }
-function placementIntro(){ptStart()}
+function placementIntro(){nfGuide()}
 
 /* ---------- E03 · адаптивний тест ---------- */
 const PT_SKILLS=[['vocab','Слова'],['gram','Граматика'],['listen','Слухання'],['read','Читання']];
@@ -10419,7 +10440,7 @@ function ptPick(i){PX.sel=i;ptRender()}
 function ptRender(){const q=PX.q,s=PX.sel,d=s!=null,skName=(PT_SKILLS.find(x=>x[0]===q.skill)||PT_SKILLS[0])[1];
   const blank=d&&q.pre!=null?q.opts[s]:'…';
   app.innerHTML=`<div class="ds-scr">
-   <header class="ds-top"><button class="ds-x" onclick="onboarding(1)" aria-label="Закрити">${icn('close')}</button>
+   <header class="ds-top"><button class="ds-x" onclick="nfGuide()" aria-label="Закрити">${icn('close')}</button>
      <div class="ds-prog"><div class="ds-prog-h"><span>Тест рівня · ${skName.toLowerCase()}</span><span>${PX.n} / ${PT_TOTAL}</span></div><div class="ds-bar"><i style="width:${(PX.n-1)/PT_TOTAL*100}%"></i></div></div></header>
    <section class="ds-q">
      <div class="ds-chips"><span class="ds-chip sky">складність: ${LEVELS[q.li]}</span><span class="ds-chip">адаптивний</span></div>
@@ -10458,7 +10479,7 @@ function ptResult(){
    <section class="ds-tipb">${icn('bulb')}<span>${tip}</span></section>
    <section class="ds-card"><h2>Твої перші 2 тижні</h2><div class="ds-wk"><div><small>ТИЖДЕНЬ 1</small><strong>${esc(w1)}</strong><span>${plus[weakK]}</span></div><div><small>ТИЖДЕНЬ 2</small><strong>${esc(w2)}</strong><span>${plus[weakK]}</span></div></div>
      <span class="ds-wkn">≈ ${daily*14} нових слів · контрольний тест через 14 днів</span></section>
-   <div class="ds-foot"><button class="ds-cta" id="ptNext" onclick="ptStartDay()">Почати день 1 ${icn('play')}</button></div></div>`;
+   <div class="ds-foot"><button class="ds-cta" id="ptNext" onclick="onboarding(1)">Далі: мета й час ${icn('arrow')}</button></div></div>`;
   window.scrollTo(0,0);
 }
 function ptStartDay(){const {lvl,focus,markLower}=PLAN_OPT,m=S.minutes||30,N=planNumbers(lvl,m);
@@ -10487,6 +10508,33 @@ launchScreen=function(){
   const end=()=>{if(!sp.isConnected)return;root.classList.add('nf-quick');sp.classList.add('out');setTimeout(()=>sp.remove(),450)};
   sp.addEventListener('click',end);document.body.appendChild(sp);setTimeout(end,1700);
 };
+
+/* ---------- Провідник Світлик: після вибору мови пояснює, що зараз буде тест ----------
+   Вигаданий персонаж — світлячок із лаймовим ліхтариком (пасує до «нічного» стилю Nightlex). */
+const NF_GUIDE_SVG=`<svg class="nf-ff" viewBox="0 0 140 140" role="img" aria-label="Світлик — світлячок-провідник">
+ <ellipse class="nf-ff-wing l" cx="46" cy="52" rx="24" ry="15" transform="rotate(-28 46 52)"/><ellipse class="nf-ff-wing r" cx="94" cy="52" rx="24" ry="15" transform="rotate(28 94 52)"/>
+ <path d="M58 30 Q50 12 40 10" class="nf-ff-ant"/><path d="M82 30 Q90 12 100 10" class="nf-ff-ant"/><circle cx="40" cy="10" r="4" class="nf-ff-tip"/><circle cx="100" cy="10" r="4" class="nf-ff-tip"/>
+ <circle cx="70" cy="104" r="22" class="nf-ff-glow"/><circle cx="70" cy="104" r="18" class="nf-ff-lamp"/>
+ <rect x="44" y="28" width="52" height="66" rx="26" class="nf-ff-body"/>
+ <g class="nf-ff-eyes"><circle cx="59" cy="56" r="9" fill="#F4F5F2"/><circle cx="81" cy="56" r="9" fill="#F4F5F2"/><circle cx="61" cy="58" r="4.5" fill="#000"/><circle cx="83" cy="58" r="4.5" fill="#000"/><circle cx="62.5" cy="56.5" r="1.5" fill="#fff"/><circle cx="84.5" cy="56.5" r="1.5" fill="#fff"/></g>
+ <path d="M62 74 Q70 81 78 74" class="nf-ff-smile"/></svg>`;
+function nfGuide(){
+  applyTheme();document.body.classList.add('in-session');REDRAW=nfGuide;
+  const text='Привіт! Я Світлик — буду поруч, поки ти вчиш англійську. Зараз тобі треба пройти короткий тест: 20 питань, близько 10 хвилин. Він покаже твій рівень, і далі ми продовжимо разом.';
+  app.innerHTML=`<div class="ds-scr nf-guide">
+    <header class="ds-hd ds-hd2">${dsDots(1)}</header>
+    <div class="nf-guide-hero">${NF_GUIDE_SVG}</div>
+    <div class="nf-say-b"><small>Світлик</small><p id="nfSay" aria-live="polite"></p></div>
+    <ul class="nf-guide-pts"><li>${icn('target')}<span>Слова, граматика, слухання й читання</span></li><li>${icn('refresh')}<span>Помилився — натисни «Переграти»</span></li><li>${icn('chart')}<span>Питання підлаштовуються під тебе</span></li></ul>
+    <div class="ds-foot"><button class="ds-cta" onclick="ptStart()">Почати тест ${icn('arrow')}</button>
+      <button class="nf-link" onclick="nfBeginner()">Я зовсім новачок — почати з A1 без тесту</button></div></div>`;
+  const el=document.getElementById('nfSay'),reduce=typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce||!el){if(el)el.textContent=text;return}
+  let i=0;const tick=()=>{if(!el.isConnected)return;i=Math.min(text.length,i+2);el.textContent=text.slice(0,i);if(i<text.length)setTimeout(tick,22)};setTimeout(tick,350);
+  el.closest('.nf-say-b').addEventListener('click',()=>{i=text.length;el.textContent=text});
+}
+function nfBeginner(){S.placement=S.placement||{};S.placement[S.lang]={lvl:'A1',date:today(),beginner:true,skills:{}};S.beginner=S.beginner||{};S.beginner[S.lang]=true;
+  PLAN_OPT={lvl:'A1',focus:'rec',markLower:false};save();onboarding(1)}
 
 bootApp();
 </script>
