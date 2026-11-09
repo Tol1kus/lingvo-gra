@@ -10547,7 +10547,7 @@ function nfBeginner(){S.placement=S.placement||{};S.placement[S.lang]={lvl:'A1',
 
 /* орбіта «EN» зі словами навколо — верхній блок першого екрана */
 function nfOrbitHTML(){const W=nfOrbitWords();return `<div class="ds-orbit nf-orbit-top" aria-hidden="true"><svg width="390" height="250" viewBox="0 0 390 250"><circle cx="195" cy="125" r="96" fill="none" stroke="#25282D" stroke-width="1.5" stroke-dasharray="3 6"/><circle cx="195" cy="125" r="62" fill="none" stroke="#16181B" stroke-width="10"/><path d="M195.0 63.0 A62 62 0 0 1 248.7 156.0" fill="none" stroke="#C8F560" stroke-width="10" stroke-linecap="round" style="filter:drop-shadow(0 0 8px rgba(200,245,96,.6))"/></svg>
-  <span class="ds-orb-c">EN</span>${[[-112,-62,0],[96,-74,.6],[-118,30,1.2],[96,22,.3],[-44,96,.9],[110,96,1.5]].map(([x,y,d],k)=>[W[k]||{en:'',uk:''},x,y,d]).map(([w,x,y,d])=>`<span class="ds-chipf ds-flip" style="left:calc(50% + ${x}px);top:calc(50% + ${y}px);animation-delay:${d}s"><b class="en">${esc(w.en)}</b><b class="uk">${esc(w.uk)}</b></span>`).join('')}</div>`}
+  <span class="ds-orb-c">EN</span>${[[-112,-62,0],[96,-74,.6],[-118,30,1.2],[96,22,.3],[-44,96,.9],[110,96,1.5]].map(([x,y,d],k)=>[W[k]||{en:'',uk:''},x,y,d]).map(([w,x,y,d])=>`<span class="ds-chipf ds-flip" style="left:calc(50% + ${x}px);top:calc(50% + ${y}px);animation-delay:${d}s"><b class="en">${esc(w.en)}</b></span>`).join('')}</div>`}
 
 /* ---------- «День N» = пройдені плани + 1 (а не дати з активністю) ----------
    Тест і перші вправи — це ще день 1; «День 2» з'являється лише після всіх кроків плану дня 1. */
@@ -10555,7 +10555,8 @@ function nfDayNo(){const D=((S.doneLog||{})[S.lang])||{};return Object.keys(D).f
 
 /* ---------- слова на орбіті «EN» змінюються по черзі ---------- */
 const NF_ORBIT_BASE=['hello','color','subway','the check','awesome','to go','apartment','sidewalk','cookie','elevator','vacation','downtown','fries','sneakers','zip code','gas station','candy','fall','trash','line','pharmacy','movie','soccer','highway','mailbox','grocery store','check in','roommate'];
-function nfOrbitSpin(){
+function nfOrbitSpin(){return; // переклад на орбіті вимкнено — лише англійські слова дня
+
   const box=document.querySelector('.nf-orbit-top');if(!box||box.dataset.spin)return;box.dataset.spin='1';
   const reduce=typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches;if(reduce)return;
   let k=0;const tick=()=>{if(!box.isConnected)return;const chips=[...box.querySelectorAll('.ds-flip')];if(!chips.length)return;
