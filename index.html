@@ -10013,14 +10013,14 @@ function homeView(){
   // сегменти дня
   const seg=B.map((b,i)=>{const st_=b.done?'done':next&&b.id===next.id?'cur':'todo',col=nfStepColor(b.id);
     return `<button class="nf-sg ${st_} c-${col}" onclick="${st_==='cur'?`heroGo('${b.id}')`:`startBlock('${b.id}')`}" aria-label="${esc(stepName(b))}"><span>${st_==='done'?icn('check'):icn(BLOCK_IC[b.id]||'sparkle')}</span><i></i></button>`}).join('');
-  const today_=`<div class="nf-today"><div class="nf-today-h"><b>Сьогодні · ${m} хв</b><small>${B.length} ${pluralUk(B.length,['крок','кроки','кроків'])} · ${spentMin} / ${m} хв</small></div><div class="nf-segs">${seg}</div></div>`;
+  const today_=`<div class="nf-today"><div class="nf-today-h"><b>Сьогодні</b><small>${B.filter(b=>b.done).length} / ${B.length} ${pluralUk(B.length,['крок','кроки','кроків'])}</small></div><div class="nf-segs">${seg}</div></div>`;
   // великий крок
   let step;
   if(next){const col=nfStepColor(next.id),first=next.id==='review';
-    step=`<div class="nf-step c-${col}"><div class="nf-step-top"><div><small class="nf-eyebrow">Крок ${ni+1}${first?' · обов\'язково':''}</small><h2 class="nf-step-t">${esc(stepName(next))}</h2><p>${esc(blockSub(next))} · ${next.min||5} хв</p></div>${nfPreview(next.id)}</div>
+    step=`<div class="nf-step c-${col}"><div class="nf-step-top"><div><small class="nf-eyebrow">Крок ${ni+1}${first?' · обов\'язково':''}</small><h2 class="nf-step-t">${esc(stepName(next))}</h2><p>${esc(blockSub(next))}</p></div>${nfPreview(next.id)}</div>
       <button class="btn big nf-cta c-${col}" onclick="heroGo('${next.id}')">${sec>30||doneN?'Продовжити':'Почати'}${first&&!doneN?' повтор':''} ${icn('play')}</button></div>`}
   else if(bnext){const rem=Math.max(0,m-spentMin);
-    step=`<div class="nf-step c-lime"><div class="nf-step-top"><div><small class="nf-eyebrow">План виконано · бонус</small><h2 class="nf-step-t">${esc(bnext.t)}</h2><p>${rem>=3?`До норми ще ${rem} хв`:'Норму виконано'} · ${esc(bnext.d)}</p></div></div>
+    step=`<div class="nf-step c-lime"><div class="nf-step-top"><div><small class="nf-eyebrow">План виконано · бонус</small><h2 class="nf-step-t">${esc(bnext.t)}</h2><p>${'За бажанням — у своєму темпі'} · ${esc(bnext.d)}</p></div></div>
       <button class="btn big nf-cta" onclick="bonusGo()">${bon.some(x=>x.done)?'Продовжити бонус':'Почати бонус'} ${icn('play')}</button></div>`}
   else{const t=tomorrowPreview();
     step=`<div class="nf-step c-lime"><div class="nf-step-top"><div><small class="nf-eyebrow">Усе на сьогодні</small><h2 class="nf-step-t">Чудовий день</h2><p>Завтра: ${t.due} на повторення · ${t.newW} нових слів · новий план через <b id="midnight">${untilMidnight()}</b></p></div></div>
@@ -10788,7 +10788,7 @@ function routeSheetClose(){document.querySelectorAll('.rt-sheet-bg').forEach(x=>
 /* ---------- День 1 без «Повторення» ----------
    Перший день — ще нічого повторювати: план починається з нових слів, а хвилини повторення віддаємо їм.
    Перший день = жодне слово не вивчалося раніше за сьогодні (слова, які тест лише позначив знайомими, не рахуються). */
-function isFirstStudyDay(){if(window.NF_NO_DAY1)return false;const m=(S.srs||{})[S.lang]||{},t=today();for(const k in m){const x=m[k];if(x&&x.lr&&x.lr<t)return false}return true}
+function isFirstStudyDay(){if(window.NF_NO_DAY1)return false;return typeof nfDayNo==='function'?nfDayNo()===1:true} // «День 1» — доки не пройдено всі кроки першого дня
 on('planBlocks',B=>{if(!isFirstStudyDay())return B;const r=B.find(b=>b.id==='review');if(!r)return B;
   const nb=B.find(b=>b.id==='new');if(nb)nb.min=(nb.min||0)+(r.min||0);return B.filter(b=>b.id!=='review')});
 
