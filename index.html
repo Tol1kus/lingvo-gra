@@ -1787,6 +1787,25 @@ header.ds-hd{display:block!important;flex-wrap:initial;margin:0}header.ds-top{ma
 .nf-launch .nf-brand{margin-bottom:14px}.nf-lead{margin:0 0 26px;font:400 16px/1.55 'Golos Text',system-ui,sans-serif;color:var(--mut);max-width:32ch;text-align:left}
 .nf-launch .nf-lang b{white-space:nowrap}
 .nf-launch .nf-lang{gap:14px}.nf-launch .nf-lang>svg{flex:none}.nf-launch .nf-lang>span:nth-child(2){min-width:0}.nf-launch .nf-lt{width:56px;height:56px;flex:none;font-size:18px}
+/* ===== заставка з логотипом ===== */
+.nf-splash{position:fixed;inset:0;z-index:999;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .45s ease}
+.nf-splash.out{opacity:0;pointer-events:none}
+.nf-sp-mark{position:relative;width:132px;height:132px;display:flex;align-items:center;justify-content:center}
+.nf-sp-mark svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.nf-sp-track{fill:none;stroke:#16181B;stroke-width:6}
+.nf-sp-ring{fill:none;stroke:var(--lime);stroke-width:6;stroke-linecap:round;stroke-dasharray:340;stroke-dashoffset:340;filter:drop-shadow(0 0 8px rgba(200,245,96,.6));animation:nfSpRing 1.1s cubic-bezier(.6,0,.2,1) .15s forwards}
+.nf-sp-logo{width:76px;height:76px;border-radius:24px;background:var(--lime);color:#000;display:flex;align-items:center;justify-content:center;font:800 40px Unbounded,sans-serif;transform:scale(.4);opacity:0;animation:nfSpPop .6s cubic-bezier(.2,1.5,.4,1) .1s forwards,nfSpGlow 1.6s ease-in-out .7s infinite alternate}
+.nf-sp-word{font:700 28px Unbounded,sans-serif;letter-spacing:-.02em;color:var(--ink);opacity:0;transform:translateY(10px);animation:nfSpWord .5s ease .75s forwards}
+@keyframes nfSpRing{to{stroke-dashoffset:0}}
+@keyframes nfSpPop{to{transform:scale(1);opacity:1}}
+@keyframes nfSpGlow{from{box-shadow:0 0 0 rgba(200,245,96,0)}to{box-shadow:0 0 42px rgba(200,245,96,.55)}}
+@keyframes nfSpWord{to{opacity:1;transform:none}}
+/* після заставки — поява вікна запуску по черзі */
+.nf-launch-in .nf-brand,.nf-launch-in .nf-lead,.nf-launch-in .nf-lang{opacity:0;transform:translateY(14px);animation:nfLaunchIn .55s ease forwards}
+.nf-launch-in .nf-brand{animation-delay:1.75s}.nf-launch-in .nf-lead{animation-delay:1.9s}.nf-launch-in .nf-lang{animation-delay:2.05s}
+.nf-launch-in.nf-quick .nf-brand{animation-delay:.05s}.nf-launch-in.nf-quick .nf-lead{animation-delay:.18s}.nf-launch-in.nf-quick .nf-lang{animation-delay:.3s}
+@keyframes nfLaunchIn{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.nf-splash{display:none}.nf-launch-in .nf-brand,.nf-launch-in .nf-lead,.nf-launch-in .nf-lang{opacity:1;transform:none;animation:none}}
 </style>
 </head>
 <body>
@@ -10452,6 +10471,22 @@ function ptStartDay(){const {lvl,focus,markLower}=PLAN_OPT,m=S.minutes||30,N=pla
   if(raw)localStorage.setItem(STORE_KEY+'.backup-'+new Date().toISOString().slice(0,16).replace(/[:T]/g,'-'),raw);
   localStorage.removeItem(STORE_KEY);try{sessionStorage.clear()}catch(e){}
   location.replace(location.pathname+location.hash)}catch(e){}})();
+
+/* ---------- Заставка з логотипом перед вікном запуску (раз на відкриття гри) ----------
+   Кільце малюється лаймом навколо «L», логотип «вистрибує» зі світінням, з'являється «Лінгво»,
+   потім заставка тане, а підпис і картка мови піднімаються по черзі. Торкання — пропустити. */
+let NF_SPLASH_DONE=false;
+const _launchSplash=launchScreen;
+launchScreen=function(){
+  _launchSplash();const root=document.querySelector('.nf-launch');if(!root)return;
+  root.classList.add('nf-launch-in');
+  const reduce=typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(NF_SPLASH_DONE||reduce){root.classList.add('nf-quick');return}NF_SPLASH_DONE=true;
+  const sp=document.createElement('div');sp.className='nf-splash';sp.setAttribute('aria-hidden','true');
+  sp.innerHTML=`<div class="nf-sp-mark"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" class="nf-sp-track"/><circle cx="60" cy="60" r="54" class="nf-sp-ring"/></svg><span class="nf-sp-logo">L</span></div><b class="nf-sp-word">Лінгво</b>`;
+  const end=()=>{if(!sp.isConnected)return;root.classList.add('nf-quick');sp.classList.add('out');setTimeout(()=>sp.remove(),450)};
+  sp.addEventListener('click',end);document.body.appendChild(sp);setTimeout(end,1700);
+};
 
 bootApp();
 </script>
