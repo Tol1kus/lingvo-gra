@@ -1827,6 +1827,11 @@ header.ds-hd{display:block!important;flex-wrap:initial;margin:0}header.ds-top{ma
 .nf-guide-pts li{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--mut)}.nf-guide-pts svg{width:18px;height:18px;color:var(--lime);flex:none}
 .nf-guide .ds-foot .nf-link{margin-top:12px}
 @media (prefers-reduced-motion:reduce){.nf-ff,.nf-ff-wing,.nf-ff-glow,.nf-ff-eyes{animation:none}}
+/* перший екран: орбіта зверху, далі логотип, підпис і картка */
+.nf-launch{justify-content:flex-start!important;padding-top:calc(env(safe-area-inset-top) + 8px)}
+.nf-launch .nf-orbit-top{width:calc(100% + 32px);margin:0 -16px 6px;align-self:stretch}
+.nf-launch-in .nf-orbit-top{opacity:0;animation:nfLaunchIn .6s ease 1.6s forwards}.nf-launch-in.nf-quick .nf-orbit-top{animation-delay:0s}
+@media (max-width:360px){.nf-launch .nf-orbit-top{transform:scale(.86);transform-origin:top center;margin-bottom:-28px}}
 </style>
 </head>
 <body>
@@ -10382,13 +10387,9 @@ function dialogA(k,btn){const cur=DS.steps[DS.step],o=cur.opts[k];
 function dsDots(i){return `<div class="ds-dots">${[0,1,2,3].map(k=>`<i class="${k===i?'on':''}"></i>`).join('')}</div>`}
 function onboarding(step=0){
   applyTheme();document.body.classList.add('in-session');REDRAW=()=>onboarding(step);
-  if(step===0){const nW=WORDS.filter(w=>w.en).length;
-    app.innerHTML=`<div class="ds-scr">
-      <div class="ds-orbit" aria-hidden="true"><svg width="390" height="250" viewBox="0 0 390 250"><circle cx="195" cy="125" r="96" fill="none" stroke="#25282D" stroke-width="1.5" stroke-dasharray="3 6"/><circle cx="195" cy="125" r="62" fill="none" stroke="#16181B" stroke-width="10"/><path d="M195.0 63.0 A62 62 0 0 1 248.7 156.0" fill="none" stroke="#C8F560" stroke-width="10" stroke-linecap="round" style="filter:drop-shadow(0 0 8px rgba(200,245,96,.6))"/></svg>
-        <span class="ds-orb-c">EN</span>${[['hello',-120,-60,0],['color',95,-74,.6],['subway',-138,30,1.2],['the check',92,22,.3],['awesome',-40,96,.9],['to go',120,96,1.5]].map(([t,x,y,d])=>`<span class="ds-chipf" style="left:calc(50% + ${x}px);top:calc(50% + ${y}px);animation-delay:${d}s">${t}</span>`).join('')}</div>
-      <header class="ds-hd">${dsDots(0)}<h1>Яку мову вчимо?</h1><p>Переклади й підказки — українською.</p></header>
-      <ul class="ds-langs"><li class="ds-lang on solo" onclick="setStartLang('en','us');nfGuide()"><div class="ds-lrow"><span class="ds-lt">EN</span><span class="ds-lname"><strong>Англійська</strong><span>A1 → C2 · ${nW.toLocaleString('uk')} слів і фраз з картинками</span></span>${icn('check')}</div></li></ul>
-      <div class="ds-foot"><button class="ds-cta" onclick="setStartLang('en','us');nfGuide()">Далі ${icn('arrow')}</button></div></div>`;return}
+  if(step===0){ // перший екран нового користувача = заставка з логотипом + вибір мови (як у вікні запуску)
+    launchScreen();REDRAW=()=>onboarding(0);
+    const c=document.querySelector('.nf-launch .nf-lang.on');if(c)c.setAttribute('onclick',"setStartLang('en','us');nfGuide()");return}
   if(step===1){const g=S.goal||'work',m=S.minutes||30;
     const G=[['work','💼','Робота','листи, зустрічі, співбесіда'],['travel','✈️','Подорожі','аеропорт, готель, місто'],['exam','🎓','Іспит','IELTS · Cambridge B2 / C1'],['self','❤️','Для себе','фільми, книжки, спілкування']];
     app.innerHTML=`<div class="ds-scr">
@@ -10500,9 +10501,10 @@ let NF_SPLASH_DONE=false;
 const _launchSplash=launchScreen;
 launchScreen=function(){
   _launchSplash();const root=document.querySelector('.nf-launch');if(!root)return;
+  root.insertAdjacentHTML('afterbegin',nfOrbitHTML());
   root.classList.add('nf-launch-in');
   const reduce=typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(NF_SPLASH_DONE||reduce){root.classList.add('nf-quick');return}NF_SPLASH_DONE=true;
+  if(NF_SPLASH_DONE||reduce||(typeof navigator!=='undefined'&&navigator.webdriver&&!window.NF_FORCE_SPLASH)){root.classList.add('nf-quick');return}NF_SPLASH_DONE=true;
   const sp=document.createElement('div');sp.className='nf-splash';sp.setAttribute('aria-hidden','true');
   sp.innerHTML=`<div class="nf-sp-mark"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" class="nf-sp-track"/><circle cx="60" cy="60" r="54" class="nf-sp-ring"/></svg><span class="nf-sp-logo">N</span></div><b class="nf-sp-word">Nightlex</b>`;
   const end=()=>{if(!sp.isConnected)return;root.classList.add('nf-quick');sp.classList.add('out');setTimeout(()=>sp.remove(),450)};
@@ -10535,6 +10537,10 @@ function nfGuide(){
 }
 function nfBeginner(){S.placement=S.placement||{};S.placement[S.lang]={lvl:'A1',date:today(),beginner:true,skills:{}};S.beginner=S.beginner||{};S.beginner[S.lang]=true;
   PLAN_OPT={lvl:'A1',focus:'rec',markLower:false};save();onboarding(1)}
+
+/* орбіта «EN» зі словами навколо — верхній блок першого екрана */
+function nfOrbitHTML(){return `<div class="ds-orbit nf-orbit-top" aria-hidden="true"><svg width="390" height="250" viewBox="0 0 390 250"><circle cx="195" cy="125" r="96" fill="none" stroke="#25282D" stroke-width="1.5" stroke-dasharray="3 6"/><circle cx="195" cy="125" r="62" fill="none" stroke="#16181B" stroke-width="10"/><path d="M195.0 63.0 A62 62 0 0 1 248.7 156.0" fill="none" stroke="#C8F560" stroke-width="10" stroke-linecap="round" style="filter:drop-shadow(0 0 8px rgba(200,245,96,.6))"/></svg>
+  <span class="ds-orb-c">EN</span>${[['hello',-120,-60,0],['color',95,-74,.6],['subway',-138,30,1.2],['the check',92,22,.3],['awesome',-40,96,.9],['to go',120,96,1.5]].map(([t,x,y,d])=>`<span class="ds-chipf" style="left:calc(50% + ${x}px);top:calc(50% + ${y}px);animation-delay:${d}s">${t}</span>`).join('')}</div>`}
 
 bootApp();
 </script>
