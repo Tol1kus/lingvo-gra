@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 <meta name="theme-color" content="#000000">
-<title>Лінгво-гра: англійська, данська, італійська</title>
+<title>Slovko — англійська для українців</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Golos+Text:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -5962,7 +5962,7 @@ const ICON={
 };
 function header(){
   return `<header>
-    <div class="brand" onclick="home()"><span class="dot"></span>Лінгво-гра</div>
+    <div class="brand" onclick="home()"><span class="dot"></span>Slovko</div>
     <div class="stats">
       <span class="pill" title="Досвід · днів поспіль">⚡${S.xp} <i class="sep"></i> 🔥${S.streak}</span>
       <button class="pill icon flag-btn" onclick="langPicker()" title="Змінити мову" aria-label="Змінити мову">${L().flag}</button>
@@ -8096,7 +8096,7 @@ async function exportProgress(){
 function importProgress(file){
   if(!file)return;const r=new FileReader();
   r.onload=()=>{try{const d=JSON.parse(r.result);
-      if(!d||d.app!=='lingvo-gra'||!d.state||!d.state.srs)return toast('Це не файл прогресу Лінгво-гри');
+      if(!d||d.app!=='lingvo-gra'||!d.state||!d.state.srs)return toast('Це не файл прогресу Slovko');
       const words=LANG_IDS.reduce((n,l)=>n+Object.keys(d.state.srs[l]||{}).length,0);
       S=Object.assign(S,d.state);if(!d.state.idv)S.idv=1;migrateState();S.t=Date.now();flushSave();
       toast('📂 Відновлено: '+words+' слів у роботі');setTimeout(()=>location.reload(),900);
@@ -10186,7 +10186,7 @@ function launchScreen(){
     B=typeof planBlocks==='function'?planBlocks():[],done=B.filter(b=>b.done).length,ep=typeof epOfDay==='function'&&epOfDay(),
     h=new Date().getHours(),hi=h<5?'Доброї ночі':h<12?'Доброго ранку':h<18?'Доброго дня':'Доброго вечора';
   app.innerHTML=`<div class="onb nf-onb nf-full nf-launch">
-    <div class="nf-brand"><span class="nf-logo">L</span><b>Лінгво</b></div>
+    <div class="nf-brand"><span class="nf-logo">S</span><b>Slovko</b></div>
     <p class="nf-lead">Твій провідник у вивченні мови. Кілька хвилин щодня — і нові слова залишаються з тобою.</p>
 
     <button class="nf-lang on" onclick="launchGo()"><span class="nf-lt lime">EN</span><span><b>Англійська · US</b></span>${icn('chev')}</button>
@@ -10473,7 +10473,7 @@ function ptStartDay(){const {lvl,focus,markLower}=PLAN_OPT,m=S.minutes||30,N=pla
   location.replace(location.pathname+location.hash)}catch(e){}})();
 
 /* ---------- Заставка з логотипом перед вікном запуску (раз на відкриття гри) ----------
-   Кільце малюється лаймом навколо «L», логотип «вистрибує» зі світінням, з'являється «Лінгво»,
+   Кільце малюється лаймом навколо «S», логотип «вистрибує» зі світінням, з'являється «Slovko»,
    потім заставка тане, а підпис і картка мови піднімаються по черзі. Торкання — пропустити. */
 let NF_SPLASH_DONE=false;
 const _launchSplash=launchScreen;
@@ -10483,7 +10483,7 @@ launchScreen=function(){
   const reduce=typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(NF_SPLASH_DONE||reduce){root.classList.add('nf-quick');return}NF_SPLASH_DONE=true;
   const sp=document.createElement('div');sp.className='nf-splash';sp.setAttribute('aria-hidden','true');
-  sp.innerHTML=`<div class="nf-sp-mark"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" class="nf-sp-track"/><circle cx="60" cy="60" r="54" class="nf-sp-ring"/></svg><span class="nf-sp-logo">L</span></div><b class="nf-sp-word">Лінгво</b>`;
+  sp.innerHTML=`<div class="nf-sp-mark"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" class="nf-sp-track"/><circle cx="60" cy="60" r="54" class="nf-sp-ring"/></svg><span class="nf-sp-logo">S</span></div><b class="nf-sp-word">Slovko</b>`;
   const end=()=>{if(!sp.isConnected)return;root.classList.add('nf-quick');sp.classList.add('out');setTimeout(()=>sp.remove(),450)};
   sp.addEventListener('click',end);document.body.appendChild(sp);setTimeout(end,1700);
 };
