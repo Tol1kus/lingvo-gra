@@ -10371,7 +10371,7 @@ function launchGo(){LANG_PICKED=true;if(S.lang!=='en'){if(typeof switchLang==='f
 const _homeLaunchNF=home;
 home=function(){if(!LANG_PICKED&&S.onb&&!(typeof navigator!=='undefined'&&navigator.webdriver)&&!window.NO_LAUNCH)return launchScreen();return _homeLaunchNF()};
 /* ====================== Екрани вправ точно за макетом «Нічний фокус 2.0» (E07, E08, E09) ====================== */
-const nfHasPic=w=>!!(w&&((w.img&&typeof PICS!=='undefined'&&PICS[w.img])||(w.pic&&String(w.pic).trim())));
+const nfHasPic=w=>!!(w&&w.img&&typeof PICS!=='undefined'&&PICS[w.img]); // лише справжній символ Mulberry: емодзі в інтерфейсі прибираються, плитка була б порожня
 const nfTileS=w=>nfHasPic(w)?`<span class="nf-tile-s">${picHTML(w)}</span>`:'';
 /* E07 · вставка: речення в картці, маленька плитка-картинка, варіанти сіткою */
 function renderFill(it){
@@ -10387,7 +10387,7 @@ function renderFill(it){
 /* E08 · аудіювання: велика кнопка зі звуком і сітка 2×2 світлих плиток-картинок (підпис з'являється після відповіді) */
 function renderListen(it){
   const w=it.w;if(!it.opts)it.opts=shuffle([w,...distractors(w,'uk')]);
-  const pics=it.opts.length>=3&&it.opts.every(nfHasPic)&&new Set(it.opts.map(o=>o.img||o.pic)).size===it.opts.length;
+  const pics=it.opts.length>=3&&it.opts.every(nfHasPic)&&new Set(it.opts.map(o=>o.img)).size===it.opts.length;
   app.innerHTML=topRow()+`<div class="nf-ex">
     <div class="nf-listen-hd"><button class="nf-play" onclick="speak(${js(w[S.lang])})" aria-label="Прослухати ще раз">${icn('speaker')}</button>
       <div><small class="muted">Послухай</small><b>${pics?'Що ти почув(ла)?':'Обери переклад'}</b><button class="nf-slow" onclick="slowSpeak(${js(w[S.lang])})">${icn('clock')} повільно</button></div></div>
