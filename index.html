@@ -1884,6 +1884,7 @@ header.ds-hd{display:block!important;flex-wrap:initial;margin:0}header.ds-top{ma
 .rt-close{display:block;width:100%;min-height:44px;margin-top:8px;background:none;border:0;color:#A6AAB1;font:600 15px 'Golos Text',sans-serif;cursor:pointer}
 @media (prefers-reduced-motion:reduce){.rt-row.cur .rt-node{animation:none}.rt-sheet,.rt-sheet-bg{transition:none}}
 .rt-wrap{position:relative}.rt-line{top:28px!important;bottom:40px!important}
+.rt-abc{font:800 17px Unbounded,sans-serif;color:#000;letter-spacing:-.02em}
 </style>
 </head>
 <body>
@@ -2537,6 +2538,21 @@ const RAW = `#greet|Привітання|👋|A1
 Можна тут сісти?|Can I sit here?|Må jeg sidde her?|Posso sedermi qui?|🪑||Czy mogę tu usiąść?
 Мені шкода це чути.|I'm sorry to hear that.|Det er jeg ked af at høre.|Mi dispiace sentirlo.|😔||Przykro mi to słyszeć.
 Гарного вечора!|Have a nice evening!|Hav en god aften!|Buona serata!|🌙||Miłego wieczoru!
+#a1x03_months|Пори року й місяці|🗓️|A1
+січень|January|januar|gennaio|❄️
+лютий|February|februar|febbraio|❄️
+березень|March|marts|marzo|🌱
+квітень|April|april|aprile|🌷
+травень|May|maj|maggio|🌸
+червень|June|juni|giugno|☀️
+липень|July|juli|luglio|🏖️
+серпень|August|august|agosto|🌻
+вересень|September|september|settembre|🍂
+жовтень|October|oktober|ottobre|🎃
+листопад|November|november|novembre|🍁
+грудень|December|december|dicembre|🎄
+осінь (амер.)|fall|et efterår|l'autunno|🍁
+пора року|season|en årstid|la stagione|🔄||pora roku
 #a2_weather|Погода|🌦️|A2
 дощ|rain|en regn|la pioggia|🌧️|rain|deszcz
 сніг|snow|en sne|la neve|❄️|snow|śnieg
@@ -2547,7 +2563,6 @@ const RAW = `#greet|Привітання|👋|A1
 сонячний|sunny|solrig|soleggiato|🌞|sun|słoneczny
 температура|temperature|en temperatur|la temperatura|🌡️|thermometer|temperatura
 прогноз погоди|weather forecast|en vejrudsigt|le previsioni del tempo|📺🌦️||prognoza pogody
-пора року|season|en årstid|la stagione|🍂||pora roku
 #a2_shopping|Покупки|🛍️|A2
 ціна|price|en pris|il prezzo|🏷️|money|cena
 дешевий|cheap|billig|economico|🪙||tani
@@ -10359,6 +10374,7 @@ function dayThemeTopics(){const t=dayTheme();return new Set(t?[t.id]:[])}
 function dayTopicName(){const t=dayTheme();return t?t.name:'Нові слова'}
 function dayWordList(){
   S.dayWords=S.dayWords||{};const D=S.dayWords[S.lang];
+  if(D&&D.d&&D.d<today()&&D.ids&&D.ids.length){S.dayPrev=S.dayPrev||{};if(!S.dayPrev[S.lang]||S.dayPrev[S.lang].d<D.d)S.dayPrev[S.lang]={d:D.d,ids:D.ids.slice()}} // запам'ятати попередній день для повторення
   if(D&&D.d===today()&&D.v===3){const ws=D.ids.map(id=>WBYID[id]).filter(Boolean);if(ws.length)return ws}
   const keep=D&&D.d===today()?D.ids.map(id=>WBYID[id]).filter(w=>w&&st(w)):[];
   const n=Math.max(1,typeof newQuotaToday==='function'?newQuotaToday():10),t=dayTheme();
@@ -10631,19 +10647,21 @@ const UNLOCK_GAMES_TOPICS=5;        // «Вправи-ігри» відкрив�
 const UNLOCK_LIBRARY_LEVEL='A2';    // «Бібліотека» відкривається з цього рівня
 const TOPIC_DONE_SHARE=.8;          // частка вивчених слів, щоб тема вважалась пройденою
 
-function routeTopics(lv){return TOPICS.filter(t=>t.lv===lv&&t.id!=='ukus'&&t.words.some(w=>w[S.lang]))}
-function topicWordsL(t){return t.words.filter(w=>w[S.lang])}
-function topicDone(t){const ws=topicWordsL(t);return ws.length>0&&ws.filter(learned).length/ws.length>=TOPIC_DONE_SHARE}
+/* «Основи» на початку A1: Алфавіт → Числа → Дні тижня → Пори року й місяці */
+const BASICS_A1=['numbers','a1m_days','a1x03_months'];
+const ABC_TOPIC={id:'__abc',name:'Алфавіт',lv:'A1',words:[],special:'abc'};
+function basicsDone(k){return !!(((S.basics||{})[k]||{})[S.lang])}
+function routeTopics(lv){const base=TOPICS.filter(t=>t.lv===lv&&t.id!=='ukus'&&t.words.some(w=>w[S.lang]));
+  if(lv!=='A1')return base;const B=BASICS_A1.map(id=>TOPIC_BY_ID[id]).filter(Boolean);
+  return [ABC_TOPIC,...B,...base.filter(t=>!B.includes(t))]}
+function topicWordsL(t){return (t.words||[]).filter(w=>w[S.lang])}
+function topicDone(t){if(t.special==='abc')return basicsDone('abc');if(t.id==='numbers'&&basicsDone('num'))return true;const ws=topicWordsL(t);return ws.length>0&&ws.filter(learned).length/ws.length>=TOPIC_DONE_SHARE}
 function levelPct(lv){const ws=routeTopics(lv).flatMap(topicWordsL);return ws.length?Math.round(ws.filter(learned).length/ws.length*100):0}
 function topicsDoneAll(){return TOPICS.filter(t=>t.id!=='ukus'&&t.words.some(w=>w[S.lang])&&topicDone(t)).length}
 function gamesOpen(){return topicsDoneAll()>=UNLOCK_GAMES_TOPICS}
 function libraryOpen(){const lv=maxLv();return LEVELS.indexOf(lv)>=LEVELS.indexOf(UNLOCK_LIBRARY_LEVEL)||routeTopics(lv).every(topicDone)} // рівень ≥ A2 або весь поточний рівень пройдено
-function routeCurrent(list){
-  const dt=typeof dayTheme==='function'?dayTheme():null;
-  if(dt&&list.includes(dt)&&!topicDone(dt))return dt;
-  return list.find(t=>!topicDone(t))||null;
-}
-function routeTile(t){const w=topicWordsL(t).find(x=>typeof hasPic==='function'?hasPic(x):x.img);return `<span class="rt-pic">${w?picHTML(w):icn('layers')}</span>`}
+function routeCurrent(list){return list.find(t=>!topicDone(t))||null} // теми проходяться по черзі
+function routeTile(t){if(t.special==='abc')return `<span class="rt-pic rt-abc">Aa</span>`;const w=topicWordsL(t).find(x=>typeof hasPic==='function'?hasPic(x):x.img);return `<span class="rt-pic">${w?picHTML(w):icn('layers')}</span>`}
 function ringSmall(lv,pct){const r=23,c=2*Math.PI*r,p=Math.max(0,Math.min(100,pct));
   return `<div class="rt-ring" role="img" aria-label="Рівень ${lv}, пройдено ${p}%"><svg width="56" height="56" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="${r}" fill="none" stroke="#16181B" stroke-width="5"/><circle cx="28" cy="28" r="${r}" fill="none" stroke="#C8F560" stroke-width="5" stroke-linecap="round" stroke-dasharray="${(c*p/100).toFixed(1)} ${c.toFixed(1)}" transform="rotate(-90 28 28)"/></svg><span><b>${lv}</b><small>${p}%</small></span></div>`}
 
@@ -10651,11 +10669,11 @@ function pathScreen(){applyTheme();REDRAW=pathScreen;emit('home:before');
   const lv=maxLv(),list=routeTopics(lv),pct=levelPct(lv),cur=routeCurrent(list),ci=cur?list.indexOf(cur):list.length;
   // вікно: 3 пройдені перед поточною + поточна + 2 наступні; якщо все пройдено — 3 останні
   const from=Math.max(0,ci-3),to=cur?Math.min(list.length,ci+3):list.length,win=list.slice(cur?from:Math.max(0,list.length-3),to);
-  const rows=win.map(t=>{const done=topicDone(t),isCur=t===cur,n=topicWordsL(t).length,left=topicWordsL(t).filter(w=>!learned(w)).length;
+  const rows=win.map(t=>{const done=topicDone(t),isCur=t===cur,abc=t.special==='abc',n=abc?(ALPHA[S.lang]||{letters:[]}).letters.length:topicWordsL(t).length,left=abc?n:topicWordsL(t).filter(w=>!learned(w)).length;
     const st=done?'done':isCur?'cur':'next',lab=done?`${t.name}: пройдено, повторити`:isCur?`${t.name}: поточна тема, відкрити`:`${t.name}: ${nW(n)}, відкрити`;
     return `<li class="rt-row ${st}"><span class="rt-node" aria-hidden="true">${done?icn('check'):''}</span>
       <button class="rt-item" onclick="routeOpen('${t.id}')" aria-label="${esc(lab)}">${routeTile(t)}<strong>${esc(t.name)}</strong>
-      ${done?`<span class="rt-ok">${icn('check')}</span>`:isCur?`<span class="rt-now">зараз</span>`:`<span class="rt-n">${nW(left||n)}</span>`}</button></li>`}).join('');
+      ${done?`<span class="rt-ok">${icn('check')}</span>`:isCur?`<span class="rt-now">зараз</span>`:`<span class="rt-n">${abc?n+' '+pluralUk(n,['літера','літери','літер']):nW(left||n)}</span>`}</button></li>`}).join('');
   const doneAll=topicsDoneAll(),gOpen=gamesOpen(),lOpen=libraryOpen(),gLeft=Math.max(0,UNLOCK_GAMES_TOPICS-doneAll);
   const station=(id,open,ic,cls,title,subLocked,subOpen,bar,barLab,fn)=>`<li class="rt-st ${open?'open':''}"><span class="rt-node sq" aria-hidden="true"></span>
       <button class="rt-card" onclick="${open?fn:`routeLocked('${id}')`}" aria-label="${esc(title+(open?': відкрити':': замкнено, що зробити, щоб відкрити'))}">
@@ -10673,7 +10691,7 @@ function pathScreen(){applyTheme();REDRAW=pathScreen;emit('home:before');
   emit('screen','path')}
 
 /* тап по темі: поточна чи наступна — вчити нові слова теми; пройдена — повторити її */
-function routeOpen(id){const t=TOPIC_BY_ID[id];if(!t)return;const ws=topicWordsL(t);
+function routeOpen(id){if(id==='__abc')return alphabetScreen();if(id==='numbers'&&!basicsDone('num'))return numbersScreen();const t=TOPIC_BY_ID[id];if(!t)return;const ws=topicWordsL(t);
   if(topicDone(t)){const it=shuffle(ws.filter(w=>st(w))).slice(0,12).map(w=>({kind:reviewKind(w),w,toUk:dirToUk(),phase:'Повтор теми · '+t.name}));
     if(!it.length)return toast('Поки нічого повторювати');return runSession(it,{title:'Повторення завершено!',back:pathScreen,backLabel:'До шляху'})}
   const fresh=ws.filter(w=>!st(w)).slice(0,10),again=ws.filter(w=>st(w)&&!learned(w)).slice(0,6);
@@ -10697,6 +10715,41 @@ function routeSheetClose(){document.querySelectorAll('.rt-sheet-bg').forEach(x=>
 function isFirstStudyDay(){if(window.NF_NO_DAY1)return false;const m=(S.srs||{})[S.lang]||{},t=today();for(const k in m){const x=m[k];if(x&&x.lr&&x.lr<t)return false}return true}
 on('planBlocks',B=>{if(!isFirstStudyDay())return B;const r=B.find(b=>b.id==='review');if(!r)return B;
   const nb=B.find(b=>b.id==='new');if(nb)nb.min=(nb.min||0)+(r.min||0);return B.filter(b=>b.id!=='review')});
+
+/* «Основи» вважаються пройденими після вправи з точністю ≥ 70 %: алфавіт — «Впізнай літеру» або «Слово по літерах», числа — будь-яка вправа з числами */
+on('session:end',o=>{try{if(!o||!o.items)return;const n=o.items.length,ok=n?(o.right||0)/n:0;if(ok<.7)return;
+  const k=/^(Алфавіт|Спелінг): готово!/.test(o.title||'')?'abc':/^Числа: готово!/.test(o.title||'')?'num':null;if(!k)return;
+  S.basics=S.basics||{};S.basics[k]=S.basics[k]||{};if(!S.basics[k][S.lang]){S.basics[k][S.lang]=today();save();toast(k==='abc'?'Алфавіт пройдено ✓':'Числа пройдено ✓')}}catch(e){}});
+/* тема «Пори року й місяці»: 12 місяців + 4 пори року з теми «Погода» (ті самі слова, без нових id) */
+(function(){try{const mt=TOPIC_BY_ID['a1x03_months'],wt=TOPIC_BY_ID['a1x01_weather'];if(!mt||!wt)return;
+  const ss=wt.words.filter(w=>['spring','summer','autumn','winter'].includes(w.en));mt.words=ss.concat(mt.words.filter(w=>!ss.includes(w)))}catch(e){}})();
+/* слова дня на A1 — спершу з «Основ» (числа → дні тижня → пори року й місяці) */
+if(typeof themeOrder==='function'){const _toBasics=themeOrder;themeOrder=function(){const L=_toBasics();if(maxLv()!=='A1')return L;
+  return BASICS_A1.map(id=>L.find(t=>t.id===id)).filter(Boolean).concat(L.filter(t=>!BASICS_A1.includes(t.id)))}}
+
+/* ---------- Повторення з дня 2 = учорашній день у пів обсягу ----------
+   Ті самі етапи, що й попереднього навчального дня (слова → практика → аудіювання → диктант → письмо),
+   на тих самих словах, але вдвічі менше: половина слів (ті, що найімовірніше забуто), кожен етап коротший. */
+function prevDayWords(){
+  const P=((S.dayPrev||{})[S.lang]);let ids=P&&P.ids||[];
+  const D=((S.dayWords||{})[S.lang]);if(!ids.length&&D&&D.d<today())ids=D.ids||[]; // ще не перераховано сьогодні
+  return ids.map(id=>WBYID[id]).filter(w=>w&&st(w))}
+function reviewItems(){
+  const P=prevDayWords().sort((a,b)=>recallP(a)-recallP(b)),half=P.slice(0,Math.ceil(P.length/2)),h2=Math.ceil(half.length/2),items=[];
+  half.forEach(w=>items.push({kind:'card',w,phase:'Повтор учорашнього · слова'}));
+  half.filter(w=>w.sent&&w.sent[S.lang]&&parseGap(w.sent[S.lang])).slice(0,h2).forEach(w=>items.push({kind:'fill',w,phase:'Повтор учорашнього · практика'}));
+  if(canSpeak){shuffle(half).slice(0,h2).forEach(w=>items.push({kind:'listen',w,phase:'Повтор учорашнього · аудіювання'}));
+    half.filter(w=>w.sent&&w.sent[S.lang]).slice(0,2).forEach(w=>items.push({kind:'dict',w,phase:'Повтор учорашнього · диктант'}))}
+  shuffle(half).slice(0,Math.ceil(half.length/3)).forEach(w=>items.push({kind:'type',w,toUk:false,phase:'Повтор учорашнього · письмо'}));
+  // старіші слова, яким пора (не з учорашнього дня) — небагато, щоб не роздувати
+  const seen=new Set(half.map(w=>w.id));dueWords().filter(w=>!seen.has(w.id)).slice(0,6).forEach(w=>items.push({kind:reviewKind(w),w,toUk:dirToUk(),phase:'Повторення'}));
+  return items}
+on('block:review',b=>{
+  let items=reviewItems();
+  if(!items.length){items=dueWords().slice(0,60).map(w=>({kind:reviewKind(w),w,toUk:dirToUk(),phase:'Повторення'}));items=fitItems(items,((b&&b.min)||8)-3)}
+  items=items.concat(errorFocusItems(),oldMaterialItems());
+  if(!items.length){markBlock('review');toast('Повторювати поки нічого. Блок зараховано ✓');return planNext()}
+  runSession(items,{title:'Повторення завершено!',requeue:true,onFinish:o=>{markBlock('review');if(o&&o._prev)o._prev(o)}})});
 
 bootApp();
 </script>
