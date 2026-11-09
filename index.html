@@ -1962,6 +1962,7 @@ header.ds-hd{display:block!important;flex-wrap:initial;margin:0}header.ds-top{ma
 .dv-hr{max-width:40%}
 .dv-hrow .dv-hhead{flex:0 1 auto}.dv-hrow .dv-hr{margin-left:auto}
 .nf-launch .ds-chipf{width:max-content}.nf-launch .ds-flip b{overflow:visible;text-overflow:clip}
+.nf-hd>div>small:only-child{font-size:15px;font-weight:700;color:var(--ink)}
 </style>
 </head>
 <body>
@@ -10007,7 +10008,7 @@ function homeView(){
   const sec=((S.act||{})[today()]||{}).sec||0,spentMin=Math.floor(sec/60),d=new Date(),pl=S.plan&&S.plan[S.lang];
   const bon=next?null:bonusSteps(),bnext=bon&&bon.find(x=>!x.done);
   const ep=typeof epOfDay==='function'?epOfDay():null,rev=reviewDone();
-  const head=`<div class="nf-hd"><div><small>${S.name?esc(S.name)+' · ':''}День ${nfDayNo()} · ${LANG_NAT[S.lang]}${S.lang==='en'?' (US)':''}</small><h1 class="nf-greet">${nfGreet()}</h1></div>
+  const head=`<div class="nf-hd"><div><small>${S.name?esc(S.name)+' · ':''}День ${nfDayNo()} · ${LANG_NAT[S.lang]}${S.lang==='en'?' (US)':''}</small></div>
     <span class="nf-streak" title="Днів поспіль">${icn('flame')}<b>${S.streak}</b></span></div>`;
   // сегменти дня
   const seg=B.map((b,i)=>{const st_=b.done?'done':next&&b.id===next.id?'cur':'todo',col=nfStepColor(b.id);
@@ -10539,13 +10540,11 @@ function onboarding(step=0){
   if(step===0){ // перший екран нового користувача = заставка з логотипом + вибір мови (як у вікні запуску)
     launchScreen();REDRAW=()=>onboarding(0);
     const c=document.querySelector('.nf-launch .nf-lang.on');if(c)c.setAttribute('onclick',"setStartLang('en','us');nfGuide()");return}
-  if(step===1){const g=S.goal||'work',m=S.minutes||30;
+  if(step===1){const g=S.goal||'work';
     const G=[['work','💼','Робота','листи, зустрічі, співбесіда'],['travel','✈️','Подорожі','аеропорт, готель, місто'],['exam','🎓','Іспит','IELTS · Cambridge B2 / C1'],['self','❤️','Для себе','фільми, книжки, спілкування']];
     app.innerHTML=`<div class="ds-scr">
       <header class="ds-hd ds-hd2">${dsDots(2)}<h1>Для чого тобі англійська?</h1><p>Від мети залежать теми слів і тексти.</p></header>
       <div class="ds-goals">${G.map(([k,e,t,s])=>`<button class="ds-goal ${k===g?'on':''}" onclick="S.goal='${k}';save();onboarding(1)"><span class="ds-g-pic">${e}</span><span class="ds-gtx"><strong>${t}</strong><span>${s}</span></span><span class="ds-radio"></span></button>`).join('')}</div>
-      <h2 class="ds-h2">Скільки часу на день?</h2>
-      <div class="ds-time">${[[30,'10–15 нових слів'],[60,'20–25 слів + вимова']].map(([x,s])=>`<button class="${m===x?'on':''}" onclick="S.minutes=${x};save();onboarding(1)"><strong>${x} хв</strong><span>${s}</span></button>`).join('')}</div>
       <div class="ds-foot"><button class="ds-cta" onclick="${PLAN_OPT&&PLAN_OPT.lvl?'ptStartDay()':'nfGuide()'}">${PLAN_OPT&&PLAN_OPT.lvl?`Почати день 1 ${icn('play')}`:`Далі: тест рівня ${icn('arrow')}`}</button></div></div>`;return}
   return nfGuide();
 }
@@ -10629,7 +10628,7 @@ function ptResult(){
    <section class="ds-tipb">${icn('bulb')}<span>${tip}</span></section>
    <section class="ds-card"><h2>Твої перші 2 тижні</h2><div class="ds-wk"><div><small>ТИЖДЕНЬ 1</small><strong>${esc(w1)}</strong><span>${plus[weakK]}</span></div><div><small>ТИЖДЕНЬ 2</small><strong>${esc(w2)}</strong><span>${plus[weakK]}</span></div></div>
      <span class="ds-wkn">≈ ${daily*14} нових слів · контрольний тест через 14 днів</span></section>
-   <div class="ds-foot"><button class="ds-cta" id="ptNext" onclick="onboarding(1)">Далі: мета й час ${icn('arrow')}</button></div></div>`;
+   <div class="ds-foot"><button class="ds-cta" id="ptNext" onclick="onboarding(1)">Далі: мета ${icn('arrow')}</button></div></div>`;
   window.scrollTo(0,0);
 }
 function ptStartDay(){const {lvl,focus,markLower}=PLAN_OPT,m=S.minutes||30,N=planNumbers(lvl,m);
