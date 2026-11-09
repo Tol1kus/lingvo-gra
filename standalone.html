@@ -1669,7 +1669,7 @@ header .pill,.pill{background:var(--s1);border:1px solid var(--line);color:var(-
 .nf-wpic img{width:120px;height:120px;object-fit:contain}.nf-wpic-t{font:700 30px Unbounded,sans-serif;color:#111;padding:0 16px;text-align:center}
 .nf-us{position:absolute;left:12px;top:12px;font:800 12px 'Golos Text',sans-serif;color:#000;background:var(--sky);padding:4px 10px;border-radius:99px}
 .nf-wrow{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
-.nf-wt{margin:0;font:700 38px/1.05 Unbounded,sans-serif;letter-spacing:-.02em;word-break:break-word}.nf-art{color:var(--mut)}
+.nf-wtitle{margin:0;font:700 38px/1.05 Unbounded,sans-serif;letter-spacing:-.02em;overflow-wrap:anywhere}.nf-art{color:var(--mut)}
 .nf-wuk{display:block;font-size:17px;color:var(--mut);margin-top:4px}
 .nf-reveal{margin-top:8px;height:40px;padding:0 14px;border-radius:12px;background:var(--s2);border:1px solid var(--line);color:var(--ink);font:700 14px 'Golos Text',sans-serif;cursor:pointer}
 .nf-say{width:60px;height:60px;flex:none;border-radius:50%;border:0;background:var(--lime);color:#000;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 0 0 1px rgba(200,245,96,.35),0 0 28px rgba(200,245,96,.28)}.nf-say svg{width:26px;height:26px}
@@ -1699,7 +1699,7 @@ header .pill,.pill{background:var(--s1);border:1px solid var(--line);color:var(-
 .nf-dopts{display:flex;flex-direction:column;gap:8px;margin:14px 0 20px}
 .nf-dopts .opt{margin:0!important;min-height:52px;border-radius:16px!important;text-align:left;font-size:15px;font-weight:700;padding:10px 14px}
 .nf-bub.me small{color:rgba(0,0,0,.62);opacity:1}
-.nf-wt-uk{font-size:32px}.nf-word .nf-reveal{width:100%;height:58px;border-radius:18px;margin-top:4px;background:var(--lime);color:#000;border:0;font-weight:800;font-size:17px;box-shadow:0 0 0 1px rgba(200,245,96,.35),0 0 28px rgba(200,245,96,.28)}
+.nf-wtitle.uk{font-size:32px}.nf-word .nf-reveal{width:100%;height:58px;border-radius:18px;margin-top:4px;background:var(--lime);color:#000;border:0;font-weight:800;font-size:17px;box-shadow:0 0 0 1px rgba(200,245,96,.35),0 0 28px rgba(200,245,96,.28)}
 /* ====================== СТАРТ ЗА МАКЕТОМ E01–E04 (ds-*) ====================== */
 .ds-scr{min-height:calc(100dvh - 20px);display:flex;flex-direction:column;background:#000;color:var(--ink);font-family:'Golos Text',system-ui,sans-serif;margin:0 -4px;padding-bottom:env(safe-area-inset-bottom)}
 .ds-orbit{position:relative;height:250px;margin-top:4px;overflow:hidden}.ds-orbit svg{position:absolute;left:50%;top:0;transform:translateX(-50%)}
@@ -1774,9 +1774,14 @@ body:has(.ds-scr) #tabbar{display:none!important}
 header.ds-hd{display:block!important;flex-wrap:initial;margin:0}header.ds-top{margin:0;flex-wrap:nowrap;justify-content:flex-start}
 .ds-scr{margin-top:0;padding-top:env(safe-area-inset-top)}
 .ds-orbit{flex:none}
-.nf-wrow>div{flex:1;min-width:0}.nf-wt{word-break:normal!important;overflow-wrap:anywhere;white-space:normal}
+.nf-wrow>div{flex:1;min-width:0}
 .nf-say{all:unset;box-sizing:border-box;width:60px;height:60px;flex:none;border-radius:50%;background:var(--lime);color:#000;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 0 0 1px rgba(200,245,96,.35),0 0 28px rgba(200,245,96,.28)}
 .ds-lang.on.solo{cursor:pointer}
+
+/* палітра «чорний + лайм»: усі кроки дня й серія — лаймові */
+.nf-streak{border-color:color-mix(in srgb,var(--lime) 45%,var(--line))!important;color:var(--lime)!important}.nf-streak svg{color:var(--lime)!important;stroke:var(--lime)!important}
+/* підписи плиток слів дня: один рядок, без розриву слова */
+.nf-wt small{display:block!important;white-space:nowrap!important;overflow:hidden;text-overflow:ellipsis;word-break:normal!important;-webkit-line-clamp:unset;font-size:11.5px;line-height:1.3}
 </style>
 </head>
 <body>
@@ -9794,7 +9799,7 @@ on('result',o=>{
   window.scrollTo(0,0);snd('win')});
 
 /* ---------- головна «Сьогодні» ---------- */
-function nfStepColor(id){return id==='review'?'amber':/^(listen|dict|speak)$/.test(id)?'sky':'lime'}
+function nfStepColor(id){return 'lime'}
 function nfGreet(){const h=new Date().getHours();return h<5?'Добра ніч':h<12?'Добрий ранок':h<18?'Добрий день':'Добрий вечір'}
 function plUk(n,f){n=Math.abs(n);const a=n%10,b=n%100;return b>=11&&b<=14?f[2]:a===1?f[0]:a>=2&&a<=4?f[1]:f[2]}
 function nfDayNo(){const A=S.act||{};return Math.max(1,Object.keys(A).length+(A[today()]?0:1))}
@@ -10289,9 +10294,9 @@ function renderCard(it){
   app.innerHTML=topRow()+`<div class="nf-ex nf-word">
     <article class="nf-wcard">
       <div class="nf-wpic">${nfHasPic(w)?picHTML(w):`<span class="nf-wpic-t">${esc(t)}</span>`}<span class="nf-us">US</span></div>
-      ${it.shown?`<div class="nf-wrow"><div><h1 class="nf-wt">${nfArt(t)}</h1><span class="nf-wuk">${esc(w.uk)}</span></div>
+      ${it.shown?`<div class="nf-wrow"><div><h1 class="nf-wtitle">${nfArt(t)}</h1><span class="nf-wuk">${esc(w.uk)}</span></div>
         <button class="nf-say" onclick="speak(${js(t)})" aria-label="Прослухати">${icn('speaker')}</button></div>`
-       :`<div class="nf-wrow"><div><h1 class="nf-wt nf-wt-uk">${esc(w.uk)}</h1><span class="nf-wuk">Згадай це слово англійською</span></div></div>
+       :`<div class="nf-wrow"><div><h1 class="nf-wtitle uk">${esc(w.uk)}</h1><span class="nf-wuk">Згадай це слово англійською</span></div></div>
         <button class="nf-reveal" onclick="SS.items[SS.i].shown=true;renderItem()">Показати відповідь</button>`}
       <div class="nf-wmeta">${nfWave()}<span>${esc(w.lv)}${th?' · '+esc(th.name):''} · вимова en-US</span></div>
     </article>
