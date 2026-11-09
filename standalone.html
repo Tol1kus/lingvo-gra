@@ -1784,7 +1784,9 @@ header.ds-hd{display:block!important;flex-wrap:initial;margin:0}header.ds-top{ma
 .nf-wt small{display:block!important;white-space:nowrap!important;overflow:hidden;text-overflow:ellipsis;word-break:normal!important;-webkit-line-clamp:unset;font-size:11.5px;line-height:1.3}
 .nf-launch h1{margin-bottom:18px}
 .nf-launch .nf-brand{margin-bottom:22px}
-.nf-launch .nf-brand{margin-bottom:14px}.nf-tag{margin:0 0 22px;font-size:16px;line-height:1.5;color:var(--mut);max-width:34ch}
+.nf-launch .nf-brand{margin-bottom:14px}.nf-lead{margin:0 0 26px;font:400 16px/1.55 'Golos Text',system-ui,sans-serif;color:var(--mut);max-width:32ch;text-align:left}
+.nf-launch .nf-lang b{white-space:nowrap}
+.nf-launch .nf-lang{gap:14px}.nf-launch .nf-lang>svg{flex:none}.nf-launch .nf-lang>span:nth-child(2){min-width:0}.nf-launch .nf-lt{width:56px;height:56px;flex:none;font-size:18px}
 </style>
 </head>
 <body>
@@ -10166,7 +10168,7 @@ function launchScreen(){
     h=new Date().getHours(),hi=h<5?'Доброї ночі':h<12?'Доброго ранку':h<18?'Доброго дня':'Доброго вечора';
   app.innerHTML=`<div class="onb nf-onb nf-full nf-launch">
     <div class="nf-brand"><span class="nf-logo">L</span><b>Лінгво</b></div>
-    <p class="nf-tag">Твій провідник у вивченні мови. Кілька хвилин щодня — і нові слова залишаються з тобою.</p>
+    <p class="nf-lead">Твій провідник у вивченні мови. Кілька хвилин щодня — і нові слова залишаються з тобою.</p>
 
     <button class="nf-lang on" onclick="launchGo()"><span class="nf-lt lime">EN</span><span><b>Англійська · US</b></span>${icn('chev')}</button>
   </div>`;
