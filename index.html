@@ -10956,6 +10956,27 @@ function idkWrite(){const it=SS&&SS.items&&SS.items[SS.i];if(!it||it.answered)re
 if(typeof renderItem==='function'){const _ri=renderItem;renderItem=function(){try{const it=SS&&SS.items&&SS.items[SS.i];
   if(it&&it.kind==='dict'&&!it.test&&typeof maxLv==='function'&&maxLv()==='A1'&&it.w){it.kind=canSpeak?'listen':'choice';if(!canSpeak)it.toUk=true;it.phase='Почуй слово дня'}}catch(e){}return _ri.apply(this,arguments)}}
 
+/* ---------- «Фокус» — лише на словах, які людина справді вчила ----------
+   Раніше брав усі слова з записом у пам'яті, разом зі словами, які тест рівня лише позначив «знайомими» (pl:1),
+   тож з'являлися випадкові фрази. Тепер: слова дня, потім слова останніх 7 днів, слабкі — першими. */
+function practicedWords(days){const lim=addDays(-(days||7)),day=new Set((typeof dayWordList==='function'?dayWordList():[]).map(w=>w.id));
+  return ALL().filter(w=>{const x=st(w);return x&&w[S.lang]&&!w.my&&!(x.pl&&!x.lr)&&(day.has(w.id)||(x.lr&&x.lr>=lim))})
+    .sort((a,b)=>(day.has(b.id)-day.has(a.id))||(recallP(a)-recallP(b)))}
+HOOKS['block:focus']=[];
+on('block:focus',b=>{const p=(S.plan||{})[S.lang]||{},fin={onFinish:()=>markBlock('focus')},pool_=practicedWords(7);
+  if(pool_.length<4){markBlock('focus');toast('Фокус зараховано: ще замало вивчених слів');return planNext()}
+  let items=[];const ph='Фокус: ';
+  if(p.focus==='syn'){const d=SD();const ls=d?d.lessons.filter(l=>LEVELS.indexOf(l.lv)<=LEVELS.indexOf(p.lvl||maxLv())):[];
+    if(ls.length&&maxLv()!=='A1')items=shuffle(ls.flatMap(l=>l.items.map(x=>({kind:'sentb',x,lesson:l,phase:ph+'будова речення'})))).slice(0,5)}
+  if(!items.length&&(p.focus==='ctx'||p.focus==='syn'))items=withSent(pool_).slice(0,8).map(w=>({kind:'fill',w,phase:ph+'слово в реченні'}));
+  if(!items.length&&p.focus==='rec')items=pool_.slice(0,10).map((w,i)=>({kind:i%2?'listen':'choice',w,toUk:true,phase:ph+'розуміння'}));
+  if(!items.length)items=pool_.slice(0,8).map(w=>({kind:'type',w,toUk:false,phase:ph+'написання'}));
+  runSession(shuffle(items),{title:'Фокус дня виконано!',requeue:true,...fin})});
+/* «вивчені» слова для вправ — без тих, що тест рівня лише позначив знайомими й людина їх ще не проходила */
+const realSt=w=>{const x=st(w);return !!(x&&!(x.pl&&!x.lr))};
+studied=function(){return ALL().filter(w=>realSt(w)&&w[S.lang])};
+if(typeof gamePool==='function')gamePool=function(){let p=ALL().filter(w=>realSt(w)&&w[S.lang]);if(p.length<12)p=p.concat(practicedWords(14).filter(w=>!p.includes(w)));if(p.length<12)p=p.concat((typeof dayWordList==='function'?dayWordList():[]).filter(w=>!p.includes(w)));return p};
+
 /* ====================== ЕКРАН «СЛОВНИК» · варіант A «Пошук і додавання в одному полі» ======================
    Макети: canvas «Лінгво-гра — варіанти дизайну», сторінка «Словник · варіанти»: DV-A-SearchAdd і DV-C-Errors.
    Одне поле «Знайти або додати слово…» фільтрує список; якщо слова ще немає — картка нового слова, заповнена
