@@ -1974,6 +1974,7 @@ header.ds-hd{display:block!important;flex-wrap:initial;margin:0}header.ds-top{ma
 .nf-step-top{display:block!important}
 .nf-step-eye{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:44px;margin-bottom:4px}
 .nf-step .nf-prev{position:static!important;flex:none}
+.st-card b.en{color:var(--lime);font-weight:700}
 </style>
 </head>
 <body>
@@ -10887,6 +10888,8 @@ const THEME_TIPS={
  family:['Сім\'я','Моя / твоя: my mother, your father. Присвійна \'s: Anna\'s brother.','parents — батьки (обоє), relatives — родичі.'],
  time:['Час','Котра година: It\'s five o\'clock. Перед годиною — at: at 7 a.m.','a.m. — до полудня, p.m. — після.'],
  a1x01_weather:['Погода','It\'s + прикметник: It\'s sunny, It\'s cold. Дощ іде: It\'s raining.','В США температуру міряють у °F.']};
+/* англійські фрази в порадах — лаймовим жирним (шматки латиниці разом із пробілами й розділовими знаками між ними) */
+function hlEn(t){return esc(t).replace(/[A-Za-z][A-Za-z0-9'’°.,?!\- ]*[A-Za-z0-9?!.°]|[A-Za-z]/g,m=>`<b class="en">${m}</b>`)}
 function tipFor(id){const base=STEP_TIPS[id];if(!base)return null;const th=typeof dayTheme==='function'?dayTheme():null,tt=th&&THEME_TIPS[th.id];
   const themed=tt&&['new','practice','listen','grammar','review'].includes(id);return {base,tt:themed?tt:null}}
 function tipSeen(id){const d=((S.tipSeen||{})[S.lang]||{});return d.d===today()&&d[id]}
@@ -10895,8 +10898,8 @@ function stepTip(id){const t=tipFor(id),B=planBlocks(),b=B.find(x=>x.id===id),n=
   app.innerHTML=`<div class="ds-scr st-tip"><header class="ds-top"><button class="ds-x" onclick="document.body.classList.remove('in-session');home()" aria-label="Закрити">${icn('close')}</button>
      <div class="ds-prog"><div class="ds-prog-h"><span>Крок ${n} з ${B.length} · ${esc(b?stepName(b):'')}</span></div></div></header>
    <section class="st-body">
-    ${t.tt?`<article class="st-card theme"><small>ПРАВИЛО ДНЯ · ${esc(t.tt[0].toUpperCase())}</small><p>${esc(t.tt[1])}</p><em>${esc(t.tt[2])}</em></article>`:''}
-    <article class="st-card"><small>${esc(t.base[0].toUpperCase())}</small><p>${esc(t.base[1])}</p><em>${icn('bulb')} ${esc(t.base[2])}</em></article></section>
+    ${t.tt?`<article class="st-card theme"><small>ПРАВИЛО ДНЯ · ${esc(t.tt[0].toUpperCase())}</small><p>${hlEn(t.tt[1])}</p><em><span>${hlEn(t.tt[2])}</span></em></article>`:''}
+    <article class="st-card"><small>${esc(t.base[0].toUpperCase())}</small><p>${hlEn(t.base[1])}</p><em>${icn('bulb')} <span>${hlEn(t.base[2])}</span></em></article></section>
    <div class="ds-foot"><button class="ds-cta" onclick="markTip('${id}');document.body.classList.remove('in-session');startBlock('${id}')">Почати крок ${icn('arrow')}</button></div></div>`;
   window.scrollTo(0,0)}
 if(typeof startBlock==='function'){const _sbTip=startBlock;startBlock=function(id){
