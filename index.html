@@ -1885,6 +1885,81 @@ header.ds-hd{display:block!important;flex-wrap:initial;margin:0}header.ds-top{ma
 @media (prefers-reduced-motion:reduce){.rt-row.cur .rt-node{animation:none}.rt-sheet,.rt-sheet-bg{transition:none}}
 .rt-wrap{position:relative}.rt-line{top:28px!important;bottom:40px!important}
 .rt-abc{font:800 17px Unbounded,sans-serif;color:#000;letter-spacing:-.02em}
+/* ====================== «СЛОВНИК» · варіант A ====================== */
+.dv-hd{display:flex!important;align-items:flex-start;justify-content:space-between;flex-wrap:nowrap!important;padding:16px 4px 6px;margin:0}
+.dv-hd small{font-size:13px;color:#A6AAB1}.dv-hd h1{margin:2px 0 0;font:800 30px Unbounded,sans-serif;letter-spacing:-.02em}
+.dv-hb{display:flex;gap:8px}.dv-hb button{width:44px;height:44px;border-radius:14px;background:#0E0F11;border:1px solid #25282D;display:flex;align-items:center;justify-content:center;color:var(--ink);cursor:pointer}.dv-hb svg{width:20px;height:20px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.dv-search{position:relative;display:flex;align-items:center;gap:10px;height:54px;margin:10px 0 0;padding:0 8px 0 16px;border-radius:18px;background:#0E0F11;border:1px solid #25282D;transition:border-color .2s,box-shadow .2s}
+.dv-search:focus-within{border-color:var(--lime);box-shadow:0 0 0 4px rgba(200,245,96,.12)}
+.dv-search>svg{width:18px;height:18px;color:#A6AAB1;flex:none}
+.dv-search input{flex:1;min-width:0;height:100%;background:none;border:0;outline:none;color:var(--ink);font:600 16px 'Golos Text',sans-serif}
+.dv-search input::placeholder{color:#6E737B;font-weight:500}
+.dv-mic{width:44px;height:44px;flex:none;border:0;border-radius:12px;background:none;color:var(--ink);display:flex;align-items:center;justify-content:center;cursor:pointer}.dv-mic svg{width:20px;height:20px}
+.dv-tabs{display:flex;gap:4px;margin:12px 0 0;padding:4px;border-radius:14px;background:#0E0F11;border:1px solid #25282D}
+.dv-tabs button{flex:1;min-height:44px;border:0;border-radius:10px;background:transparent;color:#A6AAB1;font:700 13px 'Golos Text',sans-serif;cursor:pointer}
+.dv-tabs button.on{background:var(--lime);color:#000}
+.dv-list{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:8px}
+.dv-row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:18px;background:#0E0F11;border:1px solid #25282D}
+.dv-tile{width:40px;height:40px;flex:none;border-radius:11px;background:#ECEFE6;display:inline-flex;align-items:center;justify-content:center;overflow:hidden;color:#111}
+.dv-tile img{width:72%;height:72%;object-fit:contain}.dv-tile svg{width:80%;height:80%}
+.dv-letter{font:800 18px Unbounded,sans-serif;color:#25282D}
+.dv-tile.big{width:64px;height:64px;border-radius:16px}.dv-tile.m{width:52px;height:52px;border-radius:14px}.dv-tile.h{width:56px;height:56px;border-radius:15px}
+.dv-tile.icon{background:#16181B;border:1px solid var(--sky);color:var(--sky)}.dv-tile.icon svg{width:26px;height:26px}
+.dv-tx{flex:1;min-width:0}.dv-tx strong{display:block;font-size:15px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.dv-tx small{display:block;font-size:12.5px;color:#A6AAB1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dv-say{width:44px;height:44px;flex:none;border:0;border-radius:10px;background:transparent;color:var(--lime);display:flex;align-items:center;justify-content:center;cursor:pointer}.dv-say svg{width:16px;height:16px}
+.dv-bars{display:flex;align-items:flex-end;gap:3px;height:18px;flex:none}.dv-bars i{width:4px;border-radius:2px;background:#25282D}
+.dv-bars.g i.on{background:var(--lime)}.dv-bars.a i.on{background:var(--amber)}.dv-bars.r i.on{background:var(--coral)}
+.dv-empty{margin:18px 4px;font-size:14px;line-height:1.5;color:#A6AAB1;text-align:center}
+.dv-attr{margin:16px 4px 0;font-size:11px;color:var(--dim)}
+.dv-card{margin:10px 0 0;padding:14px;border-radius:22px;background:#0E0F11;border:1px solid #25282D;animation:nfRise .3s ease both}
+.dv-eye{font-size:12px;font-weight:800;letter-spacing:.08em;color:#A6AAB1}
+.dv-cmain{display:flex;gap:14px;align-items:center;margin-top:10px}.dv-cinfo{flex:1;min-width:0}
+.dv-cw{display:flex;align-items:center;gap:2px}.dv-cw b{font:700 22px Unbounded,sans-serif;overflow-wrap:anywhere}
+.dv-cuk{display:flex;align-items:center;gap:2px;font-size:17px}
+.dv-edit{width:44px;height:36px;border:0;background:none;color:#A6AAB1;display:flex;align-items:center;justify-content:center;cursor:pointer}.dv-edit svg{width:15px;height:15px}
+.dv-uk-in{width:100%;height:40px;margin-top:4px;padding:0 10px;border-radius:10px;background:#16181B;border:1px solid #25282D;color:var(--ink);font:500 15px 'Golos Text',sans-serif;outline:none}.dv-uk-in:focus{border-color:var(--lime)}
+.dv-meta{display:block;font-size:12.5px;color:#A6AAB1;margin-top:2px}
+.dv-picrow{margin-top:12px}.dv-picrow small{font-size:12.5px;font-weight:700;color:#A6AAB1}.dv-picrow>div{display:flex;gap:8px;margin-top:6px}
+.dv-tile.opt,.dv-tile.add{width:52px;height:52px;border-radius:14px;cursor:pointer;border:2px solid transparent;padding:0}
+.dv-tile.opt.on{border-color:var(--lime)}.dv-tile.add{background:#16181B;color:#A6AAB1}.dv-tile.add svg{width:22px;height:22px}
+.dv-ex{margin:12px 0 0;font-size:14px;line-height:1.5;color:#A6AAB1}.dv-ex b{color:var(--ink)}
+.dv-addbtn{margin-top:14px}.dv-addbtn svg{width:18px;height:18px}
+.dv-sk{display:block;height:12px;margin:6px 0;border-radius:6px;background:linear-gradient(90deg,#16181B,#25282D,#16181B);background-size:200% 100%;animation:dvSk 1.2s linear infinite}
+@keyframes dvSk{from{background-position:200% 0}to{background-position:-200% 0}}
+.dv-fix{display:flex;align-items:center;gap:12px;margin:10px 0 0;padding:14px;border-radius:22px;background:#0E0F11;border:1px solid rgba(255,122,107,.45)}
+.dv-fix>div{flex:1;min-width:0}.dv-fix strong{display:block;font-size:15px}.dv-fix small{display:block;font-size:12.5px;color:#A6AAB1;line-height:1.4}
+.dv-fix>button{min-height:46px;padding:0 16px;border:0;border-radius:13px;background:var(--coral);color:#000;font:800 14px 'Golos Text',sans-serif;display:flex;align-items:center;gap:6px;cursor:pointer}.dv-fix>button svg{width:14px;height:14px}
+.dv-fix.amber{border-color:rgba(255,200,87,.5)}.dv-fix.amber>button{background:var(--amber)}
+.dv-bolt{width:44px;height:44px;flex:none;border-radius:14px;background:rgba(255,200,87,.12);color:var(--amber);display:flex;align-items:center;justify-content:center}.dv-bolt svg{width:22px;height:22px}
+.dv-mrow{display:flex;gap:12px;padding:12px;border-radius:18px;background:#0E0F11;border:1px solid #25282D;touch-action:pan-y;user-select:none}
+.dv-mtx{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.dv-mh{display:flex;align-items:center;gap:4px}.dv-mh strong{font-size:15.5px;overflow-wrap:anywhere}.dv-mh small{margin-left:auto;font-size:12px;color:#A6AAB1;text-align:right}
+.dv-mh .dv-say{width:32px;height:32px;background:#16181B;border-radius:8px}
+.dv-diff{font-size:13px;line-height:1.4}.dv-diff s{color:var(--coral)}.dv-diff em{font-style:normal;color:var(--lime)}.dv-diff.muted{color:#A6AAB1}
+.dv-prog{display:flex;align-items:center;gap:4px;margin-top:2px}.dv-prog i{width:18px;height:5px;border-radius:9px;background:#16181B}.dv-prog i.on{background:var(--lime)}.dv-prog small{margin-left:6px;font-size:11.5px;color:#A6AAB1}
+.dv-rm{display:none}
+.dv-hint{margin:10px 4px 0;font-size:12px;color:#A6AAB1}
+.dv-hcard{position:relative;padding:12px;border-radius:20px;background:#0E0F11;border:1px solid #25282D}
+.dv-hhead{width:100%;display:flex;align-items:center;gap:12px;padding:0;background:none;border:0;color:var(--ink);font:inherit;text-align:left;cursor:pointer;min-height:56px}
+.dv-hhead .dv-tx{padding-right:40px}
+.dv-say.abs{position:absolute;left:118px;top:12px;width:36px;height:36px;background:#16181B;border-radius:9px}
+.dv-hhead .dv-tx strong{padding-right:4px}
+.dv-hr{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex:none;max-width:46%}
+.dv-hr em{font-style:normal;font-size:11.5px;font-weight:800;text-align:right}.dv-hr em.r{color:var(--coral)}.dv-hr em.a{color:var(--amber)}
+.dv-assoc{display:flex;gap:10px;align-items:flex-start;margin:10px 0 0;padding:10px 12px;border-radius:14px;background:rgba(124,196,255,.08);border:1px solid rgba(124,196,255,.3);font-size:14px;line-height:1.45}
+.dv-assoc svg{width:18px;height:18px;flex:none;color:var(--sky);margin-top:1px}.dv-assoc.ex span{color:#A6AAB1}.dv-assoc.loading{opacity:.5}
+.dv-hbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.dv-hbtns button{min-height:44px;border-radius:13px;background:#16181B;border:1px solid #25282D;color:var(--ink);font:700 13px 'Golos Text',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer}.dv-hbtns svg{width:15px;height:15px;color:var(--sky)}
+.dv-psheet h2{margin:0 0 10px}.dv-pgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px;max-height:42vh;overflow:auto}.dv-pgrid .dv-tile{width:100%;height:auto;aspect-ratio:1}
+.dv-snack{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:960;display:flex;align-items:center;gap:12px;padding:8px 8px 8px 16px;border-radius:14px;background:#16181B;border:1px solid #25282D;color:var(--ink);font-size:14px;box-shadow:0 12px 30px rgba(0,0,0,.5)}
+.dv-snack button{min-height:44px;padding:0 12px;border:0;border-radius:10px;background:none;color:var(--lime);font:800 14px 'Golos Text',sans-serif;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.dv-card,.dv-sk{animation:none}.dv-search{transition:none}}
+.dv-search input{border:0!important;box-shadow:none!important;background:transparent!important;padding:0!important;margin:0!important;border-radius:0!important;outline:none!important}
+.dv-hrow{display:flex;align-items:center;gap:6px}.dv-hrow .dv-hhead{flex:1;min-width:0;width:auto}.dv-hrow .dv-hhead .dv-tx{padding-right:0}
+.dv-say.sm{width:36px;height:36px;background:#16181B;border-radius:9px;align-self:flex-start;margin-top:4px}
+.dv-hr{max-width:40%}
+.dv-hrow .dv-hhead{flex:0 1 auto}.dv-hrow .dv-hr{margin-left:auto}
 </style>
 </head>
 <body>
@@ -9848,7 +9923,7 @@ const NF_EMO_SRC='(?:\\p{Regional_Indicator}{2}|\\p{Extended_Pictographic}(?:[\\
 const NF_EMO_T=new RegExp(NF_EMO_SRC,'u'),NF_EMO_G=new RegExp(NF_EMO_SRC,'gu');
 // є що прибирати? (символи зі списку NF_KEEP не рахуємо — інакше спостерігач нескінченно замінює ті самі вузли)
 function nfNeeds(txt){if(!NF_EMO_T.test(txt))return false;const g=new RegExp(NF_EMO_SRC,'gu');let m;while((m=g.exec(txt)))if(!NF_KEEP.has(m[0].replace(/[\uFE0F\u200D]/g,'')))return true;return false}
-const NF_SKIP='.rt-attr,.nf-lb-i,.nf-pc-i,[class~="pic"],[class*="-pic"],[class*="pic-"],[class$="pic"],.pic,.pic-q,.wr-pic,.rn-pic,.bh-pic,.k-tile-pic,.k-st-pic,.sb-pic,.emoji-pick,.reader-pic,.num,.ed-ep-n,.gtext,.bub,.o3,.nf-wt-p,.pm-badge span,.ach .a-ic,textarea,input,script,style,svg';
+const NF_SKIP='.rt-attr,.dv-attr,.nf-lb-i,.nf-pc-i,[class~="pic"],[class*="-pic"],[class*="pic-"],[class$="pic"],.pic,.pic-q,.wr-pic,.rn-pic,.bh-pic,.k-tile-pic,.k-st-pic,.sb-pic,.emoji-pick,.reader-pic,.num,.ed-ep-n,.gtext,.bub,.o3,.nf-wt-p,.pm-badge span,.ach .a-ic,textarea,input,script,style,svg';
 function nfStrip(root){
   if(!root||!root.nodeType)return;const base=root.nodeType===3?root.parentElement:root;if(!base)return;
   const nodes=[];const tw=document.createTreeWalker(root.nodeType===3?base:root,NodeFilter.SHOW_TEXT,{acceptNode(n){return nfNeeds(n.nodeValue)&&n.parentElement&&!n.parentElement.closest(NF_SKIP)?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT}});
@@ -10750,6 +10825,209 @@ on('block:review',b=>{
   items=items.concat(errorFocusItems(),oldMaterialItems());
   if(!items.length){markBlock('review');toast('Повторювати поки нічого. Блок зараховано ✓');return planNext()}
   runSession(items,{title:'Повторення завершено!',requeue:true,onFinish:o=>{markBlock('review');if(o&&o._prev)o._prev(o)}})});
+
+/* ====================== ЕКРАН «СЛОВНИК» · варіант A «Пошук і додавання в одному полі» ======================
+   Макети: canvas «Лінгво-гра — варіанти дизайну», сторінка «Словник · варіанти»: DV-A-SearchAdd і DV-C-Errors.
+   Одне поле «Знайти або додати слово…» фільтрує список; якщо слова ще немає — картка нового слова, заповнена
+   автоматично (словник гри → Claude → вручну). Вкладки «Мої · N», «Помилки · N», «Важкі · N».
+   Картинки — лише символи Mulberry на світлій плитці (або проста SVG-сцена для прийменників), без емодзі. */
+
+IC.gear='<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>';
+
+let DV={tab:'my',q:'',cand:null,seq:0};
+const DV_MIN=['хвилина','хвилини','хвилин'];
+
+/* ---------- дані ---------- */
+function dvEntries(){return (S.my[S.lang]||[]).map(m=>{const w=m.ref?WBYID[m.ref]:null;
+  return {id:w?w.id:m.id,myId:m.id,fg:w?w[S.lang]:m.fg,uk:w?w.uk:m.uk,img:m.img||(w&&w.img)||'',w,ref:!!w}})}
+function dvStrength(id){const x=(S.srs[S.lang]||{})[id];return x?(x.b||0):0}
+function dvBars(b){const n=Math.max(0,Math.min(5,b)),c=b>=4?'g':b>=2?'a':'r';
+  return `<span class="dv-bars ${c}" role="img" aria-label="Сила запам'ятовування ${n} з 5">${[0,1,2,3,4].map(i=>`<i class="${i<Math.max(1,n)?'on':''}" style="height:${6+i*3}px"></i>`).join('')}</span>`}
+/* «Важкі»: вивчене слово з силою ≤ 2 або з 2+ помилками за останні 7 днів.
+   Виходить із «Важких», коли сила ≥ 3 і 7 днів немає помилок. */
+function dvHardInfo(w){const x=st(w);if(!x||!w[S.lang]||!x.lr)return null;const b=box(w),m=mistBook()[w.id],wk=addDays(-7),recent=!!(m&&m.last&&m.last>=wk&&!m.fixed);
+  if(b>=3&&!recent)return null;if(!(b<=2||(recent&&m.n>=2)))return null;
+  let why='низька сила запам\'ятовування';const art=/^(a|an|the)\s/i;
+  if(m&&m.given&&m.correct&&art.test(m.given)!==art.test(m.correct)||(m&&m.given&&m.correct&&art.test(m.given)&&art.test(m.correct)&&m.given.split(' ')[0].toLowerCase()!==m.correct.split(' ')[0].toLowerCase()&&m.given.replace(art,'')===m.correct.replace(art,'')))
+    why=`плутаєш ${((m.given.match(art)||['—'])[0]).trim()} / ${((m.correct.match(art)||['—'])[0]).trim()}`;
+  else if(recent&&m.n>=2)why=`${m.n} ${pluralUk(m.n,['помилка','помилки','помилок'])} за тиждень`;
+  else if((x.l||0)>=1||b<=1){const d=Math.max(1,Math.round(x.s||x.iv||1));why=`забуваєш через ${d} ${pluralUk(d,['день','дні','днів'])}`}
+  return {w,id:w.id,fg:w[S.lang],uk:w.uk,img:w.img||'',b,why,score:(recent?m.n*3:0)+(3-b)*2}}
+function dvHard(){return ALL().map(dvHardInfo).filter(Boolean).sort((a,b)=>b.score-a.score).slice(0,60)}
+function dvMistOpen(){return mistList().filter(x=>!x.m.fixed)}
+
+/* ---------- картинки: Mulberry на світлій плитці, сцени для прийменників ---------- */
+const DV_SCENES={
+ under:'<rect x="6" y="14" width="36" height="5" rx="2" fill="#7A5A43"/><path d="M10 19v20M38 19v20" stroke="#7A5A43" stroke-width="4" stroke-linecap="round"/><circle cx="24" cy="33" r="7" fill="#FF7A6B"/>',
+ on:'<rect x="6" y="24" width="36" height="5" rx="2" fill="#7A5A43"/><path d="M10 29v14M38 29v14" stroke="#7A5A43" stroke-width="4" stroke-linecap="round"/><circle cx="24" cy="16" r="7" fill="#FF7A6B"/>',
+ in:'<path d="M8 18h32l-4 22H12z" fill="#C9A27A" stroke="#7A5A43" stroke-width="2"/><circle cx="24" cy="28" r="7" fill="#FF7A6B"/><path d="M6 18h36" stroke="#7A5A43" stroke-width="3" stroke-linecap="round"/>',
+ above:'<rect x="6" y="30" width="36" height="5" rx="2" fill="#7A5A43"/><path d="M10 35v8M38 35v8" stroke="#7A5A43" stroke-width="4" stroke-linecap="round"/><circle cx="24" cy="12" r="7" fill="#FF7A6B"/><path d="M24 21v5" stroke="#3A3E45" stroke-width="2" stroke-dasharray="2 2"/>',
+ 'next to':'<rect x="6" y="18" width="20" height="24" rx="3" fill="#7CC4FF" stroke="#3A6A99" stroke-width="2"/><circle cx="35" cy="35" r="7" fill="#FF7A6B"/>',
+ behind:'<circle cx="30" cy="22" r="8" fill="#FF7A6B"/><rect x="8" y="20" width="24" height="22" rx="3" fill="#7CC4FF" stroke="#3A6A99" stroke-width="2"/>',
+ between:'<rect x="4" y="16" width="12" height="26" rx="3" fill="#7CC4FF"/><rect x="32" y="16" width="12" height="26" rx="3" fill="#7CC4FF"/><circle cx="24" cy="32" r="7" fill="#FF7A6B"/>'};
+function dvSceneKey(fg){const t=String(fg||'').toLowerCase().trim();return DV_SCENES[t]?t:null}
+function dvPic(o){const sk=dvSceneKey(o&&o.fg);if(sk)return `<svg viewBox="0 0 48 48" aria-hidden="true">${DV_SCENES[sk]}</svg>`; // прийменник — сцена, а не абстрактний символ
+  const img=o&&o.img;if(img&&typeof PICS!=='undefined'&&PICS[img])return `<img src="${PICS[img]}" alt="">`;
+  const ch=String((o&&o.fg)||'?').replace(/^(to|a|an|the)\s+/i,'').charAt(0).toUpperCase();return `<b class="dv-letter">${esc(ch)}</b>`}
+function dvPicSearch(q,n){if(typeof PICS==='undefined')return [];const t=String(q||'').toLowerCase().replace(/^(to|a|an|the)\s+/,'').trim();if(!t)return [];
+  const ks=Object.keys(PICS),ex=ks.filter(k=>k===t),st_=ks.filter(k=>k!==t&&(k.startsWith(t)||k.split(/[ _,-]+/).includes(t))),inc=ks.filter(k=>!ex.includes(k)&&!st_.includes(k)&&k.includes(t));
+  return ex.concat(st_,inc).slice(0,n||12)}
+
+/* ---------- екран ---------- */
+function myDict(){
+  applyTheme();if(typeof hidePop==='function')hidePop();REDRAW=myDict;
+  const lv=typeof maxLv==='function'?maxLv():'A1',mine=dvEntries(),mist=dvMistOpen(),hard=dvHard();
+  const tab=(k,t,n)=>`<button role="tab" aria-selected="${DV.tab===k}" class="${DV.tab===k?'on':''}" onclick="dvTab('${k}')">${t} · ${n}</button>`;
+  app.innerHTML=`<header class="dv-hd"><div><small>English · ${lv}</small><h1>Словник</h1></div>
+     <div class="dv-hb"><button aria-label="Тема: світла чи нічна" onclick="toggleTheme();myDict()">${icn('sun')}</button><button aria-label="Налаштування" onclick="settingsScreen()">${icn('gear')}</button></div></header>
+   ${DV.tab==='my'?`<label class="dv-search">${icn('search')}<span class="sr">Знайти або додати слово</span>
+     <input id="dvQ" value="${esc(DV.q)}" placeholder="Знайти або додати слово…" autocomplete="off" autocapitalize="off" spellcheck="false" oninput="dvInput(this.value)" onkeydown="if(event.key==='Enter'&&DV.cand&&!DV.cand.loading)dvAdd()">
+     ${typeof SR!=='undefined'&&SR?`<button class="dv-mic" onclick="dvMic(event)" aria-label="Сказати слово голосом">${icn('mic')}</button>`:''}</label><div id="dvCand"></div>`:''}
+   <div class="dv-tabs" role="tablist">${tab('my','Мої',mine.length)}${tab('mist','Помилки',mist.length)}${tab('hard','Важкі',hard.length)}</div>
+   <div id="dvList"></div>
+   <p class="dv-attr">Ілюстрації: Mulberry Symbols © Steve Lee, CC BY-SA 4.0</p>`;
+  dvRenderList();dvRenderCand();emit('screen','dict');
+}
+function dvTab(k){DV.tab=k;myDict()}
+function dvRow(o){const b=dvStrength(o.id);
+  return `<li class="dv-row"><span class="dv-tile">${dvPic(o)}</span><span class="dv-tx"><strong>${esc(o.fg)}</strong><small>${esc(o.uk||'')}</small></span>
+    <button class="dv-say" onclick="speak(${js(o.fg)})" aria-label="Прослухати ${esc(o.fg)}">${icn('speaker')}</button>${dvBars(b)}</li>`}
+function dvRenderList(){const box_=document.getElementById('dvList');if(!box_)return;const q=norm(DV.q||'',S.lang);
+  const f=o=>!q||norm(o.fg,S.lang).includes(q)||norm(o.uk||'','uk').includes(norm(DV.q,'uk'));
+  if(DV.tab==='mist')return dvRenderMist(box_);
+  if(DV.tab==='hard')return dvRenderHard(box_);
+  const L_=(DV.tab==='hard'?dvHard():dvEntries()).filter(f);
+  box_.innerHTML=L_.length?`<ul class="dv-list">${L_.map(dvRow).join('')}</ul>`
+    :q?`<p class="dv-empty">У ${DV.tab==='hard'?'«Важких»':'«Моїх словах»'} такого немає.</p>`
+    :`<p class="dv-empty">${DV.tab==='hard'?'Важких слів немає — так тримати':'Торкнись слова в тексті або напиши його вгорі — і воно з\'явиться тут'}</p>`}
+function dvInput(v){DV.q=v;dvRenderList();clearTimeout(DV.t);DV.t=setTimeout(dvLookup,250)}
+
+/* ---------- картка нового слова ---------- */
+function dvFindGame(q){const t=norm(q,S.lang);if(!t)return null;const strip=s=>s.replace(/^(to|a|an|the) /,'');
+  const u=norm(q,'uk');
+  return WORDS.find(w=>w[S.lang]&&norm(w[S.lang],S.lang)===t)||WORDS.find(w=>w[S.lang]&&strip(norm(w[S.lang],S.lang))===strip(t))||WORDS.find(w=>w[S.lang]&&w.uk&&norm(w.uk,'uk')===u)||null} // і українською: «парасолька» → umbrella
+function dvPos(fg){const t=String(fg).toLowerCase();return /^to /.test(t)?'дієслово':/^(a|an|the) /.test(t)?'іменник':/\s/.test(t)?'фраза':''}
+function dvExample(w){const s=w.sent&&w.sent[S.lang];if(!s)return null;const g=parseGap(s);return {ex:nfNoDash(g?g.full:s),exUk:ukClean(w.sent.uk||'')}}
+function dvLookup(){
+  const q=String(DV.q||'').trim(),my=dvEntries();
+  if(q.length<2||my.some(m=>norm(m.fg,S.lang)===norm(q,S.lang))){DV.cand=null;return dvRenderCand()}
+  const seq=++DV.seq,w=dvFindGame(q);
+  if(w){const e=dvExample(w)||{};DV.cand={fg:w[S.lang],uk:w.uk,ipa:'',pos:dvPos(w[S.lang]),ex:e.ex||'',exUk:e.exUk||'',ref:w.id,auto:true,
+      pics:[...new Set([w.img].concat(dvPicSearch(w[S.lang],4)).filter(Boolean))].slice(0,3),pick:0};return dvRenderCand()}
+  const loc=typeof autoTr==='function'?autoTr(q):null;
+  DV.cand={fg:q,uk:loc?loc.uk:'',ipa:'',pos:dvPos(q),ex:'',exUk:'',pics:dvPicSearch(q,3),pick:0,auto:!!loc,loading:typeof AI_OK!=='undefined'&&AI_OK};dvRenderCand();
+  if(!(typeof AI_OK!=='undefined'&&AI_OK&&AI))return;
+  const prompt=`Ти допомагаєш українцю вчити американську англійську. Слово або фраза: «${q}». Відповідай ЛИШЕ JSON:
+{"en":"слово англійською (виправ написання, якщо треба)","uk":"короткий природний переклад українською","ipa":"американська транскрипція в /.../","pos":"частина мови українською (іменник, дієслово, прикметник, прислівник, фраза…)","ex":"коротке просте речення-приклад англійською (до 10 слів)","ex_uk":"переклад речення","keys":["3 прості англійські слова для пошуку картинки-асоціації"]}`;
+  (AI.json?AI.json(prompt):Promise.reject()).then(r=>{if(seq!==DV.seq||!DV.cand)return;r=r||{};
+    const keys=(r.keys||[]).map(String),pics=[...new Set(keys.flatMap(k=>dvPicSearch(k,2)).concat(DV.cand.pics))].slice(0,3);
+    Object.assign(DV.cand,{fg:r.en||DV.cand.fg,uk:r.uk||DV.cand.uk,ipa:r.ipa||'',pos:r.pos||DV.cand.pos,ex:r.ex||'',exUk:r.ex_uk||'',pics,loading:false,auto:true});dvRenderCand()})
+   .catch(()=>{if(seq!==DV.seq||!DV.cand)return;DV.cand.loading=false;dvRenderCand()})}
+function dvRenderCand(){const el=document.getElementById('dvCand');if(!el)return;const c=DV.cand;if(!c){el.innerHTML='';return}
+  const sk=s=>`<span class="dv-sk" style="width:${s}"></span>`,cur={img:c.pics[c.pick]||'',fg:c.fg};
+  el.innerHTML=`<article class="dv-card" aria-busy="${!!c.loading}"><small class="dv-eye">${c.loading?'НОВЕ СЛОВО · ШУКАЮ ПЕРЕКЛАД…':c.auto?'НОВЕ СЛОВО · ЗАПОВНЕНО АВТОМАТИЧНО':'НОВЕ СЛОВО · ДОДАЙ ПЕРЕКЛАД'}</small>
+    <div class="dv-cmain"><span class="dv-tile big">${dvPic(cur)}</span><div class="dv-cinfo">
+      <div class="dv-cw"><b>${esc(c.fg)}</b><button class="dv-say" onclick="speak(${js(c.fg)})" aria-label="Прослухати ${esc(c.fg)}">${icn('speaker')}</button></div>
+      ${c.loading?sk('70%'):c.edit||!c.uk?`<input class="dv-uk-in" id="dvUk" value="${esc(c.uk)}" placeholder="переклад українською" oninput="DV.cand.uk=this.value" onkeydown="if(event.key==='Enter')dvAdd()" aria-label="Переклад українською">`
+        :`<div class="dv-cuk">${esc(c.uk)}<button class="dv-edit" onclick="DV.cand.edit=true;dvRenderCand();setTimeout(()=>{const i=document.getElementById('dvUk');if(i)i.focus()},20)" aria-label="Змінити переклад">${icn('pen')}</button></div>`}
+      ${c.loading?sk('50%'):(c.ipa||c.pos)?`<small class="dv-meta">${esc([c.ipa,c.pos].filter(Boolean).join(' · '))}</small>`:''}</div></div>
+    <div class="dv-picrow"><small>Картинка</small><div>${c.pics.map((k,i)=>`<button class="dv-tile opt ${i===c.pick?'on':''}" onclick="DV.cand.pick=${i};dvRenderCand()" aria-label="Обрати картинку ${esc(k)}" aria-pressed="${i===c.pick}">${dvPic({img:k})}</button>`).join('')}
+      <button class="dv-tile add" onclick="dvPicSheet()" aria-label="Знайти іншу картинку">${icn('plus')}</button></div></div>
+    ${c.loading?`<p class="dv-ex">${sk('90%')}${sk('60%')}</p>`:c.ex?`<p class="dv-ex"><b>${esc(c.ex)}</b> ${esc(c.exUk)}</p>`:''}
+    <button class="ds-cta dv-addbtn" onclick="dvAdd()" ${c.loading?'disabled':''}>${icn('plus')} Додати в словник</button></article>`}
+function dvAdd(){const c=DV.cand;if(!c||c.loading)return;const uk=String(c.uk||'').trim();if(!uk){c.edit=true;dvRenderCand();return toast('Додай переклад українською')}
+  const list=S.my[S.lang]||(S.my[S.lang]=[]);if(list.some(m=>norm(m.fg,S.lang)===norm(c.fg,S.lang)||(c.ref&&m.ref===c.ref)))return toast('Це слово вже є у словнику');
+  const id='my_'+S.lang+'_'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),img=c.pics[c.pick]||'';
+  list.unshift(Object.assign({id,fg:c.fg,uk,img,ipa:c.ipa||'',pos:c.pos||'',ex:c.ex||'',exUk:c.exUk||'',added:today()},c.ref?{ref:c.ref}:{}));
+  const sid=c.ref||id;if(!st({id:sid}))S.srs[S.lang][sid]={b:0,due:addDays(1)};
+  save();DV.q='';DV.cand=null;toast('Додано · з\'явиться в повторі завтра');DV.tab='my';myDict()}
+/* слова зі словника гри, додані як «мої», не дублюються як окремі картки повторення */
+const _myWordsDV=myWords;myWords=function(){const refs=new Set((S.my[S.lang]||[]).filter(m=>m.ref).map(m=>m.id));
+  return _myWordsDV().filter(w=>!refs.has(w.id)).map(w=>{const m=(S.my[S.lang]||[]).find(x=>x.id===w.id);if(m&&m.img){w.img=m.img;w.pic=''}return w})};
+/* пошук будь-якого символу Mulberry */
+function dvPicSheet(){if(!DV.cand)return;dvSheetClose();const d=document.createElement('div');d.className='rt-sheet-bg';d.setAttribute('role','dialog');d.setAttribute('aria-modal','true');d.setAttribute('aria-label','Пошук картинки');
+  d.innerHTML=`<div class="rt-sheet dv-psheet"><span class="rt-grab" aria-hidden="true"></span><h2>Картинка</h2>
+    <label class="dv-search">${icn('search')}<input id="dvPq" value="${esc(DV.cand.fg.replace(/^(to|a|an|the)\s+/i,''))}" placeholder="слово англійською" oninput="dvPicFill(this.value)" aria-label="Пошук картинки англійською"></label>
+    <div class="dv-pgrid" id="dvPg"></div><button class="rt-close" onclick="dvSheetClose()">Закрити</button></div>`;
+  d.addEventListener('click',e=>{if(e.target===d)dvSheetClose()});document.body.appendChild(d);setTimeout(()=>d.classList.add('on'),10);dvPicFill(document.getElementById('dvPq').value)}
+function dvPicFill(q){const g=document.getElementById('dvPg');if(!g)return;const ks=dvPicSearch(q,24);
+  g.innerHTML=ks.length?ks.map(k=>`<button class="dv-tile opt" onclick="dvPicChoose(${js(k)})" aria-label="${esc(k)}">${dvPic({img:k})}</button>`).join(''):`<p class="dv-empty">Нічого не знайшлося — спробуй інше слово.</p>`}
+function dvPicChoose(k){const c=DV.cand;if(!c)return;const i=c.pics.indexOf(k);if(i<0){c.pics=[k].concat(c.pics).slice(0,3);c.pick=0}else c.pick=i;dvSheetClose();dvRenderCand()}
+function dvSheetClose(){document.querySelectorAll('.rt-sheet-bg').forEach(x=>x.remove())}
+function dvMic(e){e.preventDefault();try{const r=new SR();r.lang='en-US';r.interimResults=false;r.onresult=ev=>{const t=ev.results[0][0].transcript.replace(/[.!?]$/,'');const i=document.getElementById('dvQ');if(i){i.value=t;dvInput(t)}};r.start();toast('Говори слово англійською…')}catch(err){toast('Мікрофон недоступний')}}
+
+/* ---------- вкладка «Помилки» ---------- */
+function dvRenderMist(box_){const L_=dvMistOpen(),mins=Math.max(1,Math.round(Math.min(L_.length,15)*8/60));
+  if(!L_.length){box_.innerHTML=`<p class="dv-empty">Помилок немає — так тримати</p>`;return}
+  const row=x=>{const isW=x.kind==='w',fg=isW?x.w[S.lang]:sbText(x.x),uk=isW?x.w.uk:x.x.uk,m=x.m,ok=Math.min(3,m.ok||0);
+    const tile=isW?`<span class="dv-tile m">${dvPic({img:x.w.img,fg})}</span>`:`<span class="dv-tile m icon">${icn('pen')}</span>`;
+    const diff=m.given&&m.correct&&norm(m.given,S.lang)!==norm(m.correct,S.lang)?`<span class="dv-diff"><s>${esc(m.given)}</s> → <em>${esc(m.correct)}</em></span>`:`<span class="dv-diff muted">${pluralUk(m.n,['помилка','помилки','помилок'])==='помилка'?'1 помилка':m.n+' '+pluralUk(m.n,['помилка','помилки','помилок'])}</span>`;
+    return `<li class="dv-mrow" data-k="${esc(x.k)}">${tile}<div class="dv-mtx"><div class="dv-mh"><strong>${esc(fg)}</strong><button class="dv-say" onclick="speak(${js(fg)})" aria-label="Прослухати ${esc(fg)}">${icn('speaker')}</button><small>${esc(uk||'')}</small></div>
+      ${diff}<span class="dv-prog">${[0,1,2].map(i=>`<i class="${i<ok?'on':''}"></i>`).join('')}<small>виправлено ${ok}/3</small></span></div>
+      <button class="dv-rm" onclick="dvMistRemove(${js(x.k)})" aria-label="Прибрати ${esc(fg)} зі списку помилок">${icn('trash')}</button></li>`};
+  box_.innerHTML=`<article class="dv-fix"><div><strong>Виправ помилки · ${mins} ${pluralUk(mins,DV_MIN)}</strong><small>3 правильні відповіді — і слово виправлене</small></div>
+     <button onclick="startMist()" aria-label="Почати тренування помилок">${icn('play')} Почати</button></article>
+   <ul class="dv-list">${L_.slice(0,80).map(row).join('')}</ul><p class="dv-hint">Проведи рядок уліво, щоб прибрати слово зі списку.</p>`;
+  box_.querySelectorAll('.dv-mrow').forEach(dvSwipe)}
+let DV_UNDO=null;
+function dvMistRemove(k){const B=mistBook();if(!B[k])return;DV_UNDO={k,m:B[k]};delete B[k];save();myDict();
+  dvSnack('Прибрано зі списку помилок',()=>{if(DV_UNDO){mistBook()[DV_UNDO.k]=DV_UNDO.m;DV_UNDO=null;save();myDict()}})}
+function dvSnack(t,undo){document.querySelectorAll('.dv-snack').forEach(x=>x.remove());const s=document.createElement('div');s.className='dv-snack';s.setAttribute('role','status');
+  s.innerHTML=`<span>${esc(t)}</span><button>Скасувати</button>`;s.querySelector('button').onclick=()=>{s.remove();undo()};document.body.appendChild(s);setTimeout(()=>s.remove(),5000)}
+function dvSwipe(el){let x0=null,dx=0;const reduce=typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  el.addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;x0=e.clientX;dx=0;el.setPointerCapture&&el.setPointerCapture(e.pointerId)});
+  el.addEventListener('pointermove',e=>{if(x0==null)return;dx=Math.min(0,e.clientX-x0);el.style.transform=`translateX(${dx}px)`;el.style.opacity=String(1+dx/300)});
+  const end=()=>{if(x0==null)return;x0=null;if(dx<-90){if(!reduce){el.style.transition='transform .2s,opacity .2s';el.style.transform='translateX(-110%)';el.style.opacity='0'}setTimeout(()=>dvMistRemove(el.dataset.k),reduce?0:180)}else{el.style.transform='';el.style.opacity=''}};
+  el.addEventListener('pointerup',end);el.addEventListener('pointercancel',end)}
+
+/* ---------- що саме людина відповіла (для рядка «було → правильно») ---------- */
+document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('.opt');if(b&&typeof SS!=='undefined'&&SS&&SS.items&&SS.items[SS.i])SS.items[SS.i]._given=b.textContent.trim()},true);
+function dvExpected(it){try{if(it.kind==='fill'&&it.g)return it.g.answer;if(it.kind==='dict'&&it.g)return it.g.full;if(it.kind==='sentb'&&it.x)return sbText(it.x);
+  if(it.w)return it.toUk?it.w.uk:(it.kind==='listen'?it.w.uk:it.w[S.lang])}catch(e){}return ''}
+on('wrong',it=>{try{if(!it||it.test)return;const k=mistKey(it);if(!k)return;const m=mistBook()[k];if(!m)return;
+  const inp=document.getElementById('ans');let given=it._given||(inp&&inp.value)||'';
+  if(it.kind==='sentb'&&!given){const z=document.querySelector('.sb-answer,.sb-out');if(z)given=z.textContent.trim()}
+  m.given=String(given).trim().slice(0,120);m.correct=String(dvExpected(it)).slice(0,120);save()}catch(e){}});
+
+/* ---------- вкладка «Важкі» ---------- */
+DV.hardOpen=null;
+function dvAssoc(w){const t=mnem(w);if(t)return {t,mn:true};const s_=w.sent&&w.sent[S.lang];if(s_){const g=parseGap(s_);return {t:nfNoDash(g?g.full:s_),mn:false}}return {t:'',mn:false}}
+function dvRenderHard(box_){const L_=dvHard();
+  if(!L_.length){box_.innerHTML=`<p class="dv-empty">Важких слів немає — пам'ять працює добре</p>`;return}
+  const nW_=Math.min(L_.length,10),items=nW_*2,mins=Math.max(1,Math.round(items*8/60));if(!DV.hardOpen||!L_.some(o=>o.id===DV.hardOpen))DV.hardOpen=L_[0].id;
+  const card=o=>{const open=o.id===DV.hardOpen,a=dvAssoc(o.w),c=o.b<=1?'r':'a';
+    return `<li class="dv-hcard ${open?'open':''}"><div class="dv-hrow"><button class="dv-hhead" onclick="DV.hardOpen='${o.id}';dvRenderList()" aria-expanded="${open}" aria-label="${esc(o.fg)}: ${esc(o.why)}">
+        <span class="dv-tile h">${dvPic(o)}</span><span class="dv-tx"><strong>${esc(o.fg)}</strong><small>${esc(o.uk||'')}</small></span></button>
+      <button class="dv-say sm" onclick="speak(${js(o.fg)})" aria-label="Прослухати ${esc(o.fg)}">${icn('speaker')}</button>
+      <span class="dv-hr">${dvBars(o.b)}<em class="${c}">${esc(o.why)}</em></span></div>
+      ${a.t?`<p class="dv-assoc ${a.mn?'':'ex'}" id="dvA_${o.id.replace(/[^\w]/g,'_')}">${icn('bulb')}<span>${esc(a.t)}</span></p>`:''}
+      ${open?`<div class="dv-hbtns"><button onclick="dvNewAssoc('${o.id}')">${icn('bulb')} Інша асоціація</button><button onclick="dvWordPic('${o.id}')">${icn('search')} Інша картинка</button></div>`:''}</li>`};
+  box_.innerHTML=`<article class="dv-fix amber"><span class="dv-bolt">${icn('bolt')}</span><div><strong>Блискавка · ${mins} ${pluralUk(mins,DV_MIN)}</strong><small>${nW(nW_).replace('слово','важке слово').replace('слова','важкі слова').replace('слів','важких слів')}, 4 різні вправи</small></div>
+     <button onclick="dvBlitz()" aria-label="Почати тренування важких слів">${icn('play')} Почати</button></article>
+   <ul class="dv-list">${L_.map(card).join('')}</ul>`;
+  // асоціації, яких ще немає, просимо в Claude (по одній, щоб не спамити)
+  if(typeof AI_OK!=='undefined'&&AI_OK){const need=L_.slice(0,3).find(o=>!mnem(o.w)&&!DV['asked_'+o.id]);if(need){DV['asked_'+need.id]=1;dvNewAssoc(need.id,true)}}}
+function dvNewAssoc(id,silent){const w=WBYID[id]||ALL().find(x=>x.id===id);if(!w)return;
+  if(!(typeof AI_OK!=='undefined'&&AI_OK&&AI&&AI.json)){if(!silent)toast('Нові асоціації доступні у версії з Claude');return}
+  const el=document.getElementById('dvA_'+id.replace(/[^\w]/g,'_'));if(el)el.classList.add('loading');
+  const prev=mnem(w)||'';
+  AI.json(`Придумай звукову асоціацію (keyword-метод) для українця, який запам'ятовує англійське слово «${w[S.lang]}» (${w.uk}).
+Схоже за звучанням українське слово чи фраза + коротка смішна сцена, що пов'язує звук і значення. До 12 слів, формат: «звук» → «сцена».${prev?` Не повторюй: ${prev}`:''}
+Відповідай лише JSON: {"assoc":"..."}`).then(r=>{if(r&&r.assoc){setMnem(w,String(r.assoc).slice(0,140));if(DV.tab==='hard')dvRenderList()}}).catch(()=>{if(el)el.classList.remove('loading');if(!silent)toast('Не вдалося отримати асоціацію')})}
+function dvBlitz(){const L_=dvHard().slice(0,10);if(!L_.length)return;const K=['choice','fill','listen','type'];let i=0;const items=[];
+  L_.forEach(o=>{for(let r=0;r<2;r++){let k=K[i++%4];const w=o.w;if(k==='fill'&&!(w.sent&&w.sent[S.lang]&&parseGap(w.sent[S.lang])))k='choice';if(k==='listen'&&!canSpeak)k='type';
+    items.push({kind:k,w,toUk:k==='choice'&&r===0,phase:'Блискавка · важкі слова'})}});
+  runSession(shuffle(items),{title:'Важкі слова опрацьовано!',requeue:true,back:myDict,backLabel:'До словника',again:dvBlitz})}
+/* своя картинка для слова — та сама всюди (картка, тест, текст, словник) */
+function dvWordPic(id){const w=WBYID[id]||ALL().find(x=>x.id===id);if(!w)return;DV.cand={fg:w[S.lang],pics:[w.img].filter(Boolean),pick:0,_word:id};dvPicSheet()}
+const _dvPicChoose=dvPicChoose;dvPicChoose=function(k){if(DV.cand&&DV.cand._word){S.picOver=S.picOver||{};S.picOver[DV.cand._word]=k;save();DV.cand=null;dvSheetClose();return myDict()}return _dvPicChoose(k)};
+const _picHTMLDV=picHTML;picHTML=function(w){const o=w&&S.picOver&&S.picOver[w.id];if(o&&PICS[o])return `<img class="pimg" src="${PICS[o]}" alt="">`;return _picHTMLDV(w)};
+const _dvPicBase=dvPic;dvPic=function(o){const ov=o&&o.id&&S.picOver&&S.picOver[o.id];return _dvPicBase(ov?Object.assign({},o,{img:ov}):o)};
+/* відповідь людини фіксуємо прямо у вправах вибору (надійніше, ніж за кліком) */
+(function(){const cur=()=>typeof SS!=='undefined'&&SS&&SS.items?SS.items[SS.i]:null;
+  if(typeof choiceA==='function'){const _c=choiceA;choiceA=function(i){const it=cur();try{if(it&&it.opts)it._given=it.opts[i][it.toUk?'uk':S.lang]}catch(e){}return _c.apply(this,arguments)}}
+  if(typeof fillA==='function'){const _f=fillA;fillA=function(i){const it=cur();try{if(it&&it.order)it._given=it.order[i]}catch(e){}return _f.apply(this,arguments)}}
+  if(typeof listenA==='function'){const _l=listenA;listenA=function(i){const it=cur();try{if(it&&it.opts)it._given=it.opts[i].uk}catch(e){}return _l.apply(this,arguments)}}})();
 
 bootApp();
 </script>
