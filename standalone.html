@@ -1963,6 +1963,13 @@ header.ds-hd{display:block!important;flex-wrap:initial;margin:0}header.ds-top{ma
 .dv-hrow .dv-hhead{flex:0 1 auto}.dv-hrow .dv-hr{margin-left:auto}
 .nf-launch .ds-chipf{width:max-content}.nf-launch .ds-flip b{overflow:visible;text-overflow:clip}
 .nf-hd>div>small:only-child{font-size:15px;font-weight:700;color:var(--ink)}
+/* порада перед кроком */
+.st-body{padding:18px 16px 0;display:flex;flex-direction:column;gap:12px}
+.st-card{padding:16px;border-radius:22px;background:var(--s1);border:1px solid var(--line)}
+.st-card small{font-size:12px;font-weight:800;letter-spacing:.08em;color:#A6AAB1}
+.st-card p{margin:8px 0 0;font-size:17px;line-height:1.5}
+.st-card em{display:flex;gap:8px;align-items:flex-start;margin-top:10px;font-style:normal;font-size:14px;line-height:1.45;color:#A6AAB1}.st-card em svg{width:16px;height:16px;flex:none;color:var(--sky);margin-top:2px}
+.st-card.theme{border-color:rgba(200,245,96,.45);box-shadow:0 0 30px rgba(200,245,96,.08)}.st-card.theme small{color:var(--lime)}.st-card.theme em{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -6292,9 +6299,10 @@ function typeA(){
     grade(w,false);markWrong(it);
     const other=!it.toUk?meaningOf(v):null, close=lev(norm(v,tl),norm(target,tl))<=3;
     const PFX={to:'Англійські дієслова пишемо з <b>to</b>: <b>to go</b>, а не «go».',at:'Данські дієслова в словниковій формі пишемо з <b>at</b>: <b>at gå</b>.',en:'Данський іменник учимо з артиклем: <b>en</b> чи <b>et</b> — від нього залежать форми слова.',et:'Данський іменник учимо з артиклем: <b>en</b> чи <b>et</b> — від нього залежать форми слова.'};
-    const pfxLine=r.kind==='prefix'?`Слово правильне, але без «<b>${esc(r.need)}</b>». `+(PFX[r.need]||'Італійський іменник учимо з артиклем (il, lo, la, l\', i, gli, le): він показує рід і число.'):r.kind==='article'?`Неправильний артикль: «${esc(r.got)}», а треба «<b>${esc(r.need)}</b>».`:'';
+    const bare=r.kind==='prefix'&&r.need==='to'?WORDS.find(x=>x[S.lang]&&norm(x[S.lang],tl)===norm(v,tl)&&!/^to /i.test(x[S.lang])):null;
+    const pfxLine=r.kind==='prefix'?`Слово правильне, але без «<b>${esc(r.need)}</b>». `+(bare?`Без <b>to</b> «${esc(v)}» — це «${esc(bare.uk)}», а «${esc(w.uk)}» — <b>${esc(target)}</b>. `:'')+(PFX[r.need]||'Італійський іменник учимо з артиклем (il, lo, la, l\', i, gli, le): він показує рід і число.'):r.kind==='article'?`Неправильний артикль: «${esc(r.got)}», а треба «<b>${esc(r.need)}</b>».`:'';
     $('#fb').innerHTML=`<div class="feedback bad">✗ Правильно: <b>${esc(target)}</b>${it.toUk?' ('+esc(w[S.lang])+')':''}<br>Ви написали: ${esc(v)}</div>`+
-      hintBox({lines:[pfxLine,!pfxLine&&close?'Ви були близько! Різниця: '+charDiff(target,v):'',other?`«${esc(v)}» — це «${esc(other)}», а потрібно «${esc(w.uk)}».`:'',it.toUk?'':genderTip(w)],cat:r.kind==='article'||(r.kind==='prefix'&&/^(en|et|il|lo|la|i|gli|le|l')$/.test(r.need||''))?(S.lang==='en'?'article':'gender'):close?'spelling':'meaning',q:(it.toUk?'Перекласти: '+w[S.lang]:'Написати мовою '+L().name+': '+w.uk),correct:target,given:v});
+      hintBox({lines:[pfxLine,!pfxLine&&close?'Ви були близько! Різниця: '+charDiff(target,v):'',other&&norm(other,'uk')!==norm(w.uk,'uk')?`«${esc(v)}» — це «${esc(other)}», а потрібно «${esc(w.uk)}».`:'',it.toUk?'':genderTip(w)],cat:r.kind==='prefix'&&r.need==='to'?'verb_to':r.kind==='article'||(r.kind==='prefix'&&/^(en|et|il|lo|la|i|gli|le|l')$/.test(r.need||''))?(S.lang==='en'?'article':'gender'):close?'spelling':'meaning',q:(it.toUk?'Перекласти: '+w[S.lang]:'Написати мовою '+L().name+': '+w.uk),correct:target,given:v});
   }
   speak(w[S.lang]);
   $('#fb').innerHTML+=`<div class="row"><button class="btn" id="nextBtn" onclick="nextItem()">Далі →</button></div>`;
@@ -6775,6 +6783,7 @@ const RULES={
   form_plural:{t:'Множина іменників',h:'Зазвичай + <b>-s</b> (book → book<b>s</b>), після s, x, ch, sh + <b>-es</b> (box → box<b>es</b>), приголосний + y → <b>-ies</b> (city → cit<b>ies</b>). Винятки: child → <b>children</b>, man → <b>men</b>.',lesson:-1},
   article:{t:'Артиклі a / an / the',h:'<b>a</b> перед приголосним звуком, <b>an</b> перед голосним звуком (an apple, an hour). <b>the</b>, коли предмет відомий.',lesson:1},
   word_order:{t:'Порядок слів в англійській',h:'Підмет → дієслово → додаток: <b>I read books</b>. Прикметник стоїть <b>перед</b> іменником (a red car). Прислівники always/often/never стоять перед основним дієсловом (I <b>often</b> read).',lesson:-1},
+  verb_to:{t:'Дієслово з to',h:'Словникова форма англійського дієслова — з <b>to</b>: <b>to help</b> — допомагати, <b>to go</b> — йти. Без <b>to</b> слово часто стає іншою частиною мови: <b>help</b> — допомога (іменник), <b>a walk</b> — прогулянка.'},
   spelling:{t:'Правопис',h:'Англійські слова часто пишуться не так, як звучать. Порівняйте свою відповідь літера за літерою і проговоріть слово вголос.',lesson:-1},
   meaning:{t:'Значення слова',h:'Запам\'ятовуйте слово разом з картинкою і прикладом речення: так воно засвоюється швидше.',lesson:-1}
  },
@@ -10826,6 +10835,69 @@ on('block:review',b=>{
   items=items.concat(errorFocusItems(),oldMaterialItems());
   if(!items.length){markBlock('review');toast('Повторювати поки нічого. Блок зараховано ✓');return planNext()}
   runSession(items,{title:'Повторення завершено!',requeue:true,onFinish:o=>{markBlock('review');if(o&&o._prev)o._prev(o)}})});
+
+/* ---------- Кроки дня від простого до складного ----------
+   Людина вперше бачить мову: спершу нові слова (знайомство й упізнавання), потім закріплення в реченнях,
+   потім маленьке правило саме на цих словах, далі діалог і текст. Повторення — з другого дня, першим кроком.
+   Перші 3 дні A1 — без перекладу речень і письма (зарано для новачка). Нових слів — щонайменше 10 на день. */
+const DAY_ORDER=['review','new','practice','listen','grammar','struct','dict','speak','dialog','read','transl','write'];
+const MIN_NEW_PER_DAY=10;
+on('planBlocks',B=>{if(window.NF_KEEP_ORDER)return B;
+  const early=maxLv()==='A1'&&typeof nfDayNo==='function'&&nfDayNo()<=3&&!window.NF_NO_DAY1;
+  let R=early?B.filter(b=>b.id!=='transl'&&b.id!=='write'):B.slice();
+  const g=R.find(b=>b.id==='grammar');if(g){g.s='Маленьке правило';g.t='📐 Маленьке правило';g.d='одне коротке правило на сьогоднішніх словах'}
+  if(!R.some(b=>b.id==='listen'))R.push({id:'listen',s:'Слухання',t:'🎧 Слухання',d:'почуй слово дня — обери картинку чи переклад',min:(S.minutes||30)>=60?6:4});
+  const rank=id=>{const i=DAY_ORDER.indexOf(id);return i<0?50:i};
+  return R.map((b,i)=>({b,i})).sort((x,y)=>rank(x.b.id)-rank(y.b.id)||x.i-y.i).map(x=>x.b)});
+if(typeof newQuotaToday==='function'){const _nq=newQuotaToday;newQuotaToday=function(){const done=((S.newLog||{})[S.lang]||{})[today()]||0;return Math.max(_nq(),MIN_NEW_PER_DAY-done,0)}}
+
+/* крок «Слухання»: слова дня на слух (картинки, де є символ Mulberry; інакше — переклад) */
+if(typeof BLOCK_IC!=='undefined')BLOCK_IC.listen='headphones';
+on('block:listen',b=>{
+  const day=(typeof dayWordList==='function'?dayWordList():[]).filter(w=>w[S.lang]),seen=day.filter(w=>st(w)),pool_=(seen.length>=4?seen:day).slice(0,10);
+  const items=(canSpeak?pool_.map(w=>({kind:'listen',w,phase:'Слухання · слова дня'})):pool_.map(w=>({kind:'choice',w,toUk:true,phase:'Слухання · слова дня'})));
+  if(!items.length){markBlock('listen');return planNext()}
+  runSession(shuffle(items),{title:'Слухання завершено!',onFinish:o=>{markBlock('listen');if(o&&o._prev)o._prev(o)}})});
+
+/* ---------- Порада перед кожним кроком: як краще запам'ятати / як правильно вживати ----------
+   Показується раз на день для кожного кроку. Спершу правило для теми дня (якщо є), потім загальна порада кроку. */
+const STEP_TIPS={
+ review:['Як краще запам\'ятати','Спершу спробуй згадати сам і лише потім дивись відповідь. Саме зусилля «згадати» робить пам\'ять міцнішою.','Не впевнений — все одно відповідай: помилка теж тренує пам\'ять.'],
+ new:['Як краще запам\'ятати','Скажи кожне слово вголос і уяви картинку. Пов\'язуй слово з образом, а не лише з перекладом.','Придумай смішну асоціацію за звучанням — так слово «чіпляється».'],
+ practice:['Як правильно вживати','Читай речення повністю, а не лише пропуск. Слово запам\'ятовується разом із сусідами.','Звертай увагу на маленькі слова навколо: a, the, to, in.'],
+ listen:['Як краще чути','Слухай двічі: спершу загальний звук, потім кожен склад. Тихенько повтори за диктором.','Не впізнав — натисни «повільно».'],
+ grammar:['Як правильно вживати','Одне правило — один приклад. Запам\'ятай приклад напам\'ять: він сам підкаже правило.','Склади з правилом власне речення про себе.'],
+ struct:['Як правильно будувати','Англійське речення має сталий порядок: хто → що робить → що / де / коли.','I drink coffee in the morning.'],
+ dialog:['Як говорити','Відповідай короткою, але повною фразою. Ввічливі «Can I…?», «I\'d like…», «please» роблять мову природною.','Сміливо помиляйся: після помилки побачиш, чому так не кажуть.'],
+ read:['Як читати','Спершу зрозумій загальний зміст, не перекладай кожне слово. Торкнися лише тих слів, без яких незрозуміло.','Підкреслені — твої слова дня.'],
+ transl:['Як перекладати','Перекладай думку, а не слово в слово. Порядок: хто → що робить → що.','Я п\'ю каву → I drink coffee.'],
+ write:['Як писати','Пиши короткими реченнями. Перевір артиклі a / the і закінчення -s після he / she / it.','She works. He likes tea.']};
+const THEME_TIPS={
+ numbers:['Числа 1–10','two, too і to звучать однаково — «ту», різниця лише на письмі. eight читається «ейт», gh не вимовляється.','three — кінчик язика між зубами (звук th), не «трі». Перевір себе: скажи three і free — вони мають звучати по-різному.'],
+ a1m_days:['Дні тижня','Завжди з великої літери: Monday, Friday. Перед днем — on: on Monday, on the weekend.','Wednesday читається «ВЕНЗдей» — «d» не вимовляється.'],
+ a1x03_months:['Місяці й пори року','Місяці з великої літери: January. Перед місяцем і порою року — in: in May, in winter.','В американській англійській осінь — fall.'],
+ greet:['Привітання','Hi — для друзів, Hello — універсально. На «How are you?» відповідають коротко: Fine, thanks. And you?','Good morning — до обіду, Good evening — увечері.'],
+ colors:['Кольори','Колір стоїть перед предметом: a red car, a blue sky. Американський правопис — color, gray.','What color is it? — It\'s green.'],
+ food:['Їжа','Злічувані: an apple, two apples. Незлічувані без a: water, bread, rice.','Some water, a glass of water.'],
+ family:['Сім\'я','Моя / твоя: my mother, your father. Присвійна \'s: Anna\'s brother.','parents — батьки (обоє), relatives — родичі.'],
+ time:['Час','Котра година: It\'s five o\'clock. Перед годиною — at: at 7 a.m.','a.m. — до полудня, p.m. — після.'],
+ a1x01_weather:['Погода','It\'s + прикметник: It\'s sunny, It\'s cold. Дощ іде: It\'s raining.','В США температуру міряють у °F.']};
+function tipFor(id){const base=STEP_TIPS[id];if(!base)return null;const th=typeof dayTheme==='function'?dayTheme():null,tt=th&&THEME_TIPS[th.id];
+  const themed=tt&&['new','practice','listen','grammar','review'].includes(id);return {base,tt:themed?tt:null}}
+function tipSeen(id){const d=((S.tipSeen||{})[S.lang]||{});return d.d===today()&&d[id]}
+function markTip(id){S.tipSeen=S.tipSeen||{};let d=S.tipSeen[S.lang];if(!d||d.d!==today())d=S.tipSeen[S.lang]={d:today()};d[id]=1;save()}
+function stepTip(id){const t=tipFor(id),B=planBlocks(),b=B.find(x=>x.id===id),n=B.indexOf(b)+1;applyTheme();document.body.classList.add('in-session');
+  app.innerHTML=`<div class="ds-scr st-tip"><header class="ds-top"><button class="ds-x" onclick="document.body.classList.remove('in-session');home()" aria-label="Закрити">${icn('close')}</button>
+     <div class="ds-prog"><div class="ds-prog-h"><span>Крок ${n} з ${B.length} · ${esc(b?stepName(b):'')}</span></div></div></header>
+   <section class="st-body">
+    ${t.tt?`<article class="st-card theme"><small>ПРАВИЛО ДНЯ · ${esc(t.tt[0].toUpperCase())}</small><p>${esc(t.tt[1])}</p><em>${esc(t.tt[2])}</em></article>`:''}
+    <article class="st-card"><small>${esc(t.base[0].toUpperCase())}</small><p>${esc(t.base[1])}</p><em>${icn('bulb')} ${esc(t.base[2])}</em></article></section>
+   <div class="ds-foot"><button class="ds-cta" onclick="markTip('${id}');document.body.classList.remove('in-session');startBlock('${id}')">Почати крок ${icn('arrow')}</button></div></div>`;
+  window.scrollTo(0,0)}
+if(typeof startBlock==='function'){const _sbTip=startBlock;startBlock=function(id){
+  if(!window.NF_NO_TIPS&&!(typeof navigator!=='undefined'&&navigator.webdriver)&&STEP_TIPS[id]&&!tipSeen(id)){const B=planBlocks(),b=B.find(x=>x.id===id),prev=B.slice(0,B.indexOf(b));
+    if(b&&!b.done&&prev.every(x=>x.done))return stepTip(id)}   // лише для чергового кроку плану
+  return _sbTip.apply(this,arguments)}}
 
 /* ====================== ЕКРАН «СЛОВНИК» · варіант A «Пошук і додавання в одному полі» ======================
    Макети: canvas «Лінгво-гра — варіанти дизайну», сторінка «Словник · варіанти»: DV-A-SearchAdd і DV-C-Errors.
