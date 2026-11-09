@@ -1782,6 +1782,7 @@ header.ds-hd{display:block!important;flex-wrap:initial;margin:0}header.ds-top{ma
 .nf-streak{border-color:color-mix(in srgb,var(--lime) 45%,var(--line))!important;color:var(--lime)!important}.nf-streak svg{color:var(--lime)!important;stroke:var(--lime)!important}
 /* підписи плиток слів дня: один рядок, без розриву слова */
 .nf-wt small{display:block!important;white-space:nowrap!important;overflow:hidden;text-overflow:ellipsis;word-break:normal!important;-webkit-line-clamp:unset;font-size:11.5px;line-height:1.3}
+.nf-launch h1{margin-bottom:18px}
 </style>
 </head>
 <body>
@@ -10163,7 +10164,7 @@ function launchScreen(){
     h=new Date().getHours(),hi=h<5?'Доброї ночі':h<12?'Доброго ранку':h<18?'Доброго дня':'Доброго вечора';
   app.innerHTML=`<div class="onb nf-onb nf-full nf-launch">
     <div class="nf-brand"><span class="nf-logo">L</span><b>Лінгво</b></div>
-    <h1>${hi}!</h1><p class="muted">Обери мову, яку вчиш сьогодні.</p>
+    <h1>${hi}!</h1>
     <button class="nf-lang on" onclick="launchGo()"><span class="nf-lt lime">EN</span><span><b>Англійська · US</b>
       <small>Рівень ${esc(lv)} · ${learned} ${plUk(learned,['слово','слова','слів'])} вивчено${S.streak?` · серія ${S.streak} дн.`:''}</small>
       ${ep?`<small class="nf-ln-ep">Сьогодні: «${esc(ep.title)}»${B.length?` · план ${done}/${B.length}`:''}</small>`:''}</span>${icn('chev')}</button>
