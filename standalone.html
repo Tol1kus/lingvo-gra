@@ -1628,6 +1628,41 @@ header .pill,.pill{background:var(--s1);border:1px solid var(--line);color:var(-
 :root:not([data-theme="light"]) .pic-q{background:var(--s1)!important;border:1px dashed var(--line);color:var(--dim)!important;filter:none!important;box-shadow:none!important}
 :root:not([data-theme="light"]) .pic-q:not(.reveal){font-size:0;min-height:96px;display:grid;place-items:center}
 :root:not([data-theme="light"]) .pic-q:not(.reveal)::after{content:"?";font:800 40px Unbounded,sans-serif;color:var(--dim)}
+/* ===== E07 / E08 / E09 — точно за макетом ===== */
+.nf-ex{padding:6px 4px 0}.nf-ex>.q-label{font-size:13px;color:var(--mut);margin:12px 4px 10px}
+.nf-sentcard{padding:16px;border-radius:20px;background:var(--s1);border:1px solid var(--line)}
+.nf-sentcard .sentence{font:500 19px/1.7 'Golos Text',system-ui,sans-serif!important;letter-spacing:0;color:var(--ink);margin:0}
+.nf-sentcard .blank{display:inline-block;min-width:56px;text-align:center;border-bottom:3px solid var(--lime);color:var(--lime);font-weight:800;margin:0 3px}
+.nf-sent-uk{margin-top:8px;font-size:14px;color:var(--mut)}.nf-sent-uk b,.nf-sent-uk mark{color:var(--lime);background:none}
+.nf-tiles{display:flex;gap:8px;margin-top:12px}
+.nf-tile-s{width:44px;height:44px;flex:none;border-radius:12px;background:var(--light);display:inline-flex;align-items:center;justify-content:center;font-size:28px;overflow:hidden}
+.nf-tile-s img{width:32px;height:32px;object-fit:contain}
+.nf-optgrid{display:grid!important;grid-template-columns:1fr 1fr;gap:8px!important;margin-top:16px}.nf-optgrid.c3{grid-template-columns:repeat(3,1fr)}
+.nf-optgrid .opt{min-height:58px;margin:0!important;border-radius:16px!important;justify-content:center;text-align:center;font-weight:800;font-size:17px;padding:8px 10px}
+.nf-listen-hd{display:flex;align-items:center;gap:16px;padding:14px 6px 4px}
+.nf-listen-hd b{display:block;font-size:22px;font-weight:800;margin:2px 0 6px}
+.nf-play{position:relative;width:76px;height:76px;flex:none;border-radius:50%;border:0;background:var(--lime);color:#000;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 0 0 1px rgba(200,245,96,.35),0 0 28px rgba(200,245,96,.28)}
+.nf-play svg{width:32px;height:32px}.nf-play::after{content:"";position:absolute;inset:-8px;border-radius:50%;border:2px solid rgba(200,245,96,.5);animation:nfPulse 2s ease-out infinite}
+@keyframes nfPulse{0%{transform:scale(.6);opacity:.7}100%{transform:scale(1.5);opacity:0}}
+.nf-slow{display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px;border-radius:99px;background:var(--s1);border:1px solid var(--line);color:var(--ink);font:700 13px 'Golos Text',sans-serif;cursor:pointer}.nf-slow svg{width:15px;height:15px}
+.nf-ptgrid{display:grid!important;grid-template-columns:1fr 1fr;gap:12px!important;margin-top:18px}
+.nf-pt{height:150px;margin:0!important;border-radius:24px!important;background:var(--s1)!important;border:2px solid var(--line)!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:8px!important}
+.nf-pt-i{width:92px;height:92px;border-radius:24px;background:var(--light);display:flex;align-items:center;justify-content:center;font-size:58px;overflow:hidden}.nf-pt-i img{width:74px;height:74px;object-fit:contain}
+.nf-pt small{font-size:13px;font-weight:700;color:var(--ink);opacity:0;transition:opacity .25s}.nf-pt:disabled small{opacity:1}
+.nf-pt.ok{border-color:var(--lime)!important;box-shadow:0 0 28px rgba(200,245,96,.35)!important}.nf-pt.bad{border-color:var(--coral)!important;box-shadow:0 0 24px rgba(255,122,107,.3)!important}
+/* читання */
+.nf-rtop{justify-content:space-between}.card.reader.nf-reader{background:none!important;border:0!important;box-shadow:none!important;padding:4px 4px 20px!important}
+.nf-rhd{padding:8px 0 4px}.nf-rhd h1{font:700 24px/1.2 Unbounded,sans-serif;margin:4px 0 2px;letter-spacing:-.01em}
+.nf-eyebrow.sky{color:var(--sky)}.nf-rday{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-size:12px;color:var(--mut)}.nf-rday i{width:16px;border-bottom:2px solid var(--lime)}
+.nf-rbar{display:grid;grid-template-columns:1fr 1.15fr 1fr 52px;gap:8px;margin:14px 0 6px;padding:10px;border-radius:22px;background:var(--s1);border:1px solid var(--line)}
+.nf-rbar button{height:52px;border-radius:14px;border:1px solid var(--line);background:var(--s2);color:var(--ink);font:700 13px 'Golos Text',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;padding:0 6px}
+.nf-rbar button svg{width:16px;height:16px}.nf-rbar button.on{background:var(--lime);color:#000;border:0;font-weight:800;box-shadow:0 0 0 1px rgba(200,245,96,.35),0 0 28px rgba(200,245,96,.28)}
+.nf-rhelp{font-size:12px;color:var(--mut);margin:2px 2px 10px}
+.nf-reader .gtext{font-size:18px;line-height:1.75}
+@media (max-width:360px){.nf-rbar{grid-template-columns:1fr 1fr 1fr 44px}.nf-optgrid.c3{grid-template-columns:1fr 1fr}}
+.card.reader.nf-reader{display:block!important}.nf-rhd{display:block;width:100%}.nf-rhd>*{max-width:100%}
+.nf-rbar button.ic{padding:0}
+.nf-rbar{grid-template-columns:1fr 1.25fr 1fr 48px}.nf-rbar button{white-space:nowrap;font-size:12.5px;min-width:0}.nf-rbar button.ic{width:100%}
 </style>
 </head>
 <body>
@@ -10022,6 +10057,112 @@ function launchScreen(){
 function launchGo(){LANG_PICKED=true;if(S.lang!=='en'){if(typeof switchLang==='function')switchLang('en');else S.lang='en'}save();document.body.classList.remove('in-session');home()}
 const _homeLaunchNF=home;
 home=function(){if(!LANG_PICKED&&S.onb&&!(typeof navigator!=='undefined'&&navigator.webdriver)&&!window.NO_LAUNCH)return launchScreen();return _homeLaunchNF()};
+/* ====================== Екрани вправ точно за макетом «Нічний фокус 2.0» (E07, E08, E09) ====================== */
+const nfHasPic=w=>!!(w&&((w.img&&typeof PICS!=='undefined'&&PICS[w.img])||(w.pic&&String(w.pic).trim())));
+const nfTileS=w=>nfHasPic(w)?`<span class="nf-tile-s">${picHTML(w)}</span>`:'';
+/* E07 · вставка: речення в картці, маленька плитка-картинка, варіанти сіткою */
+function renderFill(it){
+  const w=it.w,g=parseGap(w.sent[S.lang]);if(!g){it.kind='choice';return renderChoice(it)}
+  it.g=g;it.order=it.order||shuffle(g.opts);
+  app.innerHTML=topRow()+`<div class="nf-ex">
+    <div class="q-label">Встав у речення</div>
+    <div class="nf-sentcard"><div class="sentence">${esc(g.pre)}<span class="blank">…</span>${esc(g.post)}</div>
+      <div class="nf-sent-uk">${ukSentence(w.sent.uk,true)}</div>${nfTileS(w)?`<div class="nf-tiles">${nfTileS(w)}</div>`:''}</div>
+    <div class="opts nf-optgrid ${it.order.length===3?'c3':''}">${it.order.map((o,i)=>`<button class="opt" onclick="fillA(${i})">${esc(o)}</button>`).join('')}</div>
+    <div id="fb"></div></div>`;
+}
+/* E08 · аудіювання: велика кнопка зі звуком і сітка 2×2 світлих плиток-картинок (підпис з'являється після відповіді) */
+function renderListen(it){
+  const w=it.w;if(!it.opts)it.opts=shuffle([w,...distractors(w,'uk')]);
+  const pics=it.opts.length>=3&&it.opts.every(nfHasPic)&&new Set(it.opts.map(o=>o.img||o.pic)).size===it.opts.length;
+  app.innerHTML=topRow()+`<div class="nf-ex">
+    <div class="nf-listen-hd"><button class="nf-play" onclick="speak(${js(w[S.lang])})" aria-label="Прослухати ще раз">${icn('speaker')}</button>
+      <div><small class="muted">Послухай</small><b>${pics?'Що ти почув(ла)?':'Обери переклад'}</b><button class="nf-slow" onclick="slowSpeak(${js(w[S.lang])})">${icn('clock')} повільно</button></div></div>
+    ${pics?`<div class="opts nf-ptgrid">${it.opts.map((o,i)=>`<button class="opt nf-pt" onclick="listenA(${i})" aria-label="${esc(o.uk)}"><span class="nf-pt-i">${picHTML(o)}</span><small>${esc(o[S.lang])} · ${esc(o.uk)}</small></button>`).join('')}</div>`
+      :`<div class="opts nf-optgrid">${it.opts.map((o,i)=>`<button class="opt" onclick="listenA(${i})">${esc(o.uk)}</button>`).join('')}</div>`}
+    <div id="fb"></div></div>`;
+  setTimeout(()=>speak(w[S.lang]),300);
+}
+/* E09 · читання: рядок-надзаголовок, заголовок, одна панель «Речення · Весь текст · UA + EN», без дублів і кодів прапорців */
+const _openTextE09=openText;
+openText=function(i){
+  const r=_openTextE09(i);const card=document.querySelector('.card.reader');if(!card||!RT||!RT.t)return r;const t=RT.t;
+  const top=document.querySelector('.top-row');if(top){top.classList.add('nf-rtop');const b=top.querySelector('b');if(b)b.remove()}
+  card.classList.add('nf-reader');
+  const pic=card.querySelector('.reader-pic'),h2=card.querySelector('h2'),sub=h2&&h2.nextElementSibling;
+  const eyebrow=[t.lib?(LIB_KIND[t.lib.kind]||'текст'):(t.story?'Епізод':'Справжній факт'),t.topic_uk&&!t.lib?t.topic_uk:'',t.lv].filter(Boolean).join(' · ');
+  const nDay=(()=>{try{const ids=new Set(dayWordList().map(w=>w.id));return textWords(t).filter(w=>ids.has(w.id)).length}catch(e){return 0}})();
+  const hd=document.createElement('header');hd.className='nf-rhd';
+  hd.innerHTML=`<small class="nf-eyebrow sky">${esc(eyebrow.toUpperCase())}</small><h1>${esc(t.title)}</h1><div class="muted">${esc(t.title_uk||'')}</div>${nDay?`<span class="nf-rday"><i></i>слова дня в тексті: ${nDay}</span>`:''}`;
+  if(pic)pic.remove();if(sub&&sub.classList.contains('muted'))sub.remove();if(h2)h2.replaceWith(hd);else card.prepend(hd);
+  const ab=card.querySelector('.audio-bar');
+  if(ab){ab.className='nf-rbar';ab.innerHTML=`<button onclick="readBoth()">${icn('play')} Речення</button><button class="on" onclick="readAll()">${icn('speaker')} Весь текст</button><button onclick="toggleTr()">UA + EN</button><button class="ic" onclick="stopRead()" aria-label="Зупинити">${icn('stop')}</button>`;
+    const help=ab.nextElementSibling;if(help&&help.classList.contains('muted')){help.className='nf-rhelp';help.textContent='Торкнися слова — переклад, і воно потрапить у словник. ▶ перед реченням — прослухати лише його.'}}
+  [...card.querySelectorAll(':scope > .lv-tag')].forEach(x=>x.remove());
+  return r};
+
+/* ====================== ДЕНЬ ЗА МАКЕТОМ: ЖИТТЄВА ТЕМА ЗАМІСТЬ СЮЖЕТУ ======================
+   Рішення користувача (9.11.2026): ідею «переїзду» (сюжет «Друге життя», епізоди) прибрано.
+   Основа — макет «Нічний фокус 2.0» (E05/E14): одна життєва тема на день (напр. «Кафе»),
+   слова дня — з цієї теми, ті самі слова потім у тексті, аудіо, диктанті й діалозі.
+   Дані сюжету (data/story) не видалено — лише вимкнено. */
+
+/* 1) сюжет вимкнено */
+const STORY_ON=false;
+function epOfDay(){return null}
+function epNext(){return null}
+function epNewItems(){return []}
+function epNewWords(){return []}
+function storyPracticeItems(){return null}
+(function(){try{Object.keys(TEXTS||{}).forEach(l=>(TEXTS[l]||[]).forEach(t=>{if(t&&t.story)t.hidden=true}))}catch(e){}})();
+
+/* 2) речення без тире-діалогів: «— Are you hungry? — No…» → «Are you hungry? No…»
+      тире на початку і після кінця речення прибираємо; тире всередині речення (укр. «Київ — столиця») лишається */
+function nfNoDash(s){return typeof s!=='string'?s:s.replace(/^\s*[—–-]\s+/,'').replace(/([.?!…»"])\s+[—–]\s+/g,'$1 ').replace(/\s{2,}/g,' ').trim()}
+(function(){try{WORDS.forEach(w=>{if(!w.sent)return;Object.keys(w.sent).forEach(k=>{w.sent[k]=nfNoDash(w.sent[k])})})}catch(e){}})();
+if(typeof ensureSent==='function'){const _ensureSentND=ensureSent;ensureSent=function(){return Promise.resolve(_ensureSentND.apply(this,arguments)).then(r=>{try{WORDS.forEach(w=>{if(w.sent)Object.keys(w.sent).forEach(k=>{w.sent[k]=nfNoDash(w.sent[k])})})}catch(e){}return r})}}
+
+/* 3) тема дня */
+function themeWords(t){return (t&&t.words||[]).filter(w=>w[S.lang])}
+function themeOrder(){const top=LEVELS.indexOf(maxLv());
+  return TOPICS.filter(t=>t.id!=='ukus'&&LEVELS.indexOf(t.lv)<=top&&lvOK(t.lv)&&themeWords(t).length>=4)
+    .sort((a,b)=>Math.abs(LEVELS.indexOf(a.lv)-top)-Math.abs(LEVELS.indexOf(b.lv)-top))}
+function dayTheme(){
+  S.dayTheme=S.dayTheme||{};const D=S.dayTheme[S.lang];
+  if(D&&D.d===today()&&TOPIC_BY_ID[D.id])return TOPIC_BY_ID[D.id];
+  const left=t=>themeWords(t).filter(w=>!st(w)).length;
+  const prev=D&&TOPIC_BY_ID[D.id];
+  const picked=(S.topics||[]).map(id=>TOPIC_BY_ID[id]).filter(t=>t&&lvOK(t.lv)&&left(t)>0);
+  const t=(prev&&left(prev)>0&&prev)||picked[0]||themeOrder().find(t=>left(t)>0)||themeOrder()[0]||null;
+  if(t){S.dayTheme[S.lang]={d:today(),id:t.id};save()}return t}
+function dayThemeTopics(){const t=dayTheme();return new Set(t?[t.id]:[])}
+function dayTopicName(){const t=dayTheme();return t?t.name:'Нові слова'}
+function dayWordList(){
+  S.dayWords=S.dayWords||{};const D=S.dayWords[S.lang];
+  if(D&&D.d===today()&&D.v===3){const ws=D.ids.map(id=>WBYID[id]).filter(Boolean);if(ws.length)return ws}
+  const keep=D&&D.d===today()?D.ids.map(id=>WBYID[id]).filter(w=>w&&st(w)):[];
+  const n=Math.max(1,typeof newQuotaToday==='function'?newQuotaToday():10),t=dayTheme();
+  let list=keep.concat(t?themeWords(t).filter(w=>!st(w)&&!keep.includes(w)):[]);
+  if(list.length<Math.min(4,n)){const nx=themeOrder().find(x=>x!==t&&themeWords(x).some(w=>!st(w)));if(nx)list=list.concat(themeWords(nx).filter(w=>!st(w)))}
+  if(!list.length)list=pickNew(n);
+  list=list.slice(0,Math.max(n,keep.length));
+  S.dayWords[S.lang]={d:today(),v:3,ids:list.map(w=>w.id)};save();return list}
+
+/* 4) текст дня — той, де найбільше слів теми дня (позиції текстів — за idx, а не за місцем у списку) */
+function pickTextOfDay(){
+  const ts=textsFor();if(!ts.length)return null;const byIdx=i=>ts.find(x=>x.idx===i);
+  const T=S.todayText&&S.todayText[S.lang];if(T&&T.d===today()&&byIdx(T.idx))return byIdx(T.idx);
+  const ids=new Set(dayWordList().map(w=>w.id)),th=dayTheme(),thIds=new Set(th?themeWords(th).map(w=>w.id):[]);
+  const cand=ts.filter(x=>lvOK(x.lv)&&S.read[S.lang][x.idx]==null);
+  const score=x=>{let s=0;try{textWords(x).forEach(w=>{if(ids.has(w.id))s+=3;else if(thIds.has(w.id))s+=1})}catch(e){}return s-Math.abs(LEVELS.indexOf(x.lv)-LEVELS.indexOf(curLevel()))*.5};
+  let t=cand.map(x=>[x,score(x)]).sort((a,b)=>b[1]-a[1])[0];t=t?t[0]:(shuffle(ts.filter(x=>lvOK(x.lv)))[0]||null);if(!t)return null;
+  S.todayText=S.todayText||{};S.todayText[S.lang]={d:today(),idx:t.idx};save();return t}
+
+/* 5) перше вікно: показує тему дня замість епізоду */
+const _launchTD=launchScreen;
+launchScreen=function(){_launchTD();const ep=document.querySelector('.nf-launch .nf-lang.on span:nth-child(2)');if(ep&&!ep.querySelector('.nf-ln-ep')){const B=planBlocks(),d=B.filter(b=>b.done).length;ep.insertAdjacentHTML('beforeend',`<small class="nf-ln-ep">Тема дня: ${esc(dayTopicName())} · план ${d}/${B.length}</small>`)}};
+/* сюжетні екрани й плитки більше не показуються (присвоєння, а не оголошення — щоб сюжетні дані встигли завантажитися) */
+storyOf=function(){return null};
 
 bootApp();
 </script>
