@@ -1977,6 +1977,7 @@ header.ds-hd{display:block!important;flex-wrap:initial;margin:0}header.ds-top{ma
 .st-card b.en{color:var(--lime);font-weight:700}
 /* таймер у вправах і текстах прибрано (кожен іде у своєму темпі; час рахується непомітно для статистики) */
 .nf-time,.k-timer{display:none!important}
+.idk-w{margin:10px auto 0;min-height:44px}
 </style>
 </head>
 <body>
@@ -10918,6 +10919,18 @@ on('block:practice',b=>{const long=(S.minutes||30)>=60,day=(typeof dayWordList==
   const items=ws.slice(0,nF).map(w=>({kind:'fill',w,phase:'Слово дня в реченні'})).concat(shuffle(ws.slice(0,Math.max(nD,0))).slice(0,nD).map(w=>({kind:'dict',w,phase:'Почуй і запиши'})));
   if(!items.length){markBlock('practice');return planNext()}
   runSession(items,{title:'Слова закріплено!',requeue:true,...finB('practice')})});
+
+/* ---------- «Не знаю, як написати» в диктанті й письмі ----------
+   Чесно зараховує помилку (слово повернеться частіше) і одразу показує правильну відповідь. */
+on('item:render',it=>{try{if(!it||it.test||!['dict','type'].includes(it.kind)||document.getElementById('idkW'))return;
+  const a=document.getElementById('ans');if(!a)return;const fb=document.getElementById('fb');
+  const btn=`<button id="idkW" class="nf-link idk-w" onclick="idkWrite()">Не знаю, як написати</button>`;
+  if(fb)fb.insertAdjacentHTML('beforebegin',btn);else a.insertAdjacentHTML('afterend',btn)}catch(e){}});
+function idkWrite(){const it=SS&&SS.items&&SS.items[SS.i];if(!it||it.answered)return;const a=document.getElementById('ans');if(!a)return;
+  it._given='(не знаю)';a.value='—';const b=document.getElementById('idkW');if(b)b.remove();(it.kind==='dict'?dictA:typeA)()}
+/* A1: диктант цілих речень зарано — замість нього аудіювання слова (почуй і обери) */
+if(typeof renderItem==='function'){const _ri=renderItem;renderItem=function(){try{const it=SS&&SS.items&&SS.items[SS.i];
+  if(it&&it.kind==='dict'&&!it.test&&typeof maxLv==='function'&&maxLv()==='A1'&&it.w){it.kind=canSpeak?'listen':'choice';if(!canSpeak)it.toUk=true;it.phase='Почуй слово дня'}}catch(e){}return _ri.apply(this,arguments)}}
 
 /* ====================== ЕКРАН «СЛОВНИК» · варіант A «Пошук і додавання в одному полі» ======================
    Макети: canvas «Лінгво-гра — варіанти дизайну», сторінка «Словник · варіанти»: DV-A-SearchAdd і DV-C-Errors.
