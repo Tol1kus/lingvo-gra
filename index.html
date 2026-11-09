@@ -10167,9 +10167,6 @@ function launchScreen(){
     <button class="nf-lang on" onclick="launchGo()"><span class="nf-lt lime">EN</span><span><b>Англійська · US</b>
       <small>Рівень ${esc(lv)} · ${learned} ${plUk(learned,['слово','слова','слів'])} вивчено${S.streak?` · серія ${S.streak} дн.`:''}</small>
       ${ep?`<small class="nf-ln-ep">Сьогодні: «${esc(ep.title)}»${B.length?` · план ${done}/${B.length}`:''}</small>`:''}</span>${icn('chev')}</button>
-    <div class="nf-lang lk"><span class="nf-lt">DA</span><span><b>Данська</b><small>на паузі · незабаром</small></span>${icn('lock')}</div>
-    <div class="nf-lang lk"><span class="nf-lt">IT</span><span><b>Італійська</b><small>на паузі · незабаром</small></span>${icn('lock')}</div>
-    <div class="nf-lang lk"><span class="nf-lt">PL</span><span><b>Польська</b><small>на паузі · незабаром</small></span>${icn('lock')}</div>
   </div>`;
 }
 function launchGo(){LANG_PICKED=true;if(S.lang!=='en'){if(typeof switchLang==='function')switchLang('en');else S.lang='en'}save();document.body.classList.remove('in-session');home()}
@@ -10347,9 +10344,7 @@ function onboarding(step=0){
       <div class="ds-orbit" aria-hidden="true"><svg width="390" height="250" viewBox="0 0 390 250"><circle cx="195" cy="125" r="96" fill="none" stroke="#25282D" stroke-width="1.5" stroke-dasharray="3 6"/><circle cx="195" cy="125" r="62" fill="none" stroke="#16181B" stroke-width="10"/><path d="M195.0 63.0 A62 62 0 0 1 248.7 156.0" fill="none" stroke="#C8F560" stroke-width="10" stroke-linecap="round" style="filter:drop-shadow(0 0 8px rgba(200,245,96,.6))"/></svg>
         <span class="ds-orb-c">EN</span>${[['hello',-120,-60,0],['color',95,-74,.6],['subway',-138,30,1.2],['the check',92,22,.3],['awesome',-40,96,.9],['to go',120,96,1.5]].map(([t,x,y,d])=>`<span class="ds-chipf" style="left:calc(50% + ${x}px);top:calc(50% + ${y}px);animation-delay:${d}s">${t}</span>`).join('')}</div>
       <header class="ds-hd">${dsDots(0)}<h1>Яку мову вчимо?</h1><p>Переклади й підказки — українською.</p></header>
-      <ul class="ds-langs"><li class="ds-lang on solo" onclick="setStartLang('en','us');onboarding(1)"><div class="ds-lrow"><span class="ds-lt">EN</span><span class="ds-lname"><strong>Англійська</strong><span>A1 → C2 · ${nW.toLocaleString('uk')} слів і фраз з картинками</span></span>${icn('check')}</div></li>
-        <li class="ds-lang lk"><span class="ds-lt s">DA</span><span class="ds-lname"><strong>Данська</strong><span>незабаром</span></span>${icn('lock')}</li>
-        <li class="ds-lang lk"><span class="ds-lt s">IT</span><span class="ds-lname"><strong>Італійська</strong><span>незабаром</span></span>${icn('lock')}</li></ul>
+      <ul class="ds-langs"><li class="ds-lang on solo" onclick="setStartLang('en','us');onboarding(1)"><div class="ds-lrow"><span class="ds-lt">EN</span><span class="ds-lname"><strong>Англійська</strong><span>A1 → C2 · ${nW.toLocaleString('uk')} слів і фраз з картинками</span></span>${icn('check')}</div></li></ul>
       <div class="ds-foot"><button class="ds-cta" onclick="setStartLang('en','us');onboarding(1)">Далі ${icn('arrow')}</button></div></div>`;return}
   if(step===1){const g=S.goal||'work',m=S.minutes||30;
     const G=[['work','💼','Робота','листи, зустрічі, співбесіда'],['travel','✈️','Подорожі','аеропорт, готель, місто'],['exam','🎓','Іспит','IELTS · Cambridge B2 / C1'],['self','❤️','Для себе','фільми, книжки, спілкування']];
@@ -10371,20 +10366,28 @@ const ukClean=s=>nfNoDash(String(s||'').replace(/\[([^\]]*)\]/g,(m,a)=>a.split('
 const enFull=w=>{const s=w.sent&&w.sent.en;if(!s)return '';const g=parseGap(s);return nfNoDash(g?g.full:s)};
 function ptPool(li){return WORDS.filter(w=>w.lv===LEVELS[li]&&w.en&&!w.my&&!w.phrase&&!PX.used.has(w.id))}
 function ptMake(skill,li){
-  const ws=shuffle(ptPool(li));if(!ws.length)return null;
-  const other=(n,f)=>shuffle(WORDS.filter(x=>x.lv===LEVELS[li]&&x.en&&f(x))).slice(0,n);
-  if(skill==='vocab'){const w=ws[0],ds=other(12,x=>x.id!==w.id&&x.en!==w.en&&x.uk!==w.uk);const opts=[w.en];for(const d of ds){if(opts.length>=4)break;if(!opts.includes(d.en))opts.push(d.en)}
-    return {skill,li,w,label:'Як це англійською?',big:w.uk,opts:shuffle(opts),ans:w.en}}
+  const ws=shuffle(ptPool(li));if(!ws.length)return null;const LV=LEVELS[li];
+  // неправильні варіанти — з тієї самої теми й рівня (щоб не відкидати їх за змістом), далі — з рівня
+  const near=(w,f)=>{const a=shuffle(WORDS.filter(x=>x.lv===LV&&x.en&&x.id!==w.id&&x.topic===w.topic&&f(x))),b=shuffle(WORDS.filter(x=>x.lv===LV&&x.en&&x.id!==w.id&&x.topic!==w.topic&&f(x)));return a.concat(b)};
+  const four=(right,list,key)=>{const o=[right];for(const x of list){if(o.length>=4)break;const v=key(x);if(v&&!o.includes(v))o.push(v)}return o.length>=3?shuffle(o):null};
+  if(skill==='vocab'){const w=ws[0],opts=four(w.en,near(w,x=>x.uk!==w.uk&&!x.phrase),x=>x.en);if(!opts)return null;
+    return {skill,li,w,label:'Як це англійською?',big:w.uk,opts,ans:w.en}}
   if(skill==='gram'){const w=ws.find(x=>x.sent&&x.sent.en&&(parseGap(x.sent.en)||{opts:[]}).opts.length>=3);if(!w)return ptMake('read',li);const g=parseGap(w.sent.en);
-    return {skill,li,w,label:'Обери правильний варіант',pre:nfNoDash(g.pre),post:g.post,uk:ukClean(w.sent.uk),opts:shuffle(g.opts.slice(0,4)),ans:g.answer}}
-  const w=ws.find(x=>x.sent&&x.sent.en&&x.sent.uk&&enFull(x).split(' ').length>=4);if(!w)return ptMake('vocab',li);
-  const ds=other(20,x=>x.id!==w.id&&x.sent&&x.sent.uk).map(x=>ukClean(x.sent.uk)),right=ukClean(w.sent.uk),opts=[right];for(const d of ds){if(opts.length>=4)break;if(d&&!opts.includes(d))opts.push(d)}
-  if(skill==='listen'&&canSpeak)return {skill,li,w,label:'Послухай і обери, що почув(ла)',audio:enFull(w),opts:shuffle(opts),ans:right};
-  return {skill:'read',li,w,label:'Що означає це речення?',big:enFull(w),opts:shuffle(opts),ans:right};
+    return {skill,li,w,label:'Обери правильну форму',pre:nfNoDash(g.pre),post:g.post,uk:ukClean(w.sent.uk),opts:shuffle(g.opts.slice(0,4)),ans:g.answer}}
+  if(skill==='listen'&&canSpeak){const w=ws.find(x=>!/\s/.test(x.en.replace(/^(to|a|an|the) /,'')))||ws[0],t=w.en;
+    const sim=WORDS.filter(x=>x.en&&x.id!==w.id&&x.en!==t&&Math.abs(x.en.length-t.length)<=3&&(LEVELS.indexOf(x.lv)<=li+1)).map(x=>[x.en,lev(x.en.toLowerCase(),t.toLowerCase())]).sort((a,b)=>a[1]-b[1]).slice(0,10).map(x=>x[0]);
+    const opts=four(t,shuffle(sim.slice(0,6)).map(e=>({e})),x=>x.e);if(!opts)return null;
+    return {skill,li,w,label:'Послухай і обери слово, яке прозвучало',audio:t,opts,ans:t}}
+  // читання: речення без перекладу, пропущене слово — за змістом (варіанти з тієї ж теми)
+  const w=ws.find(x=>x.sent&&x.sent.en&&parseGap(x.sent.en)&&!x.phrase);if(!w)return ptMake('vocab',li);const g=parseGap(w.sent.en);
+  const opts=four(g.answer,near(w,x=>!x.phrase&&!/\s/.test(x.en.replace(/^(to|a|an|the) /,''))),x=>x.en.replace(/^(to|a|an|the) /,''));if(!opts)return ptMake('vocab',li);
+  return {skill:'read',li,w,label:'Прочитай і встав слово, яке підходить за змістом',pre:nfNoDash(g.pre),post:g.post,uk:'',opts,ans:g.answer};
 }
-function ptStart(){applyTheme();document.body.classList.add('in-session');PX={n:0,li:1,log:[],used:new Set(),t0:Date.now(),sel:null,q:null};ptNext()}
+function ptStart(){applyTheme();document.body.classList.add('in-session');PX={n:0,li:0,streak:0,log:[],used:new Set(),t0:Date.now(),sel:null,q:null};ptNext()}
 function ptNext(){
-  if(PX.q){const q=PX.q,ok=PX.sel!=null&&q.opts[PX.sel]===q.ans;PX.log.push({skill:q.skill,li:q.li,ok});PX.li=Math.max(0,Math.min(5,PX.li+(ok?1:-1)))}
+  // сходинки «2 вгору / 1 вниз»: складність росте лише після двох правильних поспіль
+  if(PX.q){const q=PX.q,ok=PX.sel!=null&&PX.sel>=0&&q.opts[PX.sel]===q.ans;PX.log.push({skill:q.skill,li:q.li,ok});
+    if(ok){PX.streak++;if(PX.streak>=2){PX.li=Math.min(5,PX.li+1);PX.streak=0}}else{PX.li=Math.max(0,PX.li-1);PX.streak=0}}
   if(PX.n>=PT_TOTAL)return ptResult();
   const sk=PT_SKILLS[PX.n%4][0];let q=null;for(let d=0;d<6&&!q;d++)q=ptMake(sk,Math.max(0,Math.min(5,PX.li+(d%2?-1:1)*Math.ceil(d/2))));
   if(!q)return ptResult();PX.used.add(q.w.id);PX.q=q;PX.sel=null;PX.n++;ptRender();
@@ -10399,7 +10402,7 @@ function ptRender(){const q=PX.q,s=PX.sel,d=s!=null,skName=(PT_SKILLS.find(x=>x[
    <section class="ds-q">
      <div class="ds-chips"><span class="ds-chip sky">складність: ${LEVELS[q.li]}</span><span class="ds-chip">адаптивний</span></div>
      <p class="ds-qlab">${q.label}</p>
-     ${q.pre!=null?`<strong class="ds-qs">${esc(q.pre)}<span class="ds-blank">${esc(blank)}</span>${esc(q.post)}</strong><span class="ds-qtr">${esc(q.uk)}</span>`
+     ${q.pre!=null?`<strong class="ds-qs">${esc(q.pre)}<span class="ds-blank">${esc(blank)}</span>${esc(q.post)}</strong>${q.uk?`<span class="ds-qtr">${esc(q.uk)}</span>`:''}`
       :q.audio?`<div class="ds-qaudio"><button class="nf-play" onclick="speak(${js(q.audio)})" aria-label="Прослухати ще раз">${icn('speaker')}</button><button class="nf-slow" onclick="slowSpeak(${js(q.audio)})">${icn('clock')} повільно</button></div>`
       :`<strong class="ds-qs">${esc(q.big)}</strong>`}
    </section>
@@ -10411,10 +10414,10 @@ function ptRender(){const q=PX.q,s=PX.sel,d=s!=null,skName=(PT_SKILLS.find(x=>x[
 }
 
 /* ---------- E04 · результат ---------- */
-function ptEst(arr,k=4){if(!arr.length)return 0;const v=arr.slice(-k).map(x=>x.ok?x.li:x.li-1);return Math.max(0,Math.min(5,Math.round(v.reduce((a,b)=>a+b,0)/v.length)))}
+function ptEst(arr,minN=2,ratio=.6){let best=0;for(let li=0;li<6;li++){const a=arr.filter(x=>x.li===li);if(a.length>=minN&&a.filter(x=>x.ok).length/a.length>=ratio)best=li}return best}
 function ptResult(){
-  const L=PX.log,ov=ptEst(L,8),lvl=LEVELS[ov],mins=Math.max(1,Math.round((Date.now()-PX.t0)/60000));
-  const est={};PT_SKILLS.forEach(([k])=>{const a=L.filter(x=>x.skill===k);est[k]=a.length?ptEst(a):ov});
+  const L=PX.log,ov=ptEst(L),lvl=LEVELS[ov],mins=Math.max(1,Math.round((Date.now()-PX.t0)/60000));
+  const est={};PT_SKILLS.forEach(([k])=>{const a=L.filter(x=>x.skill===k);est[k]=a.length?ptEst(a,1,.5):ov});
   const acc=k=>{const a=L.filter(x=>x.skill===k);return a.length?a.filter(x=>x.ok).length/a.length:0};
   const strong=PT_SKILLS.filter(([k])=>est[k]>ov),weak=PT_SKILLS.filter(([k])=>est[k]<ov);
   const weakK=(weak[0]||PT_SKILLS.slice().sort((a,b)=>acc(a[0])-acc(b[0]))[0])[0];
@@ -10440,6 +10443,12 @@ function ptStartDay(){const {lvl,focus,markLower}=PLAN_OPT,m=S.minutes||30,N=pla
   S.plan=S.plan||{};S.plan[S.lang]={lvl,daily:N.daily,minutes:m,focus,start:today(),eta:N.eta,retest:N.retest};
   S.newPerDay=S.newPerDay||{};S.newPerDay[S.lang]=m>=60?20:12;S.dayTheme={};S.dayWords={};
   S.onb=1;LANG_PICKED=true;addXP(30);placementApply(lvl,markLower,()=>{document.body.classList.remove('in-session');home()})}
+
+/* ---------- ?new=1 — почати як новий користувач (поточний профіль зберігається копією) ---------- */
+(function(){try{if(!/[?&]new=1\b/.test(location.search))return;save=function(){};const raw=localStorage.getItem(STORE_KEY);
+  if(raw)localStorage.setItem(STORE_KEY+'.backup-'+new Date().toISOString().slice(0,16).replace(/[:T]/g,'-'),raw);
+  localStorage.removeItem(STORE_KEY);try{sessionStorage.clear()}catch(e){}
+  location.replace(location.pathname+location.hash)}catch(e){}})();
 
 bootApp();
 </script>
