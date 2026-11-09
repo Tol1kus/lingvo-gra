@@ -6646,7 +6646,7 @@ function placementSkip(){const it=SS.items[SS.i];if(it.answered||it.ptDone)retur
 function placementApply(lvl,mark,next){
   S.levels=[lvl];S.topics=[];
   if(mark){const lower=LEVELS.slice(0,LEVELS.indexOf(lvl));
-    WORDS.filter(w=>lower.includes(w.lv)&&!st(w)).forEach(w=>{const iv=4+Math.floor(Math.random()*20);S.srs[S.lang][w.id]={b:4,iv,ef:2.5,l:0,r:2,due:addDays(1+Math.floor(Math.random()*21))}})}
+    WORDS.filter(w=>lower.includes(w.lv)&&!st(w)).forEach(w=>{const iv=4+Math.floor(Math.random()*20);S.srs[S.lang][w.id]={b:2,iv,ef:2.5,l:0,r:1,due:addDays(1+Math.floor(Math.random()*21))}})}
   save();if(next)return next();toast('Налаштовано рівень '+lvl);home();
 }
 
@@ -9719,7 +9719,7 @@ function meScreen(){applyTheme();REDRAW=meScreen;emit('home:before');
    <div class="nf-me">${levelRing({lvl:maxLv(),pct:lp,today:Math.min(1,sec/60/m),size:250,center:nx?`до ${nx}: ${Math.round(lp*100)}%`:'найвищий рівень'})}
     <div class="nf-chips mid"><span class="am">${icn('flame')} ${S.streak} ${plUk(S.streak,['день','дні','днів'])}</span><span class="ok">${icn('check')} ${known} ${plUk(known,['слово','слова','слів'])} знаєш</span><span class="sk">${icn('clock')} ${Math.floor(sec/60)} / ${m} хв</span></div></div>
    ${typeof skyCardHTML==='function'?skyCardHTML():''}
-   <div class="nf-pcs">${row('chart','Прогрес','утримання, активність, етапи слів','statsScreen()')}${row('medal','Досягнення',`${ACH.filter(a=>(S.ach||{})[S.lang+':'+a[0]]).length} з ${ACH.length}`,'achScreen()')}${row('calendar','Тижневий звіт','хвилини, точність, утримання','weekReport()')}${row('target','Тест рівня',S.placement&&S.placement[S.lang]?'ваш рівень '+S.placement[S.lang].lvl:'пройти','placementIntro()')}${row('user','Налаштування','час, слова на день, звук, тема','settingsScreen()')}</div>`;emit('screen','me')}
+   <div class="nf-pcs">${row('play','Пройти старт ще раз','мова, мета, тест рівня, план','restartStart()')}${row('chart','Прогрес','утримання, активність, етапи слів','statsScreen()')}${row('medal','Досягнення',`${ACH.filter(a=>(S.ach||{})[S.lang+':'+a[0]]).length} з ${ACH.length}`,'achScreen()')}${row('calendar','Тижневий звіт','хвилини, точність, утримання','weekReport()')}${row('target','Тест рівня',S.placement&&S.placement[S.lang]?'ваш рівень '+S.placement[S.lang].lvl:'пройти','placementIntro()')}${row('user','Налаштування','час, слова на день, звук, тема','settingsScreen()')}</div>`;emit('screen','me')}
 
 /* ---------- старт: мова → мета й час → тест ---------- */
 const NF_GOALS=[['work','briefcase','Робота','листи, зустрічі, співбесіда'],['travel','plane','Подорожі','аеропорт, готель, місто'],['exam','cap','Іспит','IELTS · Cambridge B2 / C1'],['self','heart','Для себе','фільми, книжки, спілкування']];
@@ -9938,6 +9938,16 @@ function ownTopicAdd(){let n=0;OT.ws.filter(w=>w.on).forEach(w=>{try{if(addMy(w.
   A.push([/\b(?:where|what|when|why|how)\s+(?:you|he|she|they|we)\s+(?!are\b|were\b|have\b|had\b|can\b|will\b|would\b|should\b|must\b|do\b|does\b|did\b)\w+/gi,m=>`«${m[0]}»: у запитаннях потрібен допоміжний дієслово й інший порядок слів: <b>Where do you</b> live? (не «Where you live?»).`]);
   A.push([/\b(?:did)\s+(?:he|she|it|you|we|they|I)\s+\w+ed\b/gi,m=>`«${m[0]}»: після did дієслово в основній формі: did you <b>work</b>? (не worked).`]);
   A.push([/\bi\s+am\s+(?:agree|interesting in|boring)\b|\bam\s+(?:interesting|boring)\s+in\b/gi,m=>`«${m[0]}»: «agree» — дієслово (I agree); «interested in» — про свій інтерес, «interesting» — про те, що цікаве.`])})();
+
+/* ---------- Нічний фокус за замовчуванням: одноразово скидаємо «Світлу» зі старого дизайну ---------- */
+(function(){try{if(!S.nf2theme&&(S.theme==='light'||S.theme==='auto')){S.nf2theme=1;S.theme='dark';save();applyTheme()}}catch(e){}})();
+/* старі «письмові» етапи для слів, які тест лише позначив як знайомі, — назад до вибору */
+(function(){try{if(S.nf2seed)return;let n=0;Object.values(S.srs||{}).forEach(m=>Object.values(m||{}).forEach(x=>{if(x&&x.b===4&&x.r===2&&x.l===0&&!x.lr){x.b=2;n++}}));if(n){S.nf2seed=1;save()}}catch(e){}})();
+/* пройти старт ще раз (мова → мета → тест → план), прогрес не стирається */
+function restartStart(){onboarding(0)}
+/* вибір теми в налаштуваннях — свідомий, міграція його більше не чіпає */
+const _setThemeNF=setTheme;setTheme=function(t){S.nf2theme=1;return _setThemeNF(t)};
+const _toggleThemeNF=toggleTheme;toggleTheme=function(){S.nf2theme=1;return _toggleThemeNF()};
 
 bootApp();
 </script>
