@@ -1831,7 +1831,8 @@ header.ds-hd{display:block!important;flex-wrap:initial;margin:0}header.ds-top{ma
 .nf-launch{justify-content:flex-start!important;padding-top:calc(env(safe-area-inset-top) + 8px)}
 .nf-launch .nf-orbit-top{width:calc(100% + 32px);margin:0 -16px 6px;align-self:stretch}
 .nf-launch-in .nf-orbit-top{opacity:0;animation:nfLaunchIn .6s ease 1.6s forwards}.nf-launch-in.nf-quick .nf-orbit-top{animation-delay:0s}
-@media (max-width:360px){.nf-launch .nf-orbit-top{transform:scale(.86);transform-origin:top center;margin-bottom:-28px}}
+/* орбіта: слова не налазять на назву, на вузьких екранах стискаються до центру */
+.nf-launch .nf-orbit-top{--os:min(1px,calc((100vw - 40px) / 360));margin-bottom:18px}.nf-launch .ds-chipf{max-width:none}.nf-launch .ds-flip{max-width:none}
 .ds-chipf{transition:opacity .35s ease,filter .35s ease}.ds-chipf.swap{opacity:0;filter:blur(4px)}
 /* слова на орбіті: повільний перехід англійська ↔ українська */
 .ds-flip{display:inline-grid}.ds-flip b{grid-area:1/1;font-weight:700;transition:opacity 1.1s ease,filter 1.1s ease,transform 1.1s ease;white-space:nowrap}
@@ -1960,6 +1961,7 @@ header.ds-hd{display:block!important;flex-wrap:initial;margin:0}header.ds-top{ma
 .dv-say.sm{width:36px;height:36px;background:#16181B;border-radius:9px;align-self:flex-start;margin-top:4px}
 .dv-hr{max-width:40%}
 .dv-hrow .dv-hhead{flex:0 1 auto}.dv-hrow .dv-hr{margin-left:auto}
+.nf-launch .ds-chipf{width:max-content}.nf-launch .ds-flip b{overflow:visible;text-overflow:clip}
 </style>
 </head>
 <body>
@@ -10687,7 +10689,7 @@ function nfBeginner(){S.placement=S.placement||{};S.placement[S.lang]={lvl:'A1',
 
 /* орбіта «EN» зі словами навколо — верхній блок першого екрана */
 function nfOrbitHTML(){const W=nfOrbitWords();return `<div class="ds-orbit nf-orbit-top" aria-hidden="true"><svg width="390" height="250" viewBox="0 0 390 250"><circle cx="195" cy="125" r="96" fill="none" stroke="#25282D" stroke-width="1.5" stroke-dasharray="3 6"/><circle cx="195" cy="125" r="62" fill="none" stroke="#16181B" stroke-width="10"/><path d="M195.0 63.0 A62 62 0 0 1 248.7 156.0" fill="none" stroke="#C8F560" stroke-width="10" stroke-linecap="round" style="filter:drop-shadow(0 0 8px rgba(200,245,96,.6))"/></svg>
-  <span class="ds-orb-c">EN</span>${[[-112,-62,0],[96,-74,.6],[-118,30,1.2],[96,22,.3],[-44,96,.9],[110,96,1.5]].map(([x,y,d],k)=>[W[k]||{en:'',uk:''},x,y,d]).map(([w,x,y,d])=>`<span class="ds-chipf ds-flip" style="left:calc(50% + ${x}px);top:calc(50% + ${y}px);animation-delay:${d}s"><b class="en">${esc(w.en)}</b></span>`).join('')}</div>`}
+  <span class="ds-orb-c">EN</span>${[[-112,-66,0],[100,-78,.6],[-122,22,1.2],[100,14,.3],[-58,78,.9],[96,82,1.5]].map(([x,y,d],k)=>[W[k]||{en:'',uk:''},x,y,d]).map(([w,x,y,d])=>`<span class="ds-chipf ds-flip" style="left:calc(50% + ${x} * var(--os,1px));top:calc(50% + ${y}px);animation-delay:${d}s"><b class="en">${esc(w.en)}</b></span>`).join('')}</div>`}
 
 /* ---------- «День N» = пройдені плани + 1 (а не дати з активністю) ----------
    Тест і перші вправи — це ще день 1; «День 2» з'являється лише після всіх кроків плану дня 1. */
