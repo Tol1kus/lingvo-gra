@@ -10605,6 +10605,7 @@ function nfNoDash(s){return typeof s!=='string'?s:s.replace(/^\s*[—–-]\s+/,'
 if(typeof ensureSent==='function'){const _ensureSentND=ensureSent;ensureSent=function(){return Promise.resolve(_ensureSentND.apply(this,arguments)).then(r=>{try{WORDS.forEach(w=>{if(w.sent)Object.keys(w.sent).forEach(k=>{w.sent[k]=nfNoDash(w.sent[k])})})}catch(e){}return r})}}
 
 /* 3) тема дня */
+const SERIES_TOPICS=new Set(['numbers','a1m_days','a1x03_months','colors']);
 function themeWords(t){return (t&&t.words||[]).filter(w=>w[S.lang])}
 function themeOrder(){const top=LEVELS.indexOf(maxLv());
   return TOPICS.filter(t=>t.id!=='ukus'&&LEVELS.indexOf(t.lv)<=top&&lvOK(t.lv)&&themeWords(t).length>=4)
@@ -10622,14 +10623,17 @@ function dayTopicName(){const t=dayTheme();return t?t.name:'Нові слова'
 function dayWordList(){
   S.dayWords=S.dayWords||{};const D=S.dayWords[S.lang];
   if(D&&D.d&&D.d<today()&&D.ids&&D.ids.length){S.dayPrev=S.dayPrev||{};if(!S.dayPrev[S.lang]||S.dayPrev[S.lang].d<D.d)S.dayPrev[S.lang]={d:D.d,ids:D.ids.slice()}} // запам'ятати попередній день для повторення
-  if(D&&D.d===today()&&D.v===3){const ws=D.ids.map(id=>WBYID[id]).filter(Boolean);if(ws.length)return ws}
+  if(D&&D.d===today()&&D.v===4){const ws=D.ids.map(id=>WBYID[id]).filter(Boolean);if(ws.length)return ws}
   const keep=D&&D.d===today()?D.ids.map(id=>WBYID[id]).filter(w=>w&&st(w)):[];
   const n=Math.max(1,typeof newQuotaToday==='function'?newQuotaToday():10),t=dayTheme();
-  let list=keep.concat(t?themeWords(t).filter(w=>!st(w)&&!keep.includes(w)):[]);
+  // теми-ряди (числа, дні, місяці, кольори): показуємо весь ряд — слово, яке вже трапилось раніше, але ще не засвоєне (етап < 3),
+  // лишається в уроці як повторення, інакше ряд виглядає дірявим (1, 2, 3, 5…)
+  const fresh=w=>!st(w)||(SERIES_TOPICS.has(t.id)&&(st(w).b|0)<3);
+  let list=keep.concat(t?themeWords(t).filter(w=>fresh(w)&&!keep.includes(w)):[]);
   if(list.length<Math.min(4,n)){const nx=themeOrder().find(x=>x!==t&&themeWords(x).some(w=>!st(w)));if(nx)list=list.concat(themeWords(nx).filter(w=>!st(w)))}
   if(!list.length)list=pickNew(n);
   list=list.slice(0,Math.max(n,keep.length));
-  S.dayWords[S.lang]={d:today(),v:3,ids:list.map(w=>w.id)};save();return list}
+  S.dayWords[S.lang]={d:today(),v:4,ids:list.map(w=>w.id)};save();return list}
 
 /* 4) текст дня — той, де найбільше слів теми дня (позиції текстів — за idx, а не за місцем у списку) */
 function pickTextOfDay(){
