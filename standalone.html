@@ -2218,6 +2218,22 @@ header.ds-hd{display:block!important;flex-wrap:initial;margin:0}header.ds-top{ma
 /* світла тема: головні кнопки темно-зелені (--accent) — текст і іконка білі, а не чорні; бурштинова лишається з чорним */
 :root[data-theme="light"] .btn:not(.ghost):not(:disabled):not([disabled]):not(.c-amber):not(.rate){color:#fff!important}
 :root[data-theme="light"] .nf-cta.c-amber{color:#000!important}
+/* ---------- тест рівня v2 ---------- */
+.pt-self-o button{flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:12px 16px;display:flex}
+.pt-self-o button b{font-size:16px}.pt-self-o button small{font-weight:500;font-size:13px;color:var(--mut)}
+.ds-qs.sm{font-size:19px;line-height:1.4}
+.ds-opts button.sm{font-size:15px;font-weight:600;line-height:1.35;text-align:left;justify-content:flex-start;padding:12px 16px;min-height:52px}
+.pt-text{margin:4px 0 12px;border:1px solid var(--line);border-radius:16px;background:var(--s1);padding:10px 14px}
+.pt-text summary{font-size:13px;font-weight:700;color:var(--mut);cursor:pointer;min-height:28px}
+.pt-text p{margin:8px 0 2px;font-size:16px;line-height:1.6;max-height:38vh;overflow:auto}
+.pt-tq{font-weight:700;color:var(--ink)}
+.pt-type{display:flex;flex-direction:column;gap:10px;padding:22px 16px 0}
+.pt-hint{font:700 22px/1 Unbounded,sans-serif;letter-spacing:.06em;color:var(--sky)}
+.pt-type input{min-height:56px;border-radius:16px;border:1.5px solid var(--line);background:var(--s1);color:var(--ink);font:700 20px 'Golos Text',sans-serif;padding:0 16px}
+.pt-type input:focus{outline:none;border-color:var(--lime-t)}
+.pt-sum{margin:10px 16px 0;text-align:center;font-size:15px;line-height:1.5;color:var(--mut)}
+.pt-na b{color:var(--mut)!important}.pt-nab{display:block;margin-top:10px;font-size:12px;color:var(--mut)}
+.pt-self .ds-qlab{font-size:20px;font-weight:800;color:var(--ink);margin-bottom:6px}
 </style>
 </head>
 <body>
@@ -10884,81 +10900,142 @@ function onboarding(step=0){
 }
 function placementIntro(){nfGuide()}
 
-/* ---------- E03 · адаптивний тест ---------- */
-const PT_SKILLS=[['vocab','Слова'],['gram','Граматика'],['listen','Слухання'],['read','Читання']];
-const PT_TOTAL=20;
+/* ---------- E03 · адаптивний тест рівня (версія 2, 10.11.2026) ----------
+   Питання: слова (українське → англійське), справжня граматика (вправи з правил свого рівня), читання (зміст речення;
+   від B1 — короткий справжній текст із 2 питаннями), слухання, «напиши слово» (вгадати неможливо).
+   Підрахунок — проста модель IRT: імовірність правильної відповіді на питання рівня d (A1=0 … C2=5)
+     P = c + (1 − c) · σ(PT_A · (θ − d)),  c = 1 / кількість варіантів (вгадування), для «напиши» c = 0.
+   Після кожної відповіді θ — середнє апостеріорного розподілу (сітка, м'який пріор біля самооцінки). Рівень = floor(θ − PT_CUT).
+   Тому вгадана відповідь важить мало, «Не знаю» — чесна відповідь, а один-два щасливі збіги рівень не піднімають.
+   Наступне питання — по черзі на оціненому рівні й на сходинку вище (найбільше інформації біля межі).
+   Точність перевіряє tests/smoke_placement_sim.js на «віртуальних учнях». */
+const PT_SKILLS=[['vocab','Слова'],['gram','Граматика'],['read','Читання'],['listen','Слухання'],['write','Написання']];
+const PT_ORDER=['vocab','gram','read','write','listen'];
+const PT_TOTAL=20,PT_A=2.2,PT_CUT=0.05;
 let PX=null;
 const ukClean=s=>nfNoDash(String(s||'').replace(/\[([^\]]*)\]/g,(m,a)=>a.split(';')[0]).replace(/\s+/g,' ').trim());
 const enFull=w=>{const s=w.sent&&w.sent.en;if(!s)return '';const g=parseGap(s);return nfNoDash(g?g.full:s)};
-function ptPool(li){return WORDS.filter(w=>w.lv===LEVELS[li]&&w.en&&!w.my&&!w.phrase&&!PX.used.has(w.id))}
-function ptMake(skill,li){
-  const ws=shuffle(ptPool(li));if(!ws.length)return null;const LV=LEVELS[li];
-  // неправильні варіанти — з тієї самої теми й рівня (щоб не відкидати їх за змістом), далі — з рівня
-  const near=(w,f)=>{const a=shuffle(WORDS.filter(x=>x.lv===LV&&x.en&&x.id!==w.id&&x.topic===w.topic&&f(x))),b=shuffle(WORDS.filter(x=>x.lv===LV&&x.en&&x.id!==w.id&&x.topic!==w.topic&&f(x)));return a.concat(b)};
-  const four=(right,list,key)=>{const o=[right];for(const x of list){if(o.length>=4)break;const v=key(x);if(v&&!o.includes(v))o.push(v)}return o.length>=3?shuffle(o):null};
-  if(skill==='vocab'){const w=ws[0],opts=four(w.en,near(w,x=>x.uk!==w.uk&&!x.phrase),x=>x.en);if(!opts)return null;
-    return {skill,li,w,label:'Як це англійською?',big:w.uk,opts,ans:w.en}}
-  if(skill==='gram'){const w=ws.find(x=>x.sent&&x.sent.en&&(parseGap(x.sent.en)||{opts:[]}).opts.length>=3);if(!w)return ptMake('read',li);const g=parseGap(w.sent.en);
-    return {skill,li,w,label:'Обери правильну форму',pre:nfNoDash(g.pre),post:g.post,uk:ukClean(w.sent.uk),opts:shuffle(g.opts.slice(0,4)),ans:g.answer}}
-  if(skill==='listen'&&canSpeak){const w=ws.find(x=>!/\s/.test(x.en.replace(/^(to|a|an|the) /,'')))||ws[0],t=w.en;
-    const sim=WORDS.filter(x=>x.en&&x.id!==w.id&&x.en!==t&&Math.abs(x.en.length-t.length)<=3&&(LEVELS.indexOf(x.lv)<=li+1)).map(x=>[x.en,lev(x.en.toLowerCase(),t.toLowerCase())]).sort((a,b)=>a[1]-b[1]).slice(0,10).map(x=>x[0]);
-    const opts=four(t,shuffle(sim.slice(0,6)).map(e=>({e})),x=>x.e);if(!opts)return null;
-    return {skill,li,w,label:'Послухай і обери слово, яке прозвучало',audio:t,opts,ans:t}}
-  // читання: речення без перекладу, пропущене слово — за змістом (варіанти з тієї ж теми)
-  const w=ws.find(x=>x.sent&&x.sent.en&&parseGap(x.sent.en)&&!x.phrase);if(!w)return ptMake('vocab',li);const g=parseGap(w.sent.en);
-  const opts=four(g.answer,near(w,x=>!x.phrase&&!/\s/.test(x.en.replace(/^(to|a|an|the) /,''))),x=>x.en.replace(/^(to|a|an|the) /,''));if(!opts)return ptMake('vocab',li);
-  return {skill:'read',li,w,label:'Прочитай і встав слово, яке підходить за змістом',pre:nfNoDash(g.pre),post:g.post,uk:'',opts,ans:g.answer};
-}
-function ptStart(){applyTheme();document.body.classList.add('in-session');PX={n:0,li:0,streak:0,log:[],used:new Set(),t0:Date.now(),sel:null,q:null};ptNext()}
-function ptNext(){
-  // сходинки «2 вгору / 1 вниз»: складність росте лише після двох правильних поспіль
-  if(PX.q){const q=PX.q,ok=PX.sel!=null&&PX.sel>=0&&q.opts[PX.sel]===q.ans;PX.log.push({skill:q.skill,li:q.li,ok});
-    if(ok){PX.streak++;if(PX.streak>=2){PX.li=Math.min(5,PX.li+1);PX.streak=0}}else{PX.li=Math.max(0,PX.li-1);PX.streak=0}}
+const ptPlain=s=>String(s||'').replace(/\{([^|}]*)\|[^}]*\}/g,'$1').replace(/\s+([,.!?;:])/g,'$1').replace(/\s+/g,' ').trim();
+const ptNorm=s=>String(s||'').toLowerCase().replace(/[’`]/g,"'").replace(/^(to|a|an|the) /,'').replace(/[^a-z' -]/g,'').replace(/\s+/g,' ').trim();
+const ptPos=w=>/^to /.test(w.en)?'v':/\s/.test(w.en)?'p':'w';
+const ptClamp=li=>Math.max(0,Math.min(5,li));
+function ptPool(li,f){return WORDS.filter(w=>w.lv===LEVELS[li]&&w.en&&!w.my&&!w.phrase&&w.topic!=='ukus'&&!PX.used.has(w.id)&&(!f||f(w)))}
+// неправильні варіанти: той самий рівень і та сама частина мови, спершу з тієї ж теми — щоб не відкидались за змістом чи формою
+function ptNear(w,f){const LV=w.lv,ok=x=>x.lv===LV&&x.en&&x.id!==w.id&&!x.my&&x.topic!=='ukus'&&f(x);
+  return shuffle(WORDS.filter(x=>x.topic===w.topic&&ok(x))).concat(shuffle(WORDS.filter(x=>x.topic!==w.topic&&ok(x))))}
+function ptFour(right,list,key){const o=[right],seen=new Set([String(right).toLowerCase()]);for(const x of list){if(o.length>=4)break;const v=key(x);
+  if(v&&!seen.has(String(v).toLowerCase())){seen.add(String(v).toLowerCase());o.push(v)}}return o.length>=4?shuffle(o):null}
+function ptSentMeaning(li,skill,label,audio){
+  const ws=shuffle(ptPool(li,x=>x.sent&&x.sent.en&&x.sent.uk&&parseGap(x.sent.en)));
+  for(const w of ws.slice(0,12)){const right=ukClean(w.sent.uk);if(!right)continue;
+    const opts=ptFour(right,ptNear(w,x=>x.sent&&x.sent.uk),x=>ukClean(x.sent.uk));if(!opts)continue;
+    const en=enFull(w);return {kind:'mc',skill,li,w,label,big:audio?null:en,audio:audio?en:null,opts,ans:right,small:true}}
+  return null}
+function ptMake(skill,li){const LV=LEVELS[li];
+  if(skill==='vocab'){for(const w of shuffle(ptPool(li)).slice(0,12)){
+      const opts=ptFour(w.en,ptNear(w,x=>x.uk!==w.uk&&!x.phrase&&ptPos(x)===ptPos(w)&&ptNorm(x.en)!==ptNorm(w.en)),x=>x.en);
+      if(opts)return {kind:'mc',skill,li,w,label:'Як це англійською?',big:w.uk,opts,ans:w.en}}return null}
+  if(skill==='gram'){const ex=[];(GRAMMAR[S.lang]||[]).forEach((g,gi)=>{if(g.lv!==LV||/британськ/i.test(g.t))return;
+      (g.ex||[]).forEach((e,ei)=>{const k=gi+':'+ei;if(!PX.usedG.has(k)&&/___/.test(e[0])&&Array.isArray(e[1])&&e[1].length>=3)ex.push([k,e])})});
+    if(!ex.length)return null;const [k,e]=ex[Math.floor(Math.random()*ex.length)],[pre,post]=String(e[0]).split('___');
+    return {kind:'mc',skill,li,gk:k,label:'Обери правильну форму',pre:nfNoDash(pre),post:post||'',opts:shuffle(e[1].slice()),ans:e[1][e[2]]}}
+  if(skill==='read'){
+    // від B1 — один короткий справжній текст на тест (2 питання на розуміння)
+    if(li>=2&&!PX.textDone){const ts=shuffle((TEXTS[S.lang]||[]).filter(t=>t.lv===LV&&(t.q||[]).length>=2&&ptPlain(t.text).split(' ').length<=250));
+      if(ts.length){const t=ts[0],qs=shuffle(t.q.slice()).slice(0,2),q={kind:'text',skill,li,t,plain:ptPlain(t.text),qs,qi:0};ptTextQ(q);return q}}
+    return ptSentMeaning(li,skill,'Прочитай і обери, що означає речення')}
+  if(skill==='listen'){if(!canSpeak)return null;
+    if(li>=2)return ptSentMeaning(li,skill,'Послухай і обери, що означає речення',true);
+    const w=shuffle(ptPool(li,x=>!/\s/.test(x.en.replace(/^(to|a|an|the) /,''))))[0];if(!w)return null;const t=w.en;
+    const sim=WORDS.filter(x=>x.en&&x.id!==w.id&&x.en!==t&&!/\s/.test(x.en)&&Math.abs(x.en.length-t.length)<=3&&LEVELS.indexOf(x.lv)<=li+1).map(x=>[x.en,lev(x.en.toLowerCase(),t.toLowerCase())]).sort((a,b)=>a[1]-b[1]).slice(0,10).map(x=>({e:x[0]}));
+    const opts=ptFour(t,shuffle(sim.slice(0,6)),x=>x.e);if(!opts)return null;
+    return {kind:'mc',skill,li,w,label:'Послухай і обери слово, яке прозвучало',audio:t,opts,ans:t}}
+  if(skill==='write'){const w=shuffle(ptPool(li,x=>/^[a-z]{3,12}$/i.test(ptNorm(x.en))))[0];if(!w)return null;
+    const a=ptNorm(w.en),acc=[...new Set(WORDS.filter(x=>x.uk===w.uk&&x.en&&/^[a-z]+$/i.test(ptNorm(x.en))&&ptNorm(x.en)[0]===a[0]).map(x=>ptNorm(x.en)))];
+    return {kind:'type',skill,li,w,label:'Напиши англійською',big:w.uk,hint:a[0]+'_'.repeat(a.length-1),ans:w.en,acc}}
+  return null}
+function ptTextQ(q){const x=q.qs[q.qi];q.label=x[0];q.opts=x[1].slice();q.ans=x[1][x[2]]}
+// θ — середнє апостеріорного розподілу на сітці
+function ptTheta(log,mu,sd){let sw=0,st=0;for(let th=-0.5;th<=6.5001;th+=0.05){let l=-((th-mu)**2)/(2*sd*sd);
+    for(const r of log){const p=r.c+(1-r.c)/(1+Math.exp(-PT_A*(th-r.li)));l+=Math.log(r.ok?Math.max(p,1e-6):Math.max(1-p,1e-6))}
+    const wgt=Math.exp(l);sw+=wgt;st+=wgt*th}return sw?st/sw:mu}
+const ptLevel=th=>ptClamp(Math.floor(th-PT_CUT));
+const ptMu=start=>start+PT_CUT+0.45;
+// самооцінка перед тестом — з якого рівня почати (так тест коротший для сильних і не лякає новачків)
+const PT_SELF=[['Знаю лише кілька слів','алфавіт, привітання, числа',0],['Можу просту розмову','про себе, покупки, дорогу',1],
+  ['Розумію серіали з субтитрами','листуюся, читаю прості статті',2],['Вільно читаю й говорю','роботу, новини, книжки — англійською',3]];
+function ptSelf(){applyTheme();document.body.classList.add('in-session');REDRAW=ptSelf;
+  app.innerHTML=`<div class="ds-scr pt-self"><header class="ds-top"><button class="ds-x" onclick="nfGuide()" aria-label="Назад">${icn('close')}</button>
+    <div class="ds-prog"><div class="ds-prog-h"><span>Перед тестом</span><span>1 питання</span></div></div></header>
+   <section class="ds-q"><p class="ds-qlab">Як ти оцінюєш свою англійську зараз?</p><span class="ds-qtr">Тест почнеться з питань близько до твого рівня, а далі підлаштується сам — помилитися з відповіддю тут не страшно.</span></section>
+   <div class="ds-opts pt-self-o">${PT_SELF.map(([t,s,li])=>`<button onclick="ptStart(${li})"><b>${t}</b><small>${s}</small></button>`).join('')}</div>
+   <div class="ds-foot"><button class="nf-link" onclick="nfBeginner()">Я зовсім новачок — почати з A1 без тесту</button></div></div>`;window.scrollTo(0,0)}
+function ptStart(start){applyTheme();document.body.classList.add('in-session');start=ptClamp(+start||0);
+  PX={n:0,k:0,start,th:ptMu(start),log:[],used:new Set(),usedG:new Set(),textDone:false,t0:Date.now(),sel:null,typed:'',q:null};ptNext()}
+function ptOk(q){if(q.kind==='type'){const v=ptNorm(PX.typed);return !!v&&q.acc.some(a=>a===v||(a.length>=6&&lev(a,v)<=1))}
+  return PX.sel!=null&&PX.sel>=0&&q.opts[PX.sel]===q.ans}
+function ptNext(){if(!PX||PX.done)return;
+  if(PX.q){const q=PX.q;PX.log.push({skill:q.skill,li:q.li,ok:ptOk(q),c:q.kind==='type'?0:1/q.opts.length,idk:PX.sel===-1});
+    PX.th=ptTheta(PX.log,ptMu(PX.start),1.6);
+    if(q.kind==='text'&&q.qi<q.qs.length-1&&PX.n<PT_TOTAL){q.qi++;ptTextQ(q);PX.sel=null;PX.typed='';PX.n++;return ptRender()}}
   if(PX.n>=PT_TOTAL)return ptResult();
-  const sk=PT_SKILLS[PX.n%4][0];let q=null;for(let d=0;d<6&&!q;d++)q=ptMake(sk,Math.max(0,Math.min(5,PX.li+(d%2?-1:1)*Math.ceil(d/2))));
-  if(!q)return ptResult();PX.used.add(q.w.id);PX.q=q;PX.sel=null;PX.n++;ptRender();
+  // по черзі: на оціненому рівні й на сходинку вище
+  const sk=PT_ORDER[PX.k%PT_ORDER.length],L=ptLevel(PX.th),li0=ptClamp(L+(PX.k%2));PX.k++;
+  let q=null;for(let d=0;d<6&&!q;d++){const li=ptClamp(li0+(d%2?-1:1)*Math.ceil(d/2));q=ptMake(sk,li)||(d>=3?ptMake('vocab',li):null)}
+  if(!q)return ptResult();
+  if(q.w)PX.used.add(q.w.id);if(q.gk)PX.usedG.add(q.gk);if(q.kind==='text')PX.textDone=true;
+  PX.q=q;PX.sel=null;PX.typed='';PX.n++;ptRender();
   if(q.audio)setTimeout(()=>speak(q.audio),350);
 }
 function ptPick(i){PX.sel=i;ptRender()}
+function ptType(v){PX.typed=v;const b=document.querySelector('.ds-cta');if(b){const on=!!ptNorm(v);b.classList.toggle('off',!on);b.disabled=!on}}
 function ptRender(){const q=PX.q,s=PX.sel,d=s!=null,skName=(PT_SKILLS.find(x=>x[0]===q.skill)||PT_SKILLS[0])[1];
-  const blank=d&&q.pre!=null?q.opts[s]:'…';
+  const blank=d&&q.pre!=null&&s>=0?q.opts[s]:'…',typed=q.kind==='type',ready=typed?!!ptNorm(PX.typed):d;
+  const body=q.kind==='text'?`<details class="pt-text" open><summary>${esc(q.t.title)} · текст рівня ${LEVELS[q.li]}</summary><p>${esc(q.plain)}</p></details><p class="ds-qlab pt-tq">${esc(q.label)}</p>`
+    :`<p class="ds-qlab">${q.label}</p>`+(q.pre!=null?`<strong class="ds-qs">${esc(q.pre)}<span class="ds-blank">${esc(blank)}</span>${esc(q.post)}</strong>`
+      :q.audio?`<div class="ds-qaudio"><button class="nf-play" onclick="speak(${js(q.audio)})" aria-label="Прослухати ще раз">${icn('speaker')}</button><button class="nf-slow" onclick="slowSpeak(${js(q.audio)})">${icn('clock')} повільно</button></div>`
+      :`<strong class="ds-qs${q.small?' sm':''}">${esc(q.big)}</strong>`);
   app.innerHTML=`<div class="ds-scr">
    <header class="ds-top"><button class="ds-x" onclick="nfGuide()" aria-label="Закрити">${icn('close')}</button>
      <div class="ds-prog"><div class="ds-prog-h"><span>Тест рівня · ${skName.toLowerCase()}</span><span>${PX.n} / ${PT_TOTAL}</span></div><div class="ds-bar"><i style="width:${(PX.n-1)/PT_TOTAL*100}%"></i></div></div></header>
-   <section class="ds-q">
-     <div class="ds-chips"><span class="ds-chip sky">складність: ${LEVELS[q.li]}</span><span class="ds-chip">адаптивний</span></div>
-     <p class="ds-qlab">${q.label}</p>
-     ${q.pre!=null?`<strong class="ds-qs">${esc(q.pre)}<span class="ds-blank">${esc(blank)}</span>${esc(q.post)}</strong>${q.uk?`<span class="ds-qtr">${esc(q.uk)}</span>`:''}`
-      :q.audio?`<div class="ds-qaudio"><button class="nf-play" onclick="speak(${js(q.audio)})" aria-label="Прослухати ще раз">${icn('speaker')}</button><button class="nf-slow" onclick="slowSpeak(${js(q.audio)})">${icn('clock')} повільно</button></div>`
-      :`<strong class="ds-qs">${esc(q.big)}</strong>`}
-   </section>
-   <div class="ds-opts">${q.opts.map((o,i)=>`<button class="${i===s?'on':''}" onclick="ptPick(${i})">${esc(o)}</button>`).join('')}</div>
-   ${d?`<section class="ds-pend"><span>Відповідь прийнято. <em>Натиснув(ла) випадково?</em></span><button onclick="PX.sel=null;ptRender()">${icn('refresh')} Переграти</button></section>`
-     :`<button class="ds-idk" onclick="PX.sel=-1;ptNext()">Не знаю — далі</button>`}
-   <p class="ds-qnote">У тесті не показуємо правильну відповідь — так рівень точніший. Наступне питання складніше чи простіше залежно від цієї відповіді.</p>
-   <div class="ds-foot"><button class="ds-cta ${d?'':'off'}" ${d?'':'disabled'} onclick="ptNext()">${PX.n>=PT_TOTAL?'Побачити результат':'Наступне питання'}</button></div></div>`;
+   <section class="ds-q"><div class="ds-chips"><span class="ds-chip sky">складність: ${LEVELS[q.li]}</span><span class="ds-chip">адаптивний</span></div>${body}</section>
+   ${typed?`<div class="pt-type"><span class="pt-hint" aria-label="Перша літера й кількість літер">${esc(q.hint.split('').join(' '))}</span>
+       <input id="ptIn" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="latin" placeholder="напиши слово" value="${esc(PX.typed)}" oninput="ptType(this.value)" onkeydown="if(event.key==='Enter'&&ptNorm(this.value))ptNext()"></div>`
+     :`<div class="ds-opts">${q.opts.map((o,i)=>`<button class="${i===s?'on':''}${q.small||q.kind==='text'?' sm':''}" onclick="ptPick(${i})">${esc(o)}</button>`).join('')}</div>`}
+   ${d&&!typed?`<section class="ds-pend"><span>Відповідь прийнято. <em>Натиснув(ла) випадково?</em></span><button onclick="PX.sel=null;ptRender()">${icn('refresh')} Переграти</button></section>`
+     :`<button class="ds-idk" onclick="PX.sel=-1;PX.typed='';ptNext()">Не знаю — далі</button>`}
+   <p class="ds-qnote">${typed?'Перша літера вже є, кількість рисок — кількість літер. Маленька описка в довгому слові не рахується помилкою.':'Не вгадуй: «Не знаю» дає точніший результат, ніж випадкова відповідь. Правильну відповідь у тесті не показуємо.'}</p>
+   <div class="ds-foot"><button class="ds-cta ${ready?'':'off'}" ${ready?'':'disabled'} onclick="ptNext()">${PX.n>=PT_TOTAL?'Побачити результат':'Наступне питання'}</button></div></div>`;
+  if(typed){const i=document.getElementById('ptIn');if(i)try{i.focus({preventScroll:true})}catch(e){}}
 }
 
 /* ---------- E04 · результат ---------- */
-function ptEst(arr,minN=2,ratio=.6){let best=0;for(let li=0;li<6;li++){const a=arr.filter(x=>x.li===li);if(a.length>=minN&&a.filter(x=>x.ok).length/a.length>=ratio)best=li}return best}
-function ptResult(){
-  const L=PX.log,ov=ptEst(L),lvl=LEVELS[ov],mins=Math.max(1,Math.round((Date.now()-PX.t0)/60000));
-  const est={};PT_SKILLS.forEach(([k])=>{const a=L.filter(x=>x.skill===k);est[k]=a.length?ptEst(a,1,.5):ov});
-  const acc=k=>{const a=L.filter(x=>x.skill===k);return a.length?a.filter(x=>x.ok).length/a.length:0};
-  const strong=PT_SKILLS.filter(([k])=>est[k]>ov),weak=PT_SKILLS.filter(([k])=>est[k]<ov);
-  const weakK=(weak[0]||PT_SKILLS.slice().sort((a,b)=>acc(a[0])-acc(b[0]))[0])[0];
-  const FX={vocab:'rec',gram:'ctx',listen:'rec',read:'ctx'},plus={vocab:'+ картки щодня',gram:'+ граматика щодня',listen:'+ аудіо щодня',read:'+ текст щодня'};
-  S.placement=S.placement||{};S.placement[S.lang]={lvl,date:today(),skills:Object.fromEntries(PT_SKILLS.map(([k])=>[k,LEVELS[est[k]]])),res:[{lv:lvl,right:L.filter(x=>x.ok).length,n:L.length}]};
+function ptResult(){PX.done=true;
+  const L=PX.log,th=ptTheta(L,ptMu(PX.start),1.6),ov=ptLevel(th),lvl=LEVELS[ov],mins=Math.max(1,Math.round((Date.now()-PX.t0)/60000));
+  const near=th-PT_CUT-ov,toward=ov<5&&near>0.7?LEVELS[ov+1]:null;
+  // рівень навички — лише якщо з неї було щонайменше 3 питання; пріор — загальний рівень (мало даних → ближче до загального)
+  const est={};PT_SKILLS.forEach(([k])=>{const a=L.filter(x=>x.skill===k);est[k]=a.length>=3?ptLevel(ptTheta(a,th,1.0)):null});
+  const known=PT_SKILLS.filter(([k])=>est[k]!=null);
+  const strong=known.filter(([k])=>est[k]>ov),weak=known.filter(([k])=>est[k]<ov);
+  const acc=k=>{const a=L.filter(x=>x.skill===k);return a.length?a.filter(x=>x.ok).length/a.length:1};
+  const weakK=(weak[0]||known.slice().sort((a,b)=>acc(a[0])-acc(b[0]))[0]||PT_SKILLS[0])[0];
+  const FX={vocab:'rec',gram:'ctx',listen:'rec',read:'ctx',write:'prod'},plus={vocab:'+ картки щодня',gram:'+ граматика щодня',listen:'+ аудіо щодня',read:'+ текст щодня',write:'+ письмо щодня'};
+  S.placement=S.placement||{};S.placement[S.lang]={lvl,date:today(),theta:Math.round(th*100)/100,self:PX.start,
+    skills:Object.fromEntries(known.map(([k])=>[k,LEVELS[est[k]]])),res:[{lv:lvl,right:L.filter(x=>x.ok).length,n:L.length}]};
   PLAN_OPT={lvl,focus:FX[weakK]||'prod',markLower:ov>0};save();
-  const th=(()=>{try{const top=LEVELS.indexOf(lvl);return TOPICS.filter(t=>t.lv===lvl&&t.id!=='ukus'&&t.words.filter(w=>w.en).length>=6).map(t=>t.name)}catch(e){return []}})();
-  const w1=th.slice(0,2).join(', ')||'теми рівня '+lvl,w2=th.slice(2,4).join(', ')||'нові теми',daily=(S.minutes||30)>=60?20:12;
+  const th_=(()=>{try{return TOPICS.filter(t=>t.lv===lvl&&t.id!=='ukus'&&t.words.filter(w=>w.en).length>=6).map(t=>t.name)}catch(e){return []}})();
+  const w1=th_.slice(0,2).join(', ')||'теми рівня '+lvl,w2=th_.slice(2,4).join(', ')||'нові теми',daily=(S.minutes||30)>=60?20:12;
   const cap=a=>a.map((x,i)=>i?x[1].toLowerCase():x[1]).join(' й ');
   const tip=strong.length&&weak.length?`${cap(strong)} вже вище ${lvl}, а <strong>${weak.map(x=>x[1].toLowerCase()).join(' й ')}</strong> тягнуть униз. Перші 2 тижні в плані буде більше цього.`
     :weak.length?`<strong>${cap(weak)}</strong> поки нижче за загальний рівень. Перші 2 тижні в плані буде більше цього.`
     :strong.length?`${cap(strong)} вже сильніші за загальний рівень — план додасть складніших текстів.`:`Усі навички приблизно на рівні ${lvl} — рівний старт.`;
+  const right=L.filter(x=>x.ok).length;
   app.innerHTML=`<div class="ds-scr ds-res">
-   <section class="ds-rtop"><span class="ds-eyebrow">РЕЗУЛЬТАТ ТЕСТУ · ${mins} ХВ</span>${levelRing({lvl,pct:0,size:220,center:'твій старт'})}</section>
-   <section class="ds-card"><h2>Рівень за навичками</h2><ul class="ds-skills">${PT_SKILLS.map(([k,n],i)=>{const ok=est[k]>=ov;return `<li><span>${n}</span><span class="ds-sbar"><i class="${ok?'':'am'}" style="width:${25+est[k]*15}%;animation-delay:${i*.12}s"></i></span><b class="${ok?'':'am'}">${LEVELS[est[k]]}</b></li>`}).join('')}</ul></section>
+   <section class="ds-rtop"><span class="ds-eyebrow">РЕЗУЛЬТАТ ТЕСТУ · ${mins} ХВ</span>${levelRing({lvl,pct:0,size:220,center:toward?'ближче до '+toward:'твій старт'})}
+     <p class="pt-sum">${right} з ${L.length} правильно. ${toward?`Ти впевнено на ${lvl} і вже близько до ${toward} — почнемо з ${lvl}, щоб не було прогалин.`:`Почнемо з ${lvl}: нове буде посильним, а знайоме швидко пройде повтором.`}</p></section>
+   <section class="ds-card"><h2>Рівень за навичками</h2><ul class="ds-skills">${PT_SKILLS.map(([k,n],i)=>{const e=est[k];if(e==null)return `<li class="pt-na"><span>${n}</span><span class="ds-sbar"><i style="width:0"></i></span><b title="Мало питань, щоб оцінити окремо">—</b></li>`;
+       const ok=e>=ov;return `<li><span>${n}</span><span class="ds-sbar"><i class="${ok?'':'am'}" style="width:${25+e*15}%;animation-delay:${i*.12}s"></i></span><b class="${ok?'':'am'}">${LEVELS[e]}</b></li>`}).join('')}</ul>
+     ${known.length<PT_SKILLS.length?'<small class="pt-nab">«—» — питань із цієї навички було замало для окремої оцінки.</small>':''}</section>
    <section class="ds-tipb">${icn('bulb')}<span>${tip}</span></section>
    <section class="ds-card"><h2>Твої перші 2 тижні</h2><div class="ds-wk"><div><small>ТИЖДЕНЬ 1</small><strong>${esc(w1)}</strong><span>${plus[weakK]}</span></div><div><small>ТИЖДЕНЬ 2</small><strong>${esc(w2)}</strong><span>${plus[weakK]}</span></div></div>
      <span class="ds-wkn">≈ ${daily*14} нових слів · контрольний тест через 14 днів</span></section>
@@ -11004,13 +11081,13 @@ const NF_GUIDE_SVG=`<svg class="nf-ff" viewBox="0 0 140 140" role="img" aria-lab
  <path d="M62 74 Q70 81 78 74" class="nf-ff-smile"/></svg>`;
 function nfGuide(){
   applyTheme();document.body.classList.add('in-session');REDRAW=nfGuide;
-  const text='Привіт! Я Світлик — буду поруч, поки ти вчиш англійську. Зараз тобі треба пройти короткий тест: 20 питань, близько 10 хвилин. Він покаже твій рівень, і далі ми продовжимо разом.';
+  const text='Привіт! Я Світлик — буду поруч, поки ти вчиш англійську. Зараз тобі треба пройти короткий тест: одне питання про тебе й 20 завдань, 10–12 хвилин. Він покаже твій рівень, і далі ми продовжимо разом.';
   app.innerHTML=`<div class="ds-scr nf-guide">
     <header class="ds-hd ds-hd2">${dsDots(1)}</header>
     <div class="nf-guide-hero">${NF_GUIDE_SVG}</div>
     <div class="nf-say-b"><small>Світлик</small><p id="nfSay" aria-live="polite"></p></div>
-    <ul class="nf-guide-pts"><li>${icn('target')}<span>Слова, граматика, слухання й читання</span></li><li>${icn('refresh')}<span>Помилився — натисни «Переграти»</span></li><li>${icn('chart')}<span>Питання підлаштовуються під тебе</span></li></ul>
-    <div class="ds-foot"><button class="ds-cta" onclick="ptStart()">Почати тест ${icn('arrow')}</button>
+    <ul class="nf-guide-pts"><li>${icn('target')}<span>Слова, граматика, читання, слухання й письмо</span></li><li>${icn('refresh')}<span>Помилився — натисни «Переграти»</span></li><li>${icn('chart')}<span>Питання підлаштовуються під тебе</span></li></ul>
+    <div class="ds-foot"><button class="ds-cta" onclick="ptSelf()">Почати тест ${icn('arrow')}</button>
       <button class="nf-link" onclick="nfBeginner()">Я зовсім новачок — почати з A1 без тесту</button></div></div>`;
   const el=document.getElementById('nfSay'),reduce=typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduce||!el){if(el)el.textContent=text;return}
