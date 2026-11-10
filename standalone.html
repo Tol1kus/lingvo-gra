@@ -2234,6 +2234,45 @@ header.ds-hd{display:block!important;flex-wrap:initial;margin:0}header.ds-top{ma
 .pt-sum{margin:10px 16px 0;text-align:center;font-size:15px;line-height:1.5;color:var(--mut)}
 .pt-na b{color:var(--mut)!important}.pt-nab{display:block;margin-top:10px;font-size:12px;color:var(--mut)}
 .pt-self .ds-qlab{font-size:20px;font-weight:800;color:var(--ink);margin-bottom:6px}
+
+/* ---------- дизайн 1–3 (10.11.2026) ---------- */
+/* 3) екрани з'являються швидко: блоки — 0,24 с з кроком 0,02 с (було 0,55 с з кроком 0,04 с, разом ≈ 0,8 с) */
+.pm-anim>*{animation:pmUp .24s cubic-bezier(.2,.8,.2,1) both!important}
+.pm-anim>*:nth-child(2){animation-delay:.02s!important}.pm-anim>*:nth-child(3){animation-delay:.04s!important}.pm-anim>*:nth-child(4){animation-delay:.06s!important}
+.pm-anim>*:nth-child(5){animation-delay:.07s!important}.pm-anim>*:nth-child(n+6){animation-delay:.08s!important}
+@keyframes pmUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+#app.scr-in{animation-duration:.16s}
+@media (prefers-reduced-motion:reduce){.pm-anim>*{animation:none!important}}
+/* 2) «сцена» замість емодзі: лінійна іконка теми на --s2 (DESIGN.md) */
+.pic-scene{display:grid;place-items:center;width:100%;height:100%;min-width:24px;min-height:24px;background:var(--s2);color:var(--sky);border-radius:inherit;font-size:0}
+.pic-scene svg{width:50%;height:50%;max-width:60px;max-height:60px;stroke-width:1.7}
+:has(> .pic-scene){background:var(--s2)!important}
+/* 1) вправи в стилі картки слова */
+body.in-session .q-label{font:800 12px/1.3 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--sky);margin:0 0 10px}
+body.in-session #app>.card.nf-xc{background:var(--s1);border:1px solid var(--line);border-radius:28px;padding:16px 16px 18px;box-shadow:none}
+.nf-xc>.pic{position:relative;display:grid;place-items:center;height:150px;border-radius:20px;background:var(--light);overflow:hidden;margin:0 0 14px;font-size:72px;box-shadow:none;border:0}
+.nf-xc>.pic .pimg{max-height:124px;max-width:80%;width:auto;height:auto;object-fit:contain;background:none;padding:0}
+.nf-xc>.pic.has-ph{height:180px}
+.nf-xc>.pic .ph-img{position:absolute;inset:0;width:100%;height:100%!important;max-height:none!important;object-fit:cover;opacity:0;transition:opacity .25s}
+.nf-xc>.pic.ph-on .ph-img{opacity:1}.nf-xc>.pic.ph-on>.pimg{visibility:hidden}
+.nf-xc>.pic .ph-img:not([src]),.nf-xc>.pic.ph-bad .ph-img,.nf-xc>.pic.ph-bad .ph-cr,.nf-xc>.pic:not(.ph-on) .ph-cr{display:none}
+.nf-xc>.pic .ph-cr{position:absolute;right:8px;bottom:6px;max-width:75%;font:500 10px/1.3 'Golos Text',sans-serif;color:#fff;background:rgba(0,0,0,.55);padding:2px 7px;border-radius:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-decoration:none}
+.nf-xc>.q-word{font:800 clamp(26px,8vw,34px)/1.15 var(--display);color:var(--ink);display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 16px;letter-spacing:-.01em}
+.nf-say-s{all:unset;box-sizing:border-box;cursor:pointer;flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--sky) 14%,var(--s1));color:var(--sky);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--sky) 55%,transparent)}
+.nf-say-s svg{width:20px;height:20px}
+.nf-xc .opts .opt{min-height:56px;border-radius:16px}
+/* 3) розбір помилки: кольорова рамка 50 %, фон 10 %, пояснення «чому» з лампочкою */
+.nf-fbk .k-mis{border-radius:18px;padding:12px 14px}
+.nf-fbk .k-mis.bad{background:color-mix(in srgb,var(--bad) 10%,transparent);border:1px solid color-mix(in srgb,var(--bad) 50%,transparent)}
+.nf-fbk .k-mis.ok{background:color-mix(in srgb,var(--ok) 10%,transparent);border:1px solid color-mix(in srgb,var(--ok) 50%,transparent)}
+.nf-fbk .k-mis b{font-weight:800}
+.nf-whyb{position:relative;padding-left:46px!important;background:color-mix(in srgb,var(--sky) 8%,transparent)!important;border:1px solid color-mix(in srgb,var(--sky) 40%,transparent)!important;border-radius:18px!important}
+.nf-why-ic{position:absolute;left:14px;top:12px;color:var(--sky);display:flex}.nf-why-ic svg{width:22px;height:22px}
+.nf-whyb .hl-line{font-size:15px;line-height:1.5;color:var(--ink)}
+@media (prefers-reduced-motion:reduce){.nf-xc>.pic .ph-img{transition:none}}
+.pic-scene{background:color-mix(in srgb,var(--sky) 12%,var(--s2))!important;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--sky) 28%,transparent)}
+.pic-scene svg{stroke:var(--sky)!important;fill:none!important}
+:has(> .pic-scene){background:color-mix(in srgb,var(--sky) 12%,var(--s2))!important}
 </style>
 </head>
 <body>
@@ -12016,6 +12055,63 @@ function grefFill(i,d){const b=d.querySelector('.gref-b');if(!b||b.dataset.ok)re
 function grefPractice(i){const g=GRAMMAR[S.lang][i];GREF.open=i;
   runSession(shuffle(g.ex).map(ex=>({kind:'gram',g,ex,phase:'Граматика · '+g.t})),{title:g.t,requeue:true,back:grammarRef,backLabel:'До граматики',again:()=>grefPractice(i),
     onFinish:o=>{const s_=o.graded?Math.min(1,o.right/o.graded):0;S.grammar[S.lang]=S.grammar[S.lang]||{};S.grammar[S.lang][i]=Math.max(S.grammar[S.lang][i]||0,s_);save()}})}
+
+/* ====================== ЄДИНИЙ ВИГЛЯД ВПРАВ І КАРТИНОК (10.11.2026) ======================
+   1) Вправи «вибери переклад», «напиши», «слухай», граматика — у стилі картки слова: картка --s1, мітка-«брова» небесним,
+      картинка на світлій плитці (або фото з автором), слово шрифтом Unbounded, кнопка звуку небесна.
+   2) Картинки: фото (лише там, де є місце для підпису автора й ліцензії — велика картка), інакше малюнок Mulberry,
+      інакше — лінійна іконка теми на --s2 («сцена», DESIGN.md). Емодзі як картинку слова не показуємо.
+   3) Розбір помилки (DESIGN.md, «Картки зворотного зв'язку»): «Ви обрали» / «Правильно» з кольоровою рамкою + пояснення «чому» з лампочкою. */
+
+// нові лінійні іконки для «сцен» (24×24, stroke)
+Object.assign(IC,{
+  fork:'<path d="M7 3v7M4.5 3v4.5a2.5 2.5 0 0 0 5 0V3M7 10v11M17.5 3c-1.9 0-3 2.5-3 5.5 0 2.2 1.1 3.5 3 3.5V3zM17.5 12v9"/>',
+  home:'<path d="M3 11l9-7 9 7M5.5 9.5V20h5v-5.5h3V20h5V9.5"/>',
+  cross:'<path d="M9 3.5h6v5.5h5.5v6H15v5.5H9V15H3.5V9H9z"/>',
+  leaf:'<path d="M5 19.5C5 11 10 5 20 4c-.6 9.7-6.4 15.5-15 15.5zM5 19.5l7.5-7.5"/>',
+  coin:'<circle cx="12" cy="12" r="8.5"/><path d="M14.6 9.3c-.6-.8-1.5-1.3-2.6-1.3-1.4 0-2.6.8-2.6 2s1.2 1.6 2.6 2 2.6.8 2.6 2-1.2 2-2.6 2c-1.1 0-2-.5-2.6-1.3M12 6.5V8M12 16v1.5"/>',
+  monitor:'<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
+  bag:'<path d="M5 8h14l-1.2 13H6.2zM9 8V6.5a3 3 0 0 1 6 0V8"/>'
+});
+// тема → іконка «сцени» (за назвою теми; перше збігле правило)
+const SCENE_RULES=[
+  [/Числа/,'hash'],[/Дні тижня|Мій день|Щоденн|Час|час\b/,'clock'],[/Пори року|Погод/,'sun'],
+  [/Їж|Кухн|ресторан|кафе|харчув/i,'fork'],[/Дім|Житл|Сусід|Оренд|Речі вдома|меблі|побут|Містобуд/i,'home'],
+  [/Тіло|Здоров|лікар|Медицин|Симптом|аптец|Фітнес/i,'cross'],[/Природ|Довкілл|Тварин|Енергі|клімат|Переробк|Сортув/i,'leaf'],
+  [/Грош|Економ|Фінанс|банк|Податк|Покупк|Магазин|Споживан|Ціни|Пошта|Купівля/i,'coin'],[/Одяг/,'bag'],
+  [/Технолог|Цифров|Гаджет|Телефон|інтернет|ШІ/i,'monitor'],[/Подорож|Транспорт|Квитк|Як пройти|Місто|Місця|готел/i,'plane'],
+  [/Робот|Кар.єр|Бізнес|Менеджмент|Професі|праці|Нарад|переговор/i,'briefcase'],
+  [/Школ|Навчан|Освіт|Академ|Наук|Лінгвіст|Філософ|Книжн|Історі|уроці/i,'cap'],
+  [/Емоці|Почутт|Риси|Стосунк|Психолог|характер|Сім|Родич|Зовнішн|Етика/i,'heart'],
+  [/Політик|Прав|Юрид|Злочин|Держав|Дипломат|Суспільств|Громад|Документ|Інтеграц|Глобаліз|ідеолог/i,'flag'],
+  [/Медіа|Новин|Розваг|Мистецтв|Культур|Літератур|Свят|Спорт|Хобі|дозвілл|ігри/i,'star'],
+  [/Фраз|Вираз|Привіт|Ідіом|Знайомств|Ввічлив|Прохан|Звороти|Спілкуван|Питання|Колокац|сполучен|маркер|Риторик|Зв.язк|розмов/i,'chat'],
+  [/Дієслов/,'bolt']];
+function sceneIc(w){const t=w&&TOPIC_BY_ID[w.topic],n=t?t.name:'';if(w&&w.phrase)return 'chat';for(const [re,ic] of SCENE_RULES)if(re.test(n))return ic;return 'sparkle'}
+function sceneHTML(w){return `<span class="pic-scene" aria-hidden="true">${icn(sceneIc(w))}</span>`}
+// картинка слова: малюнок (або власний вибір із «Мого словника»), інакше «сцена»; емодзі — ніколи
+{const _ph=picHTML;picHTML=function(w){if(!w)return '';if((w.img&&PICS[w.img])||(S.picOver&&S.picOver[w.id]))return _ph(w);
+  if(w.my)return _ph(w);return sceneHTML(w)}}
+
+// 1) вправи в стилі картки слова
+const NF_EX_KINDS=new Set(['choice','type','listen','gram']);
+on('item:render',it=>{try{if(!it||!NF_EX_KINDS.has(it.kind))return;const c=document.querySelector('#app > .card');if(!c)return;c.classList.add('nf-xc');
+  const pic=c.querySelector(':scope > .pic');
+  // фото — у «вибери переклад» з української (картинка не підказує англійське написання), з підписом автора
+  if(pic&&it.kind==='choice'&&!it.toUk&&it.w&&typeof hasPhoto==='function'&&hasPhoto(it.w)){pic.insertAdjacentHTML('beforeend',photoHTML(it.w));pic.classList.add('has-ph')} // малюнок лишається під фото, поки фото не завантажилось
+  if(pic&&pic.querySelector('.pic-scene'))pic.classList.add('is-scene');
+  // англійське слово на картці — з кнопкою звуку (небесна)
+  const qw=c.querySelector(':scope > .q-word');const en=it.w&&it.w[S.lang];
+  if(qw&&en&&qw.textContent.trim()===String(en).trim()&&!qw.querySelector('.nf-say-s'))qw.insertAdjacentHTML('beforeend',`<button class="nf-say-s" onclick="speak(${js(en)})" aria-label="Прослухати">${icn('speaker')}</button>`)
+}catch(e){}});
+
+// 3) розбір помилки: «чому» з лампочкою; для «вибери переклад» — коротке пояснення, що означає обране слово
+on('feedback',(html,ctx)=>{try{if(!ctx||ctx.ok||!/k-mistake/.test(html))return html;const w=ctx.it&&ctx.it.w,gw=ctx.gw;
+  let out=html.replace('<div class="k-mistake">','<div class="k-mistake nf-fbk">');
+  if(!/hl-line/.test(out)&&w&&w[S.lang]){
+    const why=gw&&gw[S.lang]?`«${esc(gw[S.lang])}» означає «${esc(gw.uk)}». А «${esc(w.uk)}» — це <b>${esc(w[S.lang])}</b>.`:`«${esc(w.uk)}» — це <b>${esc(w[S.lang])}</b>.`;
+    out=out.replace('<div class="hintbox">',`<div class="hintbox"><div class="hl-line">${why}</div>`)}
+  return out.replace('<div class="hintbox">',`<div class="hintbox nf-whyb"><span class="nf-why-ic">${icn('bulb')}</span>`)}catch(e){return html}});
 
 bootApp();
 </script>
