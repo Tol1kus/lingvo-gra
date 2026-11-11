@@ -2311,6 +2311,10 @@ body.in-session #app>.card.nf-xc{background:var(--s1);border:1px solid var(--lin
 .nf-lv{flex-wrap:wrap;row-gap:4px}
 .nf-lv-q{flex-basis:100%;display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--mut);text-align:left}.nf-lv-q svg{width:14px;height:14px;flex:none}
 .nf-stg-l .nf-sg span{border:0!important;background:none!important;width:28px!important;height:28px!important;border-radius:0!important;box-shadow:none!important;padding:0!important}
+/* активне пригадування: підказка «перша літера» під словом */
+.ar-mask{margin:-6px 0 14px}
+.ar-mask b{display:block;font:700 22px/1.3 var(--display);letter-spacing:.08em;color:var(--sky)}
+.ar-mask small{display:block;margin-top:4px;font-size:13px;line-height:1.4;color:var(--mut)}
 </style>
 </head>
 <body>
@@ -6867,7 +6871,7 @@ function renderBuild(it){
   }
   it.picked=[];
   app.innerHTML=topRow()+`<div class="card">
-    <div class="q-label">🧱 Складіть речення мовою: ${L().name}</div>
+    <div class="q-label">🧱 Складіть речення ${langAdv()}</div>
     <div class="build-head"><span class="bh-pic">${picHTML(w)}</span><div class="uk-sent big">🇺🇦 ${ukSentence(w.sent.uk,false)}</div></div>
     <div class="build-line" id="bline"></div>
     <div class="build-bank" id="bbank">${it.bank.map((x,k)=>`<button class="wtile" data-k="${k}" onclick="buildPick(${k})">${esc(x.t)}</button>`).join('')}</div>
@@ -8979,7 +8983,9 @@ on('block:new',b=>{
   try{tw=new Set(textWords(pickTextOfDay()).map(w=>w.id))}catch(e){}
   const ph=w=>w.phrase?'🎬 Вираз епізоду':epSet.has(w.id)?'🎬 Слово епізоду':tw.has(w.id)?'🆕 Слово з тексту дня':'🆕 Нові слова';
   const items=list.map(w=>({kind:'card',w,toUk:true,intro:true,phase:ph(w)}))
-    .concat(shuffle(list).map(w=>({kind:typeof hasPic==='function'&&hasPic(w)?'picchoice':'choice',w,toUk:dirToUk(),phase:'🆕 Закріплення'})));
+    .concat(shuffle(list).map(w=>({kind:typeof hasPic==='function'&&hasPic(w)?'picchoice':'choice',w,toUk:dirToUk(),phase:'🆕 Закріплення'})))
+    // активне пригадування (47_active_recall.js): після впізнавання — написати слово самому, перша літера вже є
+    .concat(typeof recallItems==='function'?recallItems(list):[]);
   const nt=list.filter(w=>!w.phrase&&!epSet.has(w.id)&&tw.has(w.id)).length;
   runSession(items,{title:'Нові слова вивчено!',requeue:true,...finB('new'),extra:nt?`<p class="muted">${nt} із цих слів зустрінуться вам у тексті дня.</p>`:''});
 });
@@ -11415,7 +11421,9 @@ HOOKS['block:practice']=[];
 on('block:practice',b=>{const long=(S.minutes||30)>=60,day=(typeof dayWordList==='function'?dayWordList():[]);
   const day1=withSent(day.filter(w=>st(w))),day2=withSent(day.filter(w=>!st(w))),td=withSent(shuffle(touchedToday())).filter(w=>!day.includes(w));
   const ws=shuffle(day1).concat(shuffle(day2),td);const nF=long?8:6,nD=canSpeak?(long?3:2):0;
-  const items=ws.slice(0,nF).map(w=>({kind:'fill',w,phase:'Слово дня в реченні'})).concat(shuffle(ws.slice(0,Math.max(nD,0))).slice(0,nD).map(w=>({kind:'dict',w,phase:'Почуй і запиши'})));
+  // після пропусків — скласти речення зі словом дня самому (активне пригадування), потім диктант
+  const nB=long?3:2,bw=(ws.length>nF?ws.slice(nF):ws).filter(w=>typeof buildOK!=='function'||buildOK(w)).slice(0,nB);
+  const items=ws.slice(0,nF).map(w=>({kind:'fill',w,phase:'Слово дня в реченні'})).concat(bw.map(w=>({kind:'build',w,phase:'Склади речення'})),shuffle(ws.slice(0,Math.max(nD,0))).slice(0,nD).map(w=>({kind:'dict',w,phase:'Почуй і запиши'})));
   if(!items.length){markBlock('practice');return planNext()}
   runSession(items,{title:'Слова закріплено!',requeue:true,...finB('practice')})});
 
@@ -12256,6 +12264,28 @@ function tipsTheme(){return S.lang==='da'?THEME_TIPS_DA:S.lang==='en'?THEME_TIPS
 /* Вправа з граматики: переклад речення одразу під ним (а не лише після відповіді) — переклад не підказує форму */
 on('item:render',it=>{try{if(!it||it.kind!=='gram'||!it.ex)return;const q=it.ex[0],tr=TR[q];if(!tr)return;
   const s=document.querySelector('#app .sentence');if(s&&!document.querySelector('.gr-q-tr'))s.insertAdjacentHTML('afterend',`<div class="gr-q-tr">${esc(tr)}</div>`)}catch(e){}});
+
+/* ====================== АКТИВНЕ ПРИГАДУВАННЯ (11.11.2026) ======================
+   Впізнати слово серед 4 варіантів легше, ніж згадати його самому, а запам'ятовується краще саме те, що довелося згадати.
+   1) Крок «Нові слова»: після карток і вибору — «Напиши сам»: слово треба написати, перша літера (і артикль / to / at) вже підказані.
+      Перші 3 дні рівня A1 — лише 3 короткі слова, далі 6 (30 хв) або 8 (60 хв).
+   2) Крок «Закріплення»: після пропусків — «Склади речення» зі словом дня (2–3 речення), див. 38_path_route.js. */
+function recallCore(w){return stripArt(String(w[S.lang]||''),S.lang)}
+function recallOK(w,short){const c=recallCore(w),L=(c.match(/\p{L}/gu)||[]).length;
+  return !!c&&!/[?!.,;:()\/]/.test(c)&&c.split(/\s+/).length<=(short?1:2)&&L>=2&&L<=(short?6:14)}
+function recallItems(list){try{
+  const early=typeof maxLv==='function'&&maxLv()==='A1'&&typeof nfDayNo==='function'&&nfDayNo()<=3;
+  const n=early?3:(S.minutes||30)>=60?8:6;
+  return shuffle(list.filter(w=>recallOK(w,early))).slice(0,n).map(w=>({kind:'type',w,toUk:false,first:true,phase:'Напиши сам'}))}catch(e){return []}}
+// речення для «Склади речення»: 3–9 слів, щоб було що складати і не було задовго
+function buildOK(w){try{const g=w.sent&&w.sent[S.lang]&&parseGap(w.sent[S.lang]);if(!g)return false;const n=g.full.trim().split(/\s+/).length;return n>=3&&n<=9}catch(e){return false}}
+// «Напиши сам»: під словом — підказка «en b__» (службове слово повністю + перша літера кожного слова); на оцінку вона не впливає
+on('item:render',it=>{try{if(!it||it.kind!=='type'||!it.first||it.toUk||document.querySelector('.ar-mask'))return;
+  const full=String(it.w[S.lang]||''),core=recallCore(it.w),pre=full.slice(0,full.length-core.length).trim();
+  const mask=core.split(/\s+/).map(wd=>{let k=0;return [...wd].map(c=>/\p{L}/u.test(c)?(k++<1?c:'_'):c).join('')}).join('   ');
+  const q=document.querySelector('#app .q-word');if(!q)return;
+  const note=q.nextElementSibling&&q.nextElementSibling.classList.contains('muted')?q.nextElementSibling:null;if(note)note.remove();
+  q.insertAdjacentHTML('afterend',`<div class="ar-mask" aria-label="Підказка: перша літера"><b>${pre?esc(pre)+' ':''}${esc(mask)}</b><small>Згадай і напиши слово повністю${pre?` — разом із «${esc(pre)}»`:''}. Перша літера вже є.</small></div>`)}catch(e){}});
 
 bootApp();
 </script>
