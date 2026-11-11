@@ -2315,6 +2315,26 @@ body.in-session #app>.card.nf-xc{background:var(--s1);border:1px solid var(--lin
 .ar-mask{margin:-6px 0 14px}
 .ar-mask b{display:block;font:700 22px/1.3 var(--display);letter-spacing:.08em;color:var(--sky)}
 .ar-mask small{display:block;margin-top:4px;font-size:13px;line-height:1.4;color:var(--mut)}
+
+/* ---------- «Шлях»: усі теми рівня з прогресом (макет 11.11.2026) ---------- */
+.rt-hd{align-items:center}
+.rt-abcb{all:unset;box-sizing:border-box;cursor:pointer;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:99px;background:var(--s2);color:var(--ink);font:700 13px var(--body)}
+.rt-abcb svg{width:18px;height:18px;color:var(--mut)}
+.rt-lv{display:flex;align-items:center;gap:10px;margin:2px 0 10px}
+.rt-lv b{font:800 16px var(--display);color:var(--lime-t)}
+.rt-lvbar{flex:1;height:7px;border-radius:99px;background:var(--s2);overflow:hidden}.rt-lvbar i{display:block;height:100%;border-radius:99px;background:var(--lime)}
+.rt-lv small{font-size:12px;color:var(--mut);white-space:nowrap}
+.rt2{padding:0}.rt2 .rt-list{display:flex;flex-direction:column;gap:2px}
+.rt2 .rt-row{height:auto;min-height:52px}
+.rt2 .rt-item{gap:12px;padding:8px 10px;min-height:52px}
+.rt2 .rt-row.next .rt-item{opacity:1}
+.rt2 .rt-row.done .rt-item strong{color:var(--mut);font-weight:600}
+.rt-tt{flex:1;min-width:0;display:block}.rt-tt strong{display:block}.rt-tt small{display:block;font-size:12px;color:var(--mut);margin-top:1px}
+.rt-rg{flex:none}.rt-rg .bg{fill:none;stroke:var(--line);stroke-width:4}.rt-rg .fg{fill:none;stroke:var(--lime-t);stroke-width:4;stroke-linecap:round}
+.rt-rg.done circle{fill:var(--lime)}.rt-rg.done path{fill:none;stroke:#000;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.rt2 .rt-st{margin:4px 0}.rt2 .rt-card{min-height:52px;padding:8px 10px;border-radius:16px}
+.rt2 .rt-ic{width:34px;height:34px;border-radius:10px}.rt2 .rt-ic svg{width:18px;height:18px}
+.rt2+.rt-attr{margin:14px 4px 0}
 </style>
 </head>
 <body>
@@ -10415,6 +10435,7 @@ const NF_STAGES=[['review','Повтор','refresh','amber',['review']],['new','
 function nfStages(B){const used=new Set(NF_STAGES.flatMap(x=>x[4]||[]));
   return NF_STAGES.map(([id,t,ic,c,ids])=>({id,t,ic,c,bs:B.filter(b=>ids?ids.includes(b.id):!used.has(b.id))})).filter(x=>x.bs.length)}
 const NF_SHORT={review:'повторення',new:'картки',practice:'закріплення',listen:'слухання',grammar:'правило',struct:'будова',dict:'диктант',speak:'вимова',dialog:'діалог',read:'текст',transl:'переклад',write:'письмо',focus:'фокус'};
+const nfMin=b=>(b.min||0)+(b.id==='new'?2:b.id==='practice'?1:0);
 function nfShort(b){return NF_SHORT[b.id]||stepName(b).toLowerCase()}
 function homeView(){
   const B=planBlocks(),m=S.minutes||30,next=B.find(b=>!b.done),ni=next?B.indexOf(next):B.length,doneN=B.filter(b=>b.done).length;
@@ -10427,14 +10448,14 @@ function homeView(){
   const ST=nfStages(B),cur=next?ST.find(x=>x.bs.includes(next)):null,ci=cur?ST.indexOf(cur):-1;
   const dw=dayWordList(),rev_=reviewDone(),tiles=dw.slice(0,5).map(w=>nfTile(w,!rev_)).join('');
   const wordsRow=dw.length?`<div class="nf-words"><div class="nf-wrow">${tiles}${dw.length>5?`<div class="nf-wt more"><span class="nf-wt-p">+${dw.length-5}</span></div>`:''}</div></div>`:'';
-  const stageRow=x=>{const dn=x.bs.filter(b=>b.done).length,n=x.bs.length,st_=dn===n?'done':x===cur?'cur':'todo',min=x.bs.filter(b=>!b.done).reduce((a,b)=>a+(b.min||0),0);
+  const stageRow=x=>{const dn=x.bs.filter(b=>b.done).length,n=x.bs.length,st_=dn===n?'done':x===cur?'cur':'todo',min=x.bs.filter(b=>!b.done).reduce((a,b)=>a+nfMin(b),0);
     return `<details class="nf-stg ${st_} c-${x.c}"><summary><span class="nf-stg-d">${st_==='done'?icn('check'):icn(x.ic)}</span><span class="nf-stg-t"><b>${x.t}</b><small>${n===1?esc(blockSub(x.bs[0])):x.bs.map(b=>esc(nfShort(b))).join(' · ')}</small></span>
       <em>${st_==='done'?'зроблено':st_==='cur'?(n>1?`${Math.min(n,dn+1)} / ${n}`:'зараз'):`≈ ${min} хв`}</em></summary>
       <div class="nf-stg-l">${x.bs.map(b=>{const s2=b.done?'done':next&&b.id===next.id?'cur':'todo';return `<button class="nf-sg ${s2}" onclick="${s2==='cur'?`heroGo('${b.id}')`:`startBlock('${b.id}')`}"><span>${b.done?icn('check'):icn(BLOCK_IC[b.id]||'sparkle')}</span><b>${esc(stepName(b))}</b><small>${b.done?'зроблено':esc(blockSub(b))}</small></button>`}).join('')}</div></details>`};
   const today_=`<div class="nf-today nf-stages" aria-label="Етапи дня">${ST.map(stageRow).join('')}</div>`;
   // головна картка: поточний етап, скільки триває, слова дня, одна кнопка
   let step;
-  if(next){const first=next.id==='review',left=cur.bs.filter(b=>!b.done),min=left.reduce((a,b)=>a+(b.min||0),0),k=cur.bs.indexOf(next)+1;
+  if(next){const first=next.id==='review',left=cur.bs.filter(b=>!b.done),min=left.reduce((a,b)=>a+nfMin(b),0),k=cur.bs.indexOf(next)+1;
     const sub=cur.id==='new'&&next.id==='new'?`${dw.length} ${pluralUk(dw.length,['слово','слова','слів'])} теми «${esc(dayTopicName())}»`:`${cur.bs.length>1?`Зараз: ${esc(stepName(next).toLowerCase())} · `:''}${esc(blockSub(next))}`;
     step=`<div class="nf-step c-lime"><div class="nf-step-top"><small class="nf-eyebrow">Етап ${ci+1} / ${ST.length} · ≈ ${Math.max(1,min)} хв${first?' · обов\'язково':''}</small><h2 class="nf-step-t">${cur.t}</h2><p>${sub}</p></div>
       ${cur.id==='review'?(!rev_&&dw.length?`<p class="nf-step-n">Слова дня відкриються після повтору.</p>`:''):wordsRow}
@@ -11265,30 +11286,39 @@ function routeTile(t){if(t.special==='abc')return `<span class="rt-pic rt-abc">A
 function ringSmall(lv,pct){const r=23,c=2*Math.PI*r,p=Math.max(0,Math.min(100,pct));
   return `<div class="rt-ring" role="img" aria-label="Рівень ${lv}, пройдено ${p}%"><svg width="56" height="56" viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="${r}" fill="none" stroke="var(--s2)" stroke-width="5"/><circle cx="28" cy="28" r="${r}" fill="none" stroke="var(--lime-t)" stroke-width="5" stroke-linecap="round" stroke-dasharray="${(c*p/100).toFixed(1)} ${c.toFixed(1)}" transform="rotate(-90 28 28)"/></svg><span><b>${lv}</b><small>${p}%</small></span></div>`}
 
+// слово «в роботі»: його вже вчили (а не лише позначили знайомим після тесту рівня)
+const rtSeen=w=>{const x=st(w);return !!(x&&!(x.pl&&!x.lr))};
+// кружечок прогресу теми: пройдена — заливка з галочкою; інакше — дуга за часткою слів у роботі
+function rtRing(done,share){const r=14,c=2*Math.PI*r,p=Math.max(0,Math.min(1,share));
+  return done?`<svg class="rt-rg done" width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="14"/><path d="M11 17.5l4 4 8-9"/></svg>`
+    :`<svg class="rt-rg" width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><circle class="bg" cx="17" cy="17" r="${r}"/>${p>0?`<circle class="fg" cx="17" cy="17" r="${r}" stroke-dasharray="${(c*p).toFixed(1)} ${c.toFixed(1)}" transform="rotate(-90 17 17)"/>`:''}</svg>`}
+/* «Шлях» (макет 11.11.2026): усі теми рівня з прогресом кожної; «Вправи-ігри» — на маршруті там, де відкриються;
+   «Бібліотека» — в кінці рівня; «Алфавіт» — кнопка вгорі. */
 function pathScreen(){applyTheme();REDRAW=pathScreen;emit('home:before');
-  const lv=maxLv(),list=routeTopics(lv),pct=levelPct(lv),cur=routeCurrent(list),ci=cur?list.indexOf(cur):list.length;
-  // вікно: 3 пройдені перед поточною + поточна + 2 наступні; якщо все пройдено — 3 останні
-  const from=Math.max(0,ci-3),to=cur?Math.min(list.length,ci+3):list.length,win=list.slice(cur?from:Math.max(0,list.length-3),to);
-  const rows=win.map(t=>{const done=topicDone(t),isCur=t===cur,abc=t.special==='abc',n=abc?(ALPHA[S.lang]||{letters:[]}).letters.length:topicWordsL(t).length,left=abc?n:topicWordsL(t).filter(w=>!learned(w)).length;
-    const st=done?'done':isCur?'cur':'next',lab=done?`${t.name}: пройдено, повторити`:isCur?`${t.name}: поточна тема, відкрити`:`${t.name}: ${nW(n)}, відкрити`;
-    return `<li class="rt-row ${st}"><span class="rt-node" aria-hidden="true">${done?icn('check'):''}</span>
-      <button class="rt-item" onclick="routeOpen('${t.id}')" aria-label="${esc(lab)}">${routeTile(t)}<strong>${esc(t.name)}</strong>
-      ${done?`<span class="rt-ok">${icn('check')}</span>`:isCur?`<span class="rt-now">зараз</span>`:`<span class="rt-n">${abc?n+' '+pluralUk(n,['літера','літери','літер']):nW(left||n)}</span>`}</button></li>`}).join('');
+  const lv=maxLv(),list=routeTopics(lv),pct=levelPct(lv),cur=routeCurrent(list);
   const doneAll=topicsDoneAll(),gOpen=gamesOpen(),lOpen=libraryOpen(),gLeft=Math.max(0,UNLOCK_GAMES_TOPICS-doneAll);
-  const station=(id,open,ic,cls,title,subLocked,subOpen,bar,barLab,fn)=>`<li class="rt-st ${open?'open':''}"><span class="rt-node sq" aria-hidden="true"></span>
+  const station=(id,open,ic,cls,title,subLocked,subOpen,fn)=>`<li class="rt-st ${open?'open':''}">
       <button class="rt-card" onclick="${open?fn:`routeLocked('${id}')`}" aria-label="${esc(title+(open?': відкрити':': замкнено, що зробити, щоб відкрити'))}">
-      <span class="rt-ic ${cls}">${icn(ic)}</span><span class="rt-tx"><strong>${title}</strong><small>${open?subOpen:subLocked}</small>
-      ${open?'':`<span class="rt-bar ${cls}"><i style="width:${Math.round(bar)}%"></i></span><em class="rt-cond ${cls}">${barLab}</em>`}</span>${open?icn('chev'):icn('lock')}</button></li>`;
-  // лайм лінії — до вузла поточної теми (або до кінця пройдених)
-  const curRow=cur?win.indexOf(cur):-1,limeH=cur?(curRow<0?0:curRow*56):9999; // усе пройдено — лінія лаймова до кінця
-  app.innerHTML=`<header class="rt-hd"><div><small>${LANG_NAT[S.lang]}${S.lang==='en'?' (US)':''} · ${lv}</small><h1>Шлях</h1></div>${ringSmall(lv,pct)}</header>
-   <div class="rt-route"><div class="rt-wrap"><span class="rt-line" aria-hidden="true"><i style="height:${limeH>=9999?'100%':limeH+'px'}"></i></span>
-    <ol class="rt-list">${rows}
-     ${station('games',gOpen,'grid','sky','Вправи-ігри',`відкриються після ${nT(UNLOCK_GAMES_TOPICS)}`,'картки, речення, слух, письмо, ігри',doneAll/UNLOCK_GAMES_TOPICS*100,`ще ${nT(gLeft)}`,'trainScreen()')}
-     ${station('library',lOpen,'book','amber','Бібліотека',`книги й статті з рівня ${UNLOCK_LIBRARY_LEVEL}`,'книги, промови й статті за рівнями',pct,`${lv} · ${pct}%`,'libraryScreen()')}</ol></div>
-    <button class="rt-all" onclick="topicsScreen('${lv}')">Усі ${nT(list.length)} рівня ${lv} →</button>${lv==='A1'?`<button class="rt-all" onclick="alphabetScreen()">Алфавіт і вимова →</button>`:''}</div>
-   <p class="rt-attr">Ілюстрації: Mulberry Symbols © Steve Lee, CC BY-SA 4.0</p>`;
-  emit('screen','path')}
+      <span class="rt-ic ${cls}">${icn(ic)}</span><span class="rt-tx"><strong>${title}</strong><small>${open?subOpen:subLocked}</small></span>${open?icn('chev'):icn('lock')}</button></li>`;
+  const games=at=>station('games',gOpen,'grid','sky','Вправи-ігри',at?'відкриються після цієї теми':`відкриються після ${nT(UNLOCK_GAMES_TOPICS)}`,'картки, речення, слух, письмо, ігри','trainScreen()');
+  let undone=0,gPut=gOpen,doneN=0;
+  const rows=(gOpen?games(false):'')+list.map(t=>{const ws=topicWordsL(t),n=ws.length,seen=ws.filter(rtSeen).length,done=topicDone(t),isCur=t===cur;if(done)doneN++;
+    const st_=done?'done':isCur?'cur':'next',sub=done?`${n} з ${n}`:seen?`${seen} з ${nW(n)}${seen>=n?' · закріплюємо':''}`:nW(n);
+    const lab=done?`${t.name}: пройдено, повторити`:isCur?`${t.name}: поточна тема, ${sub}, відкрити`:`${t.name}: ${sub}, відкрити`;
+    let h=`<li class="rt-row ${st_}"><button class="rt-item" onclick="routeOpen('${t.id}')" aria-label="${esc(lab)}">${rtRing(done,n?seen/n:0)}
+      <span class="rt-tt"><strong>${esc(t.name)}</strong>${isCur?`<small>${sub}</small>`:''}</span>${isCur?`<span class="rt-now">зараз</span>`:`<span class="rt-n">${sub}</span>`}</button></li>`;
+    if(!done&&!gPut&&++undone>=gLeft){gPut=true;h+=games(true)}
+    return h}).join('')+(gPut?'':games(false));
+  const known=routeAllTopics(lv).flatMap(topicWordsL).filter(learned).length;
+  app.innerHTML=`<header class="rt-hd"><div><small>${LANG_NAT[S.lang]}${S.lang==='en'?' (US)':''} · ${lv}</small><h1>Шлях</h1></div>
+     ${typeof ALPHA!=='undefined'&&ALPHA[S.lang]?`<button class="rt-abcb" onclick="alphabetScreen()">${icn('abc')} Алфавіт</button>`:''}</header>
+   <div class="rt-lv" role="img" aria-label="Рівень ${lv}: пройдено ${pct}%"><b>${lv} · ${pct}%</b><span class="rt-lvbar"><i style="width:${Math.max(2,pct)}%"></i></span><small>${doneN} з ${nT(list.length)} · ${nW(known)}</small></div>
+   <div class="rt-route rt2"><ol class="rt-list">${rows}
+     ${station('library',lOpen,'book','amber','Бібліотека',`книги й статті з рівня ${UNLOCK_LIBRARY_LEVEL}`,'книги, промови й статті за рівнями','libraryScreen()')}</ol></div>
+   <p class="rt-attr">Теми йдуть у тому порядку, в якому їх пропонує план дня. Будь-яку можна відкрити раніше.</p>`;
+  emit('screen','path');
+  // якщо поточна тема далеко внизу (багато пройдених) — показати її одразу
+  try{setTimeout(()=>{const c=document.querySelector('.rt-row.cur');if(c&&c.getBoundingClientRect().top>innerHeight*.7&&c.scrollIntoView)c.scrollIntoView({block:'center'})},0)}catch(e){}}
 
 /* тап по темі: поточна чи наступна — вчити нові слова теми; пройдена — повторити її */
 function routeOpen(id){if(id==='__abc')return alphabetScreen();if(id==='numbers'&&!basicsDone('num'))return numbersScreen();const t=TOPIC_BY_ID[id];if(!t)return;const ws=topicWordsL(t);
