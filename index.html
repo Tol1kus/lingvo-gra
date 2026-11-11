@@ -2474,6 +2474,33 @@ html,body{transition:background-color .4s ease}
 .dsum .ds-word{flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;padding:14px 12px}
 .dsum .ds-word>small{writing-mode:horizontal-tb;transform:none;font-size:11px;letter-spacing:.12em;text-transform:uppercase}
 .dsum .ds-word>div{flex:none;width:100%}.dsum .ds-word b{font-size:24px;color:var(--lime-t)}.dsum .ds-word span{display:block;margin-top:2px}
+/* кнопки звуку — кольору акценту, щоб не здавалися неактивними (скарга 11.11.2026) */
+.nf-say,.nf-say-s{background:color-mix(in srgb,var(--lime) 16%,var(--s1))!important;color:var(--lime-t)!important;box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--lime) 60%,transparent)!important}
+.speak,.sk-say{background:color-mix(in srgb,var(--lime) 16%,var(--s1));color:var(--lime-t);border:1px solid color-mix(in srgb,var(--lime) 45%,transparent)}
+.spk-row .btn{flex:none;align-self:flex-start;margin-top:6px}
+/* картинки не вилазять за плитку на широкому екрані (скарга 11.11.2026): висота — не більше плитки, пропорції зберігаються */
+.k-tile-pic{position:relative;overflow:hidden}
+.k-tile-pic>.pimg,.k-tile-pic>.om{position:absolute!important;left:8%;top:8%;width:84%!important;height:84%!important;max-width:none!important;max-height:none!important;object-fit:contain;margin:0!important}
+.k-tile-pic>.om .om-img{width:auto!important;height:100%!important;max-width:100%!important;max-height:100%!important}
+.nf-wt-p .pimg,.nf-wt-p .om{max-width:100%;max-height:100%}
+/* ілюстрації OpenMoji — того самого розміру, що й символи Mulberry, у вправі й на картці слова (широкий екран) */
+.nf-xc>.pic .om{height:124px!important;width:auto!important;max-width:80%!important}
+.nf-wpic .om{height:120px!important;width:auto!important;max-width:80%!important}
+.nf-xc>.pic .om .om-img,.nf-wpic .om .om-img{height:100%!important;width:auto!important;max-width:100%!important;max-height:100%!important}
+.nf-xc>.pic .om2 .om-img,.nf-wpic .om2 .om-img{max-width:49%!important}
+.pic-q .om{height:124px!important;width:auto!important;max-width:80%!important;margin:0 auto}
+.pic-q .om .om-img{height:100%!important;width:auto!important;max-width:100%!important;max-height:100%!important}.pic-q .om2 .om-img{max-width:49%!important}
+.om .om-img{max-height:150px}
+/* плитки «обери картинку» на широкому екрані: не овал (28 % від широкої плитки), а заокруглений прямокутник */
+.k-tile-pic{border-radius:18px!important}
+/* маленька картинка збоку в повідомленні після відповіді (аудіювання) та в інших малих місцях — ілюстрації не розтягуються */
+.listen-ans{display:flex;align-items:center;gap:12px;margin-top:8px}
+.listen-ans>.pimg,.listen-ans>.om{flex:none;width:56px!important;height:56px!important;max-width:56px!important;max-height:56px!important;padding:6px;border-radius:14px;background:var(--pic,#ECEFE6);box-sizing:border-box;object-fit:contain}
+.listen-ans>.om{display:flex;align-items:center;justify-content:center}
+.listen-ans>.om .om-img{width:auto!important;height:100%!important;max-width:100%!important;max-height:100%!important}
+.bh-pic .om,.wr-pic .om,.rn-pic .om,.k-st-pic .om,.sb-pic .om,.nf-tile-s .om,.reader-pic .om,.nf-wt-p .om{width:100%!important;height:100%!important}
+.bh-pic .om .om-img,.wr-pic .om .om-img,.rn-pic .om .om-img,.k-st-pic .om .om-img,.sb-pic .om .om-img,.nf-tile-s .om .om-img,.reader-pic .om .om-img,.nf-wt-p .om .om-img{height:100%!important;width:auto!important;max-width:100%!important;max-height:100%!important}
+.nf-wt-p .om2 .om-img,.nf-tile-s .om2 .om-img{max-width:49%!important}
 </style>
 </head>
 <body>
@@ -7300,7 +7327,7 @@ function renderCard(it){
   </div>`;
   if(S.tts&&toUk)setTimeout(()=>speak(t),250);
 }
-function cardAnswer(q){if(q===true)q='good';if(q===false)q='again';const w=SS.items[SS.i].w;if(st(w)&&!SS.items[SS.i].intro){gradeQ(w,q)}else introduce(w,q);SS.xp+=3;logAct(null,0);if(q!=='again')SS.right++;nextItem()}
+function cardAnswer(q){if(q===true)q='good';if(q===false)q='again';const w=SS.items[SS.i].w;if(st(w)&&!SS.items[SS.i].intro){gradeQ(w,q)}else introduce(w,q);SS.xp+=3;logAct(null,0);nextItem()} // картка — самооцінка: не рахується у «правильно» (було right++ без graded++ → 180 %, 433 % на результаті)
 
 /* вибір */
 function renderChoice(it){
@@ -10683,7 +10710,7 @@ on('session:end',o=>{if(o)o._sec=Math.round((Date.now()-(ACT_T0||Date.now()))/10
 
 /* ---------- екран результату ---------- */
 function resultHTML(o){
-  const acc=o.graded?o.right/o.graded:1,pct=Math.round(acc*100),stars=!o.graded?3:acc>=.95?3:acc>=.75?2:1;
+  const acc=o.graded?Math.min(1,o.right/o.graded):1,pct=Math.round(acc*100),stars=!o.graded?3:acc>=.95?3:acc>=.75?2:1;
   const tone=!o.graded||acc>=.85?'great':acc>=.6?'good':'keep';
   const title=!o.graded?'Готово!':acc>=.95?'Бездоганно!':acc>=.85?'Чудово!':acc>=.6?'Добре!':'Є над чим попрацювати';
   const r=40,c=2*Math.PI*r,sec=o._sec||0;
@@ -12982,13 +13009,35 @@ on('item:render',it=>{try{if(!it||it.kind!=='gram'||!it.ex)return;const q=it.ex[
 // Озвучення. ВАЖЛИВО: speak() — СИНХРОННО в тому самому дотику (iPhone/Safari блокує мовлення поза жестом користувача),
 // без затримок і без таймерів «перевірки» (вони блокували або обривали звук — скарга «звук пропав», 11.11.2026).
 // Якщо обраний голос дав помилку ще до початку — один повтор стандартним голосом браузера.
-function speakSafe(text,rate){try{if(!('speechSynthesis' in window)||!text)return;const ss=speechSynthesis;
-  const go=useVoice=>{let started=false;const u=mkUtter(text,rate);if(!useVoice){try{u.voice=null}catch(e){}}
-    u.onstart=()=>{started=true};u.onerror=e=>{if(!started&&useVoice&&!/interrupted|canceled/.test(e&&e.error||''))go(false)};
-    ss.speak(u)};
+const SPK_DIAG={ok:0,last:'',shown:''};
+// у вікні застосунку Claude (Electron) браузерне озвучення «зависає»: speaking=true, але без звуку й без подій (перевірено 11.11.2026)
+const SPK_IN_CLAUDE=(()=>{try{return / Claude\/\d/.test(navigator.userAgent)}catch(e){return false}})();
+const SPK_CLAUDE_MSG='У застосунку Claude вимова слів не працює — це обмеження самого застосунку. Відкрий Nightlex у Safari або Chrome (чи на iPhone), там звук є.';
+function spkNote(msg){if(SPK_DIAG.shown===msg)return;SPK_DIAG.shown=msg;try{toast(msg)}catch(e){}}
+function speakSafe(text,rate){try{
+  if(!('speechSynthesis' in window)){spkNote('Озвучення недоступне в цьому вікні. Відкрий сайт у Safari або Chrome.');return}
+  if(!text)return;const ss=speechSynthesis;
+  const go=useVoice=>{let started=false,ended=false;const u=mkUtter(text,rate);if(!useVoice){try{u.voice=null}catch(e){}}
+    u.onstart=()=>{started=true;SPK_DIAG.ok++;SPK_DIAG.last='ok';SPK_DIAG.shown=''};u.onend=()=>{ended=true};
+    u.onerror=e=>{const er=(e&&e.error)||'error';SPK_DIAG.last=er;if(/interrupted|canceled/.test(er))return;if(!started&&useVoice)return go(false);
+      spkNote(er==='not-allowed'?'Браузер не дозволив звук. Торкнись кнопки звуку ще раз.':'Не вдалося озвучити ('+er+'). Перевір гучність і беззвучний режим.')};
+    ss.speak(u);
+    // лише ПОВІДОМЛЕННЯ, якщо звук так і не почався (нічого не скасовуємо й не повторюємо)
+    if(useVoice)setTimeout(()=>{if(!started&&!ended&&SPK_DIAG.last!=='ok'){SPK_DIAG.last=SPK_DIAG.last||(ss.speaking?'stuck':'silent');
+      spkNote(SPK_IN_CLAUDE?SPK_CLAUDE_MSG:loadVoices().length?'Звук не запустився. Перевір гучність і беззвучний режим або «Налаштування» → «Перевірити звук».':'У цьому вікні немає голосів для озвучення. Відкрий сайт у Safari або Chrome.')}},2500)};
   try{if(ss.speaking||ss.pending)ss.cancel()}catch(e){}
   try{if(ss.paused)ss.resume()}catch(e){}
-  go(true)}catch(e){}}
+  SPK_DIAG.last='';go(true)}catch(e){}}
+// «Налаштування» → «Перевірити звук»: які голоси є, який обрано, і що сталося з пробною фразою
+const SPK_TEST={en:'Hello! How are you?',da:'Hej! Hvordan går det?',it:'Ciao! Come stai?',pl:'Cześć! Jak się masz?'};
+function spkTest(){const out=document.getElementById('spkOut');const all=loadVoices(),mine=voicesFor(S.lang),v=pickVoice(S.lang);
+  const info=SPK_IN_CLAUDE?'Ти у вікні застосунку Claude.':!('speechSynthesis' in window)?'У цьому вікні немає озвучення взагалі (speechSynthesis).':`Голосів на пристрої: ${all.length}. Для мови «${langNom()}»: ${mine.length}${v?' · обрано: '+v.name:''}.`;
+  if(out)out.textContent=info+' Звучить пробна фраза…';speak(SPK_TEST[S.lang]||'Hello');
+  setTimeout(()=>{const o=document.getElementById('spkOut');if(!o)return;const r=SPK_DIAG.last;
+    o.textContent=info+' '+(r!=='ok'&&SPK_IN_CLAUDE?SPK_CLAUDE_MSG:r==='ok'?'✓ Звук працює. Якщо не чути — перевір гучність і беззвучний режим.':r==='not-allowed'?'Браузер заблокував звук: торкнись «Перевірити звук» ще раз.':!all.length?'Голосів немає: це вікно не вміє озвучувати. Відкрий сайт у Safari або Chrome.':'Звук не запустився ('+(r||'без відповіді')+'). Спробуй інший голос нижче або інший браузер.')},2800)}
+if(typeof settingsScreen==='function'){const _ssSpk=settingsScreen;settingsScreen=function(){const r=_ssSpk.apply(this,arguments);try{
+  const row=[...document.querySelectorAll('#app .k-srow')].find(x=>/^Озвучення слів/.test((x.firstElementChild||{}).textContent||''));
+  if(row&&!document.getElementById('spkOut'))row.insertAdjacentHTML('afterend',`<div class="k-srow col spk-row"><span>Перевірити звук<small class="k-sub2" id="spkOut">Якщо вимови не чути — натисни, і застосунок покаже, що не так.</small></span><button class="btn sm" onclick="spkTest()">${icn('speaker')} Перевірити</button></div>`)}catch(e){}return r}}
 {const _spSafe=speak;speak=function(text){try{if(!VOICE_HELP_SHOWN[S.lang]&&voiceMissing(S.lang)){VOICE_HELP_SHOWN[S.lang]=1;voiceHelp(S.lang)}}catch(e){}speakSafe(text)}}
 if(typeof slowSpeak==='function')slowSpeak=function(t){speakSafe(t,Math.max(.5,voiceRate()-.3))};
 // журнали за мовами можуть ще не мати запису для мови (нова мова, старі дані) — створюємо порожні, щоб нічого не падало
@@ -13031,7 +13080,7 @@ function hardLv(){try{return Math.max(0,LEVELS.indexOf(maxLv()))}catch(e){return
 // 'p' — вираз із кількох слів, 'w' — решта
 function wPos(w){const f=String(w&&w[S.lang]||''),c=stripArt(f,S.lang).trim(),u1=String(w&&w.uk||'').toLowerCase().replace(/\s*\(.*?\)/g,'').trim().split(/[\s,;]+/)[0]||'';
   if(/[.!?…]$/.test(c)||(/^\p{Lu}/u.test(c)&&/\s/.test(c)))return 's';
-  if(/^(to|at) /i.test(f))return 'v';
+  if(S.lang==='da'?/^at /i.test(f):/^to /i.test(f))return 'v'; // «at» — дієслово лише в данській (англ. «at first» — не дієслово)
   if(/^(en|et) /i.test(f)&&S.lang==='da')return 'n';
   if(/(ий|ій|їй)$/.test(u1)&&!/\s/.test(c))return 'a';
   return /\s/.test(c)?'p':'w'}
