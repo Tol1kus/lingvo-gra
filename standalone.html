@@ -2501,6 +2501,16 @@ html,body{transition:background-color .4s ease}
 .bh-pic .om,.wr-pic .om,.rn-pic .om,.k-st-pic .om,.sb-pic .om,.nf-tile-s .om,.reader-pic .om,.nf-wt-p .om{width:100%!important;height:100%!important}
 .bh-pic .om .om-img,.wr-pic .om .om-img,.rn-pic .om .om-img,.k-st-pic .om .om-img,.sb-pic .om .om-img,.nf-tile-s .om .om-img,.reader-pic .om .om-img,.nf-wt-p .om .om-img{height:100%!important;width:auto!important;max-width:100%!important;max-height:100%!important}
 .nf-wt-p .om2 .om-img,.nf-tile-s .om2 .om-img{max-width:49%!important}
+/* «at» / «to» перед дієсловом — окрема позначка (не плутати зі словом і з en / et): бірюзова «таблетка» з пунктиром */
+:root{--inf:#5ED3C0;--inf-t:#5ED3C0}:root[data-theme="light"]{--inf:#0E8A78;--inf-t:#0B6E60}
+.nf-art.g-inf{display:inline-block;vertical-align:.18em;font-size:.42em;line-height:1;padding:.32em .55em .36em;margin-right:.18em;border-radius:999px;
+  color:var(--inf-t)!important;background:color-mix(in srgb,var(--inf) 16%,transparent);border:2px dashed color-mix(in srgb,var(--inf) 70%,transparent);letter-spacing:.02em}
+.nf-gen.g-inf{color:var(--inf-t)!important;background:color-mix(in srgb,var(--inf) 14%,transparent)!important;border-color:color-mix(in srgb,var(--inf) 45%,transparent)!important}
+.at-tag{display:inline-block;font:800 13px/1 var(--display);padding:4px 8px;border-radius:999px;color:var(--inf-t);background:color-mix(in srgb,var(--inf) 16%,transparent);border:2px dashed color-mix(in srgb,var(--inf) 70%,transparent)}
+.at-rule{display:flex;gap:10px;align-items:flex-start;margin:10px 0 0;padding:12px 14px;border-radius:18px;background:color-mix(in srgb,var(--inf) 8%,var(--s1));border:1px solid color-mix(in srgb,var(--inf) 35%,var(--line))}
+.at-rule p{margin:0;font-size:14px;line-height:1.45;color:var(--ink)}.at-rule .at-tag{flex:none;margin-top:1px}
+.at-bg .rt-sheet p{line-height:1.5}.at-bg u{text-decoration-color:var(--inf);text-decoration-thickness:2px;text-underline-offset:3px}
+.at-bg .rt-sheet .btn{width:100%;margin-top:6px}
 </style>
 </head>
 <body>
@@ -11642,9 +11652,10 @@ storyOf=function(){return null};
 /* ====================== E06 · НОВЕ СЛОВО (за макетом) ====================== */
 // службове слово перед словом: англійська the / a / an / to; данська en / et (рід — кольором: en блакитним, et бурштиновим) і at
 const nfArt=t=>{const m=String(t).match(S.lang==='da'?/^(en|et|at)\s+(.+)$/i:/^(the|a|an|to)\s+(.+)$/i);if(!m)return esc(t);
-  const g=S.lang==='da'&&/^e[nt]$/i.test(m[1])?' art g-'+m[1].toLowerCase():'';return `<span class="nf-art${g}">${esc(m[1])}</span> ${esc(m[2])}`};
+  const k=m[1].toLowerCase(),g=S.lang==='da'&&/^e[nt]$/.test(k)?' art g-'+k:(S.lang==='da'&&k==='at')||(S.lang==='en'&&k==='to')?' g-inf':'';
+  return `<span class="nf-art${g}"${g===' g-inf'?` title="${k} — частка перед дієсловом (як «to» в англійській), не окреме слово"`:''}>${esc(m[1])}</span> ${esc(m[2])}`};
 // позначка роду під данським іменником: «en-слово» / «et-слово»
-const nfGen=t=>{if(S.lang!=='da')return '';const m=String(t).match(/^(en|et)\s/i);return m?`<span class="nf-gen g-${m[1].toLowerCase()}">${m[1].toLowerCase()}-слово</span>`:''};
+const nfGen=t=>{if(S.lang!=='da')return '';if(/^at\s/i.test(String(t)))return `<span class="nf-gen g-inf">дієслово · at = «to»</span>`;const m=String(t).match(/^(en|et)\s/i);return m?`<span class="nf-gen g-${m[1].toLowerCase()}">${m[1].toLowerCase()}-слово</span>`:''};
 function nfWave(n){let h='';for(let i=0;i<16;i++){const v=[10,18,26,20,14,28,22,12,18,24,14,8,16,22,10,6][i];h+=`<i style="height:${v}px" class="${i<9?'on':''}"></i>`}return `<span class="nf-wave" aria-hidden="true">${h}</span>`}
 function nfExample(w){const s=w.sent&&w.sent[S.lang];if(!s)return '';const g=parseGap(s),full=g?g.full:s,ans=g?g.answer:w[S.lang];
   const i=full.toLowerCase().indexOf(String(ans).toLowerCase()),hl=i>=0?esc(full.slice(0,i))+`<mark>${esc(full.slice(i,i+ans.length))}</mark>`+esc(full.slice(i+ans.length)):esc(full);
@@ -13399,6 +13410,29 @@ function omPhotoToggle(b){const p=b.closest('.ph-alt');if(!p)return;const on=p.c
 on('item:render',()=>{setTimeout(()=>{try{document.querySelectorAll('#app .nf-wpic.has-ph, #app .nf-xc>.pic.has-ph').forEach(p=>{
   if(p.classList.contains('ph-alt')||!p.querySelector('.ph-img')||!p.querySelector('.pimg:not(.ph-img)'))return;
   p.classList.add('ph-alt');p.insertAdjacentHTML('beforeend','<button type="button" class="ph-tg" aria-pressed="false" onclick="event.stopPropagation();omPhotoToggle(this)">Фото</button>')})}catch(e){}},0)});
+
+/* ====================== «at» ПЕРЕД ДАНСЬКИМ ДІЄСЛОВОМ (11.11.2026) ======================
+   «at» — частка інфінітива (як англ. «to»), не окреме слово: на картці — окрема позначка свого кольору (nfArt g-inf, 36_theme_day.js),
+   під словом — «дієслово · at = «to»». Правило «коли без at»: коротко на картці дієслова і окремим вікном перед першою вправою з дієсловами. */
+const DA_MODALS='vil, kan, skal, må, bør, tør';
+function daAtRuleHTML(short){return short
+  ?`<section class="at-rule"><span class="at-tag">at</span><p><b>at</b> — як англ. «to». Після <b>${DA_MODALS}</b> — без at: <i lang="da">Jeg vil <u>være</u> lærer.</i></p></section>`
+  :`<p><b class="at-tag">at</b> стоїть перед дієсловом у словниковій формі — як англійське «to»: <i lang="da">at være</i> — бути, <i lang="da">at spise</i> — їсти.</p>
+    <p><b>Без at</b> — після модальних дієслів <b>${DA_MODALS}</b>:</p>
+    <ul class="vh-l"><li><i lang="da">Jeg vil <u>være</u> lærer.</i> — Я хочу бути вчителем.</li><li><i lang="da">Kan du <u>hjælpe</u> mig?</i> — Можеш мені допомогти?</li></ul>
+    <p><b>З at</b> — в інших місцях: <i lang="da">Det er svært <u>at være</u> ny.</i> — Важко бути новим. <i lang="da">Jeg kan lide <u>at læse</u>.</i> — Я люблю читати.</p>`}
+const isDaVerb=w=>!!(w&&S.lang==='da'&&/^at\s/i.test(String(w.da||'')));
+// картка нового данського дієслова: коротке правило під прикладом
+on('item:render',it=>{try{if(!it||it.kind!=='card'||!isDaVerb(it.w))return;const c=document.querySelector('#app .nf-word');if(!c||c.querySelector('.at-rule'))return;
+  const ex=c.querySelector('.nf-exm');(ex||c.lastElementChild).insertAdjacentHTML('afterend',daAtRuleHTML(true))}catch(e){}});
+// перед першою вправою з данськими дієсловами — вікно з правилом (один раз; потім — у «Граматиці» й на картках)
+function daAtSheet(){document.querySelectorAll('.at-bg').forEach(x=>x.remove());
+  document.body.insertAdjacentHTML('beforeend',`<div class="rt-sheet-bg on vh-bg at-bg" onclick="daAtClose()"><div class="rt-sheet" role="dialog" aria-label="Правило: at перед дієсловом" onclick="event.stopPropagation()"><span class="rt-grab"></span>
+    <small>ПРАВИЛО ПЕРЕД ВПРАВОЮ</small><h2>Дієслова: коли «at», а коли ні</h2>${daAtRuleHTML(false)}
+    <button class="btn" onclick="daAtClose()">Зрозуміло</button></div></div>`)}
+function daAtClose(){document.querySelectorAll('.at-bg').forEach(x=>x.remove());S.ruleSeen=S.ruleSeen||{};S.ruleSeen.da_at=today();save()}
+on('session:start',ss=>{try{if(S.lang!=='da'||(S.ruleSeen&&S.ruleSeen.da_at)||window.NF_NO_TIPS)return;
+  if((ss&&ss.items||[]).some(i=>isDaVerb(i.w)))setTimeout(daAtSheet,50)}catch(e){}});
 
 bootApp();
 </script>
