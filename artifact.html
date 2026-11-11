@@ -2280,6 +2280,37 @@ body.in-session #app>.card.nf-xc{background:var(--s1);border:1px solid var(--lin
 .nf-gen.g-en{color:var(--sky);background:color-mix(in srgb,var(--sky) 14%,transparent)}.nf-gen.g-et{color:var(--amber-t);background:color-mix(in srgb,var(--amber) 16%,transparent)}
 .gr-tr{font-weight:500;font-style:italic;color:var(--mut);font-size:.92em}
 .gr-q-tr{margin:6px 0 12px;font-size:15px;line-height:1.45;color:var(--mut)}
+
+/* ---------- головна: 3 етапи замість 8 кроків (макет 11.11.2026) ---------- */
+.nf-step .nf-eyebrow{max-width:none}
+.nf-step .nf-step-top{margin-bottom:12px}
+.nf-step .nf-words{background:none;border:0;border-radius:0;padding:0;margin:0 0 14px}
+.nf-step .nf-words .nf-wrow{display:flex;gap:8px}
+.nf-step-n{margin:0 0 14px!important;font-size:13.5px!important}
+.nf-today.nf-stages{padding:4px 14px}
+.nf-stg{border-top:1px solid var(--line)}.nf-stg:first-child{border-top:0}
+.nf-stg summary{list-style:none;display:flex;align-items:center;gap:12px;min-height:60px;padding:8px 0;cursor:pointer}
+.nf-stg summary::-webkit-details-marker{display:none}
+.nf-stg-d{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--s2);color:var(--mut)}
+.nf-stg-d svg{width:17px;height:17px}
+.nf-stg.c-amber .nf-stg-d{color:var(--amber-t)}.nf-stg.c-lime .nf-stg-d{color:var(--lime-t)}.nf-stg.c-sky .nf-stg-d{color:var(--sky)}
+.nf-stg.cur .nf-stg-d{background:transparent;box-shadow:inset 0 0 0 2px currentColor}
+.nf-stg.done.c-amber .nf-stg-d{background:var(--amber);color:#000}.nf-stg.done.c-lime .nf-stg-d{background:var(--lime);color:#000}.nf-stg.done.c-sky .nf-stg-d{background:var(--sky);color:#000}
+:root[data-theme="light"] .nf-stg.done.c-sky .nf-stg-d{color:#fff}
+.nf-stg-t{flex:1;min-width:0}.nf-stg-t b{display:block;font-size:16px;font-weight:700;color:var(--ink)}
+.nf-stg-t small{display:block;font-size:12.5px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nf-stg.done .nf-stg-t b{color:var(--mut);text-decoration:line-through;text-decoration-color:var(--dim);font-weight:600}
+.nf-stg summary em{font-style:normal;font-size:12.5px;color:var(--mut);white-space:nowrap}
+.nf-stg.cur summary em{font-weight:800;color:var(--lime-t)}.nf-stg.cur.c-amber summary em{color:var(--amber-t)}.nf-stg.cur.c-sky summary em{color:var(--sky)}
+.nf-stg-l{display:flex;flex-direction:column;gap:6px;padding:0 0 12px 44px}
+.nf-stg-l .nf-sg{all:unset;box-sizing:border-box;display:grid;grid-template-columns:28px 1fr;column-gap:10px;align-items:center;min-height:48px;padding:6px 10px;border-radius:14px;background:var(--s2);cursor:pointer;width:100%}
+.nf-stg-l .nf-sg span{grid-row:1 / 3;display:grid;place-items:center;color:var(--mut)}.nf-stg-l .nf-sg span svg{width:18px;height:18px}
+.nf-stg-l .nf-sg b{font-size:14.5px;font-weight:700;color:var(--ink)}.nf-stg-l .nf-sg small{font-size:12px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nf-stg-l .nf-sg.cur{box-shadow:inset 0 0 0 1.5px var(--lime-t)}.nf-stg-l .nf-sg.cur span{color:var(--lime-t)}
+.nf-stg-l .nf-sg.done b{color:var(--mut);font-weight:600}.nf-stg-l .nf-sg.done span{color:var(--lime-t)}
+.nf-lv{flex-wrap:wrap;row-gap:4px}
+.nf-lv-q{flex-basis:100%;display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--mut);text-align:left}.nf-lv-q svg{width:14px;height:14px;flex:none}
+.nf-stg-l .nf-sg span{border:0!important;background:none!important;width:28px!important;height:28px!important;border-radius:0!important;box-shadow:none!important;padding:0!important}
 </style>
 </head>
 <body>
@@ -8933,7 +8964,7 @@ function eventsCheck(){
 /* новий план — після 00:00: живий відлік і автоматичне оновлення, якщо застосунок відкритий */
 let PLAN_DAY=today();
 setInterval(()=>{const e=document.getElementById('midnight');if(e)e.textContent=untilMidnight();
-  if(today()!==PLAN_DAY){PLAN_DAY=today();if(document.querySelector('.daily,.k-list,.nf-segs')&&!document.body.classList.contains('in-session')){home();toast('🌅 Новий день — новий план!')}}},1000);
+  if(today()!==PLAN_DAY){PLAN_DAY=today();if(document.querySelector('.daily,.k-list,.nf-segs,.nf-stages')&&!document.body.classList.contains('in-session')){home();toast('🌅 Новий день — новий план!')}}},1000);
 // степер: поточний крок завжди видно (горизонтальна прокрутка до нього)
 on('home:after',()=>{const st_=document.querySelector('.stepper'),n=st_&&st_.querySelector('.st.next');if(n)st_.scrollLeft=Math.max(0,n.offsetLeft-st_.clientWidth/2+n.clientWidth/2)});
 
@@ -10373,8 +10404,12 @@ function nfGreet(){const h=new Date().getHours();return h<5?'Добра ніч':
 function nfDayNo(){const A=S.act||{};return Math.max(1,Object.keys(A).length+(A[today()]?0:1))}
 function nfPreview(id){const real=w=>!w.phrase&&w.img&&typeof PICS!=='undefined'&&PICS[w.img];const ws=(id==='review'?dueWords().slice(0,12):dayWordList()).filter(real).slice(0,3); // лише справжні картинки Mulberry, без порожніх плиток
  return ws.length?`<div class="nf-prev">${ws.map(w=>`<span>${w.phrase?icn('chat'):picHTML(w)}</span>`).join('')}</div>`:''}
-// підпис під смужкою кроків: назви всіх кроків дня по черзі (поточний — кольором), щоб іконки були зрозумілі
-function nfSegCap(B,next){return `<p class="nf-seg-cap">${B.map(b=>`<span class="${b.done?'d':next&&b.id===next.id?'c c-'+nfStepColor(b.id):''}">${esc(stepName(b))}</span>`).join(' <i aria-hidden="true">›</i> ')}</p>`}
+// етапи дня: Повтор (review) → Нові слова (new, practice, listen) → Практика (усе інше); порожні етапи не показуємо
+const NF_STAGES=[['review','Повтор','refresh','amber',['review']],['new','Нові слова','sparkle','lime',['new','practice','listen']],['use','Практика','chat','sky',null]];
+function nfStages(B){const used=new Set(NF_STAGES.flatMap(x=>x[4]||[]));
+  return NF_STAGES.map(([id,t,ic,c,ids])=>({id,t,ic,c,bs:B.filter(b=>ids?ids.includes(b.id):!used.has(b.id))})).filter(x=>x.bs.length)}
+const NF_SHORT={review:'повторення',new:'картки',practice:'закріплення',listen:'слухання',grammar:'правило',struct:'будова',dict:'диктант',speak:'вимова',dialog:'діалог',read:'текст',transl:'переклад',write:'письмо',focus:'фокус'};
+function nfShort(b){return NF_SHORT[b.id]||stepName(b).toLowerCase()}
 function homeView(){
   const B=planBlocks(),m=S.minutes||30,next=B.find(b=>!b.done),ni=next?B.indexOf(next):B.length,doneN=B.filter(b=>b.done).length;
   const sec=((S.act||{})[today()]||{}).sec||0,spentMin=Math.floor(sec/60),d=new Date(),pl=S.plan&&S.plan[S.lang];
@@ -10382,41 +10417,44 @@ function homeView(){
   const ep=typeof epOfDay==='function'?epOfDay():null,rev=reviewDone();
   const head=`<div class="nf-hd"><div><small>${S.name?esc(S.name)+' · ':''}День ${nfDayNo()} · ${LANG_NAT[S.lang]}${S.lang==='en'?' (US)':''}</small></div>
     <span class="nf-streak" title="Днів поспіль">${icn('flame')}<b>${S.streak}</b></span></div>`;
-  // сегменти дня
-  const seg=B.map((b,i)=>{const st_=b.done?'done':next&&b.id===next.id?'cur':'todo',col=nfStepColor(b.id);
-    return `<button class="nf-sg ${st_} c-${col}" onclick="${st_==='cur'?`heroGo('${b.id}')`:`startBlock('${b.id}')`}" aria-label="${esc(stepName(b))}"><span>${st_==='done'?icn('check'):icn(BLOCK_IC[b.id]||'sparkle')}</span><i></i></button>`}).join('');
-  const today_=`<div class="nf-today"><div class="nf-today-h"><b>Сьогодні</b><small>${B.filter(b=>b.done).length} / ${B.length} ${pluralUk(B.length,['крок','кроки','кроків'])}</small></div><div class="nf-segs">${seg}</div>${nfSegCap(B,next)}</div>`;
-  // великий крок
+  // три етапи дня замість восьми окремих кроків (макет 11.11.2026): Повтор → Нові слова → Практика
+  const ST=nfStages(B),cur=next?ST.find(x=>x.bs.includes(next)):null,ci=cur?ST.indexOf(cur):-1;
+  const dw=dayWordList(),rev_=reviewDone(),tiles=dw.slice(0,5).map(w=>nfTile(w,!rev_)).join('');
+  const wordsRow=dw.length?`<div class="nf-words"><div class="nf-wrow">${tiles}${dw.length>5?`<div class="nf-wt more"><span class="nf-wt-p">+${dw.length-5}</span></div>`:''}</div></div>`:'';
+  const stageRow=x=>{const dn=x.bs.filter(b=>b.done).length,n=x.bs.length,st_=dn===n?'done':x===cur?'cur':'todo',min=x.bs.filter(b=>!b.done).reduce((a,b)=>a+(b.min||0),0);
+    return `<details class="nf-stg ${st_} c-${x.c}"><summary><span class="nf-stg-d">${st_==='done'?icn('check'):icn(x.ic)}</span><span class="nf-stg-t"><b>${x.t}</b><small>${n===1?esc(blockSub(x.bs[0])):x.bs.map(b=>esc(nfShort(b))).join(' · ')}</small></span>
+      <em>${st_==='done'?'зроблено':st_==='cur'?(n>1?`${Math.min(n,dn+1)} / ${n}`:'зараз'):`≈ ${min} хв`}</em></summary>
+      <div class="nf-stg-l">${x.bs.map(b=>{const s2=b.done?'done':next&&b.id===next.id?'cur':'todo';return `<button class="nf-sg ${s2}" onclick="${s2==='cur'?`heroGo('${b.id}')`:`startBlock('${b.id}')`}"><span>${b.done?icn('check'):icn(BLOCK_IC[b.id]||'sparkle')}</span><b>${esc(stepName(b))}</b><small>${b.done?'зроблено':esc(blockSub(b))}</small></button>`}).join('')}</div></details>`};
+  const today_=`<div class="nf-today nf-stages" aria-label="Етапи дня">${ST.map(stageRow).join('')}</div>`;
+  // головна картка: поточний етап, скільки триває, слова дня, одна кнопка
   let step;
-  if(next){const col=nfStepColor(next.id),first=next.id==='review';
-    step=`<div class="nf-step c-${col}"><div class="nf-step-top"><div class="nf-step-eye"><small class="nf-eyebrow">Крок ${ni+1}${first?' · обов\'язково':''}</small>${nfPreview(next.id)}</div><h2 class="nf-step-t">${esc(stepName(next))}</h2><p>${esc(blockSub(next))}</p></div>
-      <button class="btn big nf-cta c-${col}" onclick="heroGo('${next.id}')">${sec>30||doneN?'Продовжити':'Почати'}${first&&!doneN?' повтор':''} ${icn('play')}</button></div>`}
-  else if(bnext){const rem=Math.max(0,m-spentMin);
-    step=`<div class="nf-step c-lime"><div class="nf-step-top"><div><small class="nf-eyebrow">План виконано · бонус</small><h2 class="nf-step-t">${esc(bnext.t)}</h2><p>${'За бажанням — у своєму темпі'} · ${esc(bnext.d)}</p></div></div>
+  if(next){const first=next.id==='review',left=cur.bs.filter(b=>!b.done),min=left.reduce((a,b)=>a+(b.min||0),0),k=cur.bs.indexOf(next)+1;
+    const sub=cur.id==='new'&&next.id==='new'?`${dw.length} ${pluralUk(dw.length,['слово','слова','слів'])} теми «${esc(dayTopicName())}»`:`${cur.bs.length>1?`Зараз: ${esc(stepName(next).toLowerCase())} · `:''}${esc(blockSub(next))}`;
+    step=`<div class="nf-step c-lime"><div class="nf-step-top"><small class="nf-eyebrow">Етап ${ci+1} / ${ST.length} · ≈ ${Math.max(1,min)} хв${first?' · обов\'язково':''}</small><h2 class="nf-step-t">${cur.t}</h2><p>${sub}</p></div>
+      ${cur.id==='review'?(!rev_&&dw.length?`<p class="nf-step-n">Слова дня відкриються після повтору.</p>`:''):wordsRow}
+      <button class="btn big nf-cta c-lime" onclick="heroGo('${next.id}')">${sec>30||doneN?'Продовжити':'Почати'}${first&&!doneN?' повтор':''} ${icn('play')}</button></div>`}
+  else if(bnext){
+    step=`<div class="nf-step c-lime"><div class="nf-step-top"><small class="nf-eyebrow">План виконано · бонус</small><h2 class="nf-step-t">${esc(bnext.t)}</h2><p>${'За бажанням — у своєму темпі'} · ${esc(bnext.d)}</p></div>
       <button class="btn big nf-cta" onclick="bonusGo()">${bon.some(x=>x.done)?'Продовжити бонус':'Почати бонус'} ${icn('play')}</button></div>`}
   else{const t=tomorrowPreview();
-    step=`<div class="nf-step c-lime"><div class="nf-step-top"><div><small class="nf-eyebrow">Усе на сьогодні</small><h2 class="nf-step-t">Чудовий день</h2><p>Завтра: ${t.due} на повторення · ${t.newW} нових слів · новий план через <b id="midnight">${untilMidnight()}</b></p></div></div>
+    step=`<div class="nf-step c-lime"><div class="nf-step-top"><small class="nf-eyebrow">Усе на сьогодні</small><h2 class="nf-step-t">Чудовий день</h2><p>Завтра: ${t.due} на повторення · ${t.newW} нових слів · новий план через <b id="midnight">${untilMidnight()}</b></p></div>
       <button class="btn big nf-cta" onclick="pathScreen()">Вільна практика ${icn('arrow')}</button></div>`}
   // епізод
   const epRow=ep?`<button class="nf-ep" onclick="${next&&epState().seen!==today()?`epIntro('${next.id}')`:'storyList()'}">${typeof obj3d==='function'&&typeof epObj==='function'?`<span class="nf-ep-t">${obj3d(epObj(ep),'o3-sm')}</span>`:''}<span><small>${ep.final?'Фінал сезону':'Сезон '+seasonOf(ep.lv).n} · епізод ${ep.n}</small><b>${esc(ep.title)}</b><em>${esc(ep.title_uk)}</em></span>${icn('chev')}</button>`:'';
-  // слова дня
-  const dw=dayWordList(),locked=!rev,tiles=dw.slice(0,5).map(w=>nfTile(w,locked)).join('');
-  const words=dw.length?`<div class="nf-words"><div class="nf-words-h"><b>Слова дня · ${esc(dayTopicName())}</b><span>${dw.length} ${pluralUk(dw.length,['нове','нових','нових'])}</span></div>
-    <p>${locked?'Відкриються після повтору. Ці ж слова будуть у тексті, аудіо й діалозі.':'Ці слова будуть у тексті, аудіо й діалозі.'}</p>
-    <div class="nf-wrow">${tiles}${dw.length>5?`<div class="nf-wt more"><span class="nf-wt-p">+${dw.length-5}</span></div>`:''}</div></div>`:'';
   // рівень
   const nx=nextLv(),lp=Math.min(1,lvProgress()/LV_UNLOCK),known=WORDS.filter(w=>w[S.lang]&&learned(w)).length;
-  const lvl=`<button class="nf-lv" onclick="meScreen()"><b>${maxLv()}</b><span class="nf-lvbar"><i style="width:${Math.max(3,Math.round(lp*100))}%"></i></span><small>${known} ${pluralUk(known,['слово','слова','слів'])} знаєш${nx?` · до ${nx}`:''}</small></button>`;
+  // виклик дня: тонкий рядок під рівнем; повна картка — лише коли можна забрати нагороду
+  const qs=typeof questsToday==='function'?questsToday():[],qx=(next&&qs.find(q=>!qClaimed(q.id)&&!q.go))||qs.find(q=>!qClaimed(q.id))||null,qdone=qs.filter(q=>qClaimed(q.id)).length;
+  const claim=qx&&qx.get()>=qx.n;
+  const chal=qs.length&&claim?`<div class="pm-card pm-chal"><div class="pm-ch-h">${icn('target','pm-tic')}<div><small>Виклик дня · ${qdone}/${qs.length}</small><b>${esc(qx.t)}</b></div><button class="btn sm" onclick="qClaim('${qx.id}')">+${qx.xp} XP</button></div><div class="pm-bar"><i style="width:100%"></i></div></div>`:'';
+  const chalLine=qs.length&&!claim?`<span class="nf-lv-q">${icn('target')} ${qx?`Виклик дня: ${esc(qx.t)} · ${Math.min(qx.n,qx.get())}/${qx.n}`:'Усі виклики дня виконано'}</span>`:'';
+  const lvl=`<button class="nf-lv" onclick="meScreen()"><b>${maxLv()}</b><span class="nf-lvbar"><i style="width:${Math.max(3,Math.round(lp*100))}%"></i></span><small>${known} ${pluralUk(known,['слово','слова','слів'])} знаєш${nx?` · до ${nx}`:''}</small>${chalLine}</button>`;
   const test=!(S.placement&&S.placement[S.lang])&&!((S.beginner||{})[S.lang])&&!((S.ptLater||{})[S.lang]===today())?`<div class="k-test">${icn('target','pm-tic')}<div class="k-t"><b>Визначте свій рівень</b><small>Тест 10–15 хв: вправи й тексти будуть саме вашого рівня</small>
     <div class="k-hbtns"><button class="btn" onclick="placementIntro()">Пройти тест</button><button class="btn ghost" onclick="S.ptLater=S.ptLater||{};S.ptLater[S.lang]=today();save();home()">Пізніше</button></div></div></div>`:'';
-  // виклик дня
-  const qs=typeof questsToday==='function'?questsToday():[],qx=(next&&qs.find(q=>!qClaimed(q.id)&&!q.go))||qs.find(q=>!qClaimed(q.id))||null,qdone=qs.filter(q=>qClaimed(q.id)).length;
-  const chal=qs.length?`<div class="pm-card pm-chal"><div class="pm-ch-h">${icn('target','pm-tic')}<div><small>Виклик дня · ${qdone}/${qs.length}</small><b>${qx?esc(qx.t):'Усі виклики виконано'}</b></div>
-    ${qx&&qx.get()>=qx.n?`<button class="btn sm" onclick="qClaim('${qx.id}')">+${qx.xp} XP</button>`:`<span class="pm-ch-v">${qx?Math.min(qx.n,qx.get())+'/'+qx.n:icn('check')}</span>`}</div><div class="pm-bar"><i style="width:${qx?Math.min(100,qx.get()/qx.n*100):100}%"></i></div></div>`:'';
   // бонус-раунд і підсумок після плану
   const bonusList=!next&&bon&&bon.length?`<div class="nf-blist"><div class="nf-sec">Бонус-раунд</div>${bon.map((x,i)=>{const s_=x.done?'done':x===bnext?'next':'locked';return `<button class="k-step jr-step ${s_}" onclick="bonusGo('${x.id}')"><span class="jr-node">${x.done?icn('check'):s_==='next'?icn(BLOCK_IC[x.id]||'sparkle'):i+1}</span><span class="k-t"><b>${esc(x.t)}</b><small>${esc(x.d)}</small></span><span class="jr-min">${x.done?'':x.min+' хв'}</span></button>`}).join('')}</div>`:'';
   const after=!next?`${daySummaryHTML()}${pl?`<button class="k-row" onclick="meScreen()">${icn('target','pm-tic')}<span class="k-t"><b>Ціль: ${pl.lvl} до ${fmtDate(pl.eta)}</b><small>${pl.focus&&FOCUS[pl.focus]?'фокус: '+FOCUS[pl.focus].t.toLowerCase():'щоденний план'}</small></span><span class="k-chev">›</span></button>`:''}`:'';
-  return `${head}${test}${today_}${step}${epRow}${words}${lvl}${chal}${bonusList}${after}`}
+  return `${head}${test}${step}${today_}${epRow}${lvl}${chal}${bonusList}${after}`}
 
 /* ---------- нижнє меню: Сьогодні · Шлях · Граматика · Словник · Я ---------- */
 const NF_TABS=[['home','Сьогодні',()=>ICON.train],['path','Шлях',()=>icn('map')],['gram','Граматика',()=>icn('book')],['dict','Словник',()=>icn('notes')],['me','Я',()=>icn('user')]];
