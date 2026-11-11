@@ -2338,6 +2338,14 @@ body.in-session #app>.card.nf-xc{background:var(--s1);border:1px solid var(--lin
 /* «Впиши слово»: поле під карткою речення */
 .nf-ex form{margin:12px 0 0}.nf-ex .chars{margin-top:8px}.nf-ex>.row{margin-top:12px}
 .nf-ex .idk-w{display:block;margin:12px auto 0}
+
+/* ---------- «Тобі легко» — пропозиція піднятися рівнем ---------- */
+.lu-card{display:flex;gap:12px;align-items:flex-start;margin:0 0 12px;padding:14px 16px;border-radius:22px;background:color-mix(in srgb,var(--sky) 8%,var(--s1));border:1px solid color-mix(in srgb,var(--sky) 40%,var(--line))}
+.lu-ic{flex:none;width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--sky) 16%,transparent);color:var(--sky)}.lu-ic svg{width:20px;height:20px}
+.lu-t{flex:1;min-width:0}.lu-t b{display:block;font-size:16px;font-weight:800;color:var(--ink)}
+.lu-t p{margin:4px 0 12px;font-size:14px;line-height:1.45;color:var(--mut)}
+.lu-btns{display:flex;gap:8px;flex-wrap:wrap}.lu-btns .btn{flex:1;min-width:120px}
+.lu-res .pt-sum b{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -10745,7 +10753,7 @@ function meScreen(){applyTheme();REDRAW=meScreen;emit('home:before');
    <div class="nf-me">${levelRing({lvl:maxLv(),pct:lp,today:Math.min(1,sec/60/m),size:250,center:nx?`до ${nx}: ${Math.round(lp*100)}%`:'найвищий рівень'})}
     <div class="nf-chips mid"><span class="am">${icn('flame')} ${S.streak} ${pluralUk(S.streak,['день','дні','днів'])}</span><span class="ok">${icn('check')} ${known} ${pluralUk(known,['слово','слова','слів'])} знаєш</span><span class="sk">${icn('clock')} ${Math.floor(sec/60)} / ${m} хв</span></div></div>
    ${typeof skyCardHTML==='function'?skyCardHTML():''}
-   <div class="nf-pcs">${ACTIVE_LANGS.length>1?row('globe','Мова: '+({en:'англійська',da:'данська',it:'італійська',pl:'польська'}[S.lang]||S.lang),'змінити — прогрес кожної мови окремий','launchScreen()'):''}${row('play','Пройти старт ще раз','мова, мета, тест рівня, план','restartStart()')}${row('chart','Прогрес','утримання, активність, етапи слів','statsScreen()')}${row('medal','Досягнення',`${ACH.filter(a=>(S.ach||{})[S.lang+':'+a[0]]).length} з ${ACH.length}`,'achScreen()')}${row('calendar','Тижневий звіт','хвилини, точність, утримання','weekReport()')}${row('target','Тест рівня',S.placement&&S.placement[S.lang]?'ваш рівень '+S.placement[S.lang].lvl:'пройти','placementIntro()')}${row('user','Налаштування','час, слова на день, звук, тема','settingsScreen()')}</div>`;emit('screen','me')}
+   <div class="nf-pcs">${ACTIVE_LANGS.length>1?row('globe','Мова: '+({en:'англійська',da:'данська',it:'італійська',pl:'польська'}[S.lang]||S.lang),'змінити — прогрес кожної мови окремий','launchScreen()'):''}${row('play','Пройти старт ще раз','мова, мета, тест рівня, план','restartStart()')}${row('chart','Прогрес','утримання, активність, етапи слів','statsScreen()')}${row('medal','Досягнення',`${ACH.filter(a=>(S.ach||{})[S.lang+':'+a[0]]).length} з ${ACH.length}`,'achScreen()')}${row('calendar','Тижневий звіт','хвилини, точність, утримання','weekReport()')}${row('target','Тест рівня','ваш рівень '+maxLv()+' · пройти весь тест знову','placementIntro()')}${typeof luStart==='function'&&nextLv()?row('chart','Спробувати рівень '+nextLv(),'якщо зараз надто легко · 12 питань, ≈ 4 хв','luStart()'):''}${row('user','Налаштування','час, слова на день, звук, тема','settingsScreen()')}</div>`;emit('screen','me')}
 
 /* ---------- старт: мова → мета й час → тест ---------- */
 const NF_GOALS=[['work','briefcase','Робота','листи, зустрічі, співбесіда'],['travel','plane','Подорожі','аеропорт, готель, місто'],['exam','cap','Іспит','IELTS · Cambridge B2 / C1'],['self','heart','Для себе','фільми, книжки, спілкування']];
@@ -11325,15 +11333,20 @@ function ptStart(start){applyTheme();document.body.classList.add('in-session');s
   PX={n:0,k:0,start,th:ptMu(start),log:[],used:new Set(),usedG:new Set(),textDone:false,t0:Date.now(),sel:null,typed:'',q:null};ptNext()}
 function ptOk(q){if(q.kind==='type'){const v=ptNorm(PX.typed);return !!v&&q.acc.some(a=>a===v||(a.length>=6&&lev(a,v)<=1))}
   return PX.sel!=null&&PX.sel>=0&&q.opts[PX.sel]===q.ans}
+// той самий рушій служить і для короткої перевірки наступного рівня (48_level_up.js): PX.total — скільки питань, PX.fixed — рівень питань,
+// PX.onDone — що робити в кінці, PX.title / PX.onClose — підпис і дія хрестика
+const ptTotal=()=>(PX&&PX.total)||PT_TOTAL;
+function ptEnd(){if(PX.onDone){PX.done=true;return PX.onDone(PX.log)}return ptResult()}
 function ptNext(){if(!PX||PX.done)return;
   if(PX.q){const q=PX.q;PX.log.push({skill:q.skill,li:q.li,ok:ptOk(q),c:q.kind==='type'?0:1/q.opts.length,idk:PX.sel===-1});
     PX.th=ptTheta(PX.log,ptMu(PX.start),1.6);
-    if(q.kind==='text'&&q.qi<q.qs.length-1&&PX.n<PT_TOTAL){q.qi++;ptTextQ(q);PX.sel=null;PX.typed='';PX.n++;return ptRender()}}
-  if(PX.n>=PT_TOTAL)return ptResult();
+    if(q.kind==='text'&&q.qi<q.qs.length-1&&PX.n<ptTotal()){q.qi++;ptTextQ(q);PX.sel=null;PX.typed='';PX.n++;return ptRender()}}
+  if(PX.n>=ptTotal())return ptEnd();
   // по черзі: на оціненому рівні й на сходинку вище
-  const sk=PT_ORDER[PX.k%PT_ORDER.length],L=ptLevel(PX.th),li0=ptClamp(L+(PX.k%2));PX.k++;
-  let q=null;for(let d=0;d<6&&!q;d++){const li=ptClamp(li0+(d%2?-1:1)*Math.ceil(d/2));q=ptMake(sk,li)||(d>=3?ptMake('vocab',li):null)}
-  if(!q)return ptResult();
+  const sk=PT_ORDER[PX.k%PT_ORDER.length],L=ptLevel(PX.th),li0=PX.fixed!=null?PX.fixed:ptClamp(L+(PX.k%2));PX.k++;
+  let q=null;if(PX.fixed!=null)q=ptMake(sk,li0)||ptMake('vocab',li0);
+  else for(let d=0;d<6&&!q;d++){const li=ptClamp(li0+(d%2?-1:1)*Math.ceil(d/2));q=ptMake(sk,li)||(d>=3?ptMake('vocab',li):null)}
+  if(!q)return ptEnd();
   if(q.w)PX.used.add(q.w.id);if(q.gk)PX.usedG.add(q.gk);if(q.kind==='text')PX.textDone=true;
   PX.q=q;PX.sel=null;PX.typed='';PX.n++;ptRender();
   if(q.audio)setTimeout(()=>speak(q.audio),350);
@@ -11347,16 +11360,16 @@ function ptRender(){const q=PX.q,s=PX.sel,d=s!=null,skName=(PT_SKILLS.find(x=>x[
       :q.audio?`<div class="ds-qaudio"><button class="nf-play" onclick="speak(${js(q.audio)})" aria-label="Прослухати ще раз">${icn('speaker')}</button><button class="nf-slow" onclick="slowSpeak(${js(q.audio)})">${icn('clock')} повільно</button></div>`
       :`<strong class="ds-qs${q.small?' sm':''}">${esc(q.big)}</strong>`);
   app.innerHTML=`<div class="ds-scr">
-   <header class="ds-top"><button class="ds-x" onclick="nfGuide()" aria-label="Закрити">${icn('close')}</button>
-     <div class="ds-prog"><div class="ds-prog-h"><span>Тест рівня · ${skName.toLowerCase()}</span><span>${PX.n} / ${PT_TOTAL}</span></div><div class="ds-bar"><i style="width:${(PX.n-1)/PT_TOTAL*100}%"></i></div></div></header>
-   <section class="ds-q"><div class="ds-chips"><span class="ds-chip sky">складність: ${LEVELS[q.li]}</span><span class="ds-chip">адаптивний</span></div>${body}</section>
+   <header class="ds-top"><button class="ds-x" onclick="${PX.onClose||'nfGuide()'}" aria-label="Закрити">${icn('close')}</button>
+     <div class="ds-prog"><div class="ds-prog-h"><span>${esc(PX.title||'Тест рівня')} · ${skName.toLowerCase()}</span><span>${PX.n} / ${ptTotal()}</span></div><div class="ds-bar"><i style="width:${(PX.n-1)/ptTotal()*100}%"></i></div></div></header>
+   <section class="ds-q"><div class="ds-chips"><span class="ds-chip sky">складність: ${LEVELS[q.li]}</span><span class="ds-chip">${PX.fixed!=null?'питання одного рівня':'адаптивний'}</span></div>${body}</section>
    ${typed?`<div class="pt-type"><span class="pt-hint" aria-label="Перша літера й кількість літер">${esc(q.hint.split('').join(' '))}</span>
        <input id="ptIn" autocomplete="off" autocapitalize="off" spellcheck="false" inputmode="latin" placeholder="напиши слово" value="${esc(PX.typed)}" oninput="ptType(this.value)" onkeydown="if(event.key==='Enter'&&ptNorm(this.value))ptNext()"></div>`
      :`<div class="ds-opts">${q.opts.map((o,i)=>`<button class="${i===s?'on':''}${q.small||q.kind==='text'?' sm':''}" onclick="ptPick(${i})">${esc(o)}</button>`).join('')}</div>`}
    ${d&&!typed?`<section class="ds-pend"><span>Відповідь прийнято. <em>Натиснув(ла) випадково?</em></span><button onclick="PX.sel=null;ptRender()">${icn('refresh')} Переграти</button></section>`
      :`<button class="ds-idk" onclick="PX.sel=-1;PX.typed='';ptNext()">Не знаю — далі</button>`}
    <p class="ds-qnote">${typed?'Перша літера вже є, кількість рисок — кількість літер. Маленька описка в довгому слові не рахується помилкою.':'Не вгадуй: «Не знаю» дає точніший результат, ніж випадкова відповідь. Правильну відповідь у тесті не показуємо.'}</p>
-   <div class="ds-foot"><button class="ds-cta ${ready?'':'off'}" ${ready?'':'disabled'} onclick="ptNext()">${PX.n>=PT_TOTAL?'Побачити результат':'Наступне питання'}</button></div></div>`;
+   <div class="ds-foot"><button class="ds-cta ${ready?'':'off'}" ${ready?'':'disabled'} onclick="ptNext()">${PX.n>=ptTotal()?'Побачити результат':'Наступне питання'}</button></div></div>`;
   if(typed){const i=document.getElementById('ptIn');if(i)try{i.focus({preventScroll:true})}catch(e){}}
 }
 
@@ -12630,6 +12643,59 @@ function filltA(idk){const it=SS.items[SS.i];if(!it)return;if(it.answered)return
     :`<div class="feedback bad">✗ Правильно: <b>${esc(g.answer)}</b>${idk?'':'<br>Ви написали: '+esc(v)}<br><span style="font-weight:600">${esc(g.full)}</span></div>`;
   const hb=ok?(ef?`<div class="hintbox soft"><div class="hl-line">${ef.txt}</div></div>`:''):hintBox({lines:[`Потрібне слово: <b>${esc(w[S.lang])}</b> — «${esc(w.uk)}».`,ef?ef.txt:'',!idk&&lev(u,s)<=3?'Ви були близько: '+charDiff(g.answer,v):''],cat:ef?ef.cat:'spelling',q:'Вписати слово: '+g.pre+'___'+g.post,correct:g.answer,given:v});
   document.getElementById('fb').innerHTML=pipe('feedback',head+hb+`<div class="row"><button class="btn" onclick="nextItem()">Далі →</button></div>`,{it,ok,given:v,gw:null})}
+
+/* ====================== «ТОБІ ЛЕГКО» — ПРОПОЗИЦІЯ ПІДНЯТИСЯ РІВНЕМ (11.11.2026) ======================
+   Якщо кілька днів поспіль майже все правильно з першого разу — застосунок пропонує коротку перевірку наступного рівня.
+   Пройшов → рівень піднято (без перездачі всього тесту). Не пройшов → лишаємося, наступна пропозиція за тиждень.
+   Те саме можна запустити самому: «Я» → «Спробувати рівень …».
+   Рахунок: відповіді дня з першої спроби (без карток-самооцінки й повторних спроб) — S.ease[lang][дата] = {n, ok}. */
+const LU_DAYS=3,     // стільки останніх активних днів поспіль має бути «легко»
+      LU_MIN=20,     // день рахується, якщо в ньому щонайменше стільки відповідей
+      LU_ACC=.9,     // частка правильних з першого разу
+      LU_Q=12,       // питань у перевірці наступного рівня
+      LU_PASS=9,     // правильних, щоб піднятися (навмання з 4 варіантів стільки не набрати: ≈ 0,04 %)
+      LU_MUTE=7;     // днів тиші після «Не зараз» чи невдалої спроби
+on('grade',(w,q)=>{try{const it=SS&&SS.items&&SS.items[SS.i];if(!it||it.test||it.retry||it.kind==='card')return;
+  const E=(S.ease=S.ease||{}),L=(E[S.lang]=E[S.lang]||{}),d=(L[today()]=L[today()]||{n:0,ok:0});d.n++;if(q==='good'||q==='easy')d.ok++;
+  const ks=Object.keys(L).sort();while(ks.length>14)delete L[ks.shift()]}catch(e){}});
+function luStreak(){const L=(S.ease||{})[S.lang]||{},days=Object.keys(L).filter(d=>L[d].n>=LU_MIN).sort().slice(-LU_DAYS);
+  if(days.length<LU_DAYS||days[days.length-1]<addDays(-2))return null;            // мало днів або давно не займались
+  if(!days.every(d=>L[d].ok/L[d].n>=LU_ACC))return null;
+  const n=days.reduce((a,d)=>a+L[d].n,0),ok=days.reduce((a,d)=>a+L[d].ok,0);return {days:days.length,acc:Math.round(ok/n*100),n}}
+function luOffer(){const to=nextLv();if(!to)return null;const m=(S.lvUp||{})[S.lang]||{};if(m.mute&&m.mute>today())return null;
+  const s=luStreak();return s?Object.assign(s,{from:maxLv(),to}):null}
+function luCardHTML(o){return `<div class="lu-card" role="note"><span class="lu-ic">${icn('chart')}</span><div class="lu-t"><b>Тобі легко на ${o.from}</b>
+    <p>${o.days} ${pluralUk(o.days,['день','дні','днів'])} поспіль — ${o.acc}% правильних з першого разу. Перевіримо, чи час переходити на ${o.to}? ${LU_Q} питань, близько 4 хвилин.</p>
+    <div class="lu-btns"><button class="btn sm" onclick="luStart()">Перевірити ${o.to}</button><button class="btn ghost sm" onclick="luLater()">Не зараз</button></div></div></div>`}
+on('home:after',()=>{try{const o=luOffer(),h=document.querySelector('#app .nf-step');if(!o||!h||document.querySelector('.lu-card'))return;h.insertAdjacentHTML('afterend',luCardHTML(o))}catch(e){}});
+function luLater(){S.lvUp=S.lvUp||{};S.lvUp[S.lang]=Object.assign({},S.lvUp[S.lang],{mute:addDays(LU_MUTE)});save();toast('Добре. Запропоную знову за тиждень — або спробуй сам у «Я»');home()}
+// перевірка: LU_Q питань лише наступного рівня (слова, граматика, читання, написання, слухання), без підказок і показу відповідей
+function luStart(){const to=nextLv();if(!to)return toast('Це вже найвищий рівень');
+  const m=(S.lvUp||{})[S.lang]||{};if(m.tried===today())return toast('Сьогодні спроба вже була — наступна завтра');
+  const go=()=>{applyTheme();document.body.classList.add('in-session');const li=LEVELS.indexOf(to);
+    PX={n:0,k:0,start:li,th:ptMu(li),log:[],used:new Set(),usedG:new Set(),textDone:true,t0:Date.now(),sel:null,typed:'',q:null,
+        total:LU_Q,fixed:li,title:'Перевірка рівня '+to,onClose:'luCancel()',onDone:luDone};ptNext()};
+  // речення потрібного рівня можуть бути ще не завантажені (сайт вантажить їх за рівнями)
+  if(typeof withSentL==='function'&&typeof SENT_LAZY!=='undefined'&&SENT_LAZY&&typeof SENT_OK!=='undefined'&&!SENT_OK[to])return withSentL([to],go);go()}
+function luCancel(){PX=null;document.body.classList.remove('in-session');home()}
+function luDone(log){const from=maxLv(),to=nextLv(),ok=log.filter(x=>x.ok).length,n=log.length,pass=ok>=LU_PASS&&n>=LU_Q;
+  S.lvUp=S.lvUp||{};
+  if(pass){luApply(to);S.lvUp[S.lang]={up:today(),from,to,ok,n}}
+  else S.lvUp[S.lang]={tried:today(),mute:addDays(LU_MUTE),ok,n};
+  save();
+  app.innerHTML=`<div class="ds-scr ds-res lu-res"><section class="ds-rtop"><span class="ds-eyebrow">ПЕРЕВІРКА РІВНЯ ${to}</span>
+     ${levelRing({lvl:pass?to:from,pct:0,size:220,center:pass?'новий рівень':'твій рівень'})}
+     <p class="pt-sum"><b>${ok} з ${n} правильно.</b> ${pass?`Рівень ${to} відкрито: нові слова, тексти й вправи тепер звідти. Невивчені слова нижчих рівнів позначено знайомими — вони приходитимуть лише на перевірку.`
+       :`Для ${to} потрібно щонайменше ${LU_PASS}. Поки лишаємося на ${from} — це нормально: запропоную знову за тиждень, а спробувати самому можна вже завтра.`}</p></section>
+   <div class="ds-foot"><button class="ds-cta" onclick="document.body.classList.remove('in-session');PX=null;home()">${pass?'Продовжити на '+to:'Зрозуміло'} ${icn('arrow')}</button></div></div>`;
+  window.scrollTo(0,0)}
+// піднятися на рівень: прогрес слів не чіпаємо; ще не розпочаті слова нижчих рівнів — «знайомі» (прийдуть на перевірку за 3–45 днів)
+function luApply(to){const ti=LEVELS.indexOf(to);S.lvUnlock=S.lvUnlock||{};S.lvUnlock[S.lang]=to;
+  WORDS.forEach(w=>{if(!w[S.lang]||w.my||w.topic==='ukus'||LEVELS.indexOf(w.lv)>=ti||st(w))return;
+    const iv=3+Math.floor(Math.random()*43);S.srs[S.lang][w.id]={b:2,iv,ef:2.5,l:0,r:1,pl:1,due:addDays(iv)}});
+  S.levels=[to];S.topics=[];if(S.plan&&S.plan[S.lang])S.plan[S.lang].lvl=to;
+  if(S.ease)S.ease[S.lang]={};if(S.dayTheme)delete S.dayTheme[S.lang];if(S.dayWords)delete S.dayWords[S.lang];
+  try{clampLevels()}catch(e){}}
 
 bootApp();
 </script>
