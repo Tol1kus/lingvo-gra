@@ -8391,7 +8391,7 @@ if(UKUS){UKUS.pairs.forEach(p=>{GB2US[p.gb.toLowerCase()]=p.us;US2GB[p.us.toLowe
 }
 function applyEngVar(){
   const us=S.engVar==='us';LANGS.en.tts=us?'en-US':'en-GB';LANGS.en.flag=us?'🇺🇸':'🇬🇧';LANGS.en.name=us?'Англійська (США)':'Англійська (Британія)';
-  WORDS.forEach(w=>{if(w.gb)w.en=us?w.us:w.gb;if(w.ukUS)w.uk=us?w.ukUS:w.ukGB});
+  WORDS.forEach(w=>{if(w.gb)w.en=us?w.us:w.gb;if(w.ukUS)w.uk=us&&S.lang==='en'?w.ukUS:w.ukGB});
 }
 function setEngVar(v){v='us';S.engVar=v;save();applyEngVar();toast(v==='us'?'🇺🇸 Американська англійська':'🇬🇧 Британська англійська');redraw()}
 applyEngVar();
@@ -11609,7 +11609,7 @@ function ptMake(skill,li){const LV=LEVELS[li];
   if(skill==='gram'){const ex=[];(GRAMMAR[S.lang]||[]).forEach((g,gi)=>{if(g.lv!==LV||/британськ/i.test(g.t))return;
       (g.ex||[]).forEach((e,ei)=>{const k=gi+':'+ei;if(!PX.usedG.has(k)&&/___/.test(e[0])&&Array.isArray(e[1])&&e[1].length>=3)ex.push([k,e])})});
     if(!ex.length)return null;const [k,e]=ex[Math.floor(Math.random()*ex.length)],[pre,post]=String(e[0]).split('___');
-    return {kind:'mc',skill,li,gk:k,label:'Обери правильну форму',pre:nfNoDash(pre),post:post||'',opts:shuffle(e[1].slice()),ans:e[1][e[2]]}}
+    return {kind:'mc',skill,li,gk:k,label:'Обери правильну форму',pre:nfNoDash(pre),post:post||'',uk:(typeof TR!=='undefined'&&TR[e[0]])||'',opts:shuffle(e[1].slice()),ans:e[1][e[2]]}}
   if(skill==='read'){
     // від B1 — один короткий справжній текст на тест (2 питання на розуміння)
     if(li>=2&&!PX.textDone){const ts=shuffle((TEXTS[S.lang]||[]).filter(t=>t.lv===LV&&(t.q||[]).length>=2&&ptPlain(t.text).split(' ').length<=250));
@@ -11668,7 +11668,7 @@ function ptType(v){PX.typed=v;const b=document.querySelector('.ds-cta');if(b){co
 function ptRender(){const q=PX.q,s=PX.sel,d=s!=null,skName=(PT_SKILLS.find(x=>x[0]===q.skill)||PT_SKILLS[0])[1];
   const blank=d&&q.pre!=null&&s>=0?q.opts[s]:'…',typed=q.kind==='type',ready=typed?!!ptNorm(PX.typed):d;
   const body=q.kind==='text'?`<details class="pt-text" open><summary>${esc(q.t.title)} · текст рівня ${LEVELS[q.li]}</summary><p>${esc(q.plain)}</p></details><p class="ds-qlab pt-tq">${esc(q.label)}</p>`
-    :`<p class="ds-qlab">${q.label}</p>`+(q.pre!=null?`<strong class="ds-qs">${esc(q.pre)}<span class="ds-blank">${esc(blank)}</span>${esc(q.post)}</strong>`
+    :`<p class="ds-qlab">${q.label}</p>`+(q.pre!=null?`<strong class="ds-qs">${esc(q.pre)}<span class="ds-blank">${esc(blank)}</span>${esc(q.post)}</strong>${q.uk?`<span class="ds-qtr">${esc(q.uk)}</span>`:''}`
       :q.audio?`<div class="ds-qaudio"><button class="nf-play" onclick="speak(${js(q.audio)})" aria-label="Прослухати ще раз">${icn('speaker')}</button><button class="nf-slow" onclick="slowSpeak(${js(q.audio)})">${icn('clock')} повільно</button></div>`
       :`<strong class="ds-qs${q.small?' sm':''}">${esc(q.big)}</strong>`);
   app.innerHTML=`<div class="ds-scr">
@@ -12773,10 +12773,10 @@ on('feedback',(html,ctx)=>{try{if(!ctx||ctx.ok||!/k-mistake/.test(html))return h
    («Я вивчаю англійську», «долари»). Для данської там є власний переклад uk_da (data/sentences/uk_da.txt) — підставляємо його,
    коли вчиться данська, і повертаємо спільний, коли англійська. */
 // переклад СЛОВА для данської, де спільний український переклад інший (данська — крони, англійська US — долари)
-const VOCAB_UK_DA={'two euros':'дві крони'};
+const VOCAB_UK_DA={'two euros':'дві крони','it costs ten kroner.':'Це коштує десять крон.',"that's fifty kroner.":"З вас п'ятдесят крон."};
 function applyUkDa(){try{const da=S.lang==='da';
   for(const w of WORDS){const k=String(w.gb||w.en||w.enDK||'').toLowerCase(),u=VOCAB_UK_DA[k];if(!u)continue;if(w.ukBase==null)w.ukBase=w.uk;w.uk=da?u:w.ukBase}for(const w of WORDS){const s=w.sent;if(!s||!s.uk_da)continue;if(s.ukBase==null)s.ukBase=s.uk;s.uk=da?s.uk_da:s.ukBase}}catch(e){}}
-if(typeof switchLang==='function'){const _swDa=switchLang;switchLang=function(k){const r=_swDa.apply(this,arguments);applyUkDa();return r}}
+if(typeof switchLang==='function'){const _swDa=switchLang;switchLang=function(k){const r=_swDa.apply(this,arguments);try{applyEngVar()}catch(e){}applyUkDa();return r}}
 if(typeof applySent==='function'){const _asDa=applySent;applySent=function(d){
   // слова прихованої в англійському курсі теми (держпослуги Данії) мають англійський ключ у enDK
   try{for(const w of WORDS)if(!w.sent&&!w.en&&w.enDK&&d[w.enDK])w.sent=d[w.enDK]}catch(e){}
@@ -12841,6 +12841,23 @@ function tipsTheme(){return S.lang==='da'?THEME_TIPS_DA:S.lang==='en'?THEME_TIPS
 /* Вправа з граматики: переклад речення одразу під ним (а не лише після відповіді) — переклад не підказує форму */
 on('item:render',it=>{try{if(!it||it.kind!=='gram'||!it.ex)return;const q=it.ex[0],tr=TR[q];if(!tr)return;
   const s=document.querySelector('#app .sentence');if(s&&!document.querySelector('.gr-q-tr'))s.insertAdjacentHTML('afterend',`<div class="gr-q-tr">${esc(tr)}</div>`)}catch(e){}});
+
+/* Надійніше озвучення (скарга «не працює озвучування»):
+   1) якщо щось уже звучить — cancel() і нову фразу запускаємо з паузою 60 мс (у Chrome фраза одразу після cancel() часто губиться);
+      якщо тиша — говоримо одразу, у тому самому дотику (iPhone дозволяє звук лише так);
+   2) speechSynthesis.resume() — Chrome інколи «засинає» на паузі;
+   3) якщо обраний голос не почав говорити за 1,5 с або дав помилку (часто — мережеві голоси Google) — повторюємо зі стандартним голосом браузера для цієї мови. */
+function speakSafe(text,rate){try{if(!('speechSynthesis' in window)||!text)return;const ss=speechSynthesis;
+  const go=useVoice=>{let started=false;const u=mkUtter(text,rate);if(!useVoice){try{u.voice=null}catch(e){}}
+    u.onstart=()=>{started=true};u.onerror=e=>{if(!started&&useVoice&&!/interrupted|canceled/.test(e&&e.error||''))go(false)};
+    try{ss.resume()}catch(e){}ss.speak(u);
+    if(useVoice&&u.voice)setTimeout(()=>{if(!started&&!ss.speaking){try{ss.cancel()}catch(e){}go(false)}},1500)};
+  if(ss.speaking||ss.pending){ss.cancel();setTimeout(()=>go(true),60)}else go(true)}catch(e){}}
+{const _spSafe=speak;speak=function(text){try{if(!VOICE_HELP_SHOWN[S.lang]&&voiceMissing(S.lang)){VOICE_HELP_SHOWN[S.lang]=1;voiceHelp(S.lang)}}catch(e){}speakSafe(text)}}
+if(typeof slowSpeak==='function')slowSpeak=function(t){speakSafe(t,Math.max(.5,voiceRate()-.3))};
+// журнали за мовами можуть ще не мати запису для мови (нова мова, старі дані) — створюємо порожні, щоб нічого не падало
+(function ensureLangLogs(){try{for(const k of ['srs','newLog','grammar','doneLog','dayDone']){S[k]=S[k]||{};for(const l of ACTIVE_LANGS)S[k][l]=S[k][l]||{}}}catch(e){}})();
+{const _swLog=switchLang;switchLang=function(k){for(const n of ['srs','newLog','grammar','doneLog','dayDone']){S[n]=S[n]||{};S[n][k]=S[n][k]||{}}return _swLog.apply(this,arguments)}}
 
 /* ====================== АКТИВНЕ ПРИГАДУВАННЯ (11.11.2026) ======================
    Впізнати слово серед 4 варіантів легше, ніж згадати його самому, а запам'ятовується краще саме те, що довелося згадати.
@@ -12928,7 +12945,7 @@ on('reviewKind',(k,w)=>{const L=hardLv();if(L<1)return k;const r=Math.random(),h
 /* ---------- «Впиши слово»: пропуск у реченні без варіантів ---------- */
 RENDER_X.fillt=function(it){const w=it.w,g=w.sent&&w.sent[S.lang]&&parseGap(w.sent[S.lang]);if(!g){it.kind='type';return renderItem()}
   // довгі вирази й цілі фрази вписувати заважко — для них лишаємо вибір із правдоподібних варіантів
-  if(g.answer.trim().split(/\s+/).length>2||g.answer.length>16){it.kind='fill';return renderItem()}
+  if(g.answer.trim().split(/\s+/).length>2||g.answer.length>16){it.kind='fill';it.wasFillt=1;return renderItem()}
   it.g=g;it.hint=0;it.answered=false;
   app.innerHTML=topRow()+`<div class="nf-ex">
     <div class="q-label">Впиши пропущене слово</div>
