@@ -2470,6 +2470,10 @@ html,body{transition:background-color .4s ease}
 .ph-alt:not(.ph-show)>.pimg,.ph-alt:not(.ph-show) .pimg:not(.ph-img){visibility:visible!important}
 .ph-alt.ph-show .pimg:not(.ph-img),.ph-alt.ph-show .om{visibility:hidden}
 .ph-tg{position:absolute;right:10px;top:10px;z-index:2;font:inherit;font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;border:1px solid rgba(0,0,0,.15);background:rgba(255,255,255,.85);color:#141316;cursor:pointer}
+/* «Слово дня» по центру (прохання 11.11.2026): підпис зверху, слово й переклад посередині, кнопка звуку під ними */
+.dsum .ds-word{flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:6px;padding:14px 12px}
+.dsum .ds-word>small{writing-mode:horizontal-tb;transform:none;font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.dsum .ds-word>div{flex:none;width:100%}.dsum .ds-word b{font-size:24px;color:var(--lime-t)}.dsum .ds-word span{display:block;margin-top:2px}
 </style>
 </head>
 <body>
