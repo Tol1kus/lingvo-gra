@@ -1,6 +1,6 @@
 // Service worker Nightlex: офлайн-доступ. Сторінка й дані — «спершу мережа» з обходом HTTP-кешу браузера (cache:'no-cache' → звірка з сервером),
 // щоб нова версія приходила одразу; картинки — з кешу.
-const CACHE='lingvo-9f4975fe21';
+const CACHE='lingvo-8ea031d8f1';
 const CORE=['./','index.html','manifest.json','icon-192.png','icon-512.png','data/sent_A1.json','data/sent_A2.json','data/sent_B1.json','data/sent_B2.json','data/sent_C1.json','data/sent_C2.json'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE.map(u=>new Request(u,{cache:'reload'})))).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});

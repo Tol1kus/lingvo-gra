@@ -2335,6 +2335,9 @@ body.in-session #app>.card.nf-xc{background:var(--s1);border:1px solid var(--lin
 .rt2 .rt-st{margin:4px 0}.rt2 .rt-card{min-height:52px;padding:8px 10px;border-radius:16px}
 .rt2 .rt-ic{width:34px;height:34px;border-radius:10px}.rt2 .rt-ic svg{width:18px;height:18px}
 .rt2+.rt-attr{margin:14px 4px 0}
+/* «Впиши слово»: поле під карткою речення */
+.nf-ex form{margin:12px 0 0}.nf-ex .chars{margin-top:8px}.nf-ex>.row{margin-top:12px}
+.nf-ex .idk-w{display:block;margin:12px auto 0}
 </style>
 </head>
 <body>
@@ -6490,7 +6493,9 @@ function distractors(w,key,n=3){
   const same=shuffle(ALL().filter(x=>x.topic===w.topic&&x.id!==w.id&&x[key]&&x[key]!==w[key]));
   const lvl=shuffle(WORDS.filter(x=>x.topic!==w.topic&&x.lv===w.lv&&x[key]&&x[key]!==w[key]));
   const other=shuffle(WORDS.filter(x=>x.lv!==w.lv&&x[key]&&x[key]!==w[key]));
-  const res=[];for(const x of same.concat(lvl,other)){if(!res.some(r=>r[key]===x[key]))res.push(x);if(res.length>=n)break}
+  // спершу та сама частина мови (з теми, потім з рівня), і лише тоді інші слова теми — щоб «to earn» не стояло поруч із «salary»
+  const pos=typeof wPos==='function'?wPos:null,pw=pos&&pos(w),eq=a=>pos?a.filter(x=>pos(x)===pw):a,ne=a=>pos?a.filter(x=>pos(x)!==pw):[];
+  const res=[];for(const x of eq(same).concat(eq(lvl),ne(same),ne(lvl),other)){if(!res.some(r=>r[key]===x[key]))res.push(x);if(res.length>=n)break}
   return res;
 }
 
@@ -6853,7 +6858,7 @@ const withSent=list=>list.filter(w=>w.sent&&w.sent[S.lang]&&parseGap(w.sent[S.la
 /* вставте слово */
 function renderFill(it){
   const w=it.w,g=parseGap(w.sent[S.lang]); if(!g){it.kind='choice';return renderChoice(it)}
-  it.g=g; it.order=it.order||shuffle(g.opts);
+  it.g=g; it.order=it.order||shuffle(typeof fillOpts==='function'?fillOpts(w,g):g.opts);
   app.innerHTML=topRow()+`<div class="card">
     <div class="q-label">🧩 Вставте пропущене слово</div>
     ${picBig(w)}
@@ -9003,7 +9008,7 @@ on('block:new',b=>{
   try{tw=new Set(textWords(pickTextOfDay()).map(w=>w.id))}catch(e){}
   const ph=w=>w.phrase?'🎬 Вираз епізоду':epSet.has(w.id)?'🎬 Слово епізоду':tw.has(w.id)?'🆕 Слово з тексту дня':'🆕 Нові слова';
   const items=list.map(w=>({kind:'card',w,toUk:true,intro:true,phase:ph(w)}))
-    .concat(shuffle(list).map(w=>({kind:typeof hasPic==='function'&&hasPic(w)?'picchoice':'choice',w,toUk:dirToUk(),phase:'🆕 Закріплення'})))
+    .concat(shuffle(list).map(w=>({kind:typeof newRecogKind==='function'&&newRecogKind(w)||(typeof hasPic==='function'&&hasPic(w)?'picchoice':'choice'),w,toUk:dirToUk(),phase:'🆕 Закріплення'})))
     // активне пригадування (47_active_recall.js): після впізнавання — написати слово самому, перша літера вже є
     .concat(typeof recallItems==='function'?recallItems(list):[]);
   const nt=list.filter(w=>!w.phrase&&!epSet.has(w.id)&&tw.has(w.id)).length;
@@ -10382,7 +10387,7 @@ function levelRing(o){o=o||{};const lvl=o.lvl||curLevel(),li=Math.max(0,LEVELS.i
    <circle cx="${C}" cy="${C}" r="${ir}" fill="none" stroke="var(--s2)" stroke-width="6"/><circle cx="${C}" cy="${C}" r="${ir}" fill="none" stroke="var(--sky)" stroke-width="6" stroke-linecap="round" stroke-dasharray="${f(ic)}" stroke-dashoffset="${f(ic*(1-td))}" transform="rotate(-90 ${C} ${C})"/></svg>
    <div class="nf-ring-c"><b>${lvl}</b>${o.center?`<small>${esc(o.center)}</small>`:''}</div></div>`}
 
-const NF_KIND_LBL={card:'Картки слів',choice:'Вибери переклад',type:'Напиши слово',fill:'Встав слово',build:'Склади речення',sb:'Склади речення',sentb:'Будова речення',
+const NF_KIND_LBL={card:'Картки слів',choice:'Вибери переклад',type:'Напиши слово',fill:'Встав слово',fillt:'Впиши слово',build:'Склади речення',sb:'Склади речення',sentb:'Будова речення',
   listen:'Аудіювання',piclisten:'Аудіювання',picchoice:'Обери картинку',gram:'Граматика',dict:'Диктант',speak:'Вимова',mcq:'Тест',rq:'Читання',num:'Числа',spell:'Спелінг',letter:'Алфавіт',
   accent:'Наголос',typo:'Знайди помилку',perfect:'Граматика'};
 /* ---------- верхній рядок вправи: ✕ · «Тема · крок» · 4 / 12 · час · лічильник ---------- */
@@ -10819,7 +10824,7 @@ const nfTileS=w=>nfHasPic(w)?`<span class="nf-tile-s">${picHTML(w)}</span>`:'';
 /* E07 · вставка: речення в картці, маленька плитка-картинка, варіанти сіткою */
 function renderFill(it){
   const w=it.w,g=parseGap(w.sent[S.lang]);if(!g){it.kind='choice';return renderChoice(it)}
-  it.g=g;it.order=it.order||shuffle(g.opts);
+  it.g=g;it.order=it.order||shuffle(typeof fillOpts==='function'?fillOpts(w,g):g.opts);
   app.innerHTML=topRow()+`<div class="nf-ex">
     <div class="q-label">Встав у речення</div>
     <div class="nf-sentcard"><div class="sentence">${esc(g.pre)}<span class="blank">…</span>${esc(g.post)}</div>
@@ -11450,10 +11455,10 @@ if(typeof startBlock==='function'){const _sbTip=startBlock;startBlock=function(i
 HOOKS['block:practice']=[];
 on('block:practice',b=>{const long=(S.minutes||30)>=60,day=(typeof dayWordList==='function'?dayWordList():[]);
   const day1=withSent(day.filter(w=>st(w))),day2=withSent(day.filter(w=>!st(w))),td=withSent(shuffle(touchedToday())).filter(w=>!day.includes(w));
-  const ws=shuffle(day1).concat(shuffle(day2),td);const nF=long?8:6,nD=canSpeak?(long?3:2):0;
+  const ws=shuffle(day1).concat(shuffle(day2),td);const nF=long?8:6,nD=canSpeak?(long?3:2)+(typeof hardLv==='function'&&hardLv()>=3?1:0):0;
   // після пропусків — скласти речення зі словом дня самому (активне пригадування), потім диктант
   const nB=long?3:2,bw=(ws.length>nF?ws.slice(nF):ws).filter(w=>typeof buildOK!=='function'||buildOK(w)).slice(0,nB);
-  const items=ws.slice(0,nF).map(w=>({kind:'fill',w,phase:'Слово дня в реченні'})).concat(bw.map(w=>({kind:'build',w,phase:'Склади речення'})),shuffle(ws.slice(0,Math.max(nD,0))).slice(0,nD).map(w=>({kind:'dict',w,phase:'Почуй і запиши'})));
+  const items=ws.slice(0,nF).map((w,i)=>({kind:typeof fillKind==='function'?fillKind(i):'fill',w,phase:'Слово дня в реченні'})).concat(bw.map(w=>({kind:'build',w,phase:'Склади речення'})),shuffle(ws.slice(0,Math.max(nD,0))).slice(0,nD).map(w=>({kind:'dict',w,phase:'Почуй і запиши'})));
   if(!items.length){markBlock('practice');return planNext()}
   runSession(items,{title:'Слова закріплено!',requeue:true,...finB('practice')})});
 
@@ -12316,6 +12321,98 @@ on('item:render',it=>{try{if(!it||it.kind!=='type'||!it.first||it.toUk||document
   const q=document.querySelector('#app .q-word');if(!q)return;
   const note=q.nextElementSibling&&q.nextElementSibling.classList.contains('muted')?q.nextElementSibling:null;if(note)note.remove();
   q.insertAdjacentHTML('afterend',`<div class="ar-mask" aria-label="Підказка: перша літера"><b>${pre?esc(pre)+' ':''}${esc(mask)}</b><small>Згадай і напиши слово повністю${pre?` — разом із «${esc(pre)}»`:''}. Перша літера вже є.</small></div>`)}catch(e){}});
+
+/* ====================== СКЛАДНІСТЬ ВПРАВ ЗА РІВНЕМ (11.11.2026) ======================
+   Скарга: «все дуже просто й легко» — на всіх рівнях були ті самі вправи «вибери з чотирьох», а неправильні варіанти
+   в «Встав слово» були абсурдні (experience / luggage / traffic / rain), тож відповідь вгадувалась без знання слова.
+   1) Неправильні варіанти правдоподібні на всіх рівнях: та сама частина мови й форма, спершу з тієї ж теми
+      (переклад речення з виділеним словом показано, тому правильна відповідь лишається одна).
+   2) Що вищий рівень учня, то більше треба писати самому:
+      A2 — частіше «напиши слово»; B1 — після карток слово одразу в реченні, половину пропусків вписуємо без варіантів;
+      B2 і вище — усі пропуски без варіантів, більше диктантів, у повторі майже немає вибору з варіантів. */
+function hardLv(){try{return Math.max(0,LEVELS.indexOf(maxLv()))}catch(e){return 0}}
+// частина мови за словниковою формою: дієслово (to … / at …), вираз (кілька слів), слово
+// 's' — ціле речення-фраза, 'v' — дієслово (to … / at …), 'n' — іменник з артиклем (данська), 'a' — прикметник (за українським «-ий / -ій»),
+// 'p' — вираз із кількох слів, 'w' — решта
+function wPos(w){const f=String(w&&w[S.lang]||''),c=stripArt(f,S.lang).trim(),u1=String(w&&w.uk||'').toLowerCase().replace(/\s*\(.*?\)/g,'').trim().split(/[\s,;]+/)[0]||'';
+  if(/[.!?…]$/.test(c)||(/^\p{Lu}/u.test(c)&&/\s/.test(c)))return 's';
+  if(/^(to|at) /i.test(f))return 'v';
+  if(/^(en|et) /i.test(f)&&S.lang==='da')return 'n';
+  if(/(ий|ій|їй)$/.test(u1)&&!/\s/.test(c))return 'a';
+  return /\s/.test(c)?'p':'w'}
+const fillNorm=s=>String(s||'').toLowerCase().replace(/[’`]/g,"'").replace(/[.,!?;:]/g,'').replace(/\s+/g,' ').trim();
+let FILL_ANS=null;
+function fillAnsPool(){if(FILL_ANS&&FILL_ANS.lang===S.lang&&FILL_ANS.n===WORDS.length)return FILL_ANS.a;const a=[];
+  for(const w of WORDS){if(w.my||w.topic==='ukus'||!w.sent||!w.sent[S.lang])continue;const g=parseGap(w.sent[S.lang]);if(g&&g.answer)a.push({w,ans:g.answer})}
+  FILL_ANS={lang:S.lang,n:WORDS.length,a};return a}
+// варіанти для «Встав слово»: правильна відповідь + 3 правдоподібні хибні
+function fillOpts(w,g){try{
+  const ans=g.answer,an=fillNorm(ans),core=fillNorm(stripArt(String(w[S.lang]||''),S.lang)),pos=wPos(w),cap=/^\p{Lu}/u.test(ans)&&!/^\p{Lu}/u.test(String(w[S.lang]||'')),nW_=an.split(' ').length;
+  const fix=t=>cap?t.charAt(0).toUpperCase()+t.slice(1):t,seen=new Set([an]),out=[];
+  const sentN=' '+fillNorm(g.pre+' '+g.post)+' ';
+  const add=t=>{const k=fillNorm(t);if(!k||seen.has(k)||out.length>=3||sentN.includes(' '+k+' '))return;seen.add(k);out.push(fix(t))};
+  const near=x=>x.w.id!==w.id&&x.w.uk!==w.uk&&x.w.lv===w.lv&&wPos(x.w)===pos;
+  const order=a=>shuffle(a.filter(x=>x.w.topic===w.topic)).concat(shuffle(a.filter(x=>x.w.topic!==w.topic)));
+  if(an===core){ // словникова форма: беремо словникові форми інших слів (для данських іменників — того самого роду; для a / an — той самий початок)
+    const art=(String(w[S.lang]||'').match(/^(en|et) /i)||[])[1],anV=/\ban\s*$/i.test(g.pre),aV=/\ba\s*$/i.test(g.pre);
+    const cands=WORDS.filter(x=>!x.my&&x.topic!=='ukus'&&x[S.lang]&&near({w:x})).map(x=>({w:x,ans:stripArt(String(x[S.lang]),S.lang)}))
+      .filter(x=>!art||new RegExp('^'+art+' ','i').test(String(x.w[S.lang])))
+      .filter(x=>S.lang!=='en'||(!anV&&!aV)||(/^[aeiou]/i.test(x.ans)===anV))
+      .filter(x=>fillNorm(x.ans).split(' ').length===nW_);
+    order(cands).forEach(x=>add(x.ans))}
+  else{ // змінена форма (works, mødet…): беремо справжні форми з інших речень — тієї ж частини мови і з тим самим закінченням
+    const end=an.slice(-2),pool=fillAnsPool().filter(x=>near(x)&&fillNorm(x.ans)!==fillNorm(stripArt(String(x.w[S.lang]),S.lang))&&fillNorm(x.ans).split(' ').length===nW_);
+    // шматок фрази (Please [come] in.) лишаємо з варіантами з даних: вони тієї самої частини мови
+    if(pos!=='s'&&pos!=='p'){const low=x=>/^\p{Ll}/u.test(ans)&&/^\p{Lu}/u.test(x.ans)&&/^\p{Ll}/u.test(stripArt(String(x.w[S.lang]),S.lang))?x.ans.charAt(0).toLowerCase()+x.ans.slice(1):x.ans;
+      order(pool.filter(x=>fillNorm(x.ans).slice(-2)===end)).forEach(x=>add(low(x)));
+      if(out.length<3)order(pool.filter(x=>fillNorm(x.ans).slice(-1)===end.slice(-1))).forEach(x=>add(low(x)))}}
+  g.opts.slice(1).forEach(o=>add(o)); // не вистачило — добираємо записаними в даних
+  return [ans].concat(out)}catch(e){return g.opts}}
+// після картки нового слова: з B1 — одразу слово в реченні (з правдоподібними варіантами), а не вибір перекладу
+function newRecogKind(w){return hardLv()>=2&&w.sent&&w.sent[S.lang]&&parseGap(w.sent[S.lang])?'fill':null}
+// «Закріплення»: B1 — кожен другий пропуск без варіантів, B2+ — усі
+function fillKind(i){const L=hardLv();return L>=3||(L===2&&i%2===1)?'fillt':'fill'}
+// скільки слів писати самому в «Нових словах»
+{const _ri=recallItems;recallItems=function(list){const L=hardLv();if(L<1)return _ri(list);
+  return shuffle(list.filter(w=>recallOK(w,false))).slice(0,L>=2?10:8).map(w=>({kind:'type',w,toUk:false,first:true,phase:'Напиши сам'}))}}
+// повтор: що вищий рівень, то рідше «вибери» і частіше «напиши» / «впиши»
+on('reviewKind',(k,w)=>{const L=hardLv();if(L<1)return k;const r=Math.random(),hasS=!!(w.sent&&w.sent[S.lang]&&parseGap(w.sent[S.lang]));
+  if((k==='choice'||k==='picchoice')&&recallOK(w,false)&&r<[0,.35,.6,.9,.9,.9][L])return 'type';
+  if(k==='fill'&&hasS&&r<[0,0,.5,.85,.85,.85][L])return 'fillt';
+  if((k==='listen'||k==='piclisten')&&L>=3&&hasS&&canSpeak&&r<.4)return 'dict';
+  return k});
+
+/* ---------- «Впиши слово»: пропуск у реченні без варіантів ---------- */
+RENDER_X.fillt=function(it){const w=it.w,g=w.sent&&w.sent[S.lang]&&parseGap(w.sent[S.lang]);if(!g){it.kind='type';return renderItem()}
+  // довгі вирази й цілі фрази вписувати заважко — для них лишаємо вибір із правдоподібних варіантів
+  if(g.answer.trim().split(/\s+/).length>2||g.answer.length>16){it.kind='fill';return renderItem()}
+  it.g=g;it.hint=0;it.answered=false;
+  app.innerHTML=topRow()+`<div class="nf-ex">
+    <div class="q-label">Впиши пропущене слово</div>
+    <div class="nf-sentcard"><div class="sentence">${esc(g.pre)}<span class="blank">…</span>${esc(g.post)}</div>
+      <div class="nf-sent-uk">${ukSentence(w.sent.uk,true)}</div></div>
+    <form onsubmit="event.preventDefault();filltA()"><input class="answer" id="ans" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Пропущене слово…"></form>
+    ${L().chars.length?`<div class="chars">${L().chars.map(c=>`<button type="button" onclick="insChar('${c}')">${c}</button>`).join('')}</div>`:''}
+    <div class="row ft-act"><button class="btn ghost" onclick="filltHint()">${icn('bulb')} Підказка</button><button class="btn" onclick="filltA()">Перевірити</button></div>
+    <button class="nf-link idk-w ft-act" onclick="filltA(true)">Не знаю</button>
+    <div id="fb"></div></div>`;
+  setTimeout(()=>{const a=document.getElementById('ans');if(a)try{a.focus({preventScroll:true})}catch(e){}},50)};
+function filltHint(){const it=SS.items[SS.i];if(!it||it.answered)return;it.hint=Math.min((it.hint||0)+1,2);
+  const mask=it.g.answer.split(/\s+/).map(wd=>{const n=[...wd].filter(c=>/\p{L}/u.test(c)).length,keep=it.hint===1?1:Math.ceil(n/2);let k=0;return [...wd].map(c=>/\p{L}/u.test(c)?(k++<keep?c:'_'):c).join('')}).join('   ');
+  document.getElementById('fb').innerHTML=`<div class="feedback warn th"><small>Підказка ${it.hint} з 2</small><b class="th-mask">${esc(mask)}</b></div>`}
+function filltA(idk){const it=SS.items[SS.i];if(!it)return;if(it.answered)return nextItem();
+  const a=document.getElementById('ans'),v=a?a.value:'';if(!idk&&!v.trim())return;const g=it.g,w=it.w;
+  const u=fillNorm(v),s=fillNorm(g.answer),da=typeof deAccent==='function'?deAccent:x=>x,tol=s.length>12?2:s.length>4?1:0;
+  const exact=u===s,ok=!idk&&(exact||da(u)===da(s)||(tol&&lev(u,s)<=tol));
+  it.answered=true;if(a)a.disabled=true;SS.graded++;document.querySelectorAll('.ft-act,.chars').forEach(x=>x.remove());
+  const bl=document.querySelector('.blank');if(bl){bl.textContent=g.answer;bl.style.color=ok?'var(--ok)':'var(--bad)'}
+  if(ok){SS.right++;const gain=Math.max(6,16-(it.hint||0)*4);SS.xp+=gain;grade(w,true,(it.hint||0)>0||it.retry)}else{grade(w,false);markWrong(it)}
+  try{speak(g.full)}catch(e){}
+  const ef=typeof explainForm==='function'?explainForm(w,g.answer):null;
+  const head=ok?`<div class="feedback ok">✓ ${exact?'Правильно!':'Зараховано. Правильно: <b>'+esc(g.answer)+'</b>'}<br><span style="font-weight:600">${esc(g.full)}</span></div>`
+    :`<div class="feedback bad">✗ Правильно: <b>${esc(g.answer)}</b>${idk?'':'<br>Ви написали: '+esc(v)}<br><span style="font-weight:600">${esc(g.full)}</span></div>`;
+  const hb=ok?(ef?`<div class="hintbox soft"><div class="hl-line">${ef.txt}</div></div>`:''):hintBox({lines:[`Потрібне слово: <b>${esc(w[S.lang])}</b> — «${esc(w.uk)}».`,ef?ef.txt:'',!idk&&lev(u,s)<=3?'Ви були близько: '+charDiff(g.answer,v):''],cat:ef?ef.cat:'spelling',q:'Вписати слово: '+g.pre+'___'+g.post,correct:g.answer,given:v});
+  document.getElementById('fb').innerHTML=pipe('feedback',head+hb+`<div class="row"><button class="btn" onclick="nextItem()">Далі →</button></div>`,{it,ok,given:v,gw:null})}
 
 bootApp();
 </script>
