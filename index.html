@@ -12975,12 +12975,16 @@ on('item:render',it=>{try{if(!it||it.kind!=='gram'||!it.ex)return;const q=it.ex[
       якщо тиша — говоримо одразу, у тому самому дотику (iPhone дозволяє звук лише так);
    2) speechSynthesis.resume() — Chrome інколи «засинає» на паузі;
    3) якщо обраний голос не почав говорити за 1,5 с або дав помилку (часто — мережеві голоси Google) — повторюємо зі стандартним голосом браузера для цієї мови. */
+// Озвучення. ВАЖЛИВО: speak() — СИНХРОННО в тому самому дотику (iPhone/Safari блокує мовлення поза жестом користувача),
+// без затримок і без таймерів «перевірки» (вони блокували або обривали звук — скарга «звук пропав», 11.11.2026).
+// Якщо обраний голос дав помилку ще до початку — один повтор стандартним голосом браузера.
 function speakSafe(text,rate){try{if(!('speechSynthesis' in window)||!text)return;const ss=speechSynthesis;
   const go=useVoice=>{let started=false;const u=mkUtter(text,rate);if(!useVoice){try{u.voice=null}catch(e){}}
     u.onstart=()=>{started=true};u.onerror=e=>{if(!started&&useVoice&&!/interrupted|canceled/.test(e&&e.error||''))go(false)};
-    try{ss.resume()}catch(e){}ss.speak(u);
-    if(useVoice&&u.voice)setTimeout(()=>{if(!started&&!ss.speaking){try{ss.cancel()}catch(e){}go(false)}},1500)};
-  if(ss.speaking||ss.pending){ss.cancel();setTimeout(()=>go(true),60)}else go(true)}catch(e){}}
+    ss.speak(u)};
+  try{if(ss.speaking||ss.pending)ss.cancel()}catch(e){}
+  try{if(ss.paused)ss.resume()}catch(e){}
+  go(true)}catch(e){}}
 {const _spSafe=speak;speak=function(text){try{if(!VOICE_HELP_SHOWN[S.lang]&&voiceMissing(S.lang)){VOICE_HELP_SHOWN[S.lang]=1;voiceHelp(S.lang)}}catch(e){}speakSafe(text)}}
 if(typeof slowSpeak==='function')slowSpeak=function(t){speakSafe(t,Math.max(.5,voiceRate()-.3))};
 // журнали за мовами можуть ще не мати запису для мови (нова мова, старі дані) — створюємо порожні, щоб нічого не падало
