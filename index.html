@@ -2273,6 +2273,7 @@ body.in-session #app>.card.nf-xc{background:var(--s1);border:1px solid var(--lin
 .pic-scene{background:color-mix(in srgb,var(--sky) 12%,var(--s2))!important;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--sky) 28%,transparent)}
 .pic-scene svg{stroke:var(--sky)!important;fill:none!important}
 :has(> .pic-scene){background:color-mix(in srgb,var(--sky) 12%,var(--s2))!important}
+.vh-l{margin:0 0 14px;padding-left:18px;font-size:14.5px;line-height:1.55;color:var(--ink)}.vh-l li{margin-bottom:6px}
 </style>
 </head>
 <body>
@@ -2283,7 +2284,7 @@ const RAW = `#greet|Привітання|👋|A1
 привіт|hello|hej|ciao|👋|hello|cześć
 до побачення|goodbye|farvel|arrivederci|🙋‍♀️||do widzenia
 дякую|thank you|tak|grazie|🙏||dziękuję
-будь ласка|please|vær så venlig|per favore|🥺||proszę
+будь ласка|please|vær sød|per favore|🥺||proszę
 так|yes|ja|sì|👍|nod_,_to|tak
 ні|no|nej|no|👎|mistake_no_wrong|nie
 добрий ранок|good morning|godmorgen|buongiorno|🌅|morning|dzień dobry
@@ -2470,7 +2471,7 @@ const RAW = `#greet|Привітання|👋|A1
 #a1m_phrases|Прості вирази|💬|A1
 дуже дякую|thank you very much|mange tak|grazie mille|🙏💖||dziękuję bardzo
 будь ласка (у відповідь на «дякую»)|you're welcome|selv tak|prego|😊||nie ma za co
-добрий день|good afternoon|god eftermiddag|buon pomeriggio|🌤️||dzień dobry
+добрий день|good afternoon|goddag|buon pomeriggio|🌤️||dzień dobry
 добрий вечір|good evening|godaften|buonasera|🌆👋||dobry wieczór
 як тебе звати?|what is your name?|hvad hedder du?|come ti chiami?|🏷️❓||jak masz na imię?
 скільки тобі років?|how old are you?|hvor gammel er du?|quanti anni hai?|🎂❓||ile masz lat?
@@ -2832,7 +2833,7 @@ const RAW = `#greet|Привітання|👋|A1
 Скільки коштує квиток?|How much is a ticket?|Hvad koster en billet?|Quanto costa un biglietto?|🎫||Ile kosztuje bilet?
 півціни|half price|halv pris|metà prezzo|✂️||pół ceny
 півкілограма|half a kilo|et halvt kilo|mezzo chilo|⚖️||pół kilo
-два долари|two euros|to euro|due euro|💵||dwa euro
+два долари|two euros|to kroner|due euro|💵||dwa euro
 #a1x02_family|Родичі|👨‍👩‍👧|A1
 сім'я|family|en familie|la famiglia|👪|family|rodzina
 велика сім'я|big family|en stor familie|la famiglia numerosa|👨‍👩‍👧‍👦||duża rodzina
@@ -3708,7 +3709,7 @@ const RAW = `#greet|Привітання|👋|A1
 поверх|floor|en etage|il piano|🏢||piętro
 ліфт|lift|en elevator|l'ascensore|🛗|lift|winda
 пральна машина|washing machine|en vaskemaskine|la lavatrice|🧺|washing_machine|pralka
-опалення|heating|en opvarmning|il riscaldamento|♨️||ogrzewanie
+опалення|heating|varme|il riscaldamento|♨️||ogrzewanie
 прасувати|to iron|at stryge|stirare|👔|iron_,_to|prasować
 ремонтувати|to repair|at reparere|riparare|🔧||naprawiać
 прати (одяг)|to do the laundry|at vaske tøj|fare il bucato|👕|laundry_basket|robić pranie
@@ -3754,7 +3755,7 @@ const RAW = `#greet|Привітання|👋|A1
 посвідка на проживання|residence permit|en opholdstilladelse|il permesso di soggiorno|🪪||zezwolenie na pobyt
 дозвіл на роботу|work permit|en arbejdstilladelse|il permesso di lavoro|📄||zezwolenie na pracę
 читацький квиток|library card|et lånerkort|la tessera della biblioteca|📚||karta biblioteczna
-податкова служба|tax authority|en skattemyndighed|l'agenzia delle entrate|🧾||urząd skarbowy
+податкова служба|tax authority|Skattestyrelsen|l'agenzia delle entrate|🧾||urząd skarbowy
 фонд страхування від безробіття|unemployment insurance fund|en a-kasse|l'assicurazione contro la disoccupazione|🛟||fundusz ubezpieczeń od bezrobocia
 профспілка|trade union|en fagforening|il sindacato|✊||związek zawodowy
 громадянство|citizenship|et statsborgerskab|la cittadinanza|🎫||obywatelstwo
@@ -3792,7 +3793,7 @@ const RAW = `#greet|Привітання|👋|A1
 кандидат (на посаду)|applicant|en ansøger|il candidato|🧑‍💼||kandydat
 кваліфікація|qualification|en kvalifikation|la qualifica|🎓||kwalifikacje
 досвід роботи|work experience|erhvervserfaring|l'esperienza lavorativa|💼||doświadczenie zawodowe
-рекомендація (від роботодавця)|reference|en reference|la referenza|📝||referencje
+рекомендація (від роботодавця)|reference|en anbefaling|la referenza|📝||referencje
 стажування|internship|en praktikplads|il tirocinio|🧑‍🎓||staż
 випробувальний термін|probation period|en prøvetid|il periodo di prova|⏳||okres próbny
 трудовий договір|employment contract|en ansættelseskontrakt|il contratto di lavoro|📑||umowa o pracę
@@ -3851,7 +3852,7 @@ const RAW = `#greet|Привітання|👋|A1
 не працює (про апарат)|out of order|ude af drift|fuori servizio|⛔||nieczynny
 поговорити з адміністратором|to speak to the manager|at tale med lederen|parlare con il responsabile|🗣️||porozmawiać z kierownikiem
 вимагати|to demand|at kræve|esigere|☝️||żądać
-незручність|inconvenience|en ulempe|il disagio|😣||niedogodność
+незручність|inconvenience|en gene|il disagio|😣||niedogodność
 ваучер|voucher|en værdikupon|il buono|🎟️||bon
 застрягнути|to get stuck|at sidde fast|rimanere bloccato|🚧||utknąć
 страйк|strike|en strejke|lo sciopero|🪧||strajk
@@ -3957,7 +3958,7 @@ const RAW = `#greet|Привітання|👋|A1
 горище|attic|et loft|la soffitta|🧳||strych
 внутрішній двір|courtyard|en baggård|il cortile|🌳||podwórko
 пральня (спільна)|laundry room|et vaskeri|la lavanderia|🧺||pralnia
-двокімнатна квартира|two-room flat|en toværelses lejlighed|il bilocale|🚪||mieszkanie dwupokojowe
+двокімнатна квартира|two-room flat|en toværelseslejlighed|il bilocale|🚪||mieszkanie dwupokojowe
 житлова допомога|housing benefit|boligstøtte|il contributo per l'affitto|💶||dodatek mieszkaniowy
 власник житла|homeowner|en husejer|il proprietario di casa|🏡||właściciel mieszkania
 #b1x02_neighbours|Сусіди і життя в будинку|🏘️|B1
@@ -4157,7 +4158,7 @@ const RAW = `#greet|Привітання|👋|A1
 немає в наявності|out of stock|ikke på lager|non disponibile|❌||niedostępny
 платити карткою|to pay by card|at betale med kort|pagare con la carta|🏧||płacić kartą
 візок для покупок|shopping trolley|en indkøbsvogn|il carrello della spesa|🛒||wózek sklepowy
-право на відмову від покупки|right of withdrawal|en fortrydelsesret|il diritto di recesso|📆||prawo do odstąpienia od umowy
+право на відмову від покупки|right of withdrawal|fortrydelsesret|il diritto di recesso|📆||prawo do odstąpienia od umowy
 чек для обміну подарунка|gift receipt|en byttelap|lo scontrino di cortesia|🎁||paragon prezentowy
 спеціальна пропозиція|special offer|et særtilbud|l'offerta speciale|🎉||oferta specjalna
 пошкоджений|damaged|beskadiget|danneggiato|💔||uszkodzony
@@ -4395,11 +4396,11 @@ const RAW = `#greet|Привітання|👋|A1
 очевидно|evidently|tydeligvis|evidentemente|👀||najwyraźniej
 #b2_phrases|Вирази й ідіоми B2|💬|B2
 Я не маю гадки.|I have no idea.|Jeg aner det ikke.|Non ne ho idea.|🤷|confused_man|Nie mam pojęcia.
-сушити голову|to rack one's brains|at bryde sit hoved|scervellarsi|🤯|brain|łamać sobie głowę
+сушити голову|to rack one's brains|at bryde hovedet|scervellarsi|🤯|brain|łamać sobie głowę
 убити двох зайців|to kill two birds with one stone|at slå to fluer med ét smæk|prendere due piccioni con una fava|🐦🐦|bird|upiec dwie pieczenie na jednym ogniu
 коли рак на горі свисне|when pigs fly|når der er to torsdage i en uge|quando gli asini voleranno|🐷✈️||na świętego Nigdy
 ллє як з відра|it's raining cats and dogs|det regner skomagerdrenge|piove a catinelle|🌧️🌧️|thunder_storm|leje jak z cebra
-тримати кулаки|to keep one's fingers crossed|at krydse fingre|incrociare le dita|🤞|cross_fingers_,_to|trzymać kciuki
+тримати кулаки|to keep one's fingers crossed|at holde tommelfingre|incrociare le dita|🤞|cross_fingers_,_to|trzymać kciuki
 коштувати цілий статок|to cost an arm and a leg|at koste det hvide ud af øjnene|costare un occhio della testa|💰💰||kosztować majątek
 легше сказати, ніж зробити|easier said than done|lettere sagt end gjort|più facile a dirsi che a farsi|😅||łatwiej powiedzieć, niż zrobić
 схожі як дві краплі води|like two peas in a pod|som to dråber vand|come due gocce d'acqua|👯||jak dwie krople wody
@@ -4421,7 +4422,7 @@ const RAW = `#greet|Привітання|👋|A1
 застосунок|app|en app|l'app|📲||aplikacja
 пароль|password|en adgangskode|la password|🔑||hasło
 екран|screen|en skærm|lo schermo|🖥️|touch_screen|ekran
-публікувати|to publish|at udgive|pubblicare|📤||publikować
+публікувати|to publish|at offentliggøre|pubblicare|📤||publikować
 завантажувати (з інтернету)|to download|at downloade|scaricare|⬇️|download_,_to|pobierać
 оновлювати|to update|at opdatere|aggiornare|🔄||aktualizować
 ділитися (у мережі)|to share|at dele|condividere|🔗|share_,_to|dzielić się
@@ -4659,7 +4660,7 @@ const RAW = `#greet|Привітання|👋|A1
 генеральний директор|managing director|en administrerende direktør|l'amministratore delegato|🧑‍💼||dyrektor generalny
 торгова марка|trademark|et varemærke|il marchio|™️||marka
 стартап|start-up|en startup|la startup|🌱||startup
-укласти угоду|to close a deal|at lukke en aftale|concludere un affare|🤝||zawrzeć umowę
+укласти угоду|to close a deal|at indgå en aftale|concludere un affare|🤝||zawrzeć umowę
 продуктивність|productivity|produktivitet|la produttività|⚙️||wydajność
 фрилансер|freelancer|en freelancer|il libero professionista|💻||freelancer
 бухгалтер|accountant|en revisor|il commercialista|🧮||księgowy
@@ -4757,7 +4758,7 @@ const RAW = `#greet|Привітання|👋|A1
 сприйняття|perception|en opfattelse|la percezione|👁️||postrzeganie
 фобія|phobia|en fobi|la fobia|🕷️||fobia
 розчарування (досада)|frustration|en frustration|la frustrazione|😤||frustracja
-емоційний|emotional|følelsesladet|emotivo|🥹||emocjonalny
+емоційний|emotional|emotionel|emotivo|🥹||emocjonalny
 зберігати спокій|to keep calm|at bevare roen|mantenere la calma|🧘||zachować spokój
 панікувати|to panic|at gå i panik|andare nel panico|😱||panikować
 #b2x02_arts|Мистецтво й культура|🎨|B2
@@ -4850,7 +4851,7 @@ const RAW = `#greet|Привітання|👋|A1
 проговоритися (видати секрет)|to let the cat out of the bag|at slippe katten ud af sækken|lasciarsi sfuggire il segreto|🐈||wygadać się
 раз у житті|once in a lifetime|én gang i livet|una volta nella vita|🌠||raz w życiu
 діяти на нерви|to get on someone's nerves|at gå nogen på nerverne|dare sui nervi|😤||działać na nerwy
-немає лиха без добра|a blessing in disguise|en velsignelse i forklædning|non tutto il male vien per nuocere|🍀||nie ma tego złego, co by na dobre nie wyszło
+немає лиха без добра|a blessing in disguise|en skjult velsignelse|non tutto il male vien per nuocere|🍀||nie ma tego złego, co by na dobre nie wyszło
 докладати додаткових зусиль|to go the extra mile|at gøre en ekstra indsats|fare uno sforzo in più|🏃||dokładać wszelkich starań
 вагатися|to be in two minds|at være i tvivl|essere indeciso|🤔||wahać się
 вирушати в дорогу|to hit the road|at komme af sted|mettersi in viaggio|🛣️||ruszać w drogę
@@ -5057,7 +5058,7 @@ const RAW = `#greet|Привітання|👋|A1
 на противагу цьому|in contrast|i modsætning hertil|per contro|🔀||natomiast
 навпаки|on the contrary|tværtimod|al contrario|🔄||wręcz przeciwnie
 наприклад|for instance|for eksempel|ad esempio|👉||na przykład
-до того ж|besides|i øvrigt|oltretutto|➕||poza tym
+до того ж|besides|desuden|oltretutto|➕||poza tym
 таким чином|thus|således|pertanto|➡️||tym samym
 за умови, що|provided that|forudsat at|a condizione che|📜||pod warunkiem że
 якщо тільки (за умови)|as long as|så længe|purché|⏳||o ile
@@ -5071,7 +5072,7 @@ const RAW = `#greet|Привітання|👋|A1
 #b2x03_idioms|Ідіоми B2|💬|B2
 не ставати ні на чий бік|to sit on the fence|at undlade at tage stilling|non schierarsi|🚧||nie opowiadać się po żadnej stronie
 бути на одній хвилі|to be on the same page|at være på samme bølgelængde|essere sulla stessa lunghezza d'onda|📻||nadawać na tych samych falach
-на сьогодні досить|to call it a day|at kalde det en dag|chiudere per oggi|🌇||na dziś wystarczy
+на сьогодні досить|to call it a day|at holde fyraften|chiudere per oggi|🌇||na dziś wystarczy
 у халепі|in hot water|i knibe|nei guai|🔥||w tarapatach
 бути одної думки|to see eye to eye|at være enige|essere d'accordo|👀||być tego samego zdania
 діяти за обставинами|to play it by ear|at tage det som det kommer|decidere sul momento|🎵||decydować na bieżąco
@@ -5082,12 +5083,12 @@ const RAW = `#greet|Привітання|👋|A1
 сприймати з пересторогою|to take with a pinch of salt|at tage med et gran salt|prendere con le pinze|🧂||traktować z przymrużeniem oka
 відкладати на чорний день|to save for a rainy day|at spare op til dårlige tider|risparmiare per i tempi duri|☔||odkładać na czarną godzinę
 бути на сьомому небі|to be over the moon|at være i den syvende himmel|essere al settimo cielo|🌙||być w siódmym niebie
-здаватися знайомим|to ring a bell|at ringe en klokke|dire qualcosa|🔔||brzmieć znajomo
+здаватися знайомим|to ring a bell|der ringer en klokke|dire qualcosa|🔔||brzmieć znajomo
 відповідати за наслідки|to face the music|at tage konsekvenserne|affrontare le conseguenze|🎼||ponieść konsekwencje
 ставити все на одну карту|to put all your eggs in one basket|at satse alt på ét kort|puntare tutto su una carta|🥚||stawiać wszystko na jedną kartę
-платити шалені гроші|to pay through the nose|at betale overpris|pagare un occhio della testa|💸||słono zapłacić
+платити шалені гроші|to pay through the nose|at betale det hvide ud af øjnene|pagare un occhio della testa|💸||słono zapłacić
 коротше кажучи|to cut a long story short|kort sagt|per farla breve|✂️||krótko mówiąc
-розорити (про витрати)|to break the bank|at sprænge banken|mandare in rovina|🏦||zrujnować
+розорити (про витрати)|to break the bank|at sprænge budgettet|mandare in rovina|🏦||zrujnować
 триматися на плаву|to keep one's head above water|at holde hovedet oven vande|restare a galla|🏊||utrzymać się na powierzchni
 #c1_science|Наука й дослідження|🔬|C1
 гіпотеза|hypothesis|en hypotese|l'ipotesi|🧪||hipoteza
@@ -5304,7 +5305,7 @@ const RAW = `#greet|Привітання|👋|A1
 надавати пріоритет|to prioritise|at prioritere|prioritizzare|🔝||nadawać priorytet
 надавати повноваження|to empower|at bemyndige|responsabilizzare|💪||upoważniać
 співпрацювати|to collaborate|at samarbejde|collaborare|🤝||współpracować
-безпосередній керівник|line manager|en nærmeste leder|il responsabile diretto|👤||bezpośredni przełożony
+безпосередній керівник|line manager|den nærmeste leder|il responsabile diretto|👤||bezpośredni przełożony
 керівний комітет|steering committee|en styregruppe|il comitato direttivo|🧭||komitet sterujący
 організаційна схема|organisational chart|et organisationsdiagram|l'organigramma|🗺️||schemat organizacyjny
 #c1x01_ethics|Охорона здоров'я та етика|⚕️|C1
@@ -5580,7 +5581,7 @@ const RAW = `#greet|Привітання|👋|A1
 сприймати з пересторогою|to take something with a pinch of salt|at tage noget med et gran salt|prendere qualcosa con le pinze|🧂||traktować z rezerwą
 перекладати відповідальність|to pass the buck|at skubbe ansvaret fra sig|fare a scaricabarile|🪣||zrzucać odpowiedzialność
 замітати під килим|to sweep something under the carpet|at feje noget ind under gulvtæppet|nascondere la polvere sotto il tappeto|🧹||zamiatać coś pod dywan
-бути головним (ухвалювати рішення)|to call the shots|at bestemme over tingene|dettare legge|🎬||rozdawać karty
+бути головним (ухвалювати рішення)|to call the shots|at have bukserne på|dettare legge|🎬||rozdawać karty
 разом із водою виплеснути дитину|to throw the baby out with the bathwater|at smide barnet ud med badevandet|buttare il bambino con l'acqua sporca|🛁||wylać dziecko z kąpielą
 каламутити воду|to muddy the waters|at forplumre sagen|intorbidire le acque|🌊||mącić wodę
 рівні умови гри|a level playing field|lige vilkår|la parità di condizioni|🏟️||równe warunki gry
@@ -5692,7 +5693,7 @@ const RAW = `#greet|Привітання|👋|A1
 рукопис|manuscript|et manuskript|il manoscritto|📜✍️||rękopis
 меценат|patron|en mæcen|il mecenate|💰🎨||mecenas
 вишуканий|refined|raffineret|raffinato|🎩✨||wyrafinowany
-банальний|trite|banal|banale|🥱💬||oklepany
+банальний|trite|fortærsket|banale|🥱💬||oklepany
 фреска|fresco|en freske|l'affresco|🖌️⛪||fresk
 мольберт|easel|et staffeli|il cavalletto|🖼️🎨||sztaluga
 мозаїка|mosaic|en mosaik|il mosaico|🧩🟦||mozaika
@@ -5762,9 +5763,9 @@ const RAW = `#greet|Привітання|👋|A1
 епістемологія|epistemology|en erkendelsesteori|l'epistemologia|🧠||epistemologia
 етика|ethics|en etik|l'etica|⚖️||etyka
 метафізика|metaphysics|en metafysik|la metafisica|🌌||metafizyka
-екзистенціалізм|existentialism|eksistentialisme|l'esistenzialismo|🚬||egzystencjalizm
-нігілізм|nihilism|nihilisme|il nichilismo|🕳️||nihilizm
-детермінізм|determinism|determinisme|il determinismo|⛓️||determinizm
+екзистенціалізм|existentialism|en eksistentialisme|l'esistenzialismo|🚬||egzystencjalizm
+нігілізм|nihilism|en nihilisme|il nichilismo|🕳️||nihilizm
+детермінізм|determinism|en determinisme|il determinismo|⛓️||determinizm
 свобода волі|free will|fri vilje|il libero arbitrio|🕊️||wolna wola
 сутність|essence|en essens|l'essenza|💎||istota
 існування|existence|en eksistens|l'esistenza|🌱||istnienie
@@ -5775,9 +5776,9 @@ const RAW = `#greet|Привітання|👋|A1
 мораль|morality|en moral|la moralità|😇||moralność
 чеснота|virtue|en dyd|la virtù|🌟||cnota
 порок|vice|en last|il vizio|😈|vice|przywara
-раціоналізм|rationalism|rationalisme|il razionalismo|🧮||racjonalizm
-емпіризм|empiricism|empirisme|l'empirismo|🔬||empiryzm
-скептицизм|scepticism|skepticisme|lo scetticismo|🤨||sceptycyzm
+раціоналізм|rationalism|en rationalisme|il razionalismo|🧮||racjonalizm
+емпіризм|empiricism|en empirisme|l'empirismo|🔬||empiryzm
+скептицизм|scepticism|en skepticisme|lo scetticismo|🤨||sceptycyzm
 онтологія|ontology|en ontologi|l'ontologia|🪐||ontologia
 #c2x01_thinking|Абстрактне мислення|💭|C2
 розмірковувати|to ponder|at fundere|ponderare|🤔||rozmyślać
@@ -5910,7 +5911,7 @@ const RAW = `#greet|Привітання|👋|A1
 вето|veto|et veto|il veto|✋||weto
 резолюція|resolution|en resolution|la risoluzione|🗳️||rezolucja
 дестабілізувати|to destabilise|at destabilisere|destabilizzare|🌪️||destabilizować
-ізоляціонізм|isolationism|isolationisme|l'isolazionismo|🏝️||izolacjonizm
+ізоляціонізм|isolationism|en isolationisme|l'isolazionismo|🏝️||izolacjonizm
 державний переворот|coup|et kup|il colpo di stato|💥||zamach stanu
 м'яка сила|soft power|blød magt|il soft power|🎬||miękka siła
 статус-кво|status quo|status quo|lo status quo|⏸️||status quo
@@ -5970,7 +5971,7 @@ const RAW = `#greet|Привітання|👋|A1
 мати останнє слово|to have the last word|at have det sidste ord|avere l'ultima parola|🗨️||mieć ostatnie słowo
 висіти на волосині|to hang by a thread|at hænge i en tynd tråd|essere appeso a un filo|🧵||wisieć na włosku
 пливти проти течії|to swim against the tide|at svømme mod strømmen|andare controcorrente|🏊||płynąć pod prąd
-почати з чистого аркуша|to turn over a new leaf|at vende et nyt blad|voltare pagina|📄||zacząć z czystą kartą
+почати з чистого аркуша|to turn over a new leaf|at starte på en frisk|voltare pagina|📄||zacząć z czystą kartą
 за деревами лісу не бачити|can't see the wood for the trees|ikke kunne se skoven for bare træer|guardare il dito e non la luna|🌲||nie widzieć lasu zza drzew
 зробити з необхідності чесноту|to make a virtue of necessity|at gøre en dyd af nødvendigheden|fare di necessità virtù|🪄||zrobić z konieczności cnotę
 #c2x02_medicine|Медицина (поглиблено)|🩺|C2
@@ -7947,7 +7948,7 @@ function openWrite(id){
     <details class="rulebox"><summary>🧩 Структура тексту</summary><div class="rule-body">${t.structure.map(s=>`<div><b>${esc(s[0])}</b> — ${esc(s[1])}</div>`).join('')}</div></details>
     <details class="rulebox"><summary>💬 Корисні фрази (натисніть, щоб вставити)</summary><div class="phr">${t.phrases.map(p=>`<button class="mini" onclick="insPhrase(${js(p[0])})" title="${esc(p[1])}">${esc(p[0])}<small>${esc(p[1])}</small></button>`).join('')}</div></details>
     <details class="rulebox"><summary>⚠️ Типові помилки</summary><div class="rule-body">${(t.tips_uk||[]).map(x=>'• '+esc(x)).join('<br>')}</div></details>
-    <textarea id="wtext" class="wta" placeholder="Пишіть тут мовою: ${L().name.split(' ')[0].toLowerCase()}…" oninput="wUpd()">${esc(S.drafts[t.id]||'')}</textarea>
+    <textarea id="wtext" class="wta" placeholder="Пишіть тут ${langAdv()}…" oninput="wUpd()">${esc(S.drafts[t.id]||'')}</textarea>
     <div class="chars">${L().chars.map(c=>`<button type="button" onclick="insPhrase('${c}',true)">${c}</button>`).join('')}<span class="wc" id="wc"></span></div>
     <div class="row"><button class="btn ghost" onclick="showModel()">📄 Зразок</button><button class="btn" onclick="checkWrite()">${AI_OK?'🤖 Перевірити з Claude':'✅ Перевірити'}</button></div>
     <div id="wmodel"></div><div id="wres"></div>
@@ -12133,13 +12134,33 @@ on('feedback',(html,ctx)=>{try{if(!ctx||ctx.ok||!/k-mistake/.test(html))return h
    Переклад речень: 5-те поле sent_*.txt спільне для всіх мов і для частини речень переписане під американський контекст
    («Я вивчаю англійську», «долари»). Для данської там є власний переклад uk_da (data/sentences/uk_da.txt) — підставляємо його,
    коли вчиться данська, і повертаємо спільний, коли англійська. */
-function applyUkDa(){try{const da=S.lang==='da';for(const w of WORDS){const s=w.sent;if(!s||!s.uk_da)continue;if(s.ukBase==null)s.ukBase=s.uk;s.uk=da?s.uk_da:s.ukBase}}catch(e){}}
+// переклад СЛОВА для данської, де спільний український переклад інший (данська — крони, англійська US — долари)
+const VOCAB_UK_DA={'two euros':'дві крони'};
+function applyUkDa(){try{const da=S.lang==='da';
+  for(const w of WORDS){const k=String(w.gb||w.en||w.enDK||'').toLowerCase(),u=VOCAB_UK_DA[k];if(!u)continue;if(w.ukBase==null)w.ukBase=w.uk;w.uk=da?u:w.ukBase}for(const w of WORDS){const s=w.sent;if(!s||!s.uk_da)continue;if(s.ukBase==null)s.ukBase=s.uk;s.uk=da?s.uk_da:s.ukBase}}catch(e){}}
 if(typeof switchLang==='function'){const _swDa=switchLang;switchLang=function(k){const r=_swDa.apply(this,arguments);applyUkDa();return r}}
 if(typeof applySent==='function'){const _asDa=applySent;applySent=function(d){
   // слова прихованої в англійському курсі теми (держпослуги Данії) мають англійський ключ у enDK
   try{for(const w of WORDS)if(!w.sent&&!w.en&&w.enDK&&d[w.enDK])w.sent=d[w.enDK]}catch(e){}
   const r=_asDa.apply(this,arguments);applyUkDa();return r}}
 applyUkDa();
+
+/* Озвучення: якщо на пристрої немає голосу мови вивчення (часто — данського на iPhone), браузер просто мовчить.
+   Тоді один раз за відкриття показуємо, як додати голос (iPhone / Mac / Android), замість тиші. */
+const VOICE_LANG_NAME={da:'данський',en:'англійський',it:'італійський',pl:'польський'};
+let VOICE_HELP_SHOWN={};
+function voiceMissing(lang){try{if(!('speechSynthesis' in window))return false;const all=loadVoices();return all.length>0&&!voicesFor(lang).length}catch(e){return false}}
+function voiceHelp(lang){lang=lang||S.lang;document.querySelectorAll('.vh-bg').forEach(x=>x.remove());const nm=VOICE_LANG_NAME[lang]||'потрібний';
+  const loc=(LANGS[lang]||{}).tts||lang;
+  document.body.insertAdjacentHTML('beforeend',`<div class="rt-sheet-bg on vh-bg" onclick="this.remove()"><div class="rt-sheet" role="dialog" aria-label="Як додати голос" onclick="event.stopPropagation()"><span class="rt-grab"></span>
+    <small>ОЗВУЧЕННЯ</small><h2>На пристрої немає голосу: ${nm}</h2>
+    <p>Браузер бере голоси з системи. Додай ${nm} голос (${esc(loc)}) — це безкоштовно, потрібно один раз:</p>
+    <ul class="vh-l"><li><b>iPhone / iPad:</b> Параметри → Універсальний доступ → Начитаний вміст → Голоси → ${lang==='da'?'Данська → Sara':'мова → голос'} → завантажити.</li>
+      <li><b>Mac:</b> Системні параметри → Універсальний доступ → Начитаний вміст → Системний голос → Керувати голосами → ${lang==='da'?'Данська → Sara':'мова'}.</li>
+      <li><b>Android:</b> Налаштування → Синтез мовлення (Google) → Встановити голосові дані → ${lang==='da'?'Dansk':'мова'}.</li></ul>
+    <p>Після встановлення перезапусти браузер. Якщо голос є, але не звучить — у «Я → Налаштування» можна вибрати інший.</p>
+    <button class="btn big" onclick="this.closest('.vh-bg').remove()">Зрозуміло</button></div></div>`)}
+{const _spDa=speak;speak=function(text){try{if(!VOICE_HELP_SHOWN[S.lang]&&voiceMissing(S.lang)){VOICE_HELP_SHOWN[S.lang]=1;voiceHelp(S.lang)}}catch(e){}return _spDa.apply(this,arguments)}}
 
 bootApp();
 </script>
