@@ -2602,6 +2602,12 @@ html,body{transition:background-color .4s ease}
 .lt-sumg{margin:6px 0 16px}
 .lt-sfix{margin:0 0 10px}.lt-sfix s{display:block;color:var(--mut);font-size:14px}.lt-sfix b{display:flex;align-items:center;gap:8px;font-size:17px;margin-top:4px}.lt-sfix p{margin:6px 0 0;font-size:14px;color:var(--mut)}
 .lt-sumb{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+/* ===== Кільце рівня — сталий колір, не залежить від кольору дня (12.11.2026) ===== */
+:root{--ring:#86D0E0}
+:root[data-theme="light"]{--ring:#1E7F92}
+.nf-ring-c b{color:var(--ring)!important;text-shadow:0 0 28px color-mix(in srgb,var(--ring) 40%,transparent)!important}
+:root[data-theme="light"] .nf-ring-c b{text-shadow:none!important}
+.nf-rl.on{fill:var(--ring)!important}
 </style>
 </head>
 <body>
@@ -10597,12 +10603,14 @@ function trainScreen(){
   emit('home:before');applyTheme();REDRAW=trainScreen;
   const mist=typeof mistList==='function'?mistList().filter(x=>!x.m.fixed).length:0,hard=hardOfDay().length,best=S.best||{};
   const t=(ic,n,f,badge)=>`<button class="tr-it" onclick="${f}"><span class="tr-ic">${ic}</span><b>${n}</b>${badge?`<i class="k-badge">${badge}</i>`:''}</button>`;
+  /* 12.11.2026: 5 груп без дублів. Граматика — на «Шляху», діалоги й ШІ — у вкладці «Розмова», досягнення й тиждень — на «Я», алфавіт — кнопка на «Шляху»;
+     «Мапа й боси» і «Друге життя» прибрано з меню (код лишився). */
   const G=[
-   ['warm',icn('refresh'),'Закріпити слова','щоб не забути',[t(icn('cards'),'Картки','startLearn()'),t(icn('quiz'),'Тест','startQuiz()'),t(icn('link'),'Пари','startMatch()'),t(icn('xcircle'),'Мої помилки','myDict()',mist||''),hard>=3?t(icn('bolt'),'Важкі слова','startHardDay()',hard):'']],
-   ['new',icn('type'),'Слова в реченнях','щоб уміти вжити',[t(icn('type'),'Вставте слово','startFill()'),t(icn('blocks'),'Складіть речення','startBuild()'),SD()?t(icn('list'),'Будова речення','structList()'):'',t(icn('book'),'Граматика','grammarList()')]],
-   ['prac',icn('headphones'),'Слухати й писати','на слух і з голови',[t(icn('headphones'),'Аудіювання','startListen()'),t(icn('pen'),'Диктант','startDict()'),t(icn('mic'),'Вимова','soundsScreen()'),t(icn('lang'),'Переклад речень','translateStart()'),t(icn('type'),'Написання','startType()'),t(icn('pen'),'Вільне письмо','freeWrite()')]],
-   ['talk',icn('grid'),'Ігри та історії','легше, але з користю',[storyOf()?t(icn('bookopen'),'Друге життя','storyList()'):'',t(icn('map'),'Мапа й боси','mapScreen()'),t(icn('chat'),'Діалоги','dialogList()'),t(icn('rain'),'Дощ слів','rainStart()',best['rain_'+S.lang]?best['rain_'+S.lang]:''),t(icn('bolt'),'Блискавка','blitzStart()',best['blitz_'+S.lang]?best['blitz_'+S.lang]:'')]],
-   ['bonus',icn('globe'),'Основи й іспити','алфавіт, числа, PD',[t(icn('abc'),'Алфавіт','alphabetScreen()'),t(icn('hash'),'Числа','numbersScreen()'),S.lang==='da'?t(icn('flag'),'Іспити PD','examHome()'):'',t(icn('medal'),'Досягнення','achScreen()'),t(icn('calendar'),'Тиждень','weekReport()')]]];
+   ['warm',icn('refresh'),'Слова','закріпити й не забути',[t(icn('cards'),'Картки','startLearn()'),t(icn('quiz'),'Тест','startQuiz()'),t(icn('type'),'Напиши слово','startType()'),t(icn('hash'),'Числа','numbersScreen()'),t(icn('xcircle'),'Мої помилки','myDict()',mist||''),hard>=3?t(icn('bolt'),'Важкі слова','startHardDay()',hard):'']],
+   ['new',icn('blocks'),'Речення','щоб уміти вжити слово',[t(icn('type'),'Вставте слово','startFill()'),t(icn('blocks'),'Складіть речення','startBuild()'),SD()?t(icn('list'),'Будова речення','structList()'):'']],
+   ['prac',icn('headphones'),'Слух і вимова','розуміти й говорити',[t(icn('headphones'),'Аудіювання','startListen()'),t(icn('pen'),'Диктант','startDict()'),t(icn('mic'),'Вимова','soundsScreen()')]],
+   ['bonus',icn('pen'),'Письмо й іспити','писати самому',[t(icn('lang'),'Переклад речень','translateStart()'),t(icn('pen'),'Вільне письмо','freeWrite()'),S.lang==='da'?t(icn('flag'),'Іспити PD','examHome()'):'']],
+   ['talk',icn('grid'),'Ігри','легше, але з користю',[t(icn('link'),'Пари','startMatch()'),t(icn('rain'),'Дощ слів','rainStart()',best['rain_'+S.lang]?best['rain_'+S.lang]:''),t(icn('bolt'),'Блискавка','blitzStart()',best['blitz_'+S.lang]?best['blitz_'+S.lang]:'')]]];
   const rec=nextOptions()[0];
   app.innerHTML=tabHead('Вправи')+(rec?`<button class="tr-rec" onclick="${rec[3]}"><span class="tr-rec-ic">${icn('sparkle')}</span><span class="k-t"><small>Радимо зараз</small><b>${esc(rec[1])}</b><em>${esc(rec[2])}</em></span><span class="k-chev">›</span></button>`:'')+
     G.map(([k,ic,n,d,items])=>{const h=items.filter(Boolean).join('');return h?`<section class="tr-g ph-${k}"><div class="tr-gh"><span>${ic}</span><b>${n}</b><small>${d}</small></div><div class="modes tr-grid">${h}</div></section>`:''}).join('');
@@ -11170,11 +11178,11 @@ function levelRing(o){o=o||{};const lvl=o.lvl||curLevel(),li=Math.max(0,LEVELS.i
   const arc=(a0,a1,r)=>{const [x0,y0]=P(a0,r),[x1,y1]=P(a1,r);return `M${f(x0)} ${f(y0)}A${r} ${r} 0 ${a1-a0>180?1:0} 1 ${f(x1)} ${f(y1)}`};
   let segs='',labels='',dot='';
   LEVELS.forEach((L_,i)=>{const a0=-95+60*i+5,a1=-35+60*i-5,mid=-65+60*i,[lx,ly]=P(mid,R+27);
-    const col=i<li?'var(--lime)':i===li?'color-mix(in srgb,var(--lime) 30%,var(--s2))':'var(--s2)';
+    const col=i<li?'var(--ring)':i===li?'color-mix(in srgb,var(--ring) 30%,var(--s2))':'var(--s2)';
     segs+=`<path d="${arc(a0,a1,R)}" fill="none" stroke="${col}" stroke-width="15" stroke-linecap="round"/>`;
-    if(i===li&&pct>0)segs+=`<path d="${arc(a0,a0+(a1-a0)*Math.max(.02,pct),R)}" fill="none" stroke="var(--lime)" stroke-width="15" stroke-linecap="round"/>`;
+    if(i===li&&pct>0)segs+=`<path d="${arc(a0,a0+(a1-a0)*Math.max(.02,pct),R)}" fill="none" stroke="var(--ring)" stroke-width="15" stroke-linecap="round"/>`;
     labels+=`<text x="${f(lx)}" y="${f(ly)}" text-anchor="middle" dominant-baseline="central" class="nf-rl ${i<=li?'on':''}">${L_}</text>`;
-    if(i===li){const [dx,dy]=P(a0+(a1-a0)*pct,R);dot=`<circle cx="${f(dx)}" cy="${f(dy)}" r="9" fill="var(--bg)" stroke="var(--lime)" stroke-width="5"/>`}});
+    if(i===li){const [dx,dy]=P(a0+(a1-a0)*pct,R);dot=`<circle cx="${f(dx)}" cy="${f(dy)}" r="9" fill="var(--bg)" stroke="var(--ring)" stroke-width="5"/>`}});
   const ir=58,ic=2*Math.PI*ir;
   return `<div class="nf-ring" style="width:${size}px;max-width:100%"><svg viewBox="0 0 240 240" role="img" aria-label="Рівень ${lvl}">${segs}${dot}${labels}
    <circle cx="${C}" cy="${C}" r="${ir}" fill="none" stroke="var(--s2)" stroke-width="6"/><circle cx="${C}" cy="${C}" r="${ir}" fill="none" stroke="var(--sky)" stroke-width="6" stroke-linecap="round" stroke-dasharray="${f(ic)}" stroke-dashoffset="${f(ic*(1-td))}" transform="rotate(-90 ${C} ${C})"/></svg>
@@ -13498,10 +13506,7 @@ function aiTalkOwn(){const v=(document.getElementById('aiOwn')||{}).value;const 
   const xp=10+CHT.n*5;addXP(xp);addSec(Math.min(900,Math.round((Date.now()-CHT.t0)/1000)));try{qset('dialog',1)}catch(e){}
   CHT=null;toast('+'+xp+' XP за розмову');aiTalkScreen()}}
 {const _cq=chatQuit;chatQuit=function(){if(CHT&&CHT.free){CHT=null;return aiTalkScreen()}return _cq.apply(this,arguments)}}
-// вхід: перша плитка в групі «Ігри та історії» на «Тренуванні»
-{const _trAI=trainScreen;trainScreen=function(){const r=_trAI.apply(this,arguments);try{if(document.querySelector('#app .ai-entry'))return r;
-  const dl=[...document.querySelectorAll('#app .tr-it')].find(b=>/dialogList\(\)/.test(b.getAttribute('onclick')||''));
-  if(dl)dl.insertAdjacentHTML('beforebegin',`<button class="tr-it ai-entry" onclick="aiTalkScreen()"><span class="tr-ic">${icn('chat')}</span><b>Розмова з ШІ</b></button>`)}catch(e){}return r}}
+// вхід — вкладка «Розмова» (56_read_talk.js); плитку на «Тренуванні» прибрано 12.11.2026, щоб не було двох розмов
 
 /* ====================== ПІДСУМОК ДНЯ (11.11.2026) ======================
    Коли план дня виконано: під карткою бонусу — картка підсумку (без кнопки), а коли й бонус зроблено — підсумок замість «Чудовий день»: нові слова, відповіді й точність, хвилини, серія днів
@@ -13634,6 +13639,8 @@ function rdLevelHTML(ts,lv){if(typeof lvOK==='function'&&!lvOK(lv))return `<div 
     return `<details class="rt-blk ${dn===part.length?'done':g===first?'cur':'next'}" ${open?'open':''} ontoggle="RD_OPEN['${k}']=this.open">
       <summary>${rtRing(dn===part.length,part.length?dn/part.length:0)}<span class="rt-bt"><strong>${name}</strong><small>${sub}</small></span><span class="rt-n">${dn} з ${part.length}</span>${icn('chev')}</summary>
       <ol class="rt-list rt-sub">${rows}</ol></details>`}).join('')}</div></div>`}
+// «Читання» відкрите завжди (раніше — лише після плану дня): читання — корисне заняття, а не відволікання. «Вправи-ігри» — як і раніше.
+{const _tlRd=tabLocked;tabLocked=function(k){return k==='read'?false:_tlRd.apply(this,arguments)}}
 // старий список текстів (кнопки «← Тексти» у читанні) веде на нову вкладку
 readingList=function(){return readTab()};
 
@@ -13648,6 +13655,7 @@ function talkTab(){applyTheme();REDRAW=talkTab;document.body.classList.remove('i
      <form class="ai-own" onsubmit="event.preventDefault();ltOwn()"><label for="ltOwn">Своя тема</label>
        <div class="ai-own-r"><input class="answer" id="ltOwn" maxlength="120" placeholder="Наприклад: розповідаю про свою роботу" autocomplete="off"><button class="btn sm">Почати</button></div></form>
      ${ltVoiceTipHTML()}
+     <button class="k-row lt-dlg" onclick="dialogList()">${icn('chat','pm-tic')}<span class="k-t"><b>Готові діалоги</b><small>з вибором відповіді й поясненням — без ШІ</small></span><span class="k-chev">›</span></button>
      <p class="sk-note">Відповіді генерує ШІ (Claude у твоєму акаунті, без окремої оплати). Він може помилятися — важливе звіряй із довідником.</p>`
    :`<section class="nf-card lt-off"><b>Жива розмова з ШІ працює в застосунку на claude.ai</b><p>Там Claude говорить з тобою, ставить запитання й виправляє помилки — безкоштовно, у межах твого акаунта Claude. Тут, на сайті, ШІ немає, зате є готові діалоги з вибором відповіді й озвученням.</p>
      <button class="btn big nf-cta" onclick="dialogList()">${icn('chat')} Готові діалоги</button></section>`}`;
@@ -13732,6 +13740,8 @@ function ltEnd(){if(!LIVE)return talkTab();const L0=LIVE,n=L0.turns.filter(x=>x.
     ${L0.fixes.length?`<div class="nf-sec">Запам'ятай правильно</div>${L0.fixes.map(f=>`<div class="nf-card lt-sfix"><s lang="${S.lang}">${esc(f.t)}</s><b lang="${S.lang}">${esc(f.fixed)} <button class="speak" onclick="speak(${js(f.fixed)})" aria-label="Прослухати">${icn('speaker')}</button></b>${f.why?`<p>${esc(f.why)}</p>`:''}</div>`).join('')}`:`<div class="nf-card"><p>${icn('check')} Жодної помилки — так тримати!</p></div>`}
     <div class="row lt-sumb"><button class="btn big nf-cta" onclick="talkTab()">Ще розмова ${icn('arrow')}</button><button class="btn ghost" onclick="home()">На головну</button></div></div>`;
   emit('screen','talk');window.scrollTo(0,0)}
+// готові діалоги тепер у вкладці «Розмова»: кнопка «назад» зі списку діалогів веде туди ж
+{const _dlRT=dialogList;dialogList=function(){const r=_dlRT.apply(this,arguments);try{document.querySelectorAll('#app [onclick="trainScreen()"]').forEach(b=>b.setAttribute('onclick','talkTab()'));if(typeof setTab==='function')setTab('talk')}catch(e){}return r}}
 
 bootApp();
 </script>
