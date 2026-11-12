@@ -2517,6 +2517,44 @@ html,body{transition:background-color .4s ease}
 /* плитки слів дня не розтягуються, коли слів мало (широкий екран): до 128 px, вирівнювання зліва */
 .nf-step .nf-words .nf-wrow{justify-content:flex-start}
 .nf-step .nf-words .nf-wrow>.nf-wt{flex:0 1 128px;max-width:128px}
+/* ===== «Шлях» блоками по 6 тем (12.11.2026) ===== */
+.rt-blks{display:flex;flex-direction:column;gap:8px}
+.rt-blk{background:var(--s1);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.rt-blk.cur{border-color:color-mix(in srgb,var(--lime) 50%,transparent)}
+.rt-blk>summary{list-style:none;display:flex;align-items:center;gap:12px;min-height:60px;padding:10px 14px 10px 12px;cursor:pointer}
+.rt-blk>summary::-webkit-details-marker{display:none}
+.rt-blk>summary:focus-visible{outline:2px solid var(--lime);outline-offset:-2px;border-radius:18px}
+.rt-bt{flex:1;min-width:0;display:block}.rt-bt strong{display:block;font-size:15px;font-weight:800}.rt-bt strong i{font-style:normal;font-weight:600;color:var(--mut)}
+.rt-bt small{display:block;font-size:12.5px;color:var(--mut);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rt-blk.cur .rt-bt small{color:var(--lime-t)}
+.rt-blk.done .rt-bt strong{color:var(--mut)}
+.rt-blk>summary>svg:last-child{width:16px;height:16px;flex:none;color:var(--mut);fill:none;stroke:currentColor;stroke-width:2.4;transition:transform .2s}
+.rt-blk[open]>summary>svg:last-child{transform:rotate(90deg)}
+.rt2 .rt-blk .rt-sub{padding:0 6px 8px;border-top:1px solid var(--line);padding-top:6px}
+.rt-blk .rt-row.cur .rt-item{background:var(--s2)}
+.rt-blk .rt-card{background:var(--s2)}
+.rt-end{margin-top:8px}
+@media (prefers-reduced-motion:reduce){.rt-blk>summary>svg:last-child{transition:none}}
+/* ===== «Граматика»: перемикач рівнів і блоки за змістом (12.11.2026) ===== */
+.gref-lvs{display:flex;gap:6px;margin:0 0 14px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}.gref-lvs::-webkit-scrollbar{display:none}
+.gref-lvs.dim{opacity:.45}
+.gref-lvc{all:unset;box-sizing:border-box;cursor:pointer;flex:1 0 auto;min-width:52px;min-height:48px;padding:6px 10px;border-radius:14px;background:var(--s1);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;color:var(--ink)}
+.gref-lvc b{font:800 15px var(--display)}.gref-lvc small{font-size:11px;font-weight:600;color:var(--mut)}
+.gref-lvc.on{background:var(--lime);border-color:var(--lime);color:#000}.gref-lvc.on small{color:rgba(0,0,0,.65)}
+.gref-lvc:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
+.gref-lvh{display:flex;align-items:center;gap:8px;margin:2px 2px 6px}.gref-lvh b{font:700 16px var(--display)}.gref-lvh small{margin-left:auto;font-size:12px;color:var(--mut)}
+.gref-blk{margin:0 0 8px}
+.gref-blk>summary{list-style:none;display:flex;align-items:center;gap:10px;min-height:56px;padding:8px 14px;border-radius:16px;background:var(--s1);border:1px solid var(--line);cursor:pointer;font:800 15px var(--body);color:var(--ink)}
+.gref-blk>summary::-webkit-details-marker{display:none}
+.gref-blk>summary:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
+.gref-blk>summary span{flex:1;min-width:0}
+.gref-blk>summary small{font-size:12px;font-weight:600;color:var(--mut)}
+.gref-blk.done>summary small{color:var(--lime-t)}
+.gref-blk>summary>svg:last-child{width:16px;height:16px;flex:none;color:var(--mut);transition:transform .2s}
+.gref-blk[open]>summary{background:transparent;border-color:transparent;color:var(--lime-t);min-height:44px;padding-bottom:4px}
+.gref-blk[open]>summary>svg:last-child{transform:rotate(90deg)}
+.gref-blk>.gref-it{margin-left:0}
+@media (prefers-reduced-motion:reduce){.gref-blk>summary>svg:last-child{transition:none}}
 </style>
 </head>
 <body>
@@ -12015,6 +12053,19 @@ const rtSeen=w=>{const x=st(w);return !!(x&&!(x.pl&&!x.lr))};
 function rtRing(done,share){const r=14,c=2*Math.PI*r,p=Math.max(0,Math.min(1,share));
   return done?`<svg class="rt-rg done" width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="14"/><path d="M11 17.5l4 4 8-9"/></svg>`
     :`<svg class="rt-rg" width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><circle class="bg" cx="17" cy="17" r="${r}"/>${p>0?`<circle class="fg" cx="17" cy="17" r="${r}" stroke-dasharray="${(c*p).toFixed(1)} ${c.toFixed(1)}" transform="rotate(-90 17 17)"/>`:''}</svg>`}
+/* Блоки «Шляху» (12.11.2026): теми рівня йдуть групами по RT_BLK. Розгорнутий лише блок з поточною темою;
+   пройдені й наступні — згорнуті в рядок «Блок N з M» з прогресом. Ручне розгортання пам'ятаємо до перезапуску (RT_OPEN). */
+const RT_BLK=6;let RT_OPEN={};
+function rtBlkToggle(k,o){RT_OPEN[k]=o}
+function rtBlocksHTML(lv,segs,cur,head,tail){const N=Math.ceil(segs.length/RT_BLK);let out='';
+  for(let b=0;b<N;b++){const part=segs.slice(b*RT_BLK,b*RT_BLK+RT_BLK),dn=part.filter(x=>x.done).length,all=dn===part.length,hasCur=part.some(x=>x.t===cur);
+    const words=part.reduce((a,x)=>a+x.n,0),seen=part.reduce((a,x)=>a+(x.done?x.n:x.seen),0),k=S.lang+':'+lv+':'+b,open=k in RT_OPEN?RT_OPEN[k]:hasCur;
+    const names=part.slice(0,3).map(x=>x.t.name).join(', ')+(part.length>3?'…':'');
+    const sub=all?`пройдено · ${nT(part.length)}`:hasCur?`зараз: ${esc(cur.name)}`:esc(names);
+    out+=`<details class="rt-blk ${all?'done':hasCur?'cur':'next'}" ${open?'open':''} ontoggle="rtBlkToggle('${k}',this.open)">
+      <summary aria-label="${esc(`Блок ${b+1} з ${N}: ${all?'пройдено':`${dn} з ${part.length} тем`}`)}">${rtRing(all,words?seen/words:0)}<span class="rt-bt"><strong>Блок ${b+1} <i>з ${N}</i></strong><small>${sub}</small></span><span class="rt-n">${dn} з ${part.length}</span>${icn('chev')}</summary>
+      <ol class="rt-list rt-sub">${b===0?head:''}${part.map(x=>x.h).join('')}${b===N-1?tail:''}</ol></details>`}
+  return out?`<div class="rt-blks">${out}</div>`:`<ol class="rt-list">${head}${tail}</ol>`}
 /* «Шлях» (макет 11.11.2026): усі теми рівня з прогресом кожної; «Вправи-ігри» — на маршруті там, де відкриються;
    «Бібліотека» — в кінці рівня; «Алфавіт» — кнопка вгорі. */
 function pathScreen(){applyTheme();REDRAW=pathScreen;emit('home:before');
@@ -12025,18 +12076,19 @@ function pathScreen(){applyTheme();REDRAW=pathScreen;emit('home:before');
       <span class="rt-ic ${cls}">${icn(ic)}</span><span class="rt-tx"><strong>${title}</strong><small>${open?subOpen:subLocked}</small></span>${open?icn('chev'):icn('lock')}</button></li>`;
   const games=at=>station('games',gOpen,'grid','sky','Вправи-ігри',at?'відкриються після цієї теми':`відкриються після ${nT(UNLOCK_GAMES_TOPICS)}`,'картки, речення, слух, письмо, ігри','trainScreen()');
   let undone=0,gPut=gOpen,doneN=0;
-  const rows=(gOpen?games(false):'')+list.map(t=>{const ws=topicWordsL(t),n=ws.length,seen=ws.filter(rtSeen).length,done=topicDone(t),isCur=t===cur;if(done)doneN++;
+  const segs=list.map(t=>{const ws=topicWordsL(t),n=ws.length,seen=ws.filter(rtSeen).length,done=topicDone(t),isCur=t===cur;if(done)doneN++;
     const st_=done?'done':isCur?'cur':'next',sub=done?`${n} з ${n}`:seen?`${seen} з ${nW(n)}${seen>=n?' · закріплюємо':''}`:nW(n);
     const lab=done?`${t.name}: пройдено, повторити`:isCur?`${t.name}: поточна тема, ${sub}, відкрити`:`${t.name}: ${sub}, відкрити`;
     let h=`<li class="rt-row ${st_}"><button class="rt-item" onclick="routeOpen('${t.id}')" aria-label="${esc(lab)}">${rtRing(done,n?seen/n:0)}
       <span class="rt-tt"><strong>${esc(t.name)}</strong>${isCur?`<small>${sub}</small>`:''}</span>${isCur?`<span class="rt-now">зараз</span>`:`<span class="rt-n">${sub}</span>`}</button></li>`;
     if(!done&&!gPut&&++undone>=gLeft){gPut=true;h+=games(true)}
-    return h}).join('')+(gPut?'':games(false));
+    return {t,h,done,seen,n}});
+  const blocks=rtBlocksHTML(lv,segs,cur,gOpen?games(false):'',gPut?'':games(false));
   const known=routeAllTopics(lv).flatMap(topicWordsL).filter(learned).length;
   app.innerHTML=`<header class="rt-hd"><div><small>${LANG_NAT[S.lang]}${S.lang==='en'?' (US)':''} · ${lv}</small><h1>Шлях</h1></div>
      ${typeof ALPHA!=='undefined'&&ALPHA[S.lang]?`<button class="rt-abcb" onclick="alphabetScreen()">${icn('abc')} Алфавіт</button>`:''}</header>
    <div class="rt-lv" role="img" aria-label="Рівень ${lv}: пройдено ${pct}%"><b>${lv} · ${pct}%</b><span class="rt-lvbar"><i style="width:${Math.max(2,pct)}%"></i></span><small>${doneN} з ${nT(list.length)} · ${nW(known)}</small></div>
-   <div class="rt-route rt2"><ol class="rt-list">${rows}
+   <div class="rt-route rt2">${blocks}<ol class="rt-list rt-end">
      ${station('library',lOpen,'book','amber','Бібліотека',`книги й статті з рівня ${UNLOCK_LIBRARY_LEVEL}`,'книги, промови й статті за рівнями','libraryScreen()')}</ol></div>
    <p class="rt-attr">Теми йдуть у тому порядку, в якому їх пропонує план дня. Будь-яку можна відкрити раніше.</p>`;
   emit('screen','path');
@@ -12858,7 +12910,7 @@ if(typeof practicedWords==='function'){const _pwLF=practicedWords;HOOKS['block:f
 /* ====================== ВКЛАДКА «ГРАМАТИКА» — довідник усіх правил ======================
    Усі уроки за рівнями A1–C2: правило-таблиця, як утворюється, типові помилки, приклади з перекладом і озвученням.
    Будь-яке правило можна відкрити будь-коли й потренувати вправами (оцінка уроку оновлюється, крок плану не зараховується). */
-let GREF={q:'',open:null};
+let GREF={q:'',open:null,lv:null};
 function grammarRef(){applyTheme();REDRAW=grammarRef;document.body.classList.remove('in-session');if(typeof setTab==='function')setTab('gram');
   const G=GRAMMAR[S.lang]||[],sc=(S.grammar&&S.grammar[S.lang])||{},M=(typeof GRAMMAR_MORE!=='undefined'&&GRAMMAR_MORE[S.lang])||{};
   const q=GREF.q.trim().toLowerCase(),hit=g=>!q||(g.t+' '+(g.s||'')+' '+String(g.rule||'').replace(/<[^>]+>/g,' ')).toLowerCase().includes(q);
@@ -12867,16 +12919,47 @@ function grammarRef(){applyTheme();REDRAW=grammarRef;document.body.classList.rem
   const lvls=LEVELS.filter(l=>rows.some(x=>(x.g.lv||'A1')===l));
   app.innerHTML=`<div class="nf-hd"><div><small>${LANG_NAT[S.lang]||''}${S.lang==='en'?' (US)':''} · ${G.length} правил · пройдено ${done}</small><h1>Граматика</h1></div></div>
    <label class="gref-s"><span class="sr">Пошук правила</span><input id="grefQ" type="search" placeholder="Шукати: ${S.lang==='da'?'en / et, har / er, ordstilling…':'do / does, was, a / an…'}" value="${esc(GREF.q)}" oninput="GREF.q=this.value;grefList()" autocomplete="off"></label>
-   <div id="grefL">${grefListHTML(rows,lvls,sc,M)}</div>`;
+   <div class="gref-lvs" role="tablist" aria-label="Рівень">${grefLvChips(G,sc)}</div>
+   <div id="grefL">${q?grefListHTML(rows,lvls,sc,M):grefLevelHTML(grefLv(G),sc)}</div>`;
   emit('screen','gram');window.scrollTo(0,0)}
 function grefList(){const el=document.getElementById('grefL');if(!el)return grammarRef();const G=GRAMMAR[S.lang]||[],sc=(S.grammar&&S.grammar[S.lang])||{},M=(GRAMMAR_MORE||{})[S.lang]||{};
   const q=GREF.q.trim().toLowerCase(),rows=G.map((g,i)=>({g,i})).filter(x=>!q||(x.g.t+' '+(x.g.s||'')+' '+String(x.g.rule||'').replace(/<[^>]+>/g,' ')).toLowerCase().includes(q));
-  el.innerHTML=grefListHTML(rows,LEVELS.filter(l=>rows.some(x=>(x.g.lv||'A1')===l)),sc,M)}
+  const c=document.querySelector('.gref-lvs');if(c)c.classList.toggle('dim',!!q);
+  el.innerHTML=q?grefListHTML(rows,LEVELS.filter(l=>rows.some(x=>(x.g.lv||'A1')===l)),sc,M):grefLevelHTML(grefLv(G),sc)}
 function grefListHTML(rows,lvls,sc,M){if(!rows.length)return `<p class="muted gref-empty">Нічого не знайдено. Спробуй інше слово.</p>`;
   return lvls.map(l=>`<section class="gref-lv"><h2><span class="lv-tag">${l}</span> ${({A1:'Початковий',A2:'Базовий',B1:'Середній',B2:'Вище середнього',C1:'Високий',C2:'Вільний'})[l]||''}</h2>
-    ${rows.filter(x=>(x.g.lv||'A1')===l).map(({g,i})=>{const v=sc[i],st_=v==null?'':v>=.99?'<em class="ok">пройдено</em>':`<em>${Math.round(v*100)}%</em>`;
-      return `<details class="gref-it" ${GREF.open===i?'open':''} ontoggle="if(this.open){GREF.open=${i};grefFill(${i},this)}">
-        <summary><span class="gref-t"><b>${esc(g.t)}</b>${g.s?`<small>${esc(g.s)}</small>`:''}</span>${st_}${icn('chev')}</summary><div class="gref-b" data-i="${i}"></div></details>`}).join('')}</section>`).join('')}
+    ${rows.filter(x=>(x.g.lv||'A1')===l).map(x=>grefItemHTML(x,sc)).join('')}</section>`).join('')}
+function grefItemHTML({g,i},sc){const v=sc[i],st_=v==null?'':v>=.99?'<em class="ok">пройдено</em>':`<em>${Math.round(v*100)}%</em>`;
+  return `<details class="gref-it" ${GREF.open===i?'open':''} ontoggle="if(this.open){GREF.open=${i};grefFill(${i},this)}">
+    <summary><span class="gref-t"><b>${esc(g.t)}</b>${g.s?`<small>${esc(g.s)}</small>`:''}</span>${st_}${icn('chev')}</summary><div class="gref-b" data-i="${i}"></div></details>`}
+/* Рівні й блоки (12.11.2026): угорі перемикач A1–C2 (за замовчуванням — ваш рівень), у рівні уроки зібрані в блоки за змістом.
+   Пошук шукає по всіх рівнях, як раніше. Блок визначаємо за назвою уроку (GREF_BLOCKS — перший збіг). */
+const GREF_LVN={A1:'Початковий',A2:'Базовий',B1:'Середній',B2:'Вище середнього',C1:'Високий',C2:'Вільний'};
+const GREF_BLOCKS=[
+  ['prep','Прийменники',/прийменник/i],
+  ['sent','Речення, питання й заперечення',/питальн|питання|заперечення|порядок слів|there is|det er|умовн|умова|непряма|підрядн|відносні|інверсія|сполучник|når, da|der чи det/i],
+  ['verb','Дієслова й часи',/дієприкметник/i],
+  ['adj','Прикметники й прислівники',/прикметник|ступені|прислівник|too \/ enough/i],
+  ['noun','Іменники, артиклі й займенники',/артикл|множина|займенник|this \/ that|присвійн|рід: en|означена форма|sin, sit|some \/ any/i],
+  ['verb','Дієслова й часи',/present|past|perfect|час|will|going to|to be|was \/ were|have|can|дієсл|datid|førnutid|модальн|used to|пасив|наказовий|did|герундій|інфінітив|subjunctive|wish|умовний/i]];
+const GREF_ORDER=['verb','noun','adj','sent','prep','other'];
+function grefBlock(g){const t=g.t||'';for(const [id,,re] of GREF_BLOCKS)if(re.test(t))return id;return 'other'}
+function grefBlockName(id){const b=GREF_BLOCKS.find(x=>x[0]===id);return b?b[1]:'Різне'}
+function grefLv(G){const has=l=>G.some(g=>(g.lv||'A1')===l);if(GREF.lv&&has(GREF.lv))return GREF.lv;
+  const m=typeof maxLv==='function'?maxLv():'A1';return has(m)?m:(LEVELS.find(has)||'A1')}
+function grefLvChips(G,sc){const cur=grefLv(G);
+  return LEVELS.filter(l=>G.some(g=>(g.lv||'A1')===l)).map(l=>{const ix=G.map((g,i)=>({g,i})).filter(x=>(x.g.lv||'A1')===l),d=ix.filter(x=>sc[x.i]>=.99).length;
+    return `<button class="gref-lvc ${l===cur?'on':''}" role="tab" aria-selected="${l===cur}" onclick="grefSetLv('${l}')"><b>${l}</b><small>${d}/${ix.length}</small></button>`}).join('')}
+function grefSetLv(l){GREF.lv=l;GREF.q='';GREF.open=null;grammarRef()}
+function grefLevelHTML(l,sc){const G=GRAMMAR[S.lang]||[],ix=G.map((g,i)=>({g,i})).filter(x=>(x.g.lv||'A1')===l),d=ix.filter(x=>sc[x.i]>=.99).length;
+  const head=`<div class="gref-lvh"><span class="lv-tag">${l}</span><b>${GREF_LVN[l]||''}</b><small>${d} з ${ix.length} пройдено</small></div>`;
+  if(ix.length<=4)return head+`<section class="gref-blk">${ix.map(x=>grefItemHTML(x,sc)).join('')}</section>`;
+  const by={};ix.forEach(x=>{const b=grefBlock(x.g);(by[b]=by[b]||[]).push(x)});
+  const bl=GREF_ORDER.filter(b=>by[b]),first=bl.find(b=>by[b].some(x=>!(sc[x.i]>=.99)))||bl[0];
+  return head+bl.map(b=>{const xs=by[b],bd=xs.filter(x=>sc[x.i]>=.99).length,k=S.lang+':'+l+':'+b,
+      open=k in GREF_OPEN?GREF_OPEN[k]:(b===first||xs.some(x=>x.i===GREF.open));
+    return `<details class="gref-blk${bd===xs.length?' done':''}" ${open?'open':''} ontoggle="GREF_OPEN['${k}']=this.open"><summary><span>${grefBlockName(b)}</span><small>${bd} з ${xs.length}</small>${icn('chev')}</summary>${xs.map(x=>grefItemHTML(x,sc)).join('')}</details>`}).join('')}
+let GREF_OPEN={}; // блоки, розгорнуті чи згорнуті вручну (до перезапуску)
 // вміст правила малюємо лише при відкритті (43 уроки з таблицями — важкі)
 function grefFill(i,d){const b=d.querySelector('.gref-b');if(!b||b.dataset.ok)return;b.dataset.ok=1;const g=GRAMMAR[S.lang][i],m=((GRAMMAR_MORE||{})[S.lang]||{})[g.t];
   b.innerHTML=`<div class="rule">${g.rule}</div>${typeof gmHTML==='function'?gmHTML(m):''}
